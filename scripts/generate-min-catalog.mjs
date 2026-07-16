@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const examplesDir = path.join(root, "examples/components");
+const examplesDir = path.join(root, "docs/examples/components");
 const manifestPath = path.join(examplesDir, "catalog.manifest.json");
 const minEntryPath = path.join(root, "src/core.js");
 const demosPath = path.join(examplesDir, "demos.js");

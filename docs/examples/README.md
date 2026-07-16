@@ -6,11 +6,11 @@ Example pages link `examples/examples.css` after DrawUI CSS to re-enable documen
 
 ## Run locally
 
-Build first, then serve from the repository root:
+Build first, then serve the `docs/` folder:
 
 ```powershell
 npm run build
-npx --yes serve . -p 5173
+npx --yes serve docs -p 5173
 ```
 
 Or use the combined script:
@@ -21,12 +21,12 @@ npm run examples
 
 Then open:
 
-- **Landing page:** http://localhost:5173/examples/
+- **Landing page:** http://localhost:5173/
 - **Min (no peer deps):** http://localhost:5173/examples/min/
 - **Min component gallery:** http://localhost:5173/examples/components/
 - **Full component gallery:** http://localhost:5173/examples/components/full.html
 
-For GitHub Pages, point the site source at the `/examples` folder — [`index.html`](./index.html) is the entry.
+For GitHub Pages, set the site source to the `/docs` folder — [`index.html`](../index.html) is the entry.
 
 > Previously at `/examples/min-components/` — that folder was renamed to `components/`.
 
@@ -90,4 +90,4 @@ Then open http://localhost:5173/examples/components/ (min) or http://localhost:5
 - `showdown@2.1.0`
 - `@highlightjs/cdn-assets@11.11.1`
 
-See [PUBLISHING.md](../docs/PUBLISHING.md) and `dist/importmap.full.json` for the complete import map template.
+See [PUBLISHING.md](../PUBLISHING.md) and `docs/dist/importmap.full.json` for the complete import map template.

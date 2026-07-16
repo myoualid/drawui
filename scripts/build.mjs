@@ -1,10 +1,10 @@
 import * as esbuild from "esbuild";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const rootDir = fileURLToPath(new URL("..", import.meta.url));
-const distDir = path.join(rootDir, "dist");
+const distDir = path.join(rootDir, "docs/dist");
 const scriptsDir = path.join(rootDir, "scripts");
 const packageJson = JSON.parse(
   await readFile(path.join(rootDir, "package.json"), "utf8"),
@@ -142,6 +142,28 @@ async function verifyDist() {
   }
 }
 
+async function syncDocsAssets() {
+  const docsDir = path.join(rootDir, "docs");
+  const docsStylesDir = path.join(docsDir, "styles");
+
+  await mkdir(path.join(docsStylesDir, "themes"), { recursive: true });
+  await mkdir(path.join(docsStylesDir, "components"), { recursive: true });
+
+  for (const file of ["dark.css", "light.css"]) {
+    await cp(
+      path.join(rootDir, "styles/themes", file),
+      path.join(docsStylesDir, "themes", file),
+    );
+  }
+
+  for (const file of ["nodes.css", "hud.css", "pie-menu.css"]) {
+    await cp(
+      path.join(rootDir, "styles/components", file),
+      path.join(docsStylesDir, "components", file),
+    );
+  }
+}
+
 await rm(distDir, { recursive: true, force: true });
 await mkdir(distDir, { recursive: true });
 
@@ -149,9 +171,11 @@ await buildJavaScript();
 await buildStylesheets();
 await writeFullImportMap();
 await verifyDist();
+await syncDocsAssets();
 
-console.log("Built dist/:");
+console.log("Built docs/dist/:");
 console.log("- drawui.min.js / drawui.min.css");
 console.log("- drawui.full.js / drawui.full.css");
 console.log("- drawui.overlays.js");
 console.log("- importmap.full.json");
+console.log("Synced docs/styles/ for GitHub Pages.");

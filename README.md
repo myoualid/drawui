@@ -8,6 +8,7 @@ This README is the package guide. Detailed reference material lives in `docs/`:
 - [Component index](docs/component-index.md)
 - [Styling guide](docs/styling.md)
 - [AI usage guide](docs/ai-usage.md)
+- [Live examples](docs/index.html) (GitHub Pages landing page)
 
 ## Install
 

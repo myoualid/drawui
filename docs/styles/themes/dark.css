@@ -1,0 +1,38 @@
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Dark green palette (matches :root in tokens.css) */
+  --dui-color-bg: #1c1f1c;
+  --dui-color-surface: rgba(46, 52, 54, 0.94);
+  --dui-color-surface-raised: rgba(49, 49, 49, 0.96);
+  --dui-color-surface-hover: rgba(49, 49, 49, 0.9);
+  --dui-color-surface-pressed: rgba(49, 49, 49, 0.98);
+  --dui-color-surface-selected: rgba(112, 186, 53, 0.25);
+  --dui-color-control: rgba(46, 52, 54, 0.88);
+  --dui-color-control-hover: rgba(49, 49, 49, 0.72);
+  --dui-color-overlay: rgba(46, 52, 54, 0.96);
+  --dui-color-text: #eeeeec;
+  --dui-color-text-muted: #babdb6;
+  --dui-color-text-subtle: #888a85;
+  --dui-color-border: rgba(207, 208, 203, 0.28);
+  --dui-color-border-strong: rgba(112, 186, 53, 0.4);
+  --dui-color-separator: rgba(186, 189, 182, 0.22);
+  --dui-color-focus: #70ba35;
+  --dui-color-accent: #70ba35;
+  --dui-color-accent-hover: #7cbf33;
+  --dui-color-accent-soft: rgba(112, 186, 53, 0.18);
+  --dui-color-on-accent: #ffffff;
+  --dui-color-danger: #f0855e;
+  --dui-color-warning: #d98014;
+  --dui-color-success: #40b74c;
+  --dui-color-info: #729fcf;
+
+  --dui-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --dui-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --dui-shadow-overlay: 0 8px 28px rgba(0, 0, 0, 0.35);
+
+  --dui-surface-bg: var(--dui-color-surface);
+  --dui-surface-raised-bg: var(--dui-color-surface-raised);
+  --dui-surface-overlay-bg: var(--dui-color-overlay);
+  --dui-surface-control-bg: var(--dui-color-control);
+}

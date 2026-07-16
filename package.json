@@ -85,7 +85,7 @@
   "scripts": {
     "build": "node ./scripts/build.mjs",
     "build:source-check": "node --input-type=module -e \"import './src/core.js'; import './src/index.js'\"",
-    "examples": "npm run build && npx --yes serve . -p 5173",
+    "examples": "npm run build && npx --yes serve docs -p 5173",
     "build:catalog": "node ./scripts/generate-min-catalog.mjs",
     "check:entrypoints": "node ./scripts/check-entrypoints.mjs",
     "check:package-contents": "node ./scripts/check-package-contents.mjs",

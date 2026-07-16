@@ -1,0 +1,116 @@
+
+/* HUD Labels */
+.hud-label {
+  color: var(--brand-color);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  /*  text in one line and overflow with ellipses */
+  white-space: nowrap;
+}
+
+/* HUD Input Fields */
+.hud-input {
+  background: transparent;
+  border: 0;
+  color: var(--theme-text);
+  min-width: 0;
+  outline: none;
+  padding: var(--phi-0-2-5) 0;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s ease;
+}
+
+.hud-input:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.hud-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* HUD Coins Display */
+.hud-coins {
+  color: var(--brand-color);
+  font-family: 'Orbitron', monospace;
+}
+
+/* HUD Divider */
+.hud-divider {
+  background: linear-gradient(180deg, transparent 0%, rgba(100, 159, 248, 0.5) 50%, transparent 100%);
+  flex: 0 0 1px;
+  height: 2.1rem;
+  width: 1px;
+}
+
+.GameHUD {
+  font-family: var(--game-font);
+  padding: var(--phi-0-5);
+  position: absolute;
+  gap: var(--phi-0-5);
+  z-index: 8;
+}
+
+.GameHUD .hud-module {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: min(28vw, 240px);
+  min-width: fit-content;
+}
+
+
+.GameHUD .hud-input {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* Home menu: only the table has the border contour; no row borders; content centered with column alignment */
+.home-menu-box {
+  display: table;
+  border-collapse: collapse;
+  border: 3px double rgba(0, 255, 65, 0.9);
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: min(40ch, 100%);
+  font-family: "Orbitron", "Consolas", "Monaco", monospace;
+  color: #00FF41;
+}
+
+.home-menu-row {
+  display: table-row;
+}
+
+/* No borders on rows or cells – only the table has the contour */
+.home-menu-cell {
+  display: table-cell;
+  padding: 0.5em 0.75em;
+  vertical-align: middle;
+  border: none;
+}
+
+/* Code column: fixed width so [01],[02],[03] align vertically */
+.home-menu-cell-code {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  padding-right: 0.5em;
+}
+
+/* Title column: aligns vertically across rows */
+.home-menu-cell-title {
+  text-align: left;
+}
+
+.menu-item-active .home-menu-cell {
+  background: rgba(0, 255, 65, 0.12);
+}
