@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DrawUI — min example</title>
+
+  <link rel="stylesheet" href="../../dist/drawui.min.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../examples.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      background: var(--dui-color-bg, #0a0e12);
+      color: var(--dui-color-text, #e6edf3);
+      font-family: var(--dui-font-ui, system-ui, sans-serif);
+    }
+
+    #app {
+      min-height: 100%;
+      padding: 1.5rem;
+    }
+
+    .demo-note {
+      max-width: 36rem;
+      margin-bottom: 1rem;
+      color: var(--dui-color-text-muted, #b9c2b6);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <p class="demo-note">
+      Min DrawUI demo — loads from <code>dist/</code>. Run <code>npm run build</code> first, then serve from the repo root:
+      <code>npx serve . -p 5173</code>
+    </p>
+  </div>
+
+  <script type="module">
+    import { DrawUI, FloatingPanel } from "drawui";
+
+    const panel = new FloatingPanel({
+      title: "DrawUI Min",
+      position: "right",
+      width: "320px",
+    });
+
+    const content = DrawUI.column()
+      .gap("0.75rem")
+      .add(DrawUI.h3("Hello DrawUI"))
+      .add(DrawUI.text("Panels, primitives, and basic markdown — zero peer packages."))
+      .add(
+        DrawUI.markdown(
+          "## Markdown works\n\nBuilt-in converter: **bold**, *italic*, and `code`.\n\n- No Showdown\n- No Highlight.js",
+        ),
+      )
+      .add(
+        DrawUI.row()
+          .gap("0.5rem")
+          .add(
+            DrawUI.button("Primary").addClass("primary").onClick(() => {
+              alert("DrawUI min build");
+            }),
+          )
+          .add(DrawUI.button("Secondary").addClass("secondary")),
+      );
+
+    panel.setContent(content);
+    document.body.appendChild(panel.dom);
+    panel.show();
+  </script>
+</body>
+</html>

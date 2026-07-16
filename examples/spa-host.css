@@ -1,0 +1,13 @@
+/* Full-viewport host for DrawUI.spa() example pages */
+html,
+body,
+#app {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#app > .SpaLayout {
+  height: 100%;
+}

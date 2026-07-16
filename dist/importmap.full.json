@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "drawui/full": "./drawui.full.js",
+    "drawui/overlays": "./drawui.overlays.js",
+    "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+    "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+    "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+    "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+    "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+  }
+}

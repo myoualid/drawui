@@ -1,0 +1,7 @@
+/* Standalone example pages — override app-shell scroll lock from styles/rules.css */
+html,
+body {
+  height: auto;
+  min-height: 100%;
+  overflow: auto;
+}

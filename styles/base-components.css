@@ -1,0 +1,2604 @@
+.DropZone {
+  border: 3px dashed var(--border);
+  border-radius: var(--dui-radius);
+  padding: var(--phi-0-5);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border-style: dashed;
+  border-width: 3px;
+  border-image: repeating-linear-gradient(90deg, var(--border) 0 10px, transparent 10px 20px) 1;
+}
+
+.Disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  pointer-events: auto;
+}
+
+.Active {
+  background: var(--dui-color-surface-selected) !important;
+  border-color: color-mix(in srgb, var(--dui-color-accent) 40%, transparent) !important;
+  color: var(--dui-color-accent) !important;
+}
+
+.Property {
+  display: inline-block;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.PropertyValue {
+  color: var(--brand-color);
+  font-family: var(--font-mono);
+  text-align: right;
+  min-width: 96px;
+  white-space: nowrap;
+}
+
+.PropertyTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.PropertyTable-title,
+.PropertyTable-header,
+.PropertyTable-row {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.PropertyTable-title {
+  color: var(--theme-text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--phi-0-2-5);
+  text-transform: uppercase;
+}
+
+.PropertyTable-header {
+  border-bottom: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border-hover);
+  color: var(--theme-text-secondary);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  padding: 8px 14px;
+  text-transform: uppercase;
+}
+
+.PropertyTable-row {
+  align-items: center;
+  border-bottom: 1px solid var(--dui-color-separator);
+  display: flex;
+  gap: 12px;
+  min-height: var(--dui-control-height);
+  padding: 6px 10px;
+}
+
+.PropertyTable-row:last-child {
+  border-bottom-color: transparent;
+}
+
+.PropertyTable-cell {
+  min-width: 0;
+}
+
+.PropertyTable-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.PropertyTable-value {
+  flex: 0 1 10rem;
+  min-width: 0;
+}
+
+.PropertyTable-value:has(.Slider),
+.PropertyTable-value:has(.TextArea),
+.PropertyTable-value:has(.Progress) {
+  flex: 1 1 14rem;
+}
+
+.TabPanel, .Panel {
+  background: var(--dui-surface-bg);
+  border-radius: var(--dui-radius);
+}
+
+.TabPanel > .TabPanelHeader {
+  flex-shrink: 0;
+}
+
+.TabPanel > .PanelContent {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.TabPanel > .TabPanelFooter {
+  flex-shrink: 0;
+}
+
+.TabPanel .PanelContent > .TabbedPanel {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.TabPanel .PanelContent > .TabbedPanel .Tabs {
+  flex-shrink: 0;
+}
+
+.TabPanel .PanelContent > .TabbedPanel .Panels {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  top: auto;
+}
+
+
+#objectTab .Panel,
+#geometryTab .Panel,
+#materialTab .Panel,
+#scriptTab .Panel {
+  padding: var(--phi-0-5);
+}
+
+
+
+.ContextMenu div {
+  position: relative;
+}
+
+.ContextModules .ModuleCount {
+  backdrop-filter: var(--glass-blur);
+  background: var(--red);
+  border-radius: var(--dui-radius);
+  padding: 1px 3px;
+  position: absolute;
+  right: 0;
+  top: 80%;
+}
+
+.CollapsibleSection-body:has(.ag-theme-quartz),
+.CollapsibleSection-body:has(.ag-theme-quartz-dark) {
+  display: flex;
+  flex-direction: column;
+}
+
+.CollapsibleSection-body:has(.ag-theme-quartz) .ag-theme-quartz,
+.CollapsibleSection-body:has(.ag-theme-quartz-dark) .ag-theme-quartz-dark {
+  flex: 0 0 auto;
+}
+
+
+.Module,
+.Clickable,
+.IndependentModule {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.Module:hover,
+.IndependentModule:hover {
+  color: var(--brand-color);
+}
+
+
+.ModuleName {
+  text-transform: uppercase;
+}
+
+.Link {
+  color: var(--brand-color);
+  display: inline-block;
+  font-size: 13px;
+  margin-top: var(--phi-0-5);
+  text-decoration: underline;
+}
+
+.ListBoxItem .Link {
+  color: var(--theme-text-light);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ListBoxItem:hover .Link {
+  color: var(--theme-text);
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+}
+
+.FloatingPanel .Panels .Panel {
+  padding: var(--phi-0-5);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.FloatingPanel .Panel .Row {
+  gap: var(--spacing-md);
+  padding: var(--phi-0-5);
+}
+
+#sidebar .Row .Label,
+#properties .Row .Label,
+.SideBar .Row .Label {
+  color: var(--theme-text-secondary);
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+  width: 100px;
+}
+
+.properties-panel .Panel {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  width: 100%;
+}
+
+#Viewport {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  border-radius: var(--dui-radius);
+}
+
+
+.ListBoxItem,
+.ListboxItem {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: flex;
+  gap: var(--dui-space-3);
+  margin: 1px 0;
+  min-height: var(--dui-control-height);
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.ListBoxItem:hover,
+.ListboxItem:hover {
+  background: var(--dui-color-surface-hover);
+  border-color: transparent;
+  color: var(--dui-color-text);
+}
+
+.ListBoxItem.Active,
+.ListboxItem.Active {
+  background: var(--dui-color-surface-selected);
+  border-color: transparent;
+  color: var(--dui-color-text);
+}
+
+.ListboxItem.workspace-menu-item {
+  gap: var(--dui-space-3);
+  min-height: 32px;
+  padding: 4px 8px;
+  width: 100%;
+}
+
+.workspace-menu-item .Checkbox {
+  flex-shrink: 0;
+}
+
+.workspace-menu-item-icon,
+.workspace-menu-item .material-symbols-outlined {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.ListboxItem.workspace-menu-item:hover .workspace-menu-item-icon,
+.ListboxItem.workspace-menu-item:hover .material-symbols-outlined {
+  color: var(--dui-color-text);
+  opacity: 1;
+}
+
+.workspace-menu-item-label {
+  flex: 1 1 auto;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace-menu-item-actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--dui-space-1);
+  margin-left: auto;
+}
+
+
+.Panel {
+  background: var(--dui-surface-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-width: min(fit-content, 240px);
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 7;
+}
+
+input.Color {
+  align-items: center;
+  border-radius: var(--dui-radius);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-xs);
+  position: relative;
+}
+
+.Click {
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--glass-shadow);
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+.FloatingPanel f-node {
+  z-index: 5;
+}
+
+.FloatingPanel flow,
+.FloatingPanel-content flow {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ws-node-group-background {
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  box-shadow: var(--glass-shadow-sm);
+  pointer-events: none;
+  position: absolute;
+  transition: all var(--transition-fast);
+}
+
+header {
+  align-items: center;
+}
+
+.kbd {
+  align-items: center;
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-bottom-width: 2px;
+  border-radius: var(--dui-radius);
+  box-shadow: inset 0 -1px 0 var(--dui-color-separator);
+  color: var(--dui-color-text-muted);
+  display: inline-flex;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 500;
+  height: var(--dui-control-height-sm);
+  justify-content: center;
+  min-width: var(--dui-control-height-sm);
+  padding: 0 7px;
+  width: fit-content;
+}
+
+.Code {
+  background: var(--dui-color-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--dui-color-accent) 28%, transparent);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-accent);
+  display: inline-block;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-xs);
+  line-height: 1.45;
+  padding: 2px 7px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Markdown output (min simple converter + full Showdown) */
+.Markdown {
+  color: var(--dui-color-text);
+  display: block;
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-md);
+  line-height: 1.65;
+  max-width: 48rem;
+  width: 100%;
+}
+
+.Markdown > :first-child {
+  margin-top: 0;
+}
+
+.Markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.Markdown h1,
+.Markdown h2,
+.Markdown h3,
+.Markdown h4,
+.Markdown h5,
+.Markdown h6 {
+  color: var(--dui-color-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 1.35em 0 0.5em;
+}
+
+.Markdown h1 {
+  border-bottom: 1px solid var(--dui-color-separator);
+  font-size: var(--dui-font-size-h3);
+  padding-bottom: 0.35em;
+}
+
+.Markdown h2 {
+  border-bottom: 1px solid var(--dui-color-separator);
+  font-size: var(--dui-font-size-h4);
+  padding-bottom: 0.3em;
+}
+
+.Markdown h3 {
+  font-size: var(--dui-font-size-h5);
+}
+
+.Markdown h4 {
+  font-size: var(--dui-font-size-h6);
+}
+
+.Markdown h5,
+.Markdown h6 {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-md);
+  font-weight: 650;
+}
+
+.Markdown p {
+  margin: 0 0 0.9em;
+}
+
+.Markdown a {
+  color: var(--dui-color-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--dui-color-accent) 45%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.Markdown a:hover {
+  color: var(--dui-color-accent-hover);
+  text-decoration-color: var(--dui-color-accent-hover);
+}
+
+.Markdown strong {
+  color: var(--dui-color-text);
+  font-weight: 700;
+}
+
+.Markdown em {
+  font-style: italic;
+}
+
+.Markdown del,
+.Markdown s {
+  color: var(--dui-color-text-muted);
+  text-decoration: line-through;
+}
+
+.Markdown u {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.Markdown hr {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--dui-color-separator);
+  margin: 1.5em 0;
+}
+
+.Markdown ul,
+.Markdown ol {
+  margin: 0 0 0.9em;
+  padding-left: 1.35em;
+}
+
+.Markdown li {
+  margin: 0.25em 0;
+}
+
+.Markdown li > ul,
+.Markdown li > ol {
+  margin: 0.35em 0 0.15em;
+}
+
+.Markdown li.task-list-item,
+.Markdown .task-list-item {
+  list-style: none;
+  margin-left: -1.35em;
+  padding-left: 0;
+}
+
+.Markdown .task-list-item input[type="checkbox"] {
+  accent-color: var(--dui-color-accent);
+  margin: 0 0.55em 0 0;
+  vertical-align: middle;
+}
+
+.Markdown blockquote {
+  background: var(--dui-color-accent-soft);
+  border-left: 3px solid var(--dui-color-accent);
+  border-radius: 0 var(--dui-radius) var(--dui-radius) 0;
+  color: var(--dui-color-text-muted);
+  margin: 0 0 0.9em;
+  padding: 0.65em 0.9em;
+}
+
+.Markdown blockquote > :first-child {
+  margin-top: 0;
+}
+
+.Markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.Markdown img {
+  border-radius: var(--dui-radius);
+  display: block;
+  height: auto;
+  margin: 0.75em 0;
+  max-width: 100%;
+}
+
+.Markdown table {
+  border-collapse: collapse;
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  margin: 0 0 1em;
+  max-width: 100%;
+  overflow-x: auto;
+  width: max-content;
+}
+
+.Markdown thead {
+  background: var(--dui-surface-control-bg);
+}
+
+.Markdown th,
+.Markdown td {
+  border: 1px solid var(--dui-color-border);
+  padding: 0.45em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.Markdown th {
+  color: var(--dui-color-text);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.Markdown td {
+  color: var(--dui-color-text-muted);
+}
+
+.Markdown tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--dui-color-surface-raised) 55%, transparent);
+}
+
+.Markdown code {
+  background: var(--dui-color-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--dui-color-accent) 22%, transparent);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-accent);
+  font-family: var(--dui-font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+}
+
+.Markdown pre {
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  margin: 0 0 1em;
+  overflow-x: auto;
+  padding: 0.85em 1em;
+}
+
+.Markdown pre code {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--dui-color-text);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.55;
+  padding: 0;
+  white-space: pre;
+}
+
+.Markdown pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
+.disclaimer {
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.5;
+  padding: var(--dui-space-3) var(--dui-space-4);
+}
+
+small,
+.SmallText {
+  color: var(--theme-text-light);
+  font-size: var(--font-size-sm, 14px);
+  line-height: 1.45;
+}
+
+.NotificationsPanel {
+  max-height: 30vh;
+  overflow: auto;
+  position: absolute;
+}
+
+button,
+.Button,
+.Operator {
+  align-items: center;
+  background: var(--dui-surface-control-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--dui-font-size-md);
+  font-weight: 500;
+  gap: 6px;
+  justify-content: center;
+  letter-spacing: var(--dui-letter-spacing);
+  min-height: var(--dui-control-height);
+  padding: var(--dui-control-padding-y) var(--dui-control-padding-x);
+  transition:
+    background var(--dui-transition-fast),
+    border-color var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    box-shadow var(--dui-transition-fast);
+}
+
+.Operator {
+  background: transparent;
+  border-color: transparent;
+  min-height: var(--dui-control-height-sm);
+  min-width: var(--dui-control-height-sm);
+  padding: 4px;
+  width: fit-content;
+}
+
+
+.Listbox {
+  border-radius: var(--dui-radius);
+  cursor: default;
+  font-size: var(--dui-font-size-sm);
+  min-height: fit-content;
+  overflow: hidden;
+  padding: 4px;
+  width: 100%;
+}
+
+.FloatingPanel f-canvas f-content {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.CollapsibleSection {
+  margin-bottom: 2px;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.FloatingPanel f-canvas {
+  height: 100% !important;
+  left: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  width: 100% !important;
+}
+
+
+
+.Item-actions:hover {
+  opacity: 1 !important;
+}
+
+.Badge {
+  background: var(--theme-bg-elevated, color-mix(in srgb, var(--dui-color-text) 6%, transparent));
+  border: 1px solid var(--theme-border, var(--dui-color-border));
+  border-radius: var(--dui-radius);
+  color: var(--theme-text-light, var(--dui-color-text-muted));
+  display: inline-block;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-xs);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0.2rem 0.45rem;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+button img,
+.icon {
+  opacity: 0.75;
+  transition: opacity var(--dui-transition-fast);
+  width: 1rem;
+}
+
+.Button--active {
+  background: var(--dui-color-surface-selected);
+  border-color: color-mix(in srgb, var(--dui-color-accent) 40%, transparent);
+  color: var(--dui-color-accent);
+}
+
+button:hover,
+.Button:hover {
+  background: var(--dui-color-control-hover);
+  border-color: var(--dui-color-border-strong);
+  color: var(--dui-color-text);
+}
+
+button:active,
+.Button:active {
+  background: var(--dui-color-surface-pressed);
+}
+
+.Button.primary {
+  background: var(--dui-color-accent);
+  border-color: transparent;
+  color: var(--dui-color-on-accent);
+  font-weight: 550;
+}
+
+.Button.primary:hover {
+  background: var(--dui-color-accent-hover);
+  border-color: transparent;
+  color: var(--dui-color-on-accent);
+}
+
+.Button.secondary {
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  color: var(--dui-color-text);
+}
+
+.Button.secondary:hover {
+  background: var(--dui-color-surface-hover);
+  border-color: var(--dui-color-border-strong);
+  color: var(--dui-color-text);
+}
+
+.Operator:hover {
+  background: var(--dui-color-surface-hover);
+  color: var(--dui-color-text);
+}
+
+.circle {
+  align-items: center;
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 3px 3px;
+}
+
+.Click:hover {
+  transform: scale(1.05);
+}
+
+.CollapsibleSection-body {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.CollapsibleSection-body > .Listbox {
+  padding: 2px 4px 8px;
+}
+
+.CollapsibleSection-header {
+  align-items: center;
+  background: transparent;
+  border-bottom: none;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 10px 12px 6px;
+  transition: opacity var(--transition-fast);
+}
+
+.CollapsibleSection-header:hover {
+  background: transparent;
+}
+
+.CollapsibleSection-header:hover .CollapsibleSection-leftIcon {
+  color: var(--theme-text-light);
+  opacity: 0.85;
+}
+
+.CollapsibleSection-leftIcon {
+  color: var(--theme-text-light);
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.CollapsibleSection-title {
+  color: var(--theme-text-light);
+  flex: 1 1 auto;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  min-width: 0;
+  text-transform: uppercase;
+}
+
+.CollapsibleSection-toggle {
+  color: var(--theme-text-light);
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast);
+}
+
+.CollapsibleSection:hover .CollapsibleSection-toggle {
+  opacity: 1;
+}
+
+.CollapsibleSection.collapsed .CollapsibleSection-body {
+  display: none;
+}
+
+.CollapsibleSection.collapsed .CollapsibleSection-toggle {
+  transform: rotate(-90deg);
+}
+
+
+
+
+.FloatingPanel {
+  background: var(--dui-surface-overlay-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-overlay);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  max-width: min(100vw - 2rem, 100%);
+  max-height: min(100vh - 2rem, 100%);
+  min-height: 0;
+  min-width: min(20vw, 280px);
+  overflow: hidden;
+  position: absolute;
+  transition: box-shadow var(--dui-transition-medium), border-color var(--dui-transition-medium);
+  z-index: 12;
+}
+
+@keyframes floating-panel-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.FloatingPanel.is-entering {
+  animation: floating-panel-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.FloatingPanel-header.PanelHeader {
+  border-bottom: 1px solid var(--dui-color-separator);
+  cursor: move;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+.FloatingPanel-tools {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+}
+
+.FloatingPanel-tool.Operator {
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  min-height: var(--dui-control-height-sm);
+  min-width: var(--dui-control-height-sm);
+}
+
+.FloatingPanel-tool.Operator:hover {
+  color: var(--dui-color-text);
+}
+
+.FloatingPanel-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+}
+
+.FloatingPanel-content:not(:has(> .TabPanel)) {
+  padding: var(--dui-space-3) var(--dui-space-4);
+}
+
+.FloatingPanel-content:has(> .TabPanel) {
+  overflow: hidden;
+}
+
+.FloatingPanel-content > .TabPanel {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.FloatingPanel.maximized {
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+}
+
+.FloatingPanel.minimized {
+  height: 30px !important;
+}
+
+.GameNumber {
+  color: #ffd700;
+  font-family: "Orbitron", monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+}
+
+#startPython,
+#startIM,
+#startBIM {
+  color: var(--brand-color);
+  padding: 1rem 2rem;
+  transition: background-color 0.3s ease;
+}
+
+#toolbar {
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--glass-shadow);
+  padding: var(--spacing-sm) 0;
+  position: relative;
+  text-align: center;
+}
+
+#world-container,
+#world-container canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.Image,
+.SVG {
+  min-height: 1rem;
+  min-width: 1rem;
+  object-fit: contain;
+}
+
+.ListBoxItem .Image,
+.ListBoxItem .SVG,
+.ListboxItem .Image,
+.ListboxItem .SVG {
+  filter: grayscale(100%) brightness(1.2);
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+  width: 20px;
+}
+
+.ListBoxItem:hover .Image,
+.ListBoxItem:hover .SVG,
+.ListboxItem:hover .Image,
+.ListboxItem:hover .SVG {
+  filter: grayscale(0%);
+  opacity: 0.85;
+}
+
+.ListBoxItem:hover .material-symbols-outlined,
+.ListboxItem:hover .material-symbols-outlined {
+  color: var(--theme-text);
+  opacity: 0.9;
+}
+
+
+.PanelContent {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  width: 100%;
+}
+  
+.PanelFooter {
+  flex-shrink: 0;
+  padding: var(--phi-0-5);
+}
+
+.PanelHeader {
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+  
+  
+.Network {
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+.NodesControls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: var(--phi-0-5);
+  left: var(--phi-0-5);
+  position: absolute;
+  top: var(--phi-0-5);
+  z-index: 2;
+
+}
+
+
+.Column {
+  display: flex;
+  flex-direction: column;
+}
+
+.Module {
+  align-items: center;
+
+  box-shadow: none;
+
+  display: flex;
+  flex-direction: column;
+  font-size: var(--phi-1);
+  justify-content: center;
+  margin: 0 !important;
+}
+
+.IndependentModule {
+  width: "fit-content";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--phi-0-5);
+  border-radius: var(--dui-radius);
+  background: var(--dui-surface-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  padding: var(--phi-0-5);
+  border: 1px solid var(--border);
+  align-items: center;
+}
+
+#LayoutToggleBar {
+  margin-right: var(--phi-1);
+}
+
+.NotificationsModule {
+  position: relative;
+}
+
+.HeaderBar .Row {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.ModuleCount{
+  font-size: var(--phi-0);
+  position: absolute;
+  bottom: 50%;
+  right: 0;
+}
+
+
+.SquareOperator {
+  align-items: center;
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--phi-0-2-5);
+  padding: var(--phi-0-5);
+  transition: all var(--transition-slow);
+  width: fit-content;
+}
+
+.SquareOperator:hover {
+  scale: 1.05;
+}
+
+.SquareButton {
+  align-items: center;
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 76px;
+  min-width: 76px;
+  padding: var(--dui-space-4);
+  text-align: center;
+  transition:
+    background var(--dui-transition-fast),
+    border-color var(--dui-transition-fast),
+    box-shadow var(--dui-transition-fast);
+  width: fit-content;
+}
+
+.SquareButton:hover {
+  background: var(--dui-color-control-hover);
+  border-color: var(--dui-color-border-strong);
+  box-shadow: var(--dui-shadow-sm);
+}
+
+.SquareButton-label {
+  font-size: var(--dui-font-size-md);
+  font-weight: 550;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.SquareButton-meta {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+.SquareButton .Icon,
+.SquareButton .material-symbols-outlined {
+  color: var(--dui-color-text-muted);
+  font-size: 20px;
+  opacity: 0.85;
+}
+
+
+.Tab .Image {
+  flex-shrink: 0;
+  height: 14px;
+  width: 14px;
+}
+
+.Title {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MainPanel-header {
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+}
+
+
+.Tabs .Tab:hover > .Operator.Tab-float,
+.Tabs .Tab.selected > .Operator.Tab-float {
+  opacity: 1;
+}
+
+.TabbedPanel {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - var(--sidebar-width) - var(--margin));
+  overflow: hidden;
+  transition:
+    0.3s ease,
+    left 0.3s ease;
+}
+
+.TabbedPanel .Panels {
+  display: block;
+  min-height: 3.5rem;
+  padding: var(--dui-space-4) 0 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Editor sidebar rows use ListBoxItem layout but are not list navigation */
+.TabbedPanel .Panels .ListBoxItem {
+  cursor: default;
+}
+
+.Tabs,
+.TabbedPanel .Tabs {
+  align-items: stretch;
+  background: transparent;
+  border-bottom: 1px solid var(--dui-color-separator);
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.Tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.Tabs .Tab {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--font-ui);
+  font-size: var(--dui-font-size-xs, 11px);
+  font-weight: 600;
+  gap: 6px;
+  letter-spacing: 0.04em;
+  margin-bottom: -1px;
+  max-width: 200px;
+  padding: 0.55rem 0.875rem;
+  text-transform: uppercase;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.Tabs .Tab .Title {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: 1.2;
+}
+
+.Tabs .Tab:hover {
+  background: transparent;
+  color: var(--dui-color-text);
+}
+
+.Tabs .Tab.active,
+.Tabs .Tab.selected {
+  background: transparent;
+  border-bottom-color: var(--dui-color-accent);
+  color: var(--dui-color-text);
+}
+
+.Tooltip {
+  background: var(--dui-surface-overlay-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-md);
+  color: var(--dui-color-text);
+  font-family: var(--font-ui);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 500;
+  left: 100%;
+  margin-left: 8px;
+  opacity: 0;
+  padding: 5px 8px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity var(--dui-transition-fast);
+  white-space: nowrap;
+  z-index: 10000;
+}
+
+.Tooltip--portal {
+  left: auto;
+  margin-left: 0;
+  top: auto;
+}
+
+.Tooltip--dark {
+  background: var(--dui-surface-overlay-bg);
+  border: 1px solid var(--dui-color-border);
+  color: var(--dui-color-text);
+}
+
+.Tooltip--light {
+  background: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: var(--dui-shadow-md);
+  color: #1d1d1f;
+}
+
+.Tooltip--above {
+  left: 50%;
+  margin-left: 0;
+  margin-bottom: 8px;
+  top: auto;
+  bottom: 100%;
+  transform: translateX(-50%);
+}
+
+.Tooltip.visible {
+  opacity: 1;
+}
+
+
+
+.MobileLandscapeGuidance {
+  align-items: center;
+  background: var(--glass-surface);
+  backdrop-filter: blur(8px);
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  inset: 0;
+  justify-content: center;
+  padding: var(--phi-2);
+  pointer-events: auto;
+  position: fixed;
+  z-index: 100;
+}
+
+.selected {
+  border-color: var(--brand-color) !important;
+}
+
+.SelectionToggle {
+  align-items: center;
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--phi-0-5);
+  padding: var(--phi-0-5) var(--phi-1);
+  transition: var(--transition-fast);
+}
+
+.SelectionToggle:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+}
+
+.SelectionToggle.active {
+  background: var(--brand-color-alpha);
+  border-color: var(--brand-color);
+  color: var(--on-brand-color);
+}
+
+.layout-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  border-radius: var(--dui-radius);
+}
+
+.layout-resizer {
+  background: transparent;
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.15s ease;
+  z-index: 100;
+}
+
+.layout-resizer::before {
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+  position: absolute;
+}
+
+.layout-resizer:hover,
+.layout-resizer.active {
+  background: var(--brand-color-alpha) !important;
+}
+
+.layout-resizer-left,
+.layout-resizer-right {
+  cursor: col-resize;
+  width: 4px;
+}
+
+.layout-resizer-left::before,
+.layout-resizer-right::before {
+  background: radial-gradient(circle, var(--brand-color) 1px, transparent 1.6px)
+    center / 2px 6px repeat-y;
+  height: 18px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+}
+
+.layout-resizer-bottom {
+  cursor: row-resize;
+  height: 4px;
+}
+
+.layout-resizer-bottom::before {
+  background: radial-gradient(circle, var(--brand-color) 1px, transparent 1.6px)
+    center / 6px 2px repeat-x;
+  height: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+}
+
+
+.layout-drag-overlay {
+  background: transparent;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+
+.SidebarLayout {
+  --dui-sidebar-width: 240px;
+  --dui-sidebar-min-width: 180px;
+  --dui-sidebar-max-width: 280px;
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.SidebarLayout > .SideBar {
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex: 0 0 var(--dui-sidebar-width);
+  flex-direction: column;
+  max-width: var(--dui-sidebar-max-width);
+  min-height: 0;
+  min-width: var(--dui-sidebar-min-width);
+  overflow: hidden;
+  width: var(--dui-sidebar-width);
+}
+
+.SidebarLayout.is-sidebar-hidden > .SideBar {
+  display: none;
+}
+
+.SidebarLayout > .layout-resizer-right {
+  flex: 0 0 4px;
+}
+
+.SidebarLayout.is-sidebar-hidden > .layout-resizer-right {
+  display: none;
+}
+
+.SideBar.SideBar-borderless {
+  border-right: none;
+}
+
+.SideBar-header,
+.SideBar-footer {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.SideBar-header {
+  background: var(--dui-surface-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+}
+
+.SideBar-header:empty,
+.SideBar-footer:empty {
+  display: none;
+}
+
+.SideBar-titleRow {
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.SideBar-titleRow > .Title,
+.SideBar-header .Title {
+  flex: 1 1 auto;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  min-width: 0;
+  white-space: normal;
+}
+
+.SideBar-toggle {
+  flex: 0 0 auto;
+}
+
+.SideBar-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: 0.75rem 0.5rem 1rem;
+}
+
+.SidebarLayout > .MainPanel {
+  background: transparent;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.SpaLayout {
+  height: 100%;
+  min-height: 0;
+}
+
+.SpaLayout > .SideBar > .SideBar-body:has(.SpaLayout-nav--tabs) {
+  overflow: hidden;
+}
+
+.SpaLayout-body {
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+.SpaLayout .SpaLayout-nav {
+  min-height: 0;
+}
+
+.SpaLayout .SpaLayout-nav--tabs {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.SpaLayout .SpaLayout-groupTabs.TabbedPanel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  max-width: none;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.SpaLayout .SpaLayout-groupTabs > .Tabs {
+  flex-shrink: 0;
+  gap: 0;
+  max-height: none;
+}
+
+.SpaLayout .SpaLayout-groupTabs > .Tabs .Tab {
+  flex: 1 1 0;
+  justify-content: center;
+  max-width: none;
+  padding: 0.55rem 0.4rem;
+  text-align: center;
+}
+
+.SpaLayout .SpaLayout-groupTabs > .Tabs .Tab .Title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.SpaLayout .SpaLayout-groupTabs > .Panels {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.5rem 0 0;
+}
+
+.SpaLayout .SpaLayout-groupTabs > .Panels > * {
+  min-height: 0;
+}
+
+.SpaLayout-navDivider.HorizontalRule {
+  border: 0;
+  border-top: 1px solid var(--dui-color-border);
+  margin: 0.5rem 0;
+}
+
+.SpaLayout-navHeading {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0.15rem 0 0.25rem;
+  padding: 0 0.35rem;
+  text-transform: uppercase;
+}
+
+
+
+/* â€”â€”â€” Compact macOS refinements (min build) â€”â€”â€” */
+
+.Card {
+  background: var(--dui-surface-raised-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-sm);
+  color: var(--dui-color-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dui-space-2);
+  padding: var(--dui-space-4);
+}
+
+.Link {
+  color: var(--dui-color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--dui-font-size-md);
+  font-weight: 500;
+  margin-top: 0;
+  text-decoration: none;
+}
+
+.Link:hover {
+  color: var(--dui-color-accent-hover);
+}
+
+.HorizontalRule,
+hr {
+  background: var(--dui-color-separator);
+  border: 0;
+  height: 1px;
+  margin: var(--dui-space-3) 0;
+  width: 100%;
+}
+
+.Input,
+.TextArea,
+.Select,
+.Number,
+.DatePicker-input,
+input.Input,
+input.Number,
+textarea.TextArea,
+select.Select {
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-sizing: border-box;
+  color: var(--dui-color-text);
+  font-family: inherit;
+  font-size: var(--dui-font-size-md);
+  line-height: 1.3;
+  min-height: var(--dui-control-height);
+  padding: var(--dui-control-padding-y) var(--dui-control-padding-x);
+  transition:
+    background var(--dui-transition-fast),
+    border-color var(--dui-transition-fast),
+    box-shadow var(--dui-transition-fast);
+}
+
+.Input,
+.TextArea,
+.Select,
+.DatePicker-input,
+input.Input,
+textarea.TextArea,
+select.Select {
+  width: 100%;
+}
+
+.TextArea,
+textarea.TextArea {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.Input:hover,
+.TextArea:hover,
+.Select:hover,
+.Number:hover,
+.DatePicker-input:hover,
+input.Input:hover,
+input.Number:hover,
+textarea.TextArea:hover,
+select.Select:hover {
+  background: var(--dui-color-control-hover);
+  border: 1px solid var(--dui-color-border-strong) !important;
+}
+
+.Input:focus,
+.TextArea:focus,
+.Select:focus,
+.Number:focus,
+.DatePicker-input:focus,
+input.Input:focus,
+input.Number:focus,
+textarea.TextArea:focus,
+select.Select:focus,
+.Input:focus-visible,
+.TextArea:focus-visible,
+.Select:focus-visible,
+.Number:focus-visible,
+.DatePicker-input:focus-visible,
+input.Input:focus-visible,
+input.Number:focus-visible,
+textarea.TextArea:focus-visible,
+select.Select:focus-visible {
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-focus) !important;
+  box-shadow: var(--dui-focus-ring);
+  outline: none;
+}
+
+.CompactField {
+  border: 1px solid var(--dui-color-border);
+}
+
+.CompactField:hover {
+  background: var(--dui-color-control-hover);
+  border-color: var(--dui-color-border-strong);
+}
+
+.CompactField:focus,
+.CompactField:focus-visible {
+  background: var(--dui-surface-control-bg);
+  border-color: var(--dui-color-focus);
+  box-shadow: var(--dui-focus-ring);
+  outline: none;
+}
+
+.Input::placeholder,
+.TextArea::placeholder,
+.DatePicker-input::placeholder {
+  color: var(--dui-color-text-subtle);
+}
+
+.Checkbox,
+input.Checkbox,
+input[type="checkbox"].Checkbox {
+  accent-color: var(--dui-color-accent);
+  cursor: pointer;
+  height: 14px;
+  margin: 0;
+  min-height: 14px;
+  padding: 0;
+  width: 14px;
+}
+
+.Card-checkbox {
+  accent-color: var(--dui-color-accent);
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+}
+
+label,
+.Label {
+  color: var(--dui-color-text-muted);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dui-space-3);
+  width: 100%;
+}
+
+.Slider {
+  align-items: center;
+  display: flex;
+  gap: var(--dui-space-2);
+  min-width: 0;
+  width: 100%;
+}
+
+.Slider-range,
+input.Slider-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  flex: 1 1 auto;
+  height: var(--dui-control-height);
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.Slider-range::-webkit-slider-runnable-track {
+  background: var(--dui-color-control);
+  border-radius: 999px;
+  height: 6px;
+}
+
+.Slider-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--dui-color-accent);
+  border: 2px solid var(--dui-surface-control-bg, var(--dui-surface-bg));
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dui-color-accent) 45%, transparent);
+  cursor: pointer;
+  height: 14px;
+  margin-top: -4px;
+  transition: background var(--dui-transition-fast), box-shadow var(--dui-transition-fast);
+  width: 14px;
+}
+
+.Slider-range:hover::-webkit-slider-thumb {
+  background: var(--dui-color-accent-hover);
+}
+
+.Slider-range:focus-visible {
+  outline: none;
+}
+
+.Slider-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--dui-focus-ring);
+}
+
+.Slider-range::-moz-range-track {
+  background: var(--dui-color-control);
+  border: none;
+  border-radius: 999px;
+  height: 6px;
+}
+
+.Slider-range::-moz-range-thumb {
+  background: var(--dui-color-accent);
+  border: 2px solid var(--dui-surface-control-bg, var(--dui-surface-bg));
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dui-color-accent) 45%, transparent);
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+}
+
+.Slider-range:hover::-moz-range-thumb {
+  background: var(--dui-color-accent-hover);
+}
+
+.Slider-range:focus-visible::-moz-range-thumb {
+  box-shadow: var(--dui-focus-ring);
+}
+
+.Slider-value,
+.Slider .Number,
+.Slider input.Number {
+  flex: 0 0 4.25rem;
+  min-width: 4.25rem;
+  text-align: right;
+  width: 4.25rem;
+}
+
+progress,
+.Progress {
+  appearance: none;
+  background: var(--dui-color-control);
+  border: none;
+  border-radius: var(--dui-radius);
+  height: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--dui-color-control);
+  border-radius: var(--dui-radius);
+}
+
+progress::-webkit-progress-value,
+.Progress::-webkit-progress-value {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+}
+
+progress::-moz-progress-bar {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+}
+
+.DatePicker {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--dui-space-2);
+  position: relative;
+}
+
+.DatePicker-calendar {
+  background: var(--dui-surface-overlay-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-overlay);
+  margin-top: 4px;
+  padding: var(--dui-space-3);
+  z-index: 20;
+}
+
+.CollapsibleSection {
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  margin-bottom: 2px;
+  overflow: hidden;
+  transition: background var(--dui-transition-fast);
+}
+
+
+.CollapsibleSection-header {
+  padding: 8px 10px;
+}
+
+.CollapsibleSection-title {
+  font-size: var(--dui-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.CollapsiblePanel {
+  background: var(--dui-surface-overlay-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-md);
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+}
+
+.CollapsiblePanel-header {
+  align-items: center;
+  background: var(--dui-surface-raised-bg);
+  border-bottom: 1px solid var(--dui-color-separator);
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-size: var(--dui-font-size-xs);
+  font-weight: 600;
+  gap: 8px;
+  letter-spacing: 0.04em;
+  padding: 10px 12px;
+  text-transform: uppercase;
+}
+
+.PanelHeader {
+  background: var(--dui-surface-raised-bg);
+  border-bottom: 1px solid var(--dui-color-separator);
+  min-height: 36px;
+  padding: 6px 10px;
+}
+
+.PanelContent {
+  padding: var(--dui-space-3) var(--dui-space-4);
+}
+
+.Toast {
+  align-items: center;
+  background: var(--dui-surface-overlay-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-overlay);
+  color: var(--dui-color-text);
+  display: flex;
+  font-size: var(--dui-font-size-md);
+  gap: var(--dui-space-3);
+  margin: var(--dui-space-3);
+  max-width: 360px;
+  padding: 10px 12px;
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  z-index: 10050;
+}
+
+.Toast--success {
+  border-color: color-mix(in srgb, var(--dui-color-success) 40%, transparent);
+}
+
+.Toast--error {
+  border-color: color-mix(in srgb, var(--dui-color-danger) 40%, transparent);
+}
+
+.Toast--info {
+  border-color: color-mix(in srgb, var(--dui-color-info) 40%, transparent);
+}
+
+.Toast-close {
+  background: transparent;
+  border: none;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  margin-left: auto;
+  min-height: auto;
+  padding: 2px;
+}
+
+.Toast--fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.LoadingBar {
+  align-items: center;
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.LoadingBar-track,
+.LoadingBar .track {
+  background: var(--dui-color-control);
+  border-radius: var(--dui-radius);
+  height: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.LoadingBar-fill,
+.LoadingBar .fill {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+  height: 100%;
+  transition: width var(--dui-transition-medium);
+  width: 0%;
+}
+
+.LoadingBar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.LoadingBar-meta {
+  align-items: center;
+  color: var(--dui-color-text-muted);
+  display: flex;
+  font-size: var(--dui-font-size-sm);
+  justify-content: space-between;
+  padding: 4px 2px;
+}
+
+.LoadingBar--simple {
+  background: var(--dui-color-control);
+  border-radius: var(--dui-radius);
+  height: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.PropertyTable-label {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+}
+
+.PropertyTable-value {
+  color: var(--dui-color-text);
+  font-size: var(--dui-font-size-sm);
+  text-align: right;
+}
+
+.Title {
+  color: var(--dui-color-text);
+  font-size: var(--dui-font-size-lg);
+  font-weight: 600;
+  letter-spacing: var(--dui-letter-spacing);
+}
+
+.SideBar {
+  background: var(--dui-surface-bg);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+}
+
+.SidebarLayout > .MainPanel {
+  background: var(--dui-color-bg);
+}
+
+.layout-panel {
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
+}
+
+button:disabled,
+.Button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.material-symbols-outlined {
+  font-size: 18px;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
+  line-height: 1;
+}
+
+/* ── Reorderable list ─────────────────────────────────────────────── */
+
+.reorderable-list {
+  user-select: none;
+}
+
+.reorderable-item {
+  cursor: grab;
+}
+
+.reorderable-item:active {
+  cursor: grabbing;
+}
+
+.reorderable-item .drag-handle {
+  color: var(--dui-color-text-muted);
+  cursor: grab;
+  flex-shrink: 0;
+  font-size: 18px;
+  opacity: 0.55;
+  transition: opacity var(--dui-transition-fast), color var(--dui-transition-fast);
+}
+
+.reorderable-item:hover .drag-handle {
+  opacity: 0.9;
+}
+
+.reorderable-item.is-dragging {
+  height: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 !important;
+  pointer-events: none;
+  border: none !important;
+}
+
+.reorderable-placeholder {
+  background: color-mix(in srgb, var(--dui-color-accent) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--dui-color-accent) 55%, transparent);
+  border-radius: var(--dui-radius);
+  box-sizing: border-box;
+  margin: 1px 0;
+  pointer-events: none;
+  transition: background var(--dui-transition-fast);
+}
+
+.reorderable-item-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Drill-down list ──────────────────────────────────────────────── */
+
+.dui-drill,
+.NavigableList {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.dui-drill-header,
+.NavigableList > .PanelHeader,
+.NavigableList > .Header {
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid var(--dui-color-separator);
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--dui-space-3);
+  justify-content: flex-start;
+  min-height: var(--dui-control-height);
+  padding: 4px 8px;
+}
+
+.dui-drill > .dui-drill-header.PanelHeader,
+.dui-drill > .dui-drill-header.Header {
+  background: transparent;
+  justify-content: flex-start;
+  padding: 4px 8px;
+}
+
+.dui-drill-header-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.dui-drill-header-row {
+  align-items: center;
+  display: flex;
+  gap: var(--dui-space-2);
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.dui-drill .Row.dui-drill-header-row {
+  gap: var(--dui-space-2);
+  padding: 0;
+}
+
+.dui-drill-back,
+.NavigableList-back {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 18px;
+  justify-content: center;
+  line-height: 1;
+  min-height: var(--dui-control-height-sm);
+  min-width: var(--dui-control-height-sm);
+  padding: 2px;
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.dui-drill-back:hover,
+.NavigableList-back:hover {
+  background: var(--dui-color-surface-hover);
+  color: var(--dui-color-text);
+}
+
+.dui-drill-back:focus-visible,
+.NavigableList-back:focus-visible {
+  border-color: var(--dui-color-accent);
+  outline: none;
+}
+
+.dui-drill-title,
+.NavigableList-title,
+.dui-drill-title.Text,
+.NavigableList-title.Text {
+  color: var(--dui-color-text);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 600;
+  letter-spacing: var(--dui-letter-spacing);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dui-drill-content,
+.NavigableList-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 4px;
+}
+
+.dui-drill-empty,
+.NavigableList-empty,
+.dui-drill-empty.Text,
+.NavigableList-empty.Text {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.3;
+  padding: var(--dui-space-4);
+  text-align: center;
+}
+
+.dui-drill-item,
+.NavigableList-item {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: flex;
+  gap: var(--dui-space-3);
+  justify-content: space-between;
+  margin: 1px 0;
+  min-height: var(--dui-control-height);
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.dui-drill-item:hover,
+.NavigableList-item:hover {
+  background: var(--dui-color-surface-hover);
+}
+
+.dui-drill-item:focus-visible,
+.NavigableList-item:focus-visible {
+  border-color: color-mix(in srgb, var(--dui-color-accent) 40%, transparent);
+  outline: none;
+}
+
+.dui-drill-item-label,
+.NavigableList-item-label,
+.dui-drill-item-label.Text,
+.NavigableList-item-label.Text {
+  flex: 1;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dui-drill-item-chevron {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.dui-drill-item.has-children:hover .dui-drill-item-chevron {
+  color: var(--dui-color-text);
+  opacity: 1;
+}
+
+/* ── Tree view ────────────────────────────────────────────────────── */
+
+.dui-tree {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.dui-tree-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 4px;
+}
+
+.dui-tree-empty,
+.dui-tree-empty.Text {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.3;
+  padding: var(--dui-space-4);
+  text-align: center;
+}
+
+.dui-tree-item {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: flex;
+  gap: var(--dui-space-2);
+  margin: 1px 0;
+  min-height: var(--dui-control-height);
+  overflow: hidden;
+  padding:
+    5px
+    10px
+    5px
+    calc(8px + (var(--dui-tree-depth, 0) * 20px));
+  position: relative;
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.dui-tree-item:hover {
+  background: var(--dui-color-surface-hover);
+}
+
+.dui-tree-item.is-selected {
+  background: var(--dui-color-surface-selected);
+  border-color: color-mix(in srgb, var(--dui-color-accent) 28%, transparent);
+  color: var(--dui-color-text);
+}
+
+.dui-tree-item:focus-visible {
+  border-color: color-mix(in srgb, var(--dui-color-accent) 40%, transparent);
+  outline: none;
+}
+
+.dui-tree-toggle {
+  align-items: center;
+  color: var(--dui-color-text-muted);
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 24px;
+  justify-content: center;
+  line-height: 1;
+  width: 24px;
+}
+
+.dui-tree-toggle .material-symbols-outlined,
+.dui-tree-toggle .Icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.dui-tree-toggle.is-leaf {
+  cursor: default;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.dui-tree-item.has-children .dui-tree-toggle {
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+}
+
+.dui-tree-item.has-children .dui-tree-toggle:hover {
+  background: var(--dui-color-control-hover);
+  color: var(--dui-color-text);
+}
+
+.dui-tree-label,
+.dui-tree-label.Text {
+  flex: 1;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dui-tree-children {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+

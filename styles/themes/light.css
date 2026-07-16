@@ -1,0 +1,38 @@
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Light surfaces and ink */
+  --dui-color-bg: #eeeeec;
+  --dui-color-surface: #ffffff;
+  --dui-color-surface-raised: #f7f7f6;
+  --dui-color-surface-hover: rgba(46, 52, 54, 0.06);
+  --dui-color-surface-pressed: rgba(46, 52, 54, 0.1);
+  --dui-color-surface-selected: rgba(112, 186, 53, 0.16);
+  --dui-color-control: #ffffff;
+  --dui-color-control-hover: #f7f7f6;
+  --dui-color-overlay: rgba(255, 255, 255, 0.94);
+  --dui-color-text: #2e3436;
+  --dui-color-text-muted: #4a4c59;
+  --dui-color-text-subtle: #888a85;
+  --dui-color-border: rgba(207, 208, 203, 0.9);
+  --dui-color-border-strong: rgba(112, 186, 53, 0.45);
+  --dui-color-separator: rgba(186, 189, 182, 0.55);
+  --dui-color-focus: #049344;
+  --dui-color-accent: #70ba35;
+  --dui-color-accent-hover: #40b74c;
+  --dui-color-accent-soft: rgba(112, 186, 53, 0.16);
+  --dui-color-on-accent: #ffffff;
+  --dui-color-danger: #f0855e;
+  --dui-color-warning: #d98014;
+  --dui-color-success: #40b74c;
+  --dui-color-info: #729fcf;
+
+  --dui-shadow-sm: 0 1px 2px rgba(46, 52, 54, 0.08);
+  --dui-shadow-md: 0 4px 14px rgba(46, 52, 54, 0.12);
+  --dui-shadow-overlay: 0 12px 40px rgba(46, 52, 54, 0.18);
+
+  --dui-surface-bg: var(--dui-color-surface);
+  --dui-surface-raised-bg: var(--dui-color-surface-raised);
+  --dui-surface-overlay-bg: var(--dui-color-overlay);
+  --dui-surface-control-bg: var(--dui-color-control);
+}

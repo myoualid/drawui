@@ -1,0 +1,365 @@
+@keyframes connectionFlow {
+  0% {
+    stroke-dashoffset: 10;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ws-node-view-root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ws-node-container {
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  min-height: 100%;
+  min-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ws-connection-flow {
+  animation: connectionFlow 2s linear infinite;
+  stroke-dasharray: 5, 5;
+}
+
+.ws-connection {
+  pointer-events: none;
+  position: absolute;
+}
+
+.ws-connection-path {
+  fill: none;
+  opacity: 0.6;
+  stroke: var(--brand-color);
+  stroke-width: 2;
+  transition:
+    opacity var(--transition-fast),
+    stroke-width var(--transition-fast);
+}
+
+.ws-connection:hover .ws-connection-path {
+  opacity: 1;
+  stroke-width: 3;
+}
+
+.ws-connection.selected .ws-connection-path {
+  opacity: 1;
+  stroke: var(--brand-color);
+  stroke-width: 3;
+}
+
+.ws-connections {
+  height: 100%;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.ws-node-minimap {
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  bottom: 0;
+  height: 100px;
+  left: 0;
+  margin: var(--phi-0-5);
+  overflow: hidden;
+  position: fixed;
+  width: 150px;
+  z-index: 15;
+}
+
+/* Embedded hosts pin the minimap inside the component instead of the viewport. */
+.ws-node-view-embedded .ws-node-minimap {
+  position: absolute;
+}
+
+.ws-node-handles {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.ws-node-selection {
+  background: rgba(10, 132, 255, 0.1);
+  border: 2px solid var(--theme-accent);
+  pointer-events: none;
+  position: absolute;
+  z-index: 8;
+}
+
+.ws-context-menu-item {
+  border-radius: var(--dui-radius);
+  color: var(--theme-text);
+  cursor: pointer;
+  font-size: 12px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: background var(--transition-fast);
+}
+
+.ws-context-menu-item:hover {
+  background: var(--glass-surface-hover);
+}
+
+.ws-context-menu-item.danger {
+  color: var(--theme-error);
+}
+
+.ws-context-menu-item.danger:hover {
+  background: rgba(255, 69, 58, 0.1);
+}
+
+.ws-minimap-node {
+  background: var(--theme-accent);
+  border-radius: var(--dui-radius);
+  height: 4px;
+  opacity: 0.6;
+  position: absolute;
+  width: 4px;
+}
+
+.ws-minimap-viewport {
+  background: rgba(10, 132, 255, 0.1);
+  border: 2px solid var(--theme-accent);
+  pointer-events: none;
+  position: absolute;
+}
+
+.ws-node {
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 2px solid var(--border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--glass-shadow-sm);
+  cursor: grab;
+  min-width: 200px;
+  padding: var(--spacing-md);
+  position: absolute;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  z-index: 10;
+}
+
+.ws-node-canvas {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  transform-origin: 0 0;
+  width: 100%;
+}
+
+.ws-node-canvas-inner {
+  min-height: 100%;
+  min-width: 100%;
+  position: relative;
+
+  transform-origin: 0 0;
+}
+
+.ws-node-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.ws-node-group-background:hover {
+  opacity: 0.8 !important;
+}
+
+.ws-node-handle {
+  background: var(--border);
+  border: 2px solid var(--theme-text);
+  border-radius: 50%;
+  cursor: crosshair;
+  height: 12px;
+  pointer-events: auto;
+  position: absolute;
+  transition: all var(--transition-fast);
+  width: 12px;
+  z-index: 20;
+}
+
+.ws-node-handle:hover {
+  background: var(--brand-color-alpha);
+  transform: scale(1.2);
+}
+
+.ws-node-handle.input {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ws-node-handle.output {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ws-node-header {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+}
+
+.ws-node-icon {
+  align-items: center;
+  background: var(--brand-color-alpha);
+  border-radius: var(--dui-radius);
+  color: var(--on-brand-color);
+  display: flex;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  height: 20px;
+  justify-content: center;
+  width: 20px;
+}
+
+.ws-node-meta {
+  color: var(--theme-text-light);
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  gap: var(--spacing-xs);
+}
+
+.ws-node-meta-item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--phi-0-5);
+  justify-content: flex-end;
+  margin: var(--phi-0-5);
+}
+
+.ws-node-move-pack-control input[type="checkbox"],
+.ws-node-highlight-control input[type="checkbox"],
+.ws-node-no-overlap-control input[type="checkbox"] {
+  accent-color: var(--theme-accent);
+  height: 16px;
+  width: 16px;
+}
+
+.ws-node-move-pack-control label,
+.ws-node-highlight-control label,
+.ws-node-no-overlap-control label {
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.ws-node-move-pack-control label:hover,
+.ws-node-highlight-control label:hover,
+.ws-node-no-overlap-control label:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.ws-node-move-pack-control,
+.ws-node-highlight-control,
+.ws-node-no-overlap-control {
+  align-items: center;
+  display: flex;
+}
+
+.ws-node-status {
+  border-radius: var(--dui-radius);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ws-node-status.completed {
+  background: var(--green);
+  color: var(--on-brand-color);
+}
+
+.ws-node-status.notstarted {
+  background: var(--theme-background-1618);
+  color: var(--theme-text-light);
+}
+
+.ws-node-status.paused {
+  background: var(--red);
+  color: var(--theme-text);
+}
+
+.ws-node-status.started {
+  background: var(--yellow);
+  color: var(--on-brand-color);
+}
+
+.ws-node-title {
+  color: var(--theme-text);
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-node-zoom-controls {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+}
+
+.ws-node:hover {
+  border-color: var(--brand-color-alpha);
+  box-shadow: var(--glass-shadow);
+  transform: translateY(-1px);
+}
+
+.ws-node.dragging {
+  cursor: grabbing;
+  opacity: 0.8;
+  transition: none !important;
+  z-index: 100;
+}
+
+.ws-zoom-btn {
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--dui-radius);
+  color: var(--theme-text);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  height: 32px;
+  transition: all var(--transition-fast);
+  width: 32px;
+}
+
+.ws-zoom-btn:active {
+  transform: scale(0.95);
+}

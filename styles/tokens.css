@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  /*
+   * Color — GNOME green palette (dark default).
+   * Light values live in themes/light.css.
+   */
+  --dui-color-bg: #1c1f1c;
+  --dui-color-surface: rgba(46, 52, 54, 0.94);
+  --dui-color-surface-raised: rgba(49, 49, 49, 0.96);
+  --dui-color-surface-hover: rgba(49, 49, 49, 0.9);
+  --dui-color-surface-pressed: rgba(49, 49, 49, 0.98);
+  --dui-color-surface-selected: rgba(112, 186, 53, 0.25);
+  --dui-color-control: rgba(46, 52, 54, 0.88);
+  --dui-color-control-hover: rgba(49, 49, 49, 0.72);
+  --dui-color-overlay: rgba(46, 52, 54, 0.96);
+  --dui-color-text: #eeeeec;
+  --dui-color-text-muted: #babdb6;
+  --dui-color-text-subtle: #888a85;
+  --dui-color-border: rgba(207, 208, 203, 0.28);
+  --dui-color-border-strong: rgba(112, 186, 53, 0.4);
+  --dui-color-separator: rgba(186, 189, 182, 0.22);
+  --dui-color-focus: #70ba35;
+  --dui-color-accent: #70ba35;
+  --dui-color-accent-hover: #7cbf33;
+  --dui-color-accent-soft: rgba(112, 186, 53, 0.18);
+  --dui-color-on-accent: #ffffff;
+  --dui-color-danger: #f0855e;
+  --dui-color-warning: #d98014;
+  --dui-color-success: #40b74c;
+  --dui-color-info: #729fcf;
+
+  /* ——— Typography (Nunito + Inconsolata, 16px body) ——— */
+  --dui-font-ui: "Nunito", sans-serif;
+  --dui-font-mono: "Inconsolata", monospace;
+  /* UI scale — 12 / 14 / 16 / 18 / 22 */
+  --dui-font-size-xs: 0.75rem;    /* 12px — helpers, captions */
+  --dui-font-size-sm: 0.875rem;   /* 14px — secondary UI */
+  --dui-font-size-md: 1rem;       /* 16px — body / default */
+  --dui-font-size-lg: 1.125rem;   /* 18px — emphasis */
+  --dui-font-size-xl: 1.375rem;   /* 22px — section up-titles */
+  /* Headings — 42 / 32 / 25 / 22 / 20 / 18 */
+  --dui-font-size-h1: 2.625rem;   /* 42px */
+  --dui-font-size-h2: 2rem;       /* 32px */
+  --dui-font-size-h3: 1.5625rem;  /* 25px */
+  --dui-font-size-h4: 1.375rem;   /* 22px */
+  --dui-font-size-h5: 1.25rem;    /* 20px */
+  --dui-font-size-h6: 1.125rem;   /* 18px */
+  --dui-line-height: 1.5;
+  --dui-letter-spacing: 0.02em;
+
+  /* ——— Spacing (common steps: 5 / 10 / 15 / 20 / 30) ——— */
+  --dui-space-1: 5px;
+  --dui-space-2: 10px;
+  --dui-space-3: 15px;
+  --dui-space-4: 20px;
+  --dui-space-5: 30px;
+  --dui-space-6: 40px;
+
+  /* ——— Controls (15px type, padding 10px 15px) ——— */
+  --dui-control-height: 36px;
+  --dui-control-height-sm: 28px;
+  --dui-control-height-lg: 44px;
+  --dui-control-padding-x: 15px;
+  --dui-control-padding-y: 10px;
+
+  /* ——— Radius ——— */
+  --dui-radius: 4px;
+  --dui-radius-sm: var(--dui-radius);
+  --dui-radius-md: var(--dui-radius);
+  --dui-radius-lg: var(--dui-radius);
+  --dui-radius-pill: var(--dui-radius);
+
+  /* ——— Elevation / focus ——— */
+  --dui-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --dui-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --dui-shadow-overlay: 0 8px 28px rgba(0, 0, 0, 0.35);
+  --dui-focus-ring: 0 0 0 3px var(--dui-color-accent-soft);
+  --dui-transition-fast: 0.15s ease;
+  --dui-transition-medium: 0.2s ease;
+
+  /*
+   * Liquid-glass hooks — surfaces use the palette above by default.
+   * Opt in: override surfaces + set --dui-surface-blur on the host/theme.
+   */
+  --dui-surface-bg: var(--dui-color-surface);
+  --dui-surface-raised-bg: var(--dui-color-surface-raised);
+  --dui-surface-overlay-bg: var(--dui-color-overlay);
+  --dui-surface-control-bg: var(--dui-color-control);
+  --dui-surface-blur: none;
+  --dui-surface-saturate: 1;
+}

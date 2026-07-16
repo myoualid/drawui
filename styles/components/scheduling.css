@@ -1,0 +1,934 @@
+/* Task editor column (bottom workspace): constrain height so nested views can scroll. */
+.task-view-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* View-type tabs fill the schedule-tasks panel and scroll inside each tab. */
+.sequence-task-views-panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.sequence-task-views-panel .Tabs {
+  flex-shrink: 0;
+}
+
+.sequence-task-views-panel .Panels {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sequence-task-views-panel .Panels > div {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sequence-task-view-host {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.sequence-task-view-host > .gantt {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.sequence-task-view-host .gantt .gchartcontainer {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.sequence-task-view-host .gantt .gmain {
+  min-height: 0;
+}
+
+.sequence-task-view-host .gantt .gmain.gmainright {
+  min-width: 0;
+  resize: none;
+}
+
+.sequence-task-view-host .gantt .gmain.gmainleft {
+  border-right: 2px solid var(--border, rgba(255, 255, 255, 0.14));
+  box-sizing: border-box;
+  flex-basis: 28%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  max-width: 55%;
+  min-width: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sequence-task-view-host .gantt .gmain.gmainleft:hover {
+  border-right-color: var(--brand-color, #70ba35);
+}
+
+.sequence-task-view-host .gantt .gchartlbl {
+  box-sizing: border-box;
+  width: 100% !important;
+}
+
+.sequence-task-view-host .gantt .gchartgrid {
+  box-sizing: border-box;
+  scrollbar-gutter: stable;
+}
+
+.sequence-task-view-host .gantt .sequence-gantt-left-resize-shim {
+  background: transparent;
+  bottom: 0;
+  box-sizing: border-box;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  z-index: 2;
+}
+
+.sequence-task-view-host .gantt .sequence-gantt-left-resize-shim:hover {
+  background: var(--brand-color-alpha, rgba(112, 186, 53, 0.25));
+}
+
+.sequence-task-view-host .gantt .glistlbl {
+  box-sizing: border-box;
+  scrollbar-gutter: stable;
+  width: 100%;
+}
+
+.sequence-task-view-host .gantt .gtasktablewrapper {
+  scrollbar-gutter: stable;
+  width: 100% !important;
+}
+
+/* Spreadsheet tab: flex shell so ag-Grid gets a real height (was 100% of 0 in nested tabs). */
+.sequence-spreadsheet-shell {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 220px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.sequence-spreadsheet-shell .ag-theme-quartz-dark.ag-grid-container,
+.sequence-spreadsheet-shell .spreadsheet-component {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 200px;
+  width: 100% !important;
+}
+
+.sequence-task-view-host .ag-theme-quartz-dark.ag-grid-container {
+  border: 1px solid var(--border, #3a3a42);
+  border-radius: var(--dui-radius);
+  overflow: hidden;
+}
+
+/* Node view: embedded canvas needs a minimum block size when parent height was unresolved. */
+.sequence-task-view-host .ws-node-view-embedded {
+  flex: 1 1 auto;
+  min-height: 240px;
+}
+
+.sequence-task-view-host .Network.Column {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ws-task-view-container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.critical {
+  background-color: rgba(255, 0, 0, 0.1) !important;
+  border: 2px solid #ff0000 !important;
+  box-shadow: 0 0 10px #ff0000 !important;
+}
+
+.ws-task-view-header {
+  align-items: center !important;
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.08) 0%, rgba(10, 132, 255, 0.04) 100%);
+  border: 1px solid rgba(10, 132, 255, 0.1);
+  border-radius: var(--dui-radius);
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: var(--spacing-md) !important;
+  margin-bottom: var(--spacing-lg) !important;
+  padding: var(--spacing-md) !important;
+}
+
+.ws-task-view-label {
+  color: var(--theme-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ws-task-view-header select {
+  flex: 1 1 auto;
+  min-width: 150px;
+}
+
+.ws-task-view-content {
+  overflow-y: auto !important;
+}
+
+.ws-task-view-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ws-task-view-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ws-task-view-content::-webkit-scrollbar-thumb {
+  background: var(--glass-border-hover);
+  border-radius: var(--dui-radius);
+}
+
+.ws-task-view-content::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent);
+}
+
+.ws-task-view-footer {
+  align-items: center;
+  border-top: 1px solid var(--glass-border);
+  display: flex !important;
+  gap: var(--spacing-md);
+  justify-content: flex-start;
+  margin-top: var(--spacing-lg) !important;
+  padding-top: var(--spacing-lg);
+}
+
+.ws-task-view-footer button {
+  min-width: 120px;
+}
+
+.disclaimer {
+  background: var(--glass-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+  color: var(--theme-text-light);
+  font-size: 12px;
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.ws-controls-row {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.08) 0%, rgba(10, 132, 255, 0.04) 100%);
+  border: 1px solid rgba(10, 132, 255, 0.1);
+  border-radius: var(--dui-radius);
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+.ws-controls-row.hidden {
+  display: none;
+}
+
+.ws-controls-row button {
+  flex-shrink: 0;
+}
+
+.ws-controls-row select {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* ============================================
+   SCHEDULES LISTBOX
+   ============================================ */
+
+.ws-schedules-list {
+  gap: var(--phi-0-25);
+  padding: var(--phi-0-5);
+}
+
+/* ============================================
+   GANTT VIEW STYLING
+   ============================================ */
+
+.ws-gantt-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  overflow-x: auto;
+}
+
+.ws-gantt-header,
+.ws-gantt-row {
+  border-radius: var(--dui-radius);
+  display: grid;
+  gap: var(--spacing-sm);
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  padding: var(--spacing-md);
+}
+
+.ws-gantt-header {
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.15) 0%, rgba(10, 132, 255, 0.08) 100%);
+  border: 1px solid rgba(10, 132, 255, 0.2);
+  color: var(--theme-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: sticky;
+  text-transform: uppercase;
+  top: 0;
+  z-index: 10;
+}
+
+.ws-gantt-row {
+  align-items: center;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  color: var(--theme-text);
+  font-size: 12px;
+  transition: all var(--transition-normal);
+}
+
+.ws-gantt-row:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-sm);
+}
+
+.ws-gantt-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-gantt-task-name {
+  color: var(--theme-text);
+  font-weight: 500;
+}
+
+.ws-gantt-progress {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.ws-gantt-progress-bar {
+  background: var(--glass-surface-light);
+  border-radius: var(--dui-radius);
+  flex: 1;
+  height: 4px;
+  overflow: hidden;
+}
+
+.ws-gantt-progress-fill {
+  background: linear-gradient(90deg, var(--theme-accent), var(--theme-accent-hover));
+  border-radius: var(--dui-radius);
+  height: 100%;
+  transition: width var(--transition-normal);
+}
+
+.ws-gantt-status-badge {
+  border-radius: var(--dui-radius);
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ws-gantt-status-badge.notstarted {
+  background: var(--color-status-notstarted);
+  border: 1px solid var(--color-status-notstarted-border);
+  color: var(--theme-text-secondary);
+}
+
+.ws-gantt-status-badge.started {
+  background: var(--color-status-started);
+  border: 1px solid var(--color-status-started-border);
+  color: var(--theme-warning);
+}
+
+.ws-gantt-status-badge.completed {
+  background: var(--color-status-completed);
+  border: 1px solid var(--color-status-completed-border);
+  color: var(--theme-success);
+}
+
+.ws-gantt-status-badge.paused {
+  background: var(--color-status-paused);
+  border: 1px solid var(--color-status-paused-border);
+  color: var(--theme-error);
+}
+
+/* ============================================
+   LIST VIEW STYLING
+   ============================================ */
+
+.ws-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  overflow-y: auto;
+  padding: var(--spacing-sm);
+}
+
+.ws-list-item {
+  align-items: center;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  transition: all var(--transition-normal);
+}
+
+.ws-list-item:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-sm);
+  transform: translateX(4px);
+}
+
+.ws-list-item.selected {
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.2) 0%, rgba(10, 132, 255, 0.1) 100%);
+  border-color: var(--theme-accent);
+}
+
+.ws-list-item-checkbox {
+  flex-shrink: 0;
+}
+
+.ws-list-item-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.ws-list-item-name {
+  color: var(--theme-text);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-list-item-meta {
+  color: var(--theme-text-secondary);
+  display: flex;
+  font-size: 11px;
+  gap: var(--spacing-md);
+}
+
+.ws-list-item-status {
+  border-radius: var(--dui-radius);
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 90px;
+  padding: 4px 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ws-list-item-status.notstarted {
+  background: rgba(142, 142, 147, 0.2);
+  border: 1px solid rgba(142, 142, 147, 0.3);
+  color: var(--theme-text-secondary);
+}
+
+.ws-list-item-status.started {
+  background: rgba(255, 159, 10, 0.2);
+  border: 1px solid rgba(255, 159, 10, 0.3);
+  color: var(--theme-warning);
+}
+
+.ws-list-item-status.completed,
+.ws-list-item-status.finished {
+  background: rgba(52, 199, 89, 0.2);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  color: var(--theme-success);
+}
+
+.ws-list-item-status.onhold,
+.ws-list-item-status.paused {
+  background: rgba(255, 69, 58, 0.2);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  color: var(--theme-error);
+}
+
+.ws-no-tasks {
+  color: var(--theme-text-secondary);
+  font-size: 12px;
+  grid-column: 1 / -1;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+/* ============================================
+   VIEW MODALS - DEDICATED PANELS
+   ============================================ */
+
+/* Wrapper for Kanban when in dedicated modal */
+.Kanban-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 100%;
+}
+
+/* Gantt scroll wrapper */
+.ws-gantt-scroll-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.ws-gantt-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ws-gantt-scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ws-gantt-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: var(--glass-border-hover);
+  border-radius: var(--dui-radius);
+}
+
+.ws-gantt-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent);
+}
+
+/* List view content in modal */
+.ws-list-view-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 100%;
+}
+
+/* View footer with back button */
+.ws-view-footer {
+  align-items: center;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-start;
+  padding-top: var(--spacing-lg);
+}
+
+.ws-view-footer button {
+  min-width: 120px;
+}
+
+/* ============================================
+   HIERARCHY VIEW STYLING
+   ============================================ */
+
+.ws-hierarchy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  padding: var(--spacing-sm);
+}
+
+.ws-hierarchy-list > .ListItem {
+  align-items: center;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  gap: var(--spacing-sm);
+  min-height: 36px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: all var(--transition-normal);
+}
+
+.ws-hierarchy-list > .ListItem:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+}
+
+.ws-hierarchy-list > .ListItem.collapsed {
+  opacity: 0.9;
+}
+
+.ws-hierarchy-list > .ListItem .Icon {
+  align-items: center;
+  color: var(--theme-accent);
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 18px;
+  height: 24px;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+  width: 24px;
+}
+
+.ws-hierarchy-list > .ListItem .Icon:hover {
+  transform: scale(1.1);
+}
+
+.ws-hierarchy-list .Card {
+  background: transparent;
+  border: none;
+  flex: 1;
+  padding: 0;
+}
+
+.ws-hierarchy-list .Card-header {
+  padding: 0;
+}
+
+.ws-hierarchy-list .Card-title {
+  color: var(--theme-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ws-hierarchy-list .Card-body {
+  display: none;
+}
+
+.ws-hierarchy-container {
+  background: var(--glass-surface-light);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.ws-hierarchy-item {
+  align-items: center;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+}
+
+/* Indentation based on hierarchy level */
+.ws-hierarchy-item[data-level="0"] { padding-left: var(--spacing-sm); }
+.ws-hierarchy-item[data-level="1"] { padding-left: calc(var(--spacing-sm) + 20px); }
+.ws-hierarchy-item[data-level="2"] { padding-left: calc(var(--spacing-sm) + 40px); }
+.ws-hierarchy-item[data-level="3"] { padding-left: calc(var(--spacing-sm) + 60px); }
+.ws-hierarchy-item[data-level="4"] { padding-left: calc(var(--spacing-sm) + 80px); }
+.ws-hierarchy-item[data-level="5"] { padding-left: calc(var(--spacing-sm) + 100px); }
+.ws-hierarchy-item[data-level="6"] { padding-left: calc(var(--spacing-sm) + 120px); }
+
+.ws-hierarchy-item:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-sm);
+}
+
+.ws-hierarchy-toggle {
+  align-items: center;
+  color: var(--theme-accent);
+  display: inline-flex;
+  font-size: 12px;
+  height: 16px;
+  justify-content: center;
+  min-width: 16px;
+  text-align: center;
+  transition: transform var(--transition-fast);
+  user-select: none;
+  width: 16px;
+}
+
+.ws-hierarchy-toggle.expanded,
+.ws-hierarchy-toggle.collapsed {
+  color: var(--theme-text-primary);
+  cursor: pointer;
+}
+
+.ws-hierarchy-toggle.leaf {
+  color: var(--theme-text-secondary);
+  cursor: default;
+}
+
+.ws-hierarchy-toggle:hover:not(.leaf) {
+  transform: scale(1.2);
+}
+
+.ws-hierarchy-checkbox {
+  cursor: pointer;
+  margin: 0;
+}
+
+.ws-hierarchy-name {
+  color: var(--theme-text);
+  flex: 1;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-hierarchy-name.parent-task {
+  font-weight: 600;
+}
+
+.ws-hierarchy-status {
+  border-radius: var(--dui-radius);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ws-hierarchy-status.notstarted {
+  background: var(--color-status-notstarted);
+  color: var(--theme-text-secondary);
+}
+
+.ws-hierarchy-status.started {
+  background: var(--color-status-started);
+  color: var(--theme-warning);
+}
+
+.ws-hierarchy-status.completed {
+  background: var(--color-status-completed);
+  color: var(--theme-success);
+}
+
+.ws-hierarchy-status.paused {
+  background: var(--color-status-paused);
+  color: var(--theme-error);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ws-schedule-item,
+.ws-gantt-row,
+.ws-list-item,
+.Card {
+  animation: fadeIn var(--transition-normal);
+}
+
+/* ============================================
+   jsGantt night theme
+   Load AFTER jsgantt.css. Vendor hardcodes white
+   backgrounds; without these overrides night-theme
+   inherited text is unreadable on white cells.
+   ============================================ */
+
+html[data-theme="dark"] .gantt {
+  --gantt-surface: #161b22;
+  --gantt-surface-raised: #21262d;
+  --gantt-surface-muted: #1c2128;
+  --gantt-border: var(--border, rgba(48, 54, 61, 0.55));
+  color: var(--theme-text, #e6edf3);
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .gantt .gchartcontainer,
+html[data-theme="dark"] .gantt .glistlbl,
+html[data-theme="dark"] .gantt .glistgrid,
+html[data-theme="dark"] .gantt .gchartlbl,
+html[data-theme="dark"] .gantt .gchartgrid {
+  background-color: var(--gantt-surface);
+}
+
+html[data-theme="dark"] .gantt .gtaskheading,
+html[data-theme="dark"] .gantt .gmajorheading,
+html[data-theme="dark"] .gantt .gminorheading,
+html[data-theme="dark"] .gantt .gminorheadingwkend,
+html[data-theme="dark"] .gantt .gtaskcell,
+html[data-theme="dark"] .gantt .gtaskcellcurrent,
+html[data-theme="dark"] .gantt .gtaskcellwkend,
+html[data-theme="dark"] .gantt .gtasklist,
+html[data-theme="dark"] .gantt .gtaskname,
+html[data-theme="dark"] .gantt .gname,
+html[data-theme="dark"] .gantt .gres,
+html[data-theme="dark"] .gantt .gdur,
+html[data-theme="dark"] .gantt .gcomp,
+html[data-theme="dark"] .gantt .gstartdate,
+html[data-theme="dark"] .gantt .genddate,
+html[data-theme="dark"] .gantt .gcost,
+html[data-theme="dark"] .gantt .gadditional,
+html[data-theme="dark"] .gantt .gtasktableh,
+html[data-theme="dark"] .gantt .gtasktable,
+html[data-theme="dark"] .gantt .gcharttable {
+  border-color: var(--gantt-border) !important;
+}
+
+html[data-theme="dark"] .gantt .gtaskheading,
+html[data-theme="dark"] .gantt .gmajorheading,
+html[data-theme="dark"] .gantt .gminorheading {
+  background-color: var(--gantt-surface-raised);
+  color: var(--theme-text-light, #b9c2b6);
+}
+
+html[data-theme="dark"] .gantt .gtaskcell,
+html[data-theme="dark"] .gantt .gtaskcelldiv,
+html[data-theme="dark"] .gantt .gmileitem,
+html[data-theme="dark"] .gantt .glineitem {
+  background-color: var(--gantt-surface);
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .gtaskcellwkend,
+html[data-theme="dark"] .gantt .gminorheadingwkend {
+  background-color: var(--gantt-surface-muted);
+  color: var(--theme-text-light, #b9c2b6);
+}
+
+html[data-theme="dark"] .gantt .gtaskcellcurrent {
+  background-color: color-mix(in srgb, var(--brand-color, #70ba35) 18%, var(--gantt-surface));
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .ggroupitem {
+  background-color: var(--gantt-surface-muted);
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .gitemhighlight td {
+  background-color: color-mix(in srgb, var(--brand-color, #70ba35) 22%, var(--gantt-surface));
+  background-image: none;
+}
+
+html[data-theme="dark"] .gantt .gitemdifferent td {
+  background-color: rgba(255, 255, 255, 0.04);
+  background-image: none;
+}
+
+html[data-theme="dark"] .gantt .gformlabel {
+  border-color: var(--gantt-border);
+  color: var(--theme-text-light, #b9c2b6);
+}
+
+html[data-theme="dark"] .gantt span.gformlabel:hover,
+html[data-theme="dark"] .gantt span.gselected {
+  background-color: color-mix(in srgb, var(--brand-color, #70ba35) 22%, var(--gantt-surface));
+  border-color: var(--brand-color, #70ba35);
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .gname,
+html[data-theme="dark"] .gantt .gname a,
+html[data-theme="dark"] .gantt .gres,
+html[data-theme="dark"] .gantt .gdur,
+html[data-theme="dark"] .gantt .gcomp,
+html[data-theme="dark"] .gantt .gcost,
+html[data-theme="dark"] .gantt .gstartdate,
+html[data-theme="dark"] .gantt .genddate,
+html[data-theme="dark"] .gantt .gadditional,
+html[data-theme="dark"] .gantt .gcaption,
+html[data-theme="dark"] .gantt td {
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt span.gfoldercollapse {
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .gmain.gmainleft {
+  border-right-color: var(--border, rgba(48, 54, 61, 0.75));
+}
+
+html[data-theme="dark"] .gantt .gtasktableh,
+html[data-theme="dark"] .gantt .gtasktable,
+html[data-theme="dark"] .gantt .gcharttableh,
+html[data-theme="dark"] .gantt .gcharttable {
+  background-color: var(--gantt-surface);
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .JSGanttToolTipcont {
+  background: var(--gantt-surface-raised, #21262d);
+  color: var(--theme-text, #e6edf3);
+  border: 1px solid var(--border, rgba(48, 54, 61, 0.75));
+}
+
+html[data-theme="dark"] .gTaskInfo {
+  background: var(--gantt-surface-raised, #21262d);
+  border-color: var(--border, rgba(48, 54, 61, 0.75));
+}
+
+html[data-theme="dark"] .gTtTitle,
+html[data-theme="dark"] .gTaskLabel,
+html[data-theme="dark"] .gTaskText,
+html[data-theme="dark"] .gTaskNotes {
+  color: var(--theme-text, #e6edf3);
+}
+
+html[data-theme="dark"] .gantt .gCurDate {
+  border-color: var(--brand-color, #70ba35);
+}

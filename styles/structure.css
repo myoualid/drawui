@@ -1,0 +1,837 @@
+.World {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.World .RibbonMenu {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-items: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: 100%;
+  background-color: var(--theme-background);
+}
+
+/* Workspace grid tracks are set inline by LayoutManager (gridTemplateColumns / gridTemplateRows). */
+.World.workspace-layout .HeaderBar {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: var(--headerbar-height);
+}
+
+.World.workspace-layout .MenusBar {
+  align-items: stretch;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  scrollbar-width: none;
+  padding: var(--phi-0-2-5);
+  width: 100%;
+}
+
+.World.workspace-layout .MenusBar::-webkit-scrollbar {
+  display: none;
+}
+
+.World.workspace-layout .MenusBar .MenusBarGroup {
+  align-items: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-start;
+  min-width: fit-content;
+  padding: 2px 0 0;
+}
+
+.World.workspace-layout .MenusBar .MenusBarGroupModules {
+  align-items: flex-start;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  min-height: 0;
+}
+
+.World.workspace-layout .MenusBar .MenusBarGroupLabel {
+  color: var(--theme-text-light);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: 0.7;
+  padding-top: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.World.workspace-layout .MenusBar .MenusBarGroup.MenusBarGroupVisible:not(.MenusBarGroupFirstVisible) {
+  border-left: 1px solid var(--border);
+  margin-left: 10px;
+  padding-left: 12px;
+}
+
+.World.workspace-layout .MenusBar .ContextModules {
+  align-items: center;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  box-sizing: border-box;
+  color: var(--theme-text-light);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 4px;
+  height: auto;
+  justify-content: flex-start;
+  min-width: 92px;
+  padding: 4px 10px 0;
+  position: relative;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.World.workspace-layout .MenusBar .ContextModules:last-child {
+  border-right: none;
+}
+
+.World.workspace-layout .MenusBar .ContextModules:hover,
+.World.workspace-layout .MenusBar .ContextModules.Active {
+  color: var(--theme-text);
+}
+
+.World.workspace-layout #MenusBar .ContextModules:hover {
+  background-color: color-mix(in srgb, var(--brand-color) 6%, transparent 94%);
+}
+
+.World.workspace-layout #MenusBar .ContextModules.Active {
+  background-color: transparent !important;
+  border-bottom-color: var(--brand-color) !important;
+  color: var(--theme-text) !important;
+}
+
+.World.workspace-layout .MenusBar .ContextModules .Icon,
+.World.workspace-layout .MenusBar .ContextModules .ModuleIcon {
+  color: var(--brand-color);
+  display: block;
+  font-size: 22px;
+  height: 22px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.World.workspace-layout .MenusBar .ContextModules .ModuleName {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 12px;
+  max-width: 104px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.World.workspace-layout #SideWorkspaceLeft {
+  grid-column: 1;
+  grid-row: 2 / 5;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.World.workspace-layout #SideWorkspaceRight {
+  grid-column: 5;
+  grid-row: 2 / 5;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.World.workspace-layout #BottomWorkspace {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+.World.workspace-layout #Viewport {
+  grid-column: 3;
+  grid-row: 2;
+  min-height: 0;
+  min-width: 0;
+  z-index: 1;
+}
+
+.World.workspace-layout #FooterBar {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: var(--phi-0-5);
+  grid-column: 1 / -1;
+  grid-row: 5;
+  justify-content: flex-start;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 var(--phi-0-5);
+}
+
+.World.workspace-layout #FooterBar > #NotificationsModule {
+  flex: 0 0 auto;
+  order: 1;
+}
+
+.World.workspace-layout #FooterBar > #ApplicationState {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  height: 100%;
+  justify-content: flex-start;
+  min-width: 0;
+  order: 2;
+  position: relative;
+}
+
+.World.workspace-layout .layout-resizer-left {
+  grid-column: 2;
+  grid-row: 2 / 5;
+}
+
+.World.workspace-layout .layout-resizer-right {
+  grid-column: 4;
+  grid-row: 2 / 5;
+}
+
+.World.workspace-layout .layout-resizer-bottom {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+
+.World.workspace-layout #RibbonMenu > .HeaderBar {
+  flex: 0 0 auto;
+  order: 0;
+}
+
+.World.workspace-layout #RibbonMenu > .MenusBar {
+  order: 1;
+}
+
+.World #SideWorkspaceLeft .panel-header,
+.World #SideWorkspaceRight .panel-header,
+.World #BottomWorkspace .panel-header,
+.World.workspace-layout .WorkspaceStackSegmentHeader.panel-header {
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--phi-0-5);
+  height: 32px;
+  justify-content: space-between;
+  padding: 0 var(--phi-0-5);
+}
+
+.World #SideWorkspaceLeft .panel-content,
+.World #SideWorkspaceRight .panel-content,
+.World #BottomWorkspace .panel-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.World #SideWorkspaceLeft .panel-title,
+.World #SideWorkspaceRight .panel-title,
+.World #BottomWorkspace .panel-title {
+  color: var(--theme-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.World #SideWorkspaceLeft .panel-actions,
+.World #SideWorkspaceRight .panel-actions,
+.World #BottomWorkspace .panel-actions {
+  align-items: center;
+  display: flex;
+  gap: var(--phi-0-2-5);
+}
+
+.World #SideWorkspaceLeft .panel-action-btn,
+.World #SideWorkspaceRight .panel-action-btn,
+.World #BottomWorkspace .panel-action-btn {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--dui-radius);
+  color: var(--theme-text-light);
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  height: 24px;
+  justify-content: center;
+  transition: all 0.15s ease;
+  width: 24px;
+}
+
+.World #SideWorkspaceLeft .panel-action-btn:hover,
+.World #SideWorkspaceRight .panel-action-btn:hover,
+.World #BottomWorkspace .panel-action-btn:hover {
+  color: var(--theme-text);
+}
+
+.World.workspace-layout .layout-panel > .WorkspaceStack {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  height: auto;
+  max-width: none;
+  min-height: 100%;
+  width: 100%;
+}
+
+.World.workspace-layout .layout-panel .TabbedPanel {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  height: 100%;
+  max-width: none;
+  min-height: 0;
+  width: 100%;
+}
+
+.SideWorkspaceLeft .WorkspaceStack {
+  padding-left: var(--phi-0-5);
+}
+
+.SideWorkspaceRight .WorkspaceStack {
+  padding-right: var(--phi-0-5);
+}
+
+.World.workspace-layout .WorkspaceStackSegment {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  min-height: var(--workspace-segment-min-height, 160px);
+  min-width: 0;
+  overflow: hidden;
+  background: var(--glass-surface);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--dui-radius);
+}
+
+.World.workspace-layout .WorkspaceStackSegmentHeader.panel-header {
+  border-radius: var(--dui-radius) var(--dui-radius) 0 0;
+  position: relative;
+  transition: border-radius 0.22s ease;
+}
+
+.World.workspace-layout .WorkspaceStackSegmentHeader.is-segment-drag-handle {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.World.workspace-layout .WorkspaceStackSegment.is-segment-dragging {
+  opacity: 0.55;
+}
+
+.World.workspace-layout .WorkspaceStackSegment.is-collapsed .WorkspaceStackSegmentHeader.panel-header {
+  border-radius: var(--dui-radius);
+}
+
+.World.workspace-layout .layout-panel.is-segment-drop-target {
+  outline: 2px dashed var(--brand-color);
+  outline-offset: -2px;
+}
+
+.World.workspace-layout .WorkspaceStackSegment .panel-title {
+  color: var(--brand-color);
+  flex: 0 1 calc(50% - 18px);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.World.workspace-layout .WorkspaceStackSegment .WorkspaceSegment-collapse {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--theme-text-light);
+  cursor: pointer;
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  left: 50%;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: color 0.15s ease;
+  width: 24px;
+}
+
+.World.workspace-layout .WorkspaceStackSegment .WorkspaceSegment-collapse:hover {
+  color: var(--brand-color);
+}
+
+.World.workspace-layout .WorkspaceStackSegment .WorkspaceSegment-collapse .Icon {
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 0.22s ease;
+}
+
+.World.workspace-layout .WorkspaceStackSegment.is-collapsed .WorkspaceSegment-collapse .Icon {
+  transform: rotate(-90deg);
+}
+
+.World.workspace-layout .WorkspaceSegmentPanels {
+  display: grid;
+  flex: 1 1 0;
+  grid-template-rows: 1fr;
+  min-height: 0;
+  min-width: 0;
+  opacity: 1;
+  overflow: hidden;
+  transition: grid-template-rows 0.22s ease, opacity 0.18s ease, padding 0.22s ease;
+}
+
+.World.workspace-layout .WorkspaceSegmentPanels > * {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.World.workspace-layout .WorkspaceStackSegment .Tabs:not(:has(.Tab ~ .Tab)) {
+  display: none;
+}
+
+.World.workspace-layout .WorkspaceStackSegment.is-collapsed .WorkspaceSegmentPanels {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  padding-block: 0;
+  pointer-events: none;
+}
+
+.World.workspace-layout .layout-resizer-stack {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.World.workspace-layout .layout-panel > .TabbedPanel .Panels,
+.World.workspace-layout .layout-panel .TabbedPanel .Panels {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.World.workspace-layout .layout-panel > .TabbedPanel .Panels > div,
+.World.workspace-layout .layout-panel .TabbedPanel .Panels > div {
+  height: 100%;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+.World.workspace-layout .layout-panel > .TabbedPanel .Panels > .TabPanel,
+.World.workspace-layout .layout-panel .TabbedPanel .Panels > .TabPanel {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#ApplicationStateBar {
+  position: absolute;
+  z-index: 3;
+  top: var(--phi-0-5);
+  right: auto;
+  left: var(--phi-0-5);
+  max-width: calc(100% - var(--sidebar-width) - var(--phi-0-5));
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: var(--phi-0-5);
+}
+
+#info.Panel {
+  width: var(--viewport-information-width);
+}
+
+#JobConfiguration {
+  bottom: 100%;
+}
+
+#JobConfiguration.Modules {
+  background-color: var(--blue);
+}
+
+
+#SceneInformation {
+  bottom: 100%;
+  position: absolute;
+  right: calc(-1 * var(--state-bar-right) + var(--sidebar-width));
+  text-transform: lowercase;
+}
+
+.World .HeaderBar {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  height: var(--headerbar-height);
+  justify-content: space-between;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.World .HeaderBar .Logo {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+  justify-content: flex-start;
+  min-height: 0;
+  min-width: 0;
+  overflow: visible;
+  padding-inline: var(--phi-0-5) var(--phi-0-2-5);
+  width: auto;
+}
+
+.World .HeaderBar .Logo.Image {
+  min-height: 0;
+  min-width: 0;
+  object-fit: unset;
+}
+
+.World .HeaderBar .Logo > .Image {
+  border-radius: var(--dui-radius);
+  display: block;
+  flex: 0 0 auto;
+  height: var(--logo-size);
+  max-height: calc(100% - var(--phi-0-5));
+  max-width: var(--logo-wordmark-max-width);
+  min-height: 0;
+  min-width: 0;
+  object-fit: contain;
+  width: auto;
+}
+
+.RibbonSections {
+  scrollbar-width: none;
+}
+
+.RibbonSections::-webkit-scrollbar {
+  display: none;
+}
+
+.World .HeaderBar .RibbonSections .Section {
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  box-sizing: border-box;
+  color: var(--theme-text-light);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--phi-0-5);
+  height: 100%;
+  padding: var(--phi-0-5);
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.World .HeaderBar .RibbonSections .Section:hover,
+.World .HeaderBar .RibbonSections .Section.Active {
+  color: var(--theme-text);
+  border-bottom-color: var(--brand-color);
+}
+
+.World .HeaderBar .RibbonSections .Section .Icon {
+  color: var(--brand-color);
+  font-size: 18px;
+}
+
+.World .HeaderBar .RibbonSections .Section .SectionName {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.World .HeaderBar .ContextMenu {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  z-index: 1;
+}
+
+.World .HeaderBar .ContextMenu::-webkit-scrollbar {
+  display: none;
+}
+
+.World .HeaderBar .ContextMenu .ContextModules {
+  border-right: 1px solid var(--border);
+  flex: 0 0 auto;
+  font-size: var(--phi-0-5);
+  min-width: 0;
+  overflow: hidden;
+  padding-inline: var(--phi-1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.World .HeaderBar .ContextMenu .ContextModules:last-child {
+  border-right: none;
+}
+
+.World .HeaderBar .ContextMenu .ContextModules.Active .ModuleName {
+  font-size: var(--phi-1);
+
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-underline-offset: 7px;
+}
+
+.World .HeaderBar .ContextMenu::before,
+.World .HeaderBar .ContextMenu::after {
+  content: "";
+  flex: 0 0 var(--phi-0-5);
+  min-width: var(--phi-0-5);
+}
+
+.World .HeaderBar .Controls {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+  order: -1;
+  padding-inline: var(--phi-0-5);
+  position: relative;
+}
+
+.World .HeaderBar .HistoryHeaderControls {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+  height: 100%;
+}
+
+.World .ViewportSnapTools {
+  display: none;
+  position: absolute;
+  bottom: var(--phi-1);
+  left: var(--phi-1);
+  z-index: 10;
+}
+
+
+.World .Viewport-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--phi-0-5);
+  position: absolute;
+  right: var(--margin);
+  top: var(--margin);
+  z-index: 10;
+}
+
+.World .Viewport {
+  background-color: #202329;
+}
+
+.World #Viewport canvas {
+  padding: var(--phi-0-5);
+}
+
+
+.ViewportGizmo {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  left: var(--viewport-gizmo-left);
+  bottom: calc(var(--phi-0-5));
+  z-index: 3;
+}
+
+.World .ViewportGizmo {
+  height: var(--viewport-gizmo-size);
+  position: absolute;
+  width: var(--viewport-gizmo-size);
+}
+
+.World .ViewportToolBar {
+  display: grid;
+  gap: var(--phi-0-5);
+  grid-template-columns: 1fr;
+  right: calc(var(--phi-1) + var(--sidebar-width));
+  overflow: visible;
+  position: absolute;
+
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 7;
+}
+
+.Module {
+  border: 1px solid transparent;
+  height: var(--sidebar-width);
+  padding: var(--phi-0);
+  transition: background-color 0.3s ease;
+  width: var(--sidebar-width);
+}
+
+.ws-zoom-btn:hover {
+  background: var(--glass-surface-hover);
+  border-color: var(--glass-border-hover);
+}
+
+.navigation-crosshair {
+  background: transparent;
+  border: 2px solid rgba(0, 255, 200, 0.9);
+  box-shadow: 0 0 12px rgba(0, 255, 200, 0.5);
+  box-sizing: border-box;
+  height: 48px;
+  left: 50%;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  z-index: 1;
+}
+
+.navigation-crosshair-dot,
+.navigation-crosshair-vline,
+.navigation-crosshair-hline {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.navigation-crosshair-dot {
+  background-color: rgba(0, 255, 200, 0.15);
+  border: 1px solid rgba(0, 255, 200, 0.95);
+  height: 8px;
+  width: 8px;
+}
+
+.navigation-crosshair-vline {
+  background: rgba(0, 255, 200, 0.8);
+  height: 14px;
+  width: 2px;
+}
+
+.navigation-crosshair-hline {
+  background: rgba(0, 255, 200, 0.8);
+  height: 2px;
+  width: 14px;
+}
+
+#Navigation-viewport-keyboard {
+  align-items: flex-end;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-between;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  touch-action: none;
+  width: 100%;
+  z-index: 6;
+}
+
+#Navigation-viewport-left-stack {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-end;
+  margin-bottom: var(--Navigation-bottom-inset);
+  margin-left: var(--Navigation-horizontal-inset);
+  max-width: var(--Navigation-left-stack-max-width);
+}
+
+#Navigation-viewport-right-stack {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-end;
+  margin-bottom: var(--Navigation-bottom-inset);
+  margin-right: calc(var(--Navigation-right-stack-offset) + var(--Navigation-horizontal-inset));
+}
+
+#Navigation-viewport-left-column {
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+#Navigation-viewport-keys-row {
+  max-width: min(88vw, 280px);
+  pointer-events: auto;
+  touch-action: none;
+  width: 100%;
+}
+
+#Navigation-viewport-keys-host {
+  flex: 1 1 auto;
+  min-width: 0;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+#Navigation-viewport-move-stick-host,
+#Navigation-viewport-look-stick-host {
+  pointer-events: auto;
+  touch-action: none;
+}

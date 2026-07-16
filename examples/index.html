@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DrawUI</title>
+  <meta name="description" content="Framework-free ESM UI library for DOM-native tools, panels, and controls.">
+
+  <link rel="stylesheet" href="../dist/drawui.min.css">
+  <link rel="stylesheet" href="../styles/themes/dark.css">
+  <link rel="stylesheet" href="../styles/themes/light.css">
+  <link rel="stylesheet" href="./examples.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      background: var(--dui-color-bg, #1c1f1c);
+      color: var(--dui-color-text, #eeeeec);
+      font-family: var(--dui-font-ui, system-ui, sans-serif);
+    }
+
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.25rem 1.25rem;
+    }
+
+    .landing-page {
+      flex: 1;
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .landing-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .landing {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .landing {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+
+    .landing-hero {
+      font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      color: var(--dui-color-accent, #70ba35);
+      white-space: pre;
+    }
+
+    .landing-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .landing-links .Link {
+      font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+      font-size: 1.125rem;
+      color: var(--dui-color-text, #eeeeec);
+      text-decoration: none;
+    }
+
+    .landing-links .Link:hover {
+      color: var(--dui-color-accent, #70ba35);
+    }
+
+    .landing-footer {
+      max-width: 36rem;
+      margin-top: auto;
+      padding-top: 2rem;
+      color: var(--dui-color-text-muted, #babdb6);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../dist/drawui.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+    import { DrawUI } from "drawui";
+
+    const pageHref = (path) => new URL(path, import.meta.url).href;
+
+    const page = DrawUI.column()
+      .addClass("landing-page")
+      .add(
+        DrawUI.div()
+          .addClass("landing-main")
+          .add(
+            DrawUI.row()
+              .gap("2.5rem")
+              .addClass("landing")
+              .add(DrawUI.text("> drawui").addClass("landing-hero"))
+              .add(
+                DrawUI.column()
+                  .gap("0.5rem")
+                  .addClass("landing-links")
+                  .add(DrawUI.link("min", pageHref("examples/components/"), undefined, false))
+                  .add(DrawUI.link("full", pageHref("examples/components/full.html"), undefined, false)),
+              ),
+          ),
+      )
+      .add(
+        DrawUI.text(
+          "DOM-native UI primitives and components. Zero bundler required in these demos — just ESM + CSS.",
+        ).addClass("landing-footer"),
+      );
+
+    document.getElementById("app").appendChild(page.dom);
+  </script>
+</body>
+</html>

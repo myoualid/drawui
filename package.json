@@ -1,0 +1,111 @@
+{
+  "name": "drawui",
+  "version": "0.1.0",
+  "description": "Framework-free DOM UI primitives and components for ESM applications.",
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "style": "./styles/core.css",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "src",
+    "styles/core.css",
+    "styles/icons.css",
+    "styles/tokens.css",
+    "styles/reset.css",
+    "styles/primitives.css",
+    "styles/components.css",
+    "styles/rules.css",
+    "styles/base-components.css",
+    "styles/structure.css",
+    "styles/components/spinner.css",
+    "styles/components/nodes.css",
+    "styles/components/hud.css",
+    "styles/components/pie-menu.css",
+    "styles/components/scheduling.css",
+    "styles/components/ag-grid-custom.css",
+    "styles/themes",
+    "vendor/fonts",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./min": {
+      "types": "./types/index.d.ts",
+      "import": "./src/core.js",
+      "default": "./src/core.js"
+    },
+    "./core": {
+      "types": "./types/index.d.ts",
+      "import": "./src/core.js",
+      "default": "./src/core.js"
+    },
+    "./primitives": "./src/primitives/index.js",
+    "./components": "./src/components/index.js",
+    "./layout": "./src/layout/index.js",
+    "./overlays": "./src/overlays/index.js",
+    "./utils/markdown": "./src/utils/markdown.js",
+    "./utils/panel-resizer": "./src/utils/panel-resizer.js",
+    "./utils/layout-resizer": "./src/utils/layout-resizer.js",
+    "./utils/workspace-panel-dock": "./src/utils/workspace-panel-dock.js",
+    "./vendor/fonts/material-symbols-outlined.css": "./vendor/fonts/material-symbols-outlined.css",
+    "./styles/core.css": "./styles/core.css",
+    "./styles/icons.css": "./styles/icons.css",
+    "./styles/tokens.css": "./styles/tokens.css",
+    "./styles/reset.css": "./styles/reset.css",
+    "./styles/primitives.css": "./styles/primitives.css",
+    "./styles/components.css": "./styles/components.css",
+    "./styles/structure.css": "./styles/structure.css",
+    "./styles/base-components.css": "./styles/base-components.css",
+    "./styles/rules.css": "./styles/rules.css",
+    "./styles/components/spinner.css": "./styles/components/spinner.css",
+    "./styles/components/nodes.css": "./styles/components/nodes.css",
+    "./styles/components/hud.css": "./styles/components/hud.css",
+    "./styles/components/pie-menu.css": "./styles/components/pie-menu.css",
+    "./styles/components/scheduling.css": "./styles/components/scheduling.css",
+    "./styles/components/ag-grid-custom.css": "./styles/components/ag-grid-custom.css",
+    "./styles/themes/dark.css": "./styles/themes/dark.css",
+    "./styles/themes/light.css": "./styles/themes/light.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "build:source-check": "node --input-type=module -e \"import './src/core.js'; import './src/index.js'\"",
+    "examples": "npm run build && npx --yes serve . -p 5173",
+    "build:catalog": "node ./scripts/generate-min-catalog.mjs",
+    "check:entrypoints": "node ./scripts/check-entrypoints.mjs",
+    "check:package-contents": "node ./scripts/check-package-contents.mjs",
+    "lint:css": "stylelint styles/core.css styles/tokens.css styles/reset.css styles/primitives.css styles/components.css styles/rules.css styles/base-components.css styles/structure.css styles/themes/dark.css styles/themes/light.css styles/components/spinner.css"
+  },
+  "dependencies": {
+    "@highlightjs/cdn-assets": "11.11.1",
+    "ag-grid-community": "35.2.1",
+    "chart.js": "4.4.7",
+    "jsgantt-improved": "2.8.10",
+    "showdown": "2.1.0"
+  },
+  "keywords": [
+    "ui",
+    "dom",
+    "components",
+    "drawui"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
