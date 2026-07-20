@@ -1,4 +1,45 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Rectangle | DrawUI API</title><meta name="description" content="Documentation for DrawUI API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script>
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Rectangle | DrawUI API</title><meta name="description" content="Documentation for DrawUI API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script data-drawui-storage-guard>
+(function () {
+  function isQuotaError(err) {
+    return !!err && (
+      err.name === "QuotaExceededError" ||
+      err.code === 22 ||
+      err.code === 1014
+    );
+  }
+  function evictLarge(storage) {
+    var keys = [];
+    for (var i = 0; i < storage.length; i++) {
+      var key = storage.key(i);
+      if (key) keys.push(key);
+    }
+    keys.sort(function (a, b) {
+      return (storage.getItem(b) || "").length - (storage.getItem(a) || "").length;
+    });
+    for (var j = 0; j < keys.length; j++) {
+      try { storage.removeItem(keys[j]); } catch (_) {}
+      if (j >= 8) break;
+    }
+  }
+  try {
+    var proto = Storage.prototype;
+    var rawSet = proto.setItem;
+    proto.setItem = function (key, value) {
+      try {
+        return rawSet.call(this, key, value);
+      } catch (err) {
+        if (!isQuotaError(err)) throw err;
+        try {
+          evictLarge(this);
+          return rawSet.call(this, key, value);
+        } catch (_) {
+          // Prefs are non-critical — keep TypeDoc booting.
+        }
+      }
+    };
+  } catch (_) {}
+})();
+</script><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script>
 <style data-drawui-live-assets>.doc-live-demo {
   display: block;
   margin: 0.75rem 0 1.25rem;
@@ -120,7 +161,7 @@
   }
 }
 </script>
-</head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="../index.html" class="title">DrawUI API</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb" aria-label="Breadcrumb"><li><a href="" aria-current="page">Rectangle</a></li></ul><h1>Class Rectangle</h1></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"></div></section><div class="tsd-comment tsd-typography" data-drawui-live-catalog><div class="tsd-tag-example" data-drawui-live-section>
+</head><body><script>document.documentElement.dataset.theme=(function(){try{return localStorage.getItem("tsd-theme")||"os"}catch(e){return"os"}})();document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="../index.html" class="title">DrawUI API</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb" aria-label="Breadcrumb"><li><a href="" aria-current="page">Rectangle</a></li></ul><h1>Class Rectangle</h1></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"></div></section><div class="tsd-comment tsd-typography" data-drawui-live-catalog><div class="tsd-tag-example" data-drawui-live-section>
 <h4 class="tsd-anchor-link" id="example-rectangle">Example: Rectangle<a href="#example-rectangle" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4>
 <pre><code class="ts"><span class="dui-hl-0">return</span><span class="dui-hl-1"> </span><span class="dui-hl-7">new</span><span class="dui-hl-1"> </span><span class="dui-hl-2">Rectangle</span><span class="dui-hl-1">()</span><br/><span class="dui-hl-1">  .</span><span class="dui-hl-2">add</span><span class="dui-hl-1">(</span><span class="dui-hl-7">new</span><span class="dui-hl-1"> </span><span class="dui-hl-2">TextBlock</span><span class="dui-hl-1">(</span><span class="dui-hl-4">&quot;rectangle()&quot;</span><span class="dui-hl-1">))</span><br/><span class="dui-hl-1">  .</span><span class="dui-hl-2">setStyle</span><span class="dui-hl-1">(</span><span class="dui-hl-4">&quot;padding&quot;</span><span class="dui-hl-1">, [</span><span class="dui-hl-4">&quot;0.75rem&quot;</span><span class="dui-hl-1">]);</span></code></pre>
 <div class="doc-live-demo" data-live-demo="Rectangle/rectangle" aria-label="Live preview"></div>

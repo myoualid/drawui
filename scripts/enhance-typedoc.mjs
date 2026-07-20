@@ -44,6 +44,56 @@ const LIVE_CSS = `
 }
 `.trim();
 
+/**
+ * TypeDoc writes filter/theme prefs via localStorage.setItem. On origins with a
+ * full quota (common on github.io, shared across repos), that throw aborts
+ * main.js mid-boot and leaves the page unstyled / half-initialized.
+ */
+const STORAGE_GUARD = `
+<script data-drawui-storage-guard>
+(function () {
+  function isQuotaError(err) {
+    return !!err && (
+      err.name === "QuotaExceededError" ||
+      err.code === 22 ||
+      err.code === 1014
+    );
+  }
+  function evictLarge(storage) {
+    var keys = [];
+    for (var i = 0; i < storage.length; i++) {
+      var key = storage.key(i);
+      if (key) keys.push(key);
+    }
+    keys.sort(function (a, b) {
+      return (storage.getItem(b) || "").length - (storage.getItem(a) || "").length;
+    });
+    for (var j = 0; j < keys.length; j++) {
+      try { storage.removeItem(keys[j]); } catch (_) {}
+      if (j >= 8) break;
+    }
+  }
+  try {
+    var proto = Storage.prototype;
+    var rawSet = proto.setItem;
+    proto.setItem = function (key, value) {
+      try {
+        return rawSet.call(this, key, value);
+      } catch (err) {
+        if (!isQuotaError(err)) throw err;
+        try {
+          evictLarge(this);
+          return rawSet.call(this, key, value);
+        } catch (_) {
+          // Prefs are non-critical — keep TypeDoc booting.
+        }
+      }
+    };
+  } catch (_) {}
+})();
+</script>
+`.trim();
+
 // Shared live-demos.js imports peers — always use the full bundle + peer CDNs.
 function liveImportMap(assetPrefix) {
   return `{
@@ -104,6 +154,22 @@ function catalogHighlightCss() {
     .replace(/--hl-/g, "--dui-hl-")
     .replace(/\.hl-/g, ".dui-hl-")
     .replace(/\n?pre, code \{ background: var\(--dui-code-background\); \}\n?/g, "\n");
+}
+
+function injectStorageGuard(html) {
+  if (html.includes("data-drawui-storage-guard")) return html;
+  // Run before deferred TypeDoc main.js so Storage.prototype is patched first.
+  if (html.includes('<script defer src="') || html.includes("<script defer src='")) {
+    return html.replace(/<script defer src=/, `${STORAGE_GUARD}<script defer src=`);
+  }
+  return html.replace("<head>", `<head>${STORAGE_GUARD}`);
+}
+
+function hardenThemeBootstrap(html) {
+  return html.replace(
+    /document\.documentElement\.dataset\.theme\s*=\s*localStorage\.getItem\("tsd-theme"\)\s*\|\|\s*"os"/,
+    'document.documentElement.dataset.theme=(function(){try{return localStorage.getItem("tsd-theme")||"os"}catch(e){return"os"}})()',
+  );
 }
 
 function injectHead(html, assetPrefix, extraCss = "") {
@@ -288,16 +354,28 @@ try {
 
 const htmlFiles = await listHtmlFiles(typedocDir);
 const pending = [];
+let storageGuarded = 0;
 
+// Always harden every TypeDoc page (storage guard), even without live demos.
 for (const file of htmlFiles) {
+  let html = await readFile(file, "utf8");
+  const before = html;
+  html = injectStorageGuard(html);
+  html = hardenThemeBootstrap(html);
+
   const base = path.basename(file, ".html");
   const demos = liveBySymbol[base];
-  if (!demos?.length) continue;
+  if (demos?.length) {
+    const assetPrefix = assetPrefixFor(file);
+    const { html: withMounts, injected, hasCatalog } = injectDemoMounts(html, demos);
+    pending.push({ file, assetPrefix, html: withMounts, injected, hasCatalog });
+    continue;
+  }
 
-  let html = await readFile(file, "utf8");
-  const assetPrefix = assetPrefixFor(file);
-  const { html: withMounts, injected, hasCatalog } = injectDemoMounts(html, demos);
-  pending.push({ file, assetPrefix, html: withMounts, injected, hasCatalog });
+  if (html !== before) {
+    await writeFile(file, html, "utf8");
+    storageGuarded += 1;
+  }
 }
 
 // Build catalog highlight CSS after all orphan snippets have been tokenized
@@ -308,10 +386,12 @@ let pagesTouched = 0;
 let mountsInjected = 0;
 
 for (const item of pending) {
-  let html = injectHead(item.html, item.assetPrefix, item.hasCatalog ? catalogCss : "");
+  let html = injectStorageGuard(item.html);
+  html = hardenThemeBootstrap(html);
+  html = injectHead(html, item.assetPrefix, item.hasCatalog ? catalogCss : "");
   html = injectBodyScript(html, item.assetPrefix);
 
-  if (item.injected > 0 || html.includes("data-drawui-live-assets")) {
+  if (item.injected > 0 || html.includes("data-drawui-live-assets") || html.includes("data-drawui-storage-guard")) {
     await writeFile(item.file, html, "utf8");
     pagesTouched += 1;
     mountsInjected += item.injected;
@@ -319,5 +399,5 @@ for (const item of pending) {
 }
 
 console.log(
-  `enhance-typedoc: updated ${pagesTouched} TypeDoc pages (${mountsInjected} live mounts)`,
+  `enhance-typedoc: updated ${pagesTouched} TypeDoc pages (${mountsInjected} live mounts); storage-guard on ${storageGuarded + pagesTouched} pages`,
 );

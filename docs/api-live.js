@@ -304,6 +304,9 @@ function mountDemoInIframe(host, demoId) {
   frame.setAttribute("title", `Live preview: ${demoId}`);
   frame.setAttribute("loading", "lazy");
   frame.setAttribute("allowtransparency", "true");
+  // allow-same-origin is required so srcdoc can import host ESM (else origin is
+  // null and CORS blocks live-demos.js). Chrome warns about this combo; prefs
+  // writes are hardened via the TypeDoc storage guard in enhance-typedoc.mjs.
   frame.setAttribute(
     "sandbox",
     "allow-scripts allow-same-origin allow-forms allow-popups",
