@@ -8,12 +8,10 @@ DrawUI.js is a framework-free ESM UI library. It provides chainable DOM wrappers
 
 ## Import Rules
 
-Use only exported package entrypoints:
+Use only exported package paths:
 
 ```js
-import { DrawUI, FloatingPanel } from "drawui";
-import { UIElement, UIDiv, UIButton } from "drawui/primitives";
-import { PieMenu } from "drawui/overlays";
+import { DrawUI, FloatingWindow, Control, Container, Button, RadialMenu } from "drawui";
 import "drawui/styles/core.css";
 import "drawui/styles/icons.css";
 ```
@@ -22,22 +20,22 @@ Do not import from package-internal files unless the path is exported in `drawUI
 
 ## Component Selection
 
-- Use `DrawUI.row()` or `DrawUI.column()` for simple layouts.
-- Use `BasePanel` for fixed header, content, and footer regions.
-- Use `FloatingPanel` for draggable or dockable floating windows.
-- Use `CollapsibleSection` for accordion content inside another surface.
-- Use `CollapsiblePanel` for standalone expandable tool panels.
-- Use `UITabbedPanel` or `DrawUI.tabbedPanel()` for local tab strips.
-- Use `ReorderableList` only when order is user-editable.
-- Use `DrillDownUpList` for one-level-at-a-time hierarchical browsing.
+- Use `new StackPanel({ isVertical: false })` / `{ isVertical: true }` for simple layouts.
+- Use `ContentPanel` for fixed header, content, and footer regions.
+- Use `FloatingWindow` for draggable or dockable floating windows.
+- Use `CollapsiblePanel` for accordion content inside another surface.
+- Use `Flyout` for standalone expandable tool panels.
+- Use `new TabView()` for local tab strips.
+- Use `RibbonBar` + `RibbonButton` for the app shell ribbon (borderless icon+label, tab-style selection). Prefer `IconButton` for bordered tile actions.
+- Use `SortableList` only when order is user-editable.
+- Use `NavigationList` for one-level-at-a-time hierarchical browsing.
 - Use `TreeView` for nested expand/collapse trees (same `getChildren` / `getLabel` data shape as drill-down).
-- Use `PieMenu` only when radial interaction is a deliberate fit for the workflow.
+- Use `RadialMenu` only when radial interaction is a deliberate fit for the workflow.
 
 ## Styling Rules
 
-- New package CSS should use `--dui-*` tokens.
+- Package CSS uses `--dui-*` tokens only.
 - New public selectors should use the `dui-*` namespace.
-- New docs and examples should prefer public `dui-*` selectors over legacy compatibility classes.
 - Import `drawui/styles/icons.css` when using icon-emitting components.
 - Keep application layout selectors, module IDs, and product-specific styles out of the package CSS entrypoints.
 
@@ -55,6 +53,9 @@ Before adding or changing a component:
 ## Do
 
 - Add JSDoc typedefs for non-trivial options objects.
+- Document public components with JSDoc descriptions and `@example` blocks (API pages are generated from these).
+- Mark runnable examples with `// live` as the first line and `return` a Control (or DOM node) for an inline preview (avoid `@live` — TypeDoc treats `@…` as tags).
+- Register public components in `src/api/registry.json` (status, entrypoints, emitted classes).
 - Return `this` from mutating methods.
 - Expose `.dom` consistently.
 - Document emitted CSS classes for public components.
@@ -64,14 +65,10 @@ Before adding or changing a component:
 
 - Do not make DrawUI depend on host-application runtime objects.
 - Do not move app-specific CSS into package core layers.
-- Do not document or import workspace-only compatibility files as public API.
 - Do not add framework dependencies for core components.
 - Do not introduce hidden global DOM side effects without a cleanup path.
 
 ## Known Gotchas
 
-- The published package excludes repository compatibility shims and workspace-only CSS bundles even though those files may exist in the repository.
-- `styles/minimal.css`, `styles/master.css`, and similar broad bundles are repository internals, not public package entrypoints.
-- `rules.css` mixes package-adjacent styles with host-page concerns and should not be treated as core package CSS.
 - Some overlays and floating surfaces mount or listen outside their root element and still require careful lifecycle handling.
 - Material Symbols are the current icon mechanism, so icon-emitting examples should import `drawui/styles/icons.css`.

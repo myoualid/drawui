@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NodeGraph — DrawUI API</title>
+  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.full.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="nodegraph">NodeGraph</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> peers<br />
+<strong>Import:</strong> <code>drawui</code><br />
+<strong>Emitted class(es):</strong> <code>dui-node-graph</code>, <code>dui-node</code>, <code>dui-node-port</code></p>
+<p>Interactive node graph editor.</p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { NodeGraph } from "drawui";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="nodegraph-1">NodeGraph</h3>
+<pre><code class="js language-js">const host = new Container()
+    .setStyle("height", ["420px"])
+    .setStyle("display", ["flex"])
+    .setStyle("flexDirection", ["column"])
+    .setStyle("width", ["100%"]);
+
+  const nodes = new NodeGraph({
+    embedded: true,
+    nodes: [
+      { id: 1, name: "Source", status: "Active", level: 0, parent: 0, children: [2, 3] },
+      { id: 2, name: "Transform", status: "Pending", level: 1, parent: 1, children: [4] },
+      { id: 3, name: "Validate", status: "Active", level: 1, parent: 1, children: [4] },
+      { id: 4, name: "Output", status: "Done", level: 2, parent: 2, children: [] },
+    ],
+    connections: [
+      { source: 1, sourceHandle: "output", target: 2, targetHandle: "input" },
+      { source: 1, sourceHandle: "output", target: 3, targetHandle: "input" },
+      { source: 2, sourceHandle: "output", target: 4, targetHandle: "input" },
+      { source: 3, sourceHandle: "output", target: 4, targetHandle: "input" },
+    ],
+    onEdit: (node) =&gt; alert(`Edit node: ${node.name}`),
+  });
+
+  host.add(nodes);
+  return host;
+</code></pre>
+<div class="doc-live-demo" data-live-demo="NodeGraph/nodegraph" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

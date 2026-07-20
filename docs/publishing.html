@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publishing — DrawUI</title>
+  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <link rel="stylesheet" href="./styles/themes/dark.css">
+  <link rel="stylesheet" href="./styles/themes/light.css">
+  <link rel="stylesheet" href="./examples/examples.css">
+  <link rel="stylesheet" href="./doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a href="./generated/typedoc/index.html">TypeDoc</a>
+      <a href="./generated/component-index.html">Component index</a>
+      <a href="./SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="publishinganddistribution">Publishing and distribution</h1>
+<p>DrawUI ships as source ESM plus bundled browser builds under <code>docs/dist/</code>. This page covers npm packaging, GitHub Pages, and CDN-style consumption.</p>
+<h2 id="packagecontents">Package contents</h2>
+<p>The published npm package includes:</p>
+<ul>
+<li><code>src/</code> — ESM source entrypoints</li>
+<li><code>styles/</code> — public CSS entrypoints (<code>core.css</code>, <code>tokens.css</code>, themes, etc.)</li>
+<li><code>types/index.d.ts</code> — TypeScript declarations</li>
+<li><code>docs/</code> — examples, generated reference, and GitHub Pages assets</li>
+</ul>
+<h2 id="entrypoints">Entrypoints</h2>
+<p>Import from the package entry and CSS subpaths:</p>
+<pre><code class="js language-js">import { DrawUI, FloatingWindow, Button, RadialMenu } from "drawui";
+import "drawui/styles/core.css";
+import "drawui/styles/icons.css";
+</code></pre>
+<p>See the generated <a href="./generated/component-index.html">component index</a> for the full export inventory.</p>
+<h2 id="builds">Builds</h2>
+<table>
+<thead>
+<tr>
+<th>Script</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run build</code></td>
+<td><code>docs/dist/drawui.min.js</code>, <code>drawui.full.js</code>, CSS bundles, import map</td>
+</tr>
+<tr>
+<td><code>npm run build:catalog</code></td>
+<td><code>docs/examples/components/catalog.json</code></td>
+</tr>
+<tr>
+<td><code>npm run docs</code></td>
+<td><code>docs/generated/</code> reference pages + TypeDoc HTML</td>
+</tr>
+</tbody>
+</table>
+<p>Run <code>npm run build</code> before serving examples or publishing docs assets.</p>
+<h2 id="githubpages">GitHub Pages</h2>
+<p>Set the site source to the <code>/docs</code> folder. The landing page is <a href="./index.html"><code>index.html</code></a>.</p>
+<p>Local preview:</p>
+<pre><code class="powershell language-powershell">npm run examples
+</code></pre>
+<p>Then open http://localhost:5173/</p>
+<h2 id="fullpeerimportmap">Full peer import map</h2>
+<p>The full build (<code>drawui.full.js</code>) externalizes peer dependencies. Browser demos load peers from jsDelivr using <a href="./dist/importmap.full.json"><code>docs/dist/importmap.full.json</code></a>:</p>
+<ul>
+<li><code>chart.js</code></li>
+<li><code>ag-grid-community</code></li>
+<li><code>jsgantt-improved</code></li>
+<li><code>showdown</code></li>
+<li><code>@highlightjs/cdn-assets</code></li>
+</ul>
+<p>Example (<code>full.html</code> pattern):</p>
+<pre><code class="html language-html">&lt;link rel="stylesheet" href="../../dist/drawui.full.css"&gt;
+&lt;script type="importmap" src="../../dist/importmap.full.json"&gt;&lt;/script&gt;
+&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "drawui": "../../dist/drawui.full.js"
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p>After npm publish, swap paths for CDN URLs:</p>
+<pre><code class="html language-html">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/drawui@0.2.0/dist/drawui.min.css"&gt;
+&lt;script type="module"&gt;
+  import { DrawUI } from "https://cdn.jsdelivr.net/npm/drawui@0.2.0/dist/drawui.min.js";
+&lt;/script&gt;
+</code></pre>
+<h2 id="localvendorsync">Local vendor sync</h2>
+<p>During development, <code>npm run build</code> can copy <code>docs/dist/*</code> and <code>types/index.d.ts</code> to a local vendor directory when <code>scripts/local-vendor.mjs</code> exists (see <code>scripts/local-vendor.example.mjs</code>).</p>
+<h2 id="documentationworkflow">Documentation workflow</h2>
+<ol>
+<li>Edit API metadata in <code>src/api/registry.json</code> (status, entrypoints, emitted classes, notes).</li>
+<li>Add or update JSDoc on source exports where method-level detail is needed.</li>
+<li>Run <code>npm run docs</code> to regenerate markdown sources and browser-ready <code>.html</code> pages under <code>docs/</code>.</li>
+<li>Run <code>npm run check:docs</code> in CI to ensure generated output is up to date.</li>
+</ol>
+<p>Manual docs (not generated):</p>
+<ul>
+<li><a href="./styling.html">Styling guide</a></li>
+<li><a href="./getting-started.html">Getting started</a></li>
+<li><a href="./SKILL.html">AI usage guide</a></li>
+</ul></main>
+  </div>
+</body>
+</html>

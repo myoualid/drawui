@@ -1,0 +1,1195 @@
+{
+  "factoryNotes": [
+    {
+      "api": "new Grid()",
+      "notes": "Package-owned CSS grid layout primitive."
+    },
+    {
+      "api": "new IconButton(label, options)",
+      "notes": "Tile-style action button without module-local styling."
+    }
+  ],
+  "symbols": [
+    {
+      "name": "Control",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Base chainable wrapper around a DOM node."
+    },
+    {
+      "name": "Hyperlink",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Link"
+      ],
+      "notes": "Anchor wrapper with optional icon and external-target behavior."
+    },
+    {
+      "name": "Image",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Image"
+      ],
+      "notes": "Image wrapper around `img`."
+    },
+    {
+      "name": "Svg",
+      "category": "text",
+      "status": "experimental",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "SVG"
+      ],
+      "notes": "Supports fetch, clone, and ID retargeting for reusable SVGs."
+    },
+    {
+      "name": "Paragraph",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Semantic `p` wrapper."
+    },
+    {
+      "name": "Heading",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Semantic heading wrapper (`h1`–`h6` via level option)."
+    },
+    {
+      "name": "Span",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Generic inline wrapper."
+    },
+    {
+      "name": "Container",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Generic block wrapper."
+    },
+    {
+      "name": "StackPanel",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Row",
+        "Column"
+      ],
+      "notes": "Row/column layout primitive used throughout panel layouts (`new StackPanel({ isVertical: false|true })`)."
+    },
+    {
+      "name": "ScrollViewer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Scrollable container wrapper."
+    },
+    {
+      "name": "Grid",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Grid"
+      ],
+      "notes": "Grid layout primitive with explicit column or auto-fit helpers."
+    },
+    {
+      "name": "Rectangle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Rectangle"
+      ],
+      "notes": "Generic panel container."
+    },
+    {
+      "name": "Label",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Label wrapper for form controls."
+    },
+    {
+      "name": "Form",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Form wrapper with submit helpers."
+    },
+    {
+      "name": "TextBlock",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "TextBlock"
+      ],
+      "notes": "Inline text primitive."
+    },
+    {
+      "name": "Caption",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Thin `small` wrapper."
+    },
+    {
+      "name": "Title",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Title"
+      ],
+      "notes": "Panel-style title text for section headers."
+    },
+    {
+      "name": "Disclaimer",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "disclaimer"
+      ],
+      "notes": "Muted helper or legal copy."
+    },
+    {
+      "name": "Code",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Code"
+      ],
+      "notes": "Inline code / API signature chip."
+    },
+    {
+      "name": "Kbd",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "kbd"
+      ],
+      "notes": "Keyboard shortcut chip."
+    },
+    {
+      "name": "Badge",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Badge"
+      ],
+      "notes": "Compact status / label badge."
+    },
+    {
+      "name": "Canvas",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Canvas"
+      ],
+      "notes": "HTML canvas wrapper for custom drawing."
+    },
+    {
+      "name": "Card",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Card"
+      ],
+      "notes": "Elevated surface shell (`Rectangle` + `Card` class)."
+    },
+    {
+      "name": "Spacer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Vertical spacer between stacked items."
+    },
+    {
+      "name": "HSpacer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Horizontal spacer between inline or row items."
+    },
+    {
+      "name": "Handle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "drag-handle",
+        "resize-handle"
+      ],
+      "notes": "Drag / resize handle element (`new Handle(\"drag\"|\"resize\")`)."
+    },
+    {
+      "name": "TabItem",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Tab"
+      ],
+      "notes": "Tab chrome created by `TabView.addTab()` — not usually constructed directly."
+    },
+    {
+      "name": "ToolbarButton",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Button"
+      ],
+      "notes": "Compact button for toolbars and field-control wrappers."
+    },
+    {
+      "name": "center",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "centered"
+      ],
+      "notes": "Adds the shared `centered` class to a control."
+    },
+    {
+      "name": "InputText",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputText"
+      ],
+      "notes": "Single-line input with editor-style propagation guards."
+    },
+    {
+      "name": "InputSearch",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputSearch"
+      ],
+      "notes": "Search input variant of `InputText`."
+    },
+    {
+      "name": "Icon",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "material-symbols-outlined",
+        "Icon"
+      ],
+      "notes": "Material Symbols icon span."
+    },
+    {
+      "name": "InputTextArea",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputTextArea"
+      ],
+      "notes": "Multiline editor primitive with tab insertion support."
+    },
+    {
+      "name": "InputDropdown",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputDropdown"
+      ],
+      "notes": "Native select wrapper."
+    },
+    {
+      "name": "Checkbox",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Checkbox"
+      ],
+      "notes": "Checkbox input primitive."
+    },
+    {
+      "name": "InputColor",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputColor"
+      ],
+      "notes": "Color input primitive."
+    },
+    {
+      "name": "InputNumber",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputNumber"
+      ],
+      "notes": "Numeric input with drag and keyboard adjustments."
+    },
+    {
+      "name": "InputInteger",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputNumber"
+      ],
+      "notes": "Integer-specialized numeric input."
+    },
+    {
+      "name": "Slider",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Slider"
+      ],
+      "notes": "Range track plus numeric field for continuous values."
+    },
+    {
+      "name": "LineBreak",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "LineBreak"
+      ],
+      "notes": "Thin `br` wrapper."
+    },
+    {
+      "name": "Line",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Line"
+      ],
+      "notes": "Divider wrapper around `hr`."
+    },
+    {
+      "name": "Button",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Button"
+      ],
+      "notes": "Button primitive with optional prepended icon."
+    },
+    {
+      "name": "IconButton",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Button",
+        "SquareButton",
+        "SquareButton-label",
+        "SquareButton-meta",
+        "Active",
+        "Button--active"
+      ],
+      "notes": "Tile-style button for icon + label + meta content."
+    },
+    {
+      "name": "RibbonButton",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Button",
+        "RibbonButton",
+        "RibbonButton-label",
+        "Active",
+        "selected"
+      ],
+      "notes": "Borderless icon+label control with tab-style accent when selected. Use in RibbonBar."
+    },
+    {
+      "name": "ProgressBar",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Native progress wrapper."
+    },
+    {
+      "name": "TabView",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "TabView",
+        "TabView-tabs",
+        "TabView-content",
+        "Tab",
+        "Tab-float",
+        "selected"
+      ],
+      "notes": "Self-managed tab container."
+    },
+    {
+      "name": "InputList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputList",
+        "Active"
+      ],
+      "notes": "Selectable list container."
+    },
+    {
+      "name": "InputListItem",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputListItem"
+      ],
+      "notes": "Clickable row for `InputList`."
+    },
+    {
+      "name": "InputDate",
+      "category": "inputs",
+      "status": "experimental",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "InputDate",
+        "InputDate-input",
+        "InputDate-calendar"
+      ],
+      "notes": "Composite date and time picker."
+    },
+    {
+      "name": "ProgressRing",
+      "category": "inputs",
+      "status": "experimental",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "spinner-container",
+        "spinner-wrapper",
+        "spinner",
+        "spinner-text",
+        "spinner-percentage"
+      ],
+      "notes": "Overlay spinner with text and percentage states."
+    },
+    {
+      "name": "Tooltip",
+      "category": "inputs",
+      "status": "experimental",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Tooltip",
+        "Tooltip--{theme}",
+        "visible"
+      ],
+      "notes": "Hover tooltip with theme variants."
+    },
+    {
+      "name": "DrawUI",
+      "category": "facade",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Main facade for primitives and composed helpers. Emitted classes vary by factory method."
+    },
+    {
+      "name": "ContentPanel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "ContentPanel",
+        "Rectangle",
+        "Header",
+        "PanelContent",
+        "RibbonBar"
+      ],
+      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content."
+    },
+    {
+      "name": "FloatingDialog",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "ContentPanel",
+        "Header",
+        "PanelContent",
+        "RibbonBar"
+      ],
+      "notes": "Lightweight floating panel built on `ContentPanel`."
+    },
+    {
+      "name": "WorkspacePanel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "WorkspacePanel",
+        "CollapsiblePanel",
+        "ContentPanel",
+        "Header",
+        "PanelContent",
+        "RibbonBar"
+      ],
+      "notes": "Collapsible ContentPanel mounted as a tab in a WorkspaceRegion (left/right/bottom)."
+    },
+    {
+      "name": "Header",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Header"
+      ],
+      "notes": "Shared title/icon/actions row for panel chrome (`ContentPanel`, `CollapsiblePanel`, `WorkspacePanel`)."
+    },
+    {
+      "name": "RibbonBar",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "RibbonBar"
+      ],
+      "notes": "Horizontal ribbon / action row for panel footers or the app shell. Pair with RibbonButton."
+    },
+    {
+      "name": "Flyout",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Flyout",
+        "Flyout-header",
+        "Flyout-icon",
+        "Flyout-title",
+        "Flyout-content",
+        "Flyout-search",
+        "expanded",
+        "Badge",
+        "centered"
+      ],
+      "notes": "Expandable tool panel with optional search row."
+    },
+    {
+      "name": "CollapsiblePanel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "CollapsiblePanel",
+        "CollapsiblePanel-toggle",
+        "ContentPanel",
+        "Header",
+        "PanelContent",
+        "collapsed"
+      ],
+      "notes": "ContentPanel with a header collapse toggle."
+    },
+    {
+      "name": "InstructionPanel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Titled panel of keyboard / pointer instruction rows."
+    },
+    {
+      "name": "InstructionLine",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "One keyboard shortcut row: key chip + description."
+    },
+    {
+      "name": "SplitContainer",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "split-container"
+      ],
+      "notes": "Flex host for horizontal/vertical split panes."
+    },
+    {
+      "name": "Toast",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Toast",
+        "Toast--{type}",
+        "Toast--fade-out",
+        "Toast-close",
+        "status-bar",
+        "status-bar-fill"
+      ],
+      "notes": "Transient notification (`new Toast(message, type)`) or progress overlay (`toast.show` / `update` / `hide`)."
+    },
+    {
+      "name": "Operator",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Operator"
+      ],
+      "notes": "Icon-only operator control shell."
+    },
+    {
+      "name": "LabeledBoxItem",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "workspace-menu-item"
+      ],
+      "notes": "Checkbox + icon + label menu row for workspace menus."
+    },
+    {
+      "name": "WorkspaceLayout",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "World",
+        "workspace-layout",
+        "WorkspaceStack"
+      ],
+      "notes": "Applies workspace grid, resizers, and stacked CollapsiblePanel / WorkspacePanel roots. Undock transfers content into a FloatingWindow."
+    },
+    {
+      "name": "buildWorldFromConfig",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "World"
+      ],
+      "notes": "Build the `#World` DOM tree from declarative config before `WorkspaceLayout.init()`."
+    },
+    {
+      "name": "createDefaultWorldConfig",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Default workspace shell config with stable region ids for `WorkspaceLayout`."
+    },
+    {
+      "name": "FloatingWindow",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "FloatingWindow",
+        "FloatingWindow-header",
+        "FloatingWindow-content",
+        "circle",
+        "pos-btn",
+        "green",
+        "red",
+        "Row",
+        "centered-vertical",
+        "justify-between",
+        "fill-width",
+        "fill-height"
+      ],
+      "notes": "Free-floating window with docking controls."
+    },
+    {
+      "name": "NavigationList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "dui-drill",
+        "dui-drill-header",
+        "dui-drill-item",
+        "NavigableList"
+      ],
+      "notes": "One-level-at-a-time hierarchical navigation with back control."
+    },
+    {
+      "name": "TreeView",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "dui-tree",
+        "dui-tree-item",
+        "dui-tree-toggle",
+        "dui-tree-label",
+        "dui-tree-children",
+        "is-expanded",
+        "is-selected"
+      ],
+      "notes": "Expandable nested tree; same data options shape as `NavigationList`."
+    },
+    {
+      "name": "Markdown",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Markdown"
+      ],
+      "notes": "Markdown (or sanitized HTML) renderer. Min build uses the built-in converter; full build uses Showdown + Highlight.js when those peers are present."
+    },
+    {
+      "name": "Chart",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Rectangle",
+        "chart-ui-component"
+      ],
+      "notes": "Chart.js-backed visualization panel used by `DrawUI.Chart()`."
+    },
+    {
+      "name": "DataGrid",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Rectangle",
+        "ag-grid-custom"
+      ],
+      "notes": "AG Grid-backed spreadsheet panel used by `DrawUI.Spreadsheet()`."
+    },
+    {
+      "name": "GanttChart",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "Rectangle",
+        "gantt-container"
+      ],
+      "notes": "jsGantt-improved-backed scheduling chart."
+    },
+    {
+      "name": "SortableList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "reorderable-list",
+        "reorderable-item",
+        "drag-handle",
+        "reorderable-placeholder",
+        "is-dragging",
+        "InputList",
+        "InputListItem",
+        "Checkbox"
+      ],
+      "notes": "Drag-and-drop reorder list with optional checkboxes."
+    },
+    {
+      "name": "RadialMenu",
+      "category": "overlays",
+      "status": "experimental",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Radial interaction overlay."
+    },
+    {
+      "name": "AppShell",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "AppShell",
+        "AppShell-sidebar",
+        "AppShell-main"
+      ],
+      "notes": "SPA host with sidebar navigation and hash routing."
+    },
+    {
+      "name": "NavigationView",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "NavigationView",
+        "NavigationView-sidebar",
+        "NavigationView-content"
+      ],
+      "notes": "Sidebar + content navigation scaffold."
+    },
+    {
+      "name": "PropertyGrid",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "PropertyGrid",
+        "PropertyGrid-row"
+      ],
+      "notes": "Key/value property editor grid."
+    },
+    {
+      "name": "NodeGraph",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "dui-node-graph",
+        "dui-node",
+        "dui-node-port"
+      ],
+      "notes": "Interactive node graph editor."
+    },
+    {
+      "name": "StatusBar",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "StatusBar"
+      ],
+      "notes": "Application status bar with message regions."
+    },
+    {
+      "name": "ThemeToggle",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "ThemeToggle"
+      ],
+      "notes": "Light/dark theme toggle control."
+    },
+    {
+      "name": "PropertyGridRow",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [
+        "PropertyGrid-row"
+      ],
+      "notes": "Single row helper for `PropertyGrid`."
+    },
+    {
+      "name": "ICONS",
+      "category": "facade",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Material Symbols icon name constants."
+    },
+    {
+      "name": "makeDraggable",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Attaches drag behavior to a panel via a header handle element."
+    },
+    {
+      "name": "makeResizable",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Attaches edge resize behavior to a floating panel."
+    },
+    {
+      "name": "makeFlexResizer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Creates a pointer-driven flex size resizer between siblings."
+    },
+    {
+      "name": "createSplitResizer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Builds a resizer control for a split-pane child index."
+    },
+    {
+      "name": "createLayoutResizerHandle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Creates a left/right/bottom workspace layout resizer handle."
+    },
+    {
+      "name": "buildWorkspaceDockHandlers",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "drawui"
+      ],
+      "emits": [],
+      "notes": "Returns dock/undock handlers for WorkspacePanel chrome wired to a WorkspaceLayout."
+    }
+  ],
+  "cssEntryPoints": [
+    {
+      "path": "styles/core.css",
+      "status": "stable",
+      "purpose": "Imports token, reset, primitive, and generic component layers."
+    },
+    {
+      "path": "styles/tokens.css",
+      "status": "stable",
+      "purpose": "Package-owned `--dui-*` design tokens."
+    },
+    {
+      "path": "styles/reset.css",
+      "status": "stable",
+      "purpose": "Scoped reset helpers."
+    },
+    {
+      "path": "styles/primitives.css",
+      "status": "stable",
+      "purpose": "Base primitive classes."
+    },
+    {
+      "path": "styles/components.css",
+      "status": "stable",
+      "purpose": "Generic component classes."
+    },
+    {
+      "path": "styles/icons.css",
+      "status": "stable",
+      "purpose": "Material Symbols stylesheet for icon-emitting components."
+    },
+    {
+      "path": "styles/themes/dark.css",
+      "status": "stable",
+      "purpose": "Dark theme token values."
+    },
+    {
+      "path": "styles/themes/light.css",
+      "status": "stable",
+      "purpose": "Light theme token values."
+    }
+  ]
+}

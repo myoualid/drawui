@@ -1,0 +1,16 @@
+/* Full-viewport workspace template demo (host chrome only). */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--dui-color-bg);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
+}
+
+.templates-panel-body {
+  box-sizing: border-box;
+  gap: inherit;
+}
+

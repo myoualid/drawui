@@ -50,32 +50,39 @@
   </div>
 
   <script type="module">
-    import { DrawUI, FloatingPanel } from "drawui";
+    import {
+      Markdown,
+      FloatingWindow,
+      StackPanel,
+      Heading,
+      TextBlock,
+      Button,
+    } from "drawui";
 
-    const panel = new FloatingPanel({
+    const panel = new FloatingWindow({
       title: "DrawUI Min",
       position: "right",
       width: "320px",
     });
 
-    const content = DrawUI.column()
+    const content = new StackPanel({ isVertical: true })
       .gap("0.75rem")
-      .add(DrawUI.h3("Hello DrawUI"))
-      .add(DrawUI.text("Panels, primitives, and basic markdown — zero peer packages."))
+      .add(new Heading(3, "Hello DrawUI"))
+      .add(new TextBlock("Panels, primitives, and basic markdown — zero peer packages."))
       .add(
-        DrawUI.markdown(
+        new Markdown(
           "## Markdown works\n\nBuilt-in converter: **bold**, *italic*, and `code`.\n\n- No Showdown\n- No Highlight.js",
         ),
       )
       .add(
-        DrawUI.row()
+        new StackPanel({ isVertical: false })
           .gap("0.5rem")
           .add(
-            DrawUI.button("Primary").addClass("primary").onClick(() => {
+            new Button("Primary").addClass("primary").onClick(() => {
               alert("DrawUI min build");
             }),
           )
-          .add(DrawUI.button("Secondary").addClass("secondary")),
+          .add(new Button("Secondary").addClass("secondary")),
       );
 
     panel.setContent(content);

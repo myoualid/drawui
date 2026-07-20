@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styling — DrawUI</title>
+  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <link rel="stylesheet" href="./styles/themes/dark.css">
+  <link rel="stylesheet" href="./styles/themes/light.css">
+  <link rel="stylesheet" href="./examples/examples.css">
+  <link rel="stylesheet" href="./doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a href="./generated/typedoc/index.html">TypeDoc</a>
+      <a href="./generated/component-index.html">Component index</a>
+      <a href="./SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="drawuijsstylingguide">DrawUI.js Styling Guide</h1>
+<h2 id="cssentrypoints">CSS Entry Points</h2>
+<p>DrawUI publishes the following CSS files as package API:</p>
+<ul>
+<li><code>drawui/styles/core.css</code></li>
+<li><code>drawui/styles/icons.css</code></li>
+<li><code>drawui/styles/tokens.css</code></li>
+<li><code>drawui/styles/reset.css</code></li>
+<li><code>drawui/styles/primitives.css</code></li>
+<li><code>drawui/styles/components.css</code></li>
+<li><code>drawui/styles/themes/dark.css</code></li>
+<li><code>drawui/styles/themes/light.css</code></li>
+</ul>
+<p><code>drawui/styles/core.css</code> is the normal starting point. It imports the token, reset, primitive, and component layers in the supported package order.</p>
+<p>DrawUI core does <strong>not</strong> style <code>html</code> / <code>body</code> or zero page margins. Full-viewport app shells should import the optional host layer (or set equivalent rules themselves):</p>
+<pre><code class="js language-js">import "drawui/styles/core.css";
+import "drawui/styles/app-host.css";
+import "drawui/styles/themes/dark.css";
+</code></pre>
+<h2 id="tokens">Tokens</h2>
+<p>All package styles use the <code>--dui-*</code> namespace. Tokens are defined in <code>drawui/styles/tokens.css</code> and overridden by theme files.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Variables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core surfaces</td>
+<td><code>--dui-color-bg</code>, <code>--dui-color-surface</code>, <code>--dui-color-surface-hover</code></td>
+</tr>
+<tr>
+<td>Text and semantic colors</td>
+<td><code>--dui-color-text</code>, <code>--dui-color-text-muted</code>, <code>--dui-color-danger</code>, <code>--dui-color-warning</code>, <code>--dui-color-success</code></td>
+</tr>
+<tr>
+<td>Accent, border, and focus</td>
+<td><code>--dui-color-border</code>, <code>--dui-color-focus</code>, <code>--dui-color-accent</code>, <code>--dui-color-accent-soft</code>, <code>--dui-focus-ring</code></td>
+</tr>
+<tr>
+<td>Typography</td>
+<td><code>--dui-font-ui</code>, <code>--dui-font-mono</code>, <code>--dui-font-size-xs</code>, <code>--dui-font-size-sm</code>, <code>--dui-font-size-md</code>, <code>--dui-font-size-lg</code></td>
+</tr>
+<tr>
+<td>Spacing</td>
+<td><code>--dui-space-1</code>, <code>--dui-space-2</code>, <code>--dui-space-3</code>, <code>--dui-space-4</code>, <code>--dui-space-5</code>, <code>--dui-space-6</code></td>
+</tr>
+<tr>
+<td>Radius, elevation, motion</td>
+<td><code>--dui-radius</code> (single corner radius for all components), <code>--dui-shadow-overlay</code>, <code>--dui-transition-fast</code></td>
+</tr>
+<tr>
+<td>App shell layout</td>
+<td><code>--dui-headerbar-height</code>, <code>--dui-sidebar-width</code>, <code>--dui-shell-margin</code>, <code>--dui-config-width</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="publicselectorrules">Public Selector Rules</h2>
+<ul>
+<li>Use <code>dui-*</code> names for new public package selectors.</li>
+<li>Prefer token references over hard-coded colors, spacing, and radius values.</li>
+<li>Keep package CSS scoped to generic library surfaces rather than host-page layout.</li>
+</ul>
+<h2 id="themes">Themes</h2>
+<p>Import one theme stylesheet after <code>drawui/styles/core.css</code>:</p>
+<pre><code class="js language-js">import "drawui/styles/core.css";
+import "drawui/styles/themes/dark.css";
+</code></pre>
+<p>Theme files should override token values, not redefine component structure.</p>
+<h2 id="icons">Icons</h2>
+<p>Components that emit Material Symbols markup require <code>drawui/styles/icons.css</code>.</p>
+<pre><code class="js language-js">import "drawui/styles/icons.css";
+</code></pre>
+<h2 id="optionalcomponentstyles">Optional component styles</h2>
+<p>Full-build demos may link additional styles for peer-dependent components:</p>
+<ul>
+<li><code>drawui/styles/components/nodes.css</code> — node graph editor</li>
+<li><code>drawui/styles/components/hud.css</code> — HUD labels in node meta</li>
+<li><code>drawui/styles/components/pie-menu.css</code> — radial menu overlay</li>
+<li><code>drawui/styles/components/scheduling.css</code> — gantt/scheduling views</li>
+<li><code>drawui/styles/components/ag-grid-custom.css</code> — spreadsheet grid theming</li>
+</ul>
+<p>Spinner styles ship via <code>drawui/styles/core.css</code> (imported through <code>components.css</code>).</p></main>
+  </div>
+</body>
+</html>

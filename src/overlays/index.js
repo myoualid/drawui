@@ -1,2 +1,2 @@
-export { FloatingPanel } from "./FloatingPanel.js";
-export { PieMenu } from "./PieMenu.js";
+export { FloatingWindow } from "./FloatingWindow.js";
+export { makeDraggable, makeResizable } from "./drag.js";

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI usage guide — DrawUI</title>
+  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <link rel="stylesheet" href="./styles/themes/dark.css">
+  <link rel="stylesheet" href="./styles/themes/light.css">
+  <link rel="stylesheet" href="./examples/examples.css">
+  <link rel="stylesheet" href="./doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a href="./generated/typedoc/index.html">TypeDoc</a>
+      <a href="./generated/component-index.html">Component index</a>
+      <a href="./SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="drawuijsaiusageguide">DrawUI.js AI Usage Guide</h1>
+<p>This guide is for coding agents working in DrawUI itself or in applications that consume the package.</p>
+<h2 id="purpose">Purpose</h2>
+<p>DrawUI.js is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
+<h2 id="importrules">Import Rules</h2>
+<p>Use only exported package paths:</p>
+<pre><code class="js language-js">import { DrawUI, FloatingWindow, Control, Container, Button, RadialMenu } from "drawui";
+import "drawui/styles/core.css";
+import "drawui/styles/icons.css";
+</code></pre>
+<p>Do not import from package-internal files unless the path is exported in <code>drawUI/package.json</code>.</p>
+<h2 id="componentselection">Component Selection</h2>
+<ul>
+<li>Use <code>new StackPanel({ isVertical: false })</code> / <code>{ isVertical: true }</code> for simple layouts.</li>
+<li>Use <code>ContentPanel</code> for fixed header, content, and footer regions.</li>
+<li>Use <code>FloatingWindow</code> for draggable or dockable floating windows.</li>
+<li>Use <code>CollapsiblePanel</code> for accordion content inside another surface.</li>
+<li>Use <code>Flyout</code> for standalone expandable tool panels.</li>
+<li>Use <code>new TabView()</code> for local tab strips.</li>
+<li>Use <code>RibbonBar</code> + <code>RibbonButton</code> for the app shell ribbon (borderless icon+label, tab-style selection). Prefer <code>IconButton</code> for bordered tile actions.</li>
+<li>Use <code>SortableList</code> only when order is user-editable.</li>
+<li>Use <code>NavigationList</code> for one-level-at-a-time hierarchical browsing.</li>
+<li>Use <code>TreeView</code> for nested expand/collapse trees (same <code>getChildren</code> / <code>getLabel</code> data shape as drill-down).</li>
+<li>Use <code>RadialMenu</code> only when radial interaction is a deliberate fit for the workflow.</li>
+</ul>
+<h2 id="stylingrules">Styling Rules</h2>
+<ul>
+<li>Package CSS uses <code>--dui-*</code> tokens only.</li>
+<li>New public selectors should use the <code>dui-*</code> namespace.</li>
+<li>Import <code>drawui/styles/icons.css</code> when using icon-emitting components.</li>
+<li>Keep application layout selectors, module IDs, and product-specific styles out of the package CSS entrypoints.</li>
+</ul>
+<h2 id="accessibilitychecklist">Accessibility Checklist</h2>
+<p>Before adding or changing a component:</p>
+<ul>
+<li>Prefer semantic HTML elements.</li>
+<li>Make icon-only controls expose labels through <code>aria-label</code> or visible text.</li>
+<li>Preserve keyboard focus styles with <code>:focus-visible</code>.</li>
+<li>Reflect selection state in DOM state, class state, or ARIA state.</li>
+<li>Provide <code>disabled</code> behavior where a control can become unavailable.</li>
+<li>Add <code>dispose()</code> if the component owns global listeners, timers, observers, or external mounts.</li>
+</ul>
+<h2 id="do">Do</h2>
+<ul>
+<li>Add JSDoc typedefs for non-trivial options objects.</li>
+<li>Document public components with JSDoc descriptions and <code>@example</code> blocks (API pages are generated from these).</li>
+<li>Mark runnable examples with <code>// live</code> as the first line and <code>return</code> a Control (or DOM node) for an inline preview (avoid <code>@live</code> — TypeDoc treats <code>@…</code> as tags).</li>
+<li>Register public components in <code>src/api/registry.json</code> (status, entrypoints, emitted classes).</li>
+<li>Return <code>this</code> from mutating methods.</li>
+<li>Expose <code>.dom</code> consistently.</li>
+<li>Document emitted CSS classes for public components.</li>
+<li>Keep package examples aligned with exported package paths.</li>
+</ul>
+<h2 id="donot">Do Not</h2>
+<ul>
+<li>Do not make DrawUI depend on host-application runtime objects.</li>
+<li>Do not move app-specific CSS into package core layers.</li>
+<li>Do not add framework dependencies for core components.</li>
+<li>Do not introduce hidden global DOM side effects without a cleanup path.</li>
+</ul>
+<h2 id="knowngotchas">Known Gotchas</h2>
+<ul>
+<li>Some overlays and floating surfaces mount or listen outside their root element and still require careful lifecycle handling.</li>
+<li>Material Symbols are the current icon mechanism, so icon-emitting examples should import <code>drawui/styles/icons.css</code>.</li>
+</ul></main>
+  </div>
+</body>
+</html>

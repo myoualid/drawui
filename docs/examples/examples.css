@@ -1,7 +1,11 @@
-/* Standalone example pages — override app-shell scroll lock from styles/rules.css */
+/* Standalone example pages — host chrome (core DrawUI CSS does not style html/body). */
 html,
 body {
   height: auto;
   min-height: 100%;
+  margin: 0;
   overflow: auto;
+  background: var(--dui-color-bg);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
 }

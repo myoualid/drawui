@@ -1,6 +1,6 @@
 {
   "name": "drawui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-free DOM UI primitives and components for ESM applications.",
   "type": "module",
   "main": "./src/index.js",
@@ -21,6 +21,7 @@
     "styles/primitives.css",
     "styles/components.css",
     "styles/rules.css",
+    "styles/app-host.css",
     "styles/base-components.css",
     "styles/structure.css",
     "styles/components/spinner.css",
@@ -44,24 +45,10 @@
       "import": "./src/index.js",
       "default": "./src/index.js"
     },
-    "./min": {
-      "types": "./types/index.d.ts",
-      "import": "./src/core.js",
-      "default": "./src/core.js"
-    },
-    "./core": {
-      "types": "./types/index.d.ts",
-      "import": "./src/core.js",
-      "default": "./src/core.js"
-    },
-    "./primitives": "./src/primitives/index.js",
-    "./components": "./src/components/index.js",
-    "./layout": "./src/layout/index.js",
-    "./overlays": "./src/overlays/index.js",
     "./utils/markdown": "./src/utils/markdown.js",
-    "./utils/panel-resizer": "./src/utils/panel-resizer.js",
-    "./utils/layout-resizer": "./src/utils/layout-resizer.js",
-    "./utils/workspace-panel-dock": "./src/utils/workspace-panel-dock.js",
+    "./utils/flexResizer": "./src/utils/flexResizer.js",
+    "./overlays/drag": "./src/overlays/drag.js",
+    "./workspace/dock": "./src/workspace/dock.js",
     "./vendor/fonts/material-symbols-outlined.css": "./vendor/fonts/material-symbols-outlined.css",
     "./styles/core.css": "./styles/core.css",
     "./styles/icons.css": "./styles/icons.css",
@@ -72,6 +59,7 @@
     "./styles/structure.css": "./styles/structure.css",
     "./styles/base-components.css": "./styles/base-components.css",
     "./styles/rules.css": "./styles/rules.css",
+    "./styles/app-host.css": "./styles/app-host.css",
     "./styles/components/spinner.css": "./styles/components/spinner.css",
     "./styles/components/nodes.css": "./styles/components/nodes.css",
     "./styles/components/hud.css": "./styles/components/hud.css",
@@ -84,12 +72,15 @@
   },
   "scripts": {
     "build": "node ./scripts/build.mjs",
-    "build:source-check": "node --input-type=module -e \"import './src/core.js'; import './src/index.js'\"",
+    "build:source-check": "node --input-type=module -e \"import './src/index.js'\"",
     "examples": "npm run build && npx --yes serve docs -p 5173",
     "build:catalog": "node ./scripts/generate-min-catalog.mjs",
+    "docs:index": "node ./scripts/generate-docs.mjs",
+    "docs:api": "typedoc && node ./scripts/enhance-typedoc.mjs",
+    "docs": "npm run docs:index && npm run docs:api && npm run build:catalog",
+    "check:docs": "npm run docs && git diff --exit-code docs/generated",
     "check:entrypoints": "node ./scripts/check-entrypoints.mjs",
-    "check:package-contents": "node ./scripts/check-package-contents.mjs",
-    "lint:css": "stylelint styles/core.css styles/tokens.css styles/reset.css styles/primitives.css styles/components.css styles/rules.css styles/base-components.css styles/structure.css styles/themes/dark.css styles/themes/light.css styles/components/spinner.css"
+    "check:package-contents": "node ./scripts/check-package-contents.mjs"
   },
   "dependencies": {
     "@highlightjs/cdn-assets": "11.11.1",
@@ -106,6 +97,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "typedoc": "^0.28.5"
   }
 }

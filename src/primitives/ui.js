@@ -27,8 +27,16 @@
 /**
  * Base UI element wrapper for DOM elements with chainable methods.
  * All UI components extend this class.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * const el = document.createElement("span");
+ * el.textContent = "Wrapped DOM";
+ * return new Control(el);
+ *
+ * @category Layout
  */
-class UIElement {
+class Control {
   /**
    * @param {HTMLElement} dom - The DOM element to wrap
    */
@@ -39,28 +47,28 @@ class UIElement {
 
   /**
    * Clone this element
-   * @returns {UIElement}
+   * @returns {Control}
    */
   clone() {
-    return new UIElement(this.dom.cloneNode(true));
+    return new Control(this.dom.cloneNode(true));
   }
 
   /**
-   * Add child UIElements
-   * @param {...UIElement} children - Elements to add
+   * Add child Controls
+   * @param {...Control} children - Elements to add
    * @returns {this}
    */
-  add() {
-    for (let i = 0; i < arguments.length; i++) {
-      const argument = arguments[i];
+  add(...children) {
+    for (let i = 0; i < children.length; i++) {
+      const argument = children[i];
 
-      if (argument instanceof UIElement) {
+      if (argument instanceof Control) {
         this.dom.appendChild(argument.dom);
       } else {
         console.error(
-          "UIElement:",
+          "Control:",
           argument,
-          "is not an instance of UIElement."
+          "is not an instance of Control."
         );
       }
     }
@@ -73,21 +81,21 @@ class UIElement {
   }
 
   /**
-   * Remove child UIElements
-   * @param {...UIElement} children - Elements to remove
+   * Remove child Controls
+   * @param {...Control} children - Elements to remove
    * @returns {this}
    */
-  remove() {
-    for (let i = 0; i < arguments.length; i++) {
-      const argument = arguments[i];
+  remove(...children) {
+    for (let i = 0; i < children.length; i++) {
+      const argument = children[i];
 
-      if (argument instanceof UIElement) {
+      if (argument instanceof Control) {
         this.dom.removeChild(argument.dom);
       } else {
         console.error(
-          "UIElement:",
+          "Control:",
           argument,
-          "is not an instance of UIElement."
+          "is not an instance of Control."
         );
       }
     }
@@ -305,7 +313,7 @@ class UIElement {
 
   /**
    * Get index of child element
-   * @param {UIElement} element
+   * @param {Control} element
    * @returns {number}
    */
   getIndexOfChild(element) {
@@ -399,7 +407,7 @@ properties.forEach(function (property) {
   const method =
     "set" + property.substring(0, 1).toUpperCase() + property.substring(1);
 
-  UIElement.prototype[method] = function () {
+  Control.prototype[method] = function () {
     this.setStyle(property, arguments);
 
     return this;
@@ -416,27 +424,45 @@ const events = [
   "Click",
   "DblClick",
   "Change",
-  "Input",
+  "InputText",
 ];
 
 events.forEach(function (event) {
   const method = "on" + event;
 
-  UIElement.prototype[method] = function (callback) {
+  Control.prototype[method] = function (callback) {
     this.dom.addEventListener(event.toLowerCase(), callback.bind(this));
 
     return this;
   };
 });
 
-class UISpan extends UIElement {
+/**
+ * Generic inline wrapper.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Span().setTextContent("Inline span");
+ *
+ * @category Text
+ */
+class Span extends Control {
   constructor() {
     super(document.createElement("span"));
   }
 }
 
 
-class UILink extends UIElement {
+/**
+ * Anchor with optional icon and external-target behavior.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Hyperlink("Open docs", "#", "open_in_new", false);
+ *
+ * @category Text
+ */
+class Hyperlink extends Control {
   constructor( name, link, icon, external = false ) {
     super(document.createElement("a"));
 
@@ -465,7 +491,7 @@ class UILink extends UIElement {
   }
 
   addIcon( icon ) {
-    this.icon = new UIIcon( icon );
+    this.icon = new Icon( icon );
 
     this.dom.insertBefore( this.icon.dom, this.dom.firstChild );
 
@@ -493,7 +519,21 @@ class UILink extends UIElement {
   }
 }
 
-class UIImage extends UIElement {
+/**
+ * Image wrapper around `img`.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Image(
+ *   "data:image/svg+xml," +
+ *     encodeURIComponent(
+ *       '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="8" fill="#70ba35"/></svg>',
+ *     ),
+ * ).setStyle("width", ["4rem"]);
+ *
+ * @category Text
+ */
+class Image extends Control {
   constructor(path) {
     super(document.createElement("img"));
 
@@ -520,7 +560,53 @@ class UIImage extends UIElement {
 
 }
 
-class UISVG extends UIElement {
+/**
+ * HTML canvas wrapper for custom drawing.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * const canvas = new Canvas();
+ * canvas.dom.width = 240;
+ * canvas.dom.height = 120;
+ * canvas
+ *   .setStyle("border", ["1px solid var(--dui-color-border, #444)"])
+ *   .setStyle("borderRadius", ["var(--dui-radius, 4px)"]);
+ * const ctx = canvas.dom.getContext("2d");
+ * ctx.fillStyle = "#70ba35";
+ * ctx.fillRect(16, 16, 88, 88);
+ * ctx.fillStyle = "#e8e8e8";
+ * ctx.font = "14px sans-serif";
+ * ctx.fillText("Canvas", 120, 70);
+ * return canvas;
+ *
+ * @category Text
+ */
+class Canvas extends Control {
+  constructor() {
+    super(document.createElement("canvas"));
+
+    this.dom.className = "Canvas";
+  }
+}
+
+/**
+ * SVG host with fetch, clone, and ID retargeting for reusable SVGs.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Svg(
+ *   "data:image/svg+xml," +
+ *     encodeURIComponent(
+ *       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
+ *     ),
+ * )
+ *   .setStyle("width", ["3rem"])
+ *   .setStyle("height", ["3rem"])
+ *   .setStyle("color", ["var(--dui-color-accent, #70ba35)"]);
+ *
+ * @category Text
+ */
+class Svg extends Control {
   constructor(pathOrElement) {
     super(document.createElement("div"));
 
@@ -626,7 +712,7 @@ class UISVG extends UIElement {
   }
 
   clone() {
-    const cloned = new UISVG(this);
+    const cloned = new Svg(this);
 
     // Give the clone unique ids to avoid conflicts when inserting multiple copies into the document
     const prefix = "aeco-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 6);
@@ -663,9 +749,9 @@ class UISVG extends UIElement {
     });
 
     // Replace references (url(#id), href="#id", xlink:href="#id", filter/url/clip-path/mask etc)
-    const allNodes = Array.from(svgEl.querySelectorAll('*'));
+    const allNodeGraph = Array.from(svgEl.querySelectorAll('*'));
 
-    allNodes.forEach((node) => {
+    allNodeGraph.forEach((node) => {
       for (const attr of Array.from(node.attributes || [])) {
         if (!attr.value) continue;
 
@@ -838,7 +924,16 @@ class UISVG extends UIElement {
 }
 
 
-class UIParagraph extends UIElement {
+/**
+ * Semantic `p` wrapper.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Paragraph("A short paragraph of body copy.");
+ *
+ * @category Text
+ */
+class Paragraph extends Control {
   constructor(text) {
     super(document.createElement("p"));
 
@@ -858,41 +953,90 @@ class UIParagraph extends UIElement {
   }
 }
 
-class UIDiv extends UIElement {
+/** @category Layout */
+class Container extends Control {
   constructor() {
     super(document.createElement("div"));
   }
 }
 
-class UIRow extends UIDiv {
-  constructor() {
+/**
+ * Flex row or column container.
+ *
+ * @example <caption>Horizontal</caption>
+ * // live
+ * return new StackPanel({ isVertical: false })
+ *   .gap("0.5rem")
+ *   .add(new Badge("Row"))
+ *   .add(new Badge("Layout"));
+ *
+ * @category Layout
+ */
+class StackPanel extends Container {
+  constructor(options = {}) {
     super();
-
-    this.dom.className = "Row";
+    const isVertical = options.isVertical !== false;
+    this.isVertical = isVertical;
+    this.dom.className = isVertical
+      ? "StackPanel Column"
+      : "StackPanel Row";
+    this.dom.style.display = "flex";
+    this.dom.style.flexDirection = isVertical ? "column" : "row";
   }
 
   gap(size) {
     this.dom.style.gap = size;
-
     return this;
   }
 }
 
-class UIColumn extends UIDiv {
-  constructor() {
+/** @category Layout */
+/**
+ * Scrollable viewport wrapper.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Container()
+ *   .setStyle("height", ["6rem"])
+ *   .setStyle("overflow", ["hidden"])
+ *   .add(
+ *     new ScrollViewer({ fill: true, scrollable: true }).add(
+ *       new StackPanel({ isVertical: true })
+ *         .gap("0.25rem")
+ *         .add(new TextBlock("Scrollable line 1"))
+ *         .add(new TextBlock("Scrollable line 2"))
+ *         .add(new TextBlock("Scrollable line 3"))
+ *         .add(new TextBlock("Scrollable line 4"))
+ *         .add(new TextBlock("Scrollable line 5")),
+ *     ),
+ *   );
+ *
+ * @category Layout
+ */
+class ScrollViewer extends Container {
+  constructor(options = {}) {
     super();
-
-    this.dom.className = "Column";
+    const { scrollable = true, className = "", fill = false } = options;
+    this.dom.className = ["ScrollViewer", className].filter(Boolean).join(" ");
+    this.dom.style.overflow = scrollable ? "auto" : "hidden";
+    this.dom.style.minHeight = "0";
+    this.dom.style.minWidth = "0";
+    if (fill) {
+      this.dom.style.display = "flex";
+      this.dom.style.flexDirection = "column";
+      this.dom.style.flex = "1 1 auto";
+      this.dom.style.gap = "0";
+    }
   }
 
   gap(size) {
     this.dom.style.gap = size;
-
     return this;
   }
 }
 
-class UIGrid extends UIDiv {
+/** @category Layout */
+class Grid extends Container {
   constructor() {
     super();
 
@@ -911,15 +1055,25 @@ class UIGrid extends UIDiv {
 }
 
 
-class UIPanel extends UIDiv {
+/** @category Layout */
+class Rectangle extends Container {
   constructor() {
     super();
 
-    this.dom.className = "Panel";
+    this.dom.className = "Rectangle";
   }
 }
 
-class UILabel extends UIElement {
+/**
+ * Form label (`label` element).
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Label("Display name");
+ *
+ * @category Inputs
+ */
+class Label extends Control {
   constructor(text = '') {
     super(document.createElement('label'));
 
@@ -943,7 +1097,8 @@ class UILabel extends UIElement {
   }
 }
 
-class UIForm extends UIElement {
+/** @category Inputs */
+class Form extends Control {
   constructor() {
     super(document.createElement('form'));
   }
@@ -985,11 +1140,20 @@ class UIForm extends UIElement {
   }
 }
 
-class UIText extends UISpan {
+/**
+ * Inline text block.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new TextBlock("Inline text");
+ *
+ * @category Text
+ */
+class TextBlock extends Span {
   constructor(text) {
     super();
 
-    this.dom.className = "Text";
+    this.dom.className = "TextBlock";
 
     this.dom.style.display = "inline-block";
 
@@ -1009,7 +1173,16 @@ class UIText extends UISpan {
   }
 }
 
-class UISmallText extends UIElement {
+/**
+ * Secondary caption (`small`).
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Caption("Secondary caption");
+ *
+ * @category Text
+ */
+class Caption extends Control {
   constructor(text) {
     super(document.createElement("small"));
 
@@ -1029,11 +1202,207 @@ class UISmallText extends UIElement {
   }
 }
 
-class UIInput extends UIElement {
+/**
+ * Panel title text (`Title` class).
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Title("Panel title");
+ *
+ * @category Text
+ */
+class Title extends TextBlock {
+  constructor(text = "") {
+    super(text);
+    this.addClass("Title");
+  }
+}
+
+/**
+ * Secondary legal / helper copy.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Disclaimer("Helper copy for secondary legal text.");
+ *
+ * @category Text
+ */
+class Disclaimer extends TextBlock {
+  constructor(text = "") {
+    super(text);
+    this.setClass("disclaimer");
+  }
+}
+
+/**
+ * Inline code / API signature chip.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Code("new Button()");
+ *
+ * @category Text
+ */
+class Code extends Span {
+  constructor(text = "") {
+    super();
+    this.setClass("Code");
+    this.setTextContent(text);
+  }
+}
+
+/**
+ * Keyboard key chip.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Kbd("Ctrl");
+ *
+ * @category Text
+ */
+class Kbd extends Span {
+  constructor(key = "") {
+    super();
+    this.setClass("kbd");
+    this.setTextContent(key);
+  }
+}
+
+/**
+ * Status / label badge.
+ *
+ * @example <caption>Badge</caption>
+ * // live
+ * return new Badge("New");
+ *
+ * @category Text
+ */
+class Badge extends TextBlock {
+  constructor(text = "") {
+    super(text);
+    this.addClass("Badge");
+  }
+}
+
+/**
+ * Card shell (`Rectangle` + `Card` class).
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Card()
+ *   .padding("1rem")
+ *   .add(new Title("Card"))
+ *   .add(new TextBlock("Raised surface with border."));
+ *
+ * @category Layout
+ */
+class Card extends Rectangle {
+  constructor() {
+    super();
+    this.addClass("Card");
+  }
+}
+
+/**
+ * Vertical spacer between stacked items.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new StackPanel({ isVertical: true })
+ *   .add(new TextBlock("Above"))
+ *   .add(new Spacer("1rem"))
+ *   .add(new TextBlock("Below"));
+ *
+ * @category Layout
+ */
+class Spacer extends Container {
+  constructor(size = "8px") {
+    super();
+    this.setHeight(size);
+  }
+}
+
+/**
+ * Horizontal spacer between inline or row items.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new StackPanel({ isVertical: false })
+ *   .gap("0")
+ *   .setStyle("alignItems", ["center"])
+ *   .add(new TextBlock("Start"))
+ *   .add(new HSpacer("2rem"))
+ *   .add(new TextBlock("End"));
+ *
+ * @category Layout
+ */
+class HSpacer extends Span {
+  constructor(size = "8px") {
+    super();
+    this.setWidth(size);
+    this.dom.style.display = "inline-block";
+  }
+}
+
+/**
+ * Drag / resize handle element. Pass `"drag"` or `"resize"` to set the handle class.
+ *
+ * @example <caption>Drag handle</caption>
+ * // live
+ * return new StackPanel({ isVertical: false })
+ *   .gap("0.5rem")
+ *   .setStyle("alignItems", ["center"])
+ *   .setStyle("padding", ["0.5rem 0.75rem"])
+ *   .addClass("Card")
+ *   .add(
+ *     new Handle("drag")
+ *       .add(new Icon("drag_indicator"))
+ *       .setStyle("cursor", ["grab"])
+ *       .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
+ *   )
+ *   .add(new TextBlock("Draggable row"));
+ *
+ * @category Layout
+ */
+class Handle extends Span {
+  constructor(type = "drag") {
+    super();
+    this.addClass(`${type}-handle`);
+  }
+}
+
+/**
+ * Add the shared `centered` class to a control.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Container()
+ *   .setStyle("minHeight", ["4rem"])
+ *   .add(center(new Badge("Centered")));
+ *
+ * @param {Control} component
+ * @returns {Control}
+ * @category Layout
+ */
+function center(component) {
+  component.addClass("centered");
+  return component;
+}
+
+/**
+ * Single-line text input.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new InputText("Hello").setStyle("width", ["16rem"]);
+ *
+ * @category Inputs
+ */
+class InputText extends Control {
   constructor(text) {
     super(document.createElement("input"));
 
-    this.dom.className = "Input";
+    this.dom.className = "InputText";
 
     this.dom.setAttribute("autocomplete", "off");
 
@@ -1071,13 +1440,44 @@ class UIInput extends UIElement {
   }
 }
 
-class UITextArea extends UIElement {
+/**
+ * Search field (`type="search"`).
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new InputSearch("Search layers…").setStyle("width", ["16rem"]);
+ *
+ * @category Inputs
+ */
+class InputSearch extends InputText {
+  constructor(placeholder = "Search...", onInput = null) {
+    super();
+    this.dom.type = "search";
+    this.dom.className = "InputSearch";
+    this.dom.setAttribute("placeholder", placeholder);
+    this.dom.setAttribute("aria-label", placeholder);
+    if (onInput) {
+      this.dom.addEventListener("input", () => {
+        onInput(this.getValue());
+      });
+    }
+  }
+}
+
+/**
+ * Multi-line text area.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new InputTextArea().setValue("Notes…").setStyle("width", ["16rem"]);
+ *
+ * @category Inputs
+ */
+class InputTextArea extends Control {
   constructor() {
     super(document.createElement("textarea"));
 
-    this.dom.className = "TextArea";
-
-    this.dom.style.padding = "2px";
+    this.dom.className = "InputTextArea";
 
     this.dom.spellcheck = false;
 
@@ -1112,13 +1512,23 @@ class UITextArea extends UIElement {
   }
 }
 
-class UISelect extends UIElement {
+/**
+ * Native `<select>` dropdown.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new InputDropdown()
+ *   .setOptions({ a: "Option A", b: "Option B" })
+ *   .setValue("a")
+ *   .setStyle("width", ["12rem"]);
+ *
+ * @category Inputs
+ */
+class InputDropdown extends Control {
   constructor() {
     super(document.createElement("select"));
 
-    this.dom.className = "Select";
-
-    this.dom.style.padding = "2px";
+    this.dom.className = "InputDropdown";
 
     this.dom.setAttribute("autocomplete", "off");
 
@@ -1170,7 +1580,16 @@ class UISelect extends UIElement {
   }
 }
 
-class UICheckbox extends UIElement {
+/**
+ * Checkbox input.
+ *
+ * @example <caption>Checked</caption>
+ * // live
+ * return new Checkbox(true);
+ *
+ * @category Inputs
+ */
+class Checkbox extends Control {
   constructor(boolean) {
     super(document.createElement("input"));
 
@@ -1200,11 +1619,20 @@ class UICheckbox extends UIElement {
   }
 }
 
-class UIColor extends UIElement {
+/**
+ * Color picker input.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new InputColor();
+ *
+ * @category Inputs
+ */
+class InputColor extends Control {
   constructor() {
     super(document.createElement("input"));
 
-    this.dom.className = "Color";
+    this.dom.className = "InputColor";
 
     this.dom.style.width = "32px";
 
@@ -1246,13 +1674,14 @@ class UIColor extends UIElement {
   }
 }
 
-class UINumber extends UIElement {
+/** @category Inputs */
+class InputNumber extends Control {
   constructor(number) {
     super(document.createElement("input"));
 
     this.dom.style.cursor = "ns-resize";
 
-    this.dom.className = "Number";
+    this.dom.className = "InputNumber";
 
     this.dom.value = "0.00";
 
@@ -1516,13 +1945,14 @@ class UINumber extends UIElement {
   }
 }
 
-class UIInteger extends UIElement {
+/** @category Inputs */
+class InputInteger extends Control {
   constructor(number) {
     super(document.createElement("input"));
 
     this.dom.style.cursor = "ns-resize";
 
-    this.dom.className = "Number";
+    this.dom.className = "InputNumber";
 
     this.dom.value = "0";
 
@@ -1712,8 +2142,15 @@ class UIInteger extends UIElement {
 /**
  * Number slider: range track synced with a numeric field.
  * Dispatches bubbling `input` / `change` on the root element.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Slider(42).setRange(0, 100).setStep(1).setPrecision(0)
+ *   .setStyle("width", ["16rem"]);
+ *
+ * @category Inputs
  */
-class UISlider extends UIElement {
+class Slider extends Control {
   constructor(number = 0) {
     super(document.createElement("div"));
 
@@ -1730,7 +2167,7 @@ class UISlider extends UIElement {
     this.range.className = "Slider-range";
     this.range.setAttribute("autocomplete", "off");
 
-    this.field = new UINumber(number);
+    this.field = new InputNumber(number);
     this.field.addClass("Slider-value");
 
     this.dom.appendChild(this.range);
@@ -1841,23 +2278,51 @@ class UISlider extends UIElement {
   }
 }
 
-class UIBreak extends UIElement {
+/** @category Text */
+class LineBreak extends Control {
   constructor() {
     super(document.createElement("br"));
 
-    this.dom.className = "Break";
+    this.dom.className = "LineBreak";
   }
 }
 
-class UIHorizontalRule extends UIElement {
+/**
+ * Horizontal rule.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new StackPanel({ isVertical: true })
+ *   .gap("0.5rem")
+ *   .setStyle("width", ["16rem"])
+ *   .add(new TextBlock("Above the rule"))
+ *   .add(new Line())
+ *   .add(new TextBlock("Below the rule"));
+ *
+ * @category Text
+ */
+class Line extends Control {
   constructor() {
     super(document.createElement("hr"));
 
-    this.dom.className = "HorizontalRule";
+    this.dom.className = "Line";
   }
 }
 
-class UIButton extends UIElement {
+/**
+ * Button primitive with optional prepended icon.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Button("Save");
+ *
+ * @example <caption>With icon</caption>
+ * // live
+ * return new Button("Save").setIcon("save");
+ *
+ * @category Inputs
+ */
+class Button extends Control {
   constructor(value) {
     super(document.createElement("button"));
 
@@ -1867,7 +2332,7 @@ class UIButton extends UIElement {
   }
 
   setIcon(iconClass) {
-    const span = new UISpan();
+    const span = new Span();
 
     span.addClass("material-symbols-outlined");
 
@@ -1888,18 +2353,27 @@ class UIButton extends UIElement {
   }
 }
 
-class UISquareButton extends UIButton {
+/**
+ * Tile-style action button with icon, label, and optional meta.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new IconButton("Export", { icon: "download", meta: ".ifc" });
+ *
+ * @category Inputs
+ */
+class IconButton extends Button {
   constructor(label = "", options = {}) {
     super("");
 
     this.addClass("SquareButton");
 
-    this.iconElement = new UIIcon(options.icon || "download");
+    this.iconElement = new Icon(options.icon || "download");
 
-    this.labelElement = new UIText(label);
+    this.labelElement = new TextBlock(label);
     this.labelElement.addClass("SquareButton-label");
 
-    this.metaElement = new UISmallText(options.meta || "");
+    this.metaElement = new Caption(options.meta || "");
     this.metaElement.addClass("SquareButton-meta");
 
     this.add(this.iconElement, this.labelElement, this.metaElement);
@@ -1949,7 +2423,72 @@ class UISquareButton extends UIButton {
   }
 }
 
-class UIIcon extends UISpan {
+/**
+ * Borderless ribbon control: icon above label, tab-style accent when selected.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new RibbonButton("Project", { icon: "folder_open" });
+ *
+ * @example <caption>Selected</caption>
+ * // live
+ * return new RibbonButton("Properties", { icon: "tune", active: true });
+ *
+ * @category Inputs
+ */
+class RibbonButton extends Button {
+  constructor(label = "", options = {}) {
+    super("");
+
+    this.addClass("RibbonButton");
+
+    this.iconElement = new Icon(options.icon || "widgets");
+    this.labelElement = new TextBlock(label);
+    this.labelElement.addClass("RibbonButton-label");
+
+    this.add(this.iconElement, this.labelElement);
+    this.setIcon(options.icon || "widgets");
+    this.setActive(Boolean(options.active));
+  }
+
+  setLabel(label) {
+    this.labelElement.setValue(label);
+    return this;
+  }
+
+  setIcon(iconClass) {
+    const hasIcon = iconClass !== undefined && iconClass !== null && iconClass !== "";
+
+    this.iconElement.setHidden(!hasIcon);
+
+    if (hasIcon) {
+      this.iconElement.setIcon(iconClass);
+    }
+
+    return this;
+  }
+
+  setActive(isActive) {
+    const active = Boolean(isActive);
+
+    this.toggleClass("Active", active);
+    this.toggleClass("selected", active);
+    this.dom.setAttribute("aria-pressed", String(active));
+
+    return this;
+  }
+}
+
+/**
+ * Material Symbols icon glyph.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new Icon("settings");
+ *
+ * @category Text
+ */
+class Icon extends Span {
   constructor(icon) {
     super();
 
@@ -1973,7 +2512,16 @@ class UIIcon extends UISpan {
   }
 }
 
-class UIProgress extends UIElement {
+/**
+ * Native progress bar.
+ *
+ * @example <caption>Basic</caption>
+ * // live
+ * return new ProgressBar(0.65).setStyle("width", ["16rem"]);
+ *
+ * @category Inputs
+ */
+class ProgressBar extends Control {
   constructor(value) {
     super(document.createElement("progress"));
 
@@ -1985,23 +2533,24 @@ class UIProgress extends UIElement {
   }
 }
 
-class UITabbedPanel extends UIDiv {
+/** @category Layout */
+class TabView extends Container {
   constructor() {
     super();
 
-    this.dom.className = "TabbedPanel";
+    this.dom.className = "TabView";
 
     this.tabs = [];
 
     this.panels = [];
 
-    this.tabsDiv = new UIDiv();
+    this.tabsDiv = new Container();
 
-    this.tabsDiv.setClass("Tabs");
+    this.tabsDiv.setClass("TabView-tabs");
 
-    this.panelsDiv = new UIDiv();
+    this.panelsDiv = new Container();
 
-    this.panelsDiv.setClass("Panels");
+    this.panelsDiv.setClass("TabView-content");
 
     this.add(this.tabsDiv);
 
@@ -2095,7 +2644,7 @@ class UITabbedPanel extends UIDiv {
     }
 
     const floatable = Boolean(tabOptions && tabOptions.floatable);
-    const tab = new UITab(label, this, { floatable });
+    const tab = new TabItem(label, this, { floatable });
 
     tab.setId(id);
 
@@ -2104,8 +2653,8 @@ class UITabbedPanel extends UIDiv {
     this.tabsDiv.add(tab);
 
     const pageRootIsItems =
-      items instanceof UIElement && !(items instanceof UITabbedPanel);
-    const panel = pageRootIsItems ? items : new UIDiv();
+      items instanceof Control && !(items instanceof TabView);
+    const panel = pageRootIsItems ? items : new Container();
     panel.setId(id);
     if (styles && typeof styles === "object") {
       panel.setStyles(styles);
@@ -2191,10 +2740,23 @@ class UITabbedPanel extends UIDiv {
   }
 }
 
-class UITab extends UIDiv {
+/**
+ * Tab chrome created by `TabView.addTab()`. Prefer `tabs.addTab(id, label, content)` over constructing directly.
+ *
+ * @example <caption>Via TabView</caption>
+ * // live
+ * const tabs = new TabView();
+ * tabs.addTab("a", "Overview", [new TextBlock("Tab A")]);
+ * tabs.addTab("b", "Details", [new TextBlock("Tab B")]);
+ * tabs.select("a");
+ * return tabs;
+ *
+ * @category Layout
+ */
+class TabItem extends Container {
   /**
    * @param {string} labelText
-   * @param {UITabbedPanel} parent
+   * @param {TabView} parent
    * @param {{ floatable?: boolean }} [tabOptions]
    */
   constructor(labelText, parent, tabOptions = {}) {
@@ -2204,7 +2766,7 @@ class UITab extends UIDiv {
 
     this.parent = parent;
 
-    const label = new UISpan();
+    const label = new Span();
 
     label.dom.className = "Title";
 
@@ -2213,7 +2775,7 @@ class UITab extends UIDiv {
     this.add(label);
 
     if (tabOptions.floatable) {
-      const floatIc = new UIIcon("open_in_new");
+      const floatIc = new Icon("open_in_new");
 
       floatIc.dom.classList.add("Operator", "Tab-float");
 
@@ -2246,11 +2808,12 @@ class UITab extends UIDiv {
   }
 }
 
-class UIListbox extends UIDiv {
+/** @category Collections */
+class InputList extends Container {
   constructor() {
     super();
 
-    this.dom.className = "Listbox";
+    this.dom.className = "InputList";
 
     this.dom.tabIndex = 0;
 
@@ -2283,7 +2846,7 @@ class UIListbox extends UIDiv {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      const listitem = new ListboxItem(this);
+      const listitem = new InputListItem(this);
 
       listitem.setId(item.id || `Listbox-${i}`);
 
@@ -2298,7 +2861,7 @@ class UIListbox extends UIDiv {
 
     this.listitems = this.listitems.concat(items);
 
-    UIElement.prototype.add.apply(this, items);
+    Control.prototype.add.apply(this, items);
   }
 
   selectIndex(index) {
@@ -2335,11 +2898,12 @@ class UIListbox extends UIDiv {
   }
 }
 
-class ListboxItem extends UIDiv {
+/** @category Collections */
+class InputListItem extends Container {
   constructor(parent) {
     super();
 
-    this.dom.className = "ListboxItem";
+    this.dom.className = "InputListItem";
 
     this.parent = parent;
 
@@ -2355,11 +2919,12 @@ class ListboxItem extends UIDiv {
   }
 }
 
-class UIDatePicker extends UIElement {
+/** @category Inputs */
+class InputDate extends Control {
   constructor(date) {
     super(document.createElement("div"));
 
-    this.dom.className = "DatePicker";
+    this.dom.className = "InputDate";
 
     this.dom.style.position = "relative";
 
@@ -2372,7 +2937,7 @@ class UIDatePicker extends UIElement {
     // Create input field
     this.input = document.createElement("input");
 
-    this.input.className = "DatePicker-input";
+    this.input.className = "InputDate-input";
 
     this.input.readOnly = true;
 
@@ -2403,7 +2968,7 @@ class UIDatePicker extends UIElement {
     // Create calendar popup
     this.calendarPopup = document.createElement("div");
 
-    this.calendarPopup.className = "DatePicker-calendar";
+    this.calendarPopup.className = "InputDate-calendar";
 
     this.dom.appendChild(this.calendarPopup);
 
@@ -2803,67 +3368,42 @@ class UIDatePicker extends UIElement {
   }
 }
 
-class UIHeader extends UIElement {
-  constructor(header) {
-    super(document.createElement(header));
+/**
+ * Semantic heading (`h1`–`h6`).
+ *
+ * @example <caption>Levels</caption>
+ * // live
+ * return new StackPanel({ isVertical: true })
+ *   .gap("0.25rem")
+ *   .add(new Heading(2, "Section title"))
+ *   .add(new Heading(3, "Subsection"));
+ *
+ * @category Text
+ */
+class Heading extends Control {
+  constructor(level = 1, text = "") {
+    const clamped = Math.min(6, Math.max(1, Number(level) || 1));
+    super(document.createElement(`h${clamped}`));
+    this.level = clamped;
+    if (text) this.setValue(text);
   }
 
   setValue(text) {
     this.dom.textContent = text;
-
     return this;
   }
 }
 
-class UIH1 extends UIHeader {
-  constructor(text) {
-    super("h1");
-
-    this.setValue(text);
-  }
-}
-
-class UIH2 extends UIHeader {
-  constructor(text) {
-    super("h2");
-
-    this.setValue(text);
-  }
-}
-
-class UIH3 extends UIHeader {
-  constructor(text) {
-    super("h3");
-
-    this.setValue(text);
-  }
-}
-
-class UIH4 extends UIHeader {
-  constructor(text) {
-    super("h4");
-
-    this.setValue(text);
-  }
-}
-
-class UIH5 extends UIHeader {
-  constructor(text) {
-    super("h5");
-
-    this.setValue(text);
-  }
-}
-
-class UIH6 extends UIHeader {
-  constructor(text) {
-    super("h6");
-
-    this.setValue(text);
-  }
-}
-
-class UISpinner extends UIElement {
+/**
+ * Indeterminate progress spinner.
+ *
+ * @example <caption>With label</caption>
+ * // live
+ * return new ProgressRing({ text: "Loading" });
+ *
+ * @category Inputs
+ */
+class ProgressRing extends Control {
   constructor(options = {}) {
     super(document.createElement('div'));
 
@@ -2890,7 +3430,7 @@ class UISpinner extends UIElement {
   /**
    * Show the spinner in a target container as an overlay
    * @param {string|HTMLElement} target - CSS selector or DOM element
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   show(target = 'body') {
 
@@ -2915,7 +3455,7 @@ class UISpinner extends UIElement {
 
     this.dom.style.height = isBody ? '100vh' : '100%';
 
-    this.dom.style.backgroundColor = 'var(--game-hud-background, rgba(0, 0, 0, 0.6))';
+    this.dom.style.backgroundColor = 'var(--dui-color-overlay, rgba(0, 0, 0, 0.6))';
 
     this.dom.style.backdropFilter = 'blur(5px)';
 
@@ -2934,7 +3474,7 @@ class UISpinner extends UIElement {
 
   /**
    * Hide and remove the spinner from DOM
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   hide() {
     if (this.dom.parentNode) {
@@ -2947,7 +3487,7 @@ class UISpinner extends UIElement {
   /**
    * Update the spinner text
    * @param {string} text - New text to display
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   updateText(text) {
     const textElement = this.dom.querySelector('.spinner-text');
@@ -2964,7 +3504,7 @@ class UISpinner extends UIElement {
   /**
    * Set the spinner text (alias for updateText)
    * @param {string} text - Text to display
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   setText(text) {
     return this.updateText(text);
@@ -2973,7 +3513,7 @@ class UISpinner extends UIElement {
   /**
    * Update the percentage display
    * @param {number} percentage - Percentage value (0-100)
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   updatePercentage(percentage) {
     const percentageElement = this.dom.querySelector('.spinner-percentage');
@@ -2989,7 +3529,7 @@ class UISpinner extends UIElement {
 
   /**
    * Hide the percentage display
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   hidePercentage() {
     const percentageElement = this.dom.querySelector('.spinner-percentage');
@@ -3004,10 +3544,10 @@ class UISpinner extends UIElement {
   /**
    * Set the spinner color
    * @param {string} color - CSS color value
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   setColor(color) {
-    this.dom.style.setProperty('--spinner-color', color);
+    this.dom.style.setProperty('--dui-color-accent', color);
 
     return this;
   }
@@ -3015,7 +3555,7 @@ class UISpinner extends UIElement {
   /**
    * Set the background color of the overlay
    * @param {string} color - CSS color value
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   setBackground(color) {
     this.dom.style.backgroundColor = color;
@@ -3026,7 +3566,7 @@ class UISpinner extends UIElement {
   /**
    * Set the size of the spinner cube
    * @param {string} size - CSS size value (e.g., '60px')
-   * @returns {UISpinner} this for chaining
+   * @returns {ProgressRing} this for chaining
    */
   setSize(size) {
     const spinner = this.dom.querySelector('.spinner');
@@ -3049,7 +3589,8 @@ class UISpinner extends UIElement {
   }
 }
 
-class UITooltip extends UIElement {
+/** @category Inputs */
+class Tooltip extends Control {
   constructor(text = '', options = {}) {
     super(document.createElement('div'));
 
@@ -3160,45 +3701,54 @@ class UITooltip extends UIElement {
 }
 
 export {
-  UIElement,
-  UILink,
-  UIImage,
-  UISVG,
-  UIParagraph,
-  UIH1,
-  UIH2,
-  UIH3,
-  UIH4,
-  UIH5,
-  UIH6,
-  UISpan,
-  UIDiv,
-  UIRow,
-  UIColumn,
-  UIPanel,
-  UILabel,
-  UIForm,
-  UIText,
-  UISmallText,
-  UIInput,
-  UIIcon,
-  UITextArea,
-  UISelect,
-  UICheckbox,
-  UIColor,
-  UINumber,
-  UIInteger,
-  UISlider,
-  UIBreak,
-  UIHorizontalRule,
-  UIButton,
-  UISquareButton,
-  UIProgress,
-  UITabbedPanel,
-  UIGrid,
-  UIListbox,
-  ListboxItem,
-  UIDatePicker,
-  UISpinner,
-  UITooltip,
+  Control,
+  Hyperlink,
+  Image,
+  Canvas,
+  Svg,
+  Paragraph,
+  Heading,
+  Span,
+  Container,
+  StackPanel,
+  ScrollViewer,
+  Grid,
+  Rectangle,
+  Label,
+  Form,
+  TextBlock,
+  Caption,
+  Title,
+  Disclaimer,
+  Code,
+  Kbd,
+  Badge,
+  Card,
+  Spacer,
+  HSpacer,
+  Handle,
+  center,
+  InputText,
+  InputTextArea,
+  InputSearch,
+  Icon,
+  InputDropdown,
+  Checkbox,
+  InputColor,
+  InputNumber,
+  InputInteger,
+  Slider,
+  LineBreak,
+  Line,
+  Button,
+  IconButton,
+  RibbonButton,
+  ProgressBar,
+  TabView,
+  TabItem,
+  InputList,
+  InputListItem,
+  InputDate,
+  ProgressRing,
+  Tooltip,
 };

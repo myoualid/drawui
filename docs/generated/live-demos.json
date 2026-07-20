@@ -1,0 +1,789 @@
+{
+  "Control": [
+    {
+      "id": "Control/basic",
+      "caption": "Basic",
+      "code": "const el = document.createElement(\"span\");\nel.textContent = \"Wrapped DOM\";\nreturn new Control(el);"
+    }
+  ],
+  "Hyperlink": [
+    {
+      "id": "Hyperlink/hyperlink",
+      "caption": "Hyperlink",
+      "code": "return new Hyperlink(\"DrawUI docs\", \"#\", \"open_in_new\", false);",
+      "demoId": "inline-link"
+    }
+  ],
+  "Image": [
+    {
+      "id": "Image/image",
+      "caption": "Image",
+      "code": "return new Image(\n    \"data:image/svg+xml,\" +\n      encodeURIComponent(\n        '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\"><rect width=\"64\" height=\"64\" rx=\"8\" fill=\"#70ba35\"/></svg>',\n      ),\n  ).setStyle(\"width\", [\"4rem\"]);",
+      "demoId": "image"
+    }
+  ],
+  "Svg": [
+    {
+      "id": "Svg/svg",
+      "caption": "Svg",
+      "code": "return new Svg(\n    \"data:image/svg+xml,\" +\n      encodeURIComponent(\n        '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"currentColor\"/></svg>',\n      ),\n  )\n    .setStyle(\"width\", [\"3rem\"])\n    .setStyle(\"height\", [\"3rem\"])\n    .setStyle(\"color\", [\"var(--dui-color-accent, #70ba35)\"]);",
+      "demoId": "svg"
+    }
+  ],
+  "Paragraph": [
+    {
+      "id": "Paragraph/paragraph",
+      "caption": "Paragraph",
+      "code": "return new Paragraph(\"Paragraph with inline content.\");",
+      "demoId": "paragraph"
+    }
+  ],
+  "Heading": [
+    {
+      "id": "Heading/headings",
+      "caption": "Headings",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new Heading(1, \"Heading 1\"))\n  .add(new Heading(2, \"Heading 2\"))\n  .add(new Heading(3, \"Heading 3\"))\n  .add(new Heading(4, \"Heading 4\"))\n  .add(new Heading(5, \"Heading 5\"))\n  .add(new Heading(6, \"Heading 6\"));",
+      "demoId": "headings"
+    }
+  ],
+  "Span": [
+    {
+      "id": "Span/span",
+      "caption": "Span",
+      "code": "return new Span().setTextContent(\"Inline span\");",
+      "demoId": "span"
+    }
+  ],
+  "Container": [
+    {
+      "id": "Container/container",
+      "caption": "Container",
+      "code": "return new Container()\n  .add(new TextBlock(\"container() — generic block container\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "demoId": "div"
+    }
+  ],
+  "StackPanel": [
+    {
+      "id": "StackPanel/stackpanel-row",
+      "caption": "StackPanel (row)",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.5rem\")\n  .add(new Badge(\"Row\"))\n  .add(new Badge(\"Layout\"));",
+      "demoId": "row"
+    },
+    {
+      "id": "StackPanel/stackpanel-column",
+      "caption": "StackPanel (column)",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new TextBlock(\"Column A\"))\n  .add(new TextBlock(\"Column B\"));",
+      "demoId": "column"
+    }
+  ],
+  "ScrollViewer": [
+    {
+      "id": "ScrollViewer/basic",
+      "caption": "Basic",
+      "code": "return new Container()\n  .setStyle(\"height\", [\"6rem\"])\n  .setStyle(\"overflow\", [\"hidden\"])\n  .add(\n    new ScrollViewer({ fill: true, scrollable: true }).add(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.25rem\")\n        .add(new TextBlock(\"Scrollable line 1\"))\n        .add(new TextBlock(\"Scrollable line 2\"))\n        .add(new TextBlock(\"Scrollable line 3\"))\n        .add(new TextBlock(\"Scrollable line 4\"))\n        .add(new TextBlock(\"Scrollable line 5\")),\n    ),\n  );"
+    }
+  ],
+  "Grid": [
+    {
+      "id": "Grid/grid",
+      "caption": "Grid",
+      "code": "const grid = new Grid();\n  grid.setStyle(\"display\", [\"grid\"]);\n  grid.setStyle(\"gridTemplateColumns\", [\"repeat(3, 1fr)\"]);\n  grid.setStyle(\"gap\", [\"0.5rem\"]);\n  [\"A\", \"B\", \"C\"].forEach((label) => {\n    grid.add(\n      new Card()\n        .add(new TextBlock(label))\n        .setStyle(\"padding\", [\"0.5rem\"])\n        .setStyle(\"textAlign\", [\"center\"]),\n    );\n  });\n  return grid;",
+      "demoId": "grid"
+    }
+  ],
+  "Rectangle": [
+    {
+      "id": "Rectangle/rectangle",
+      "caption": "Rectangle",
+      "code": "return new Rectangle()\n  .add(new TextBlock(\"rectangle()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "demoId": "panel"
+    }
+  ],
+  "Label": [
+    {
+      "id": "Label/label",
+      "caption": "Label",
+      "code": "return new Label(\"Field label\");",
+      "demoId": "label"
+    }
+  ],
+  "Form": [
+    {
+      "id": "Form/form",
+      "caption": "Form",
+      "code": "const nameInput = new InputText();\n  nameInput.dom.placeholder = \"Jane Doe\";\n  const emailInput = new InputText();\n  emailInput.dom.placeholder = \"jane@example.com\";\n  emailInput.dom.type = \"email\";\n  const notes = new InputTextArea();\n  notes.dom.placeholder = \"Optional notes…\";\n  const roleSelect = new InputDropdown().setOptions({ user: \"User\", admin: \"Admin\", editor: \"Editor\" });\n  const actions = new StackPanel({ isVertical: false })\n    .gap(\"0.5rem\")\n    .add(new Button(\"Cancel\").addClass(\"secondary\"))\n    .add(new Button(\"Save\").addClass(\"primary\"));\n  return new Form()\n    .setStyle(\"display\", [\"flex\"])\n    .setStyle(\"flexDirection\", [\"column\"])\n    .gap(\"0.5rem\")\n    .add(new Label(\"Name\"))\n    .add(nameInput)\n    .add(new Label(\"Email\"))\n    .add(emailInput)\n    .add(new Label(\"Role\"))\n    .add(roleSelect)\n    .add(new Label(\"Notes\"))\n    .add(notes)\n    .add(\n      new StackPanel({ isVertical: false })\n        .gap(\"0.5rem\")\n        .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n        .add(new TextBlock(\"Email me updates\")),\n    )\n    .add(new Spacer(\"0.5rem\"))\n    .add(actions);",
+      "demoId": "form-composed"
+    }
+  ],
+  "TextBlock": [
+    {
+      "id": "TextBlock/text",
+      "caption": "Text",
+      "code": "return new TextBlock(\"Body text via textBlock()\");",
+      "demoId": "text"
+    }
+  ],
+  "Caption": [
+    {
+      "id": "Caption/caption",
+      "caption": "Caption",
+      "code": "return new Caption(\"Small text via caption()\");",
+      "demoId": "small-text"
+    }
+  ],
+  "Title": [
+    {
+      "id": "Title/title",
+      "caption": "Title",
+      "code": "return new Title(\"Panel title style\");",
+      "demoId": "title"
+    }
+  ],
+  "Disclaimer": [
+    {
+      "id": "Disclaimer/disclaimer",
+      "caption": "Disclaimer",
+      "code": "return new Disclaimer(\"Disclaimer copy for secondary legal or helper text.\");",
+      "demoId": "disclaimer"
+    }
+  ],
+  "Code": [
+    {
+      "id": "Code/code",
+      "caption": "Code",
+      "code": "return new Code(\"new Button()\");",
+      "demoId": "code"
+    }
+  ],
+  "Kbd": [
+    {
+      "id": "Kbd/keyboard-hint",
+      "caption": "Keyboard hint",
+      "code": "return new Kbd(\"Ctrl\");",
+      "demoId": "kbd"
+    }
+  ],
+  "Badge": [
+    {
+      "id": "Badge/badge",
+      "caption": "Badge",
+      "code": "return new Badge(\"Badge\");",
+      "demoId": "badge"
+    }
+  ],
+  "Canvas": [
+    {
+      "id": "Canvas/canvas",
+      "caption": "Canvas",
+      "code": "const canvas = new Canvas();\n  canvas.dom.width = 240;\n  canvas.dom.height = 120;\n  canvas\n    .setStyle(\"border\", [\"1px solid var(--dui-color-border, #444)\"])\n    .setStyle(\"borderRadius\", [\"var(--dui-radius, 4px)\"]);\n  const ctx = canvas.dom.getContext(\"2d\");\n  ctx.fillStyle = \"#70ba35\";\n  ctx.fillRect(16, 16, 88, 88);\n  ctx.fillStyle = \"#e8e8e8\";\n  ctx.font = \"14px sans-serif\";\n  ctx.fillText(\"Canvas\", 120, 70);\n  return canvas;",
+      "demoId": "canvas"
+    }
+  ],
+  "Card": [
+    {
+      "id": "Card/card",
+      "caption": "Card",
+      "code": "return new Card()\n  .add(new TextBlock(\"new Card()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "demoId": "card"
+    }
+  ],
+  "Spacer": [
+    {
+      "id": "Spacer/vertical-spacer",
+      "caption": "Vertical spacer",
+      "code": "return new StackPanel({ isVertical: true })\n  .add(new TextBlock(\"Above\"))\n  .add(new Spacer(\"1rem\"))\n  .add(new TextBlock(\"Below\"));",
+      "demoId": "spacer"
+    }
+  ],
+  "HSpacer": [
+    {
+      "id": "HSpacer/horizontal-spacer",
+      "caption": "Horizontal spacer",
+      "code": "return row()\n  .add(new TextBlock(\"Start\"))\n  .add(new HSpacer(\"2rem\"))\n  .add(new TextBlock(\"End\"));",
+      "demoId": "hspacer"
+    }
+  ],
+  "Handle": [
+    {
+      "id": "Handle/handle",
+      "caption": "Handle",
+      "code": "return row()\n  .add(\n    new Card()\n      .setStyle(\"padding\", [\"0.5rem 0.75rem\"])\n      .setStyle(\"display\", [\"flex\"])\n      .setStyle(\"alignItems\", [\"center\"])\n      .setStyle(\"gap\", [\"0.5rem\"])\n      .add(\n        new Handle(\"drag\")\n          .add(new Icon(\"drag_indicator\"))\n          .setStyle(\"cursor\", [\"grab\"])\n          .setStyle(\"color\", [\"var(--dui-color-text-muted, #999)\"]),\n      )\n      .add(new TextBlock(\"Draggable row\")),\n  );",
+      "demoId": "handle"
+    }
+  ],
+  "TabItem": [
+    {
+      "id": "TabItem/via-tabview",
+      "caption": "Via TabView",
+      "code": "const tabs = new TabView();\ntabs.addTab(\"a\", \"Overview\", [new TextBlock(\"Tab A\")]);\ntabs.addTab(\"b\", \"Details\", [new TextBlock(\"Tab B\")]);\ntabs.select(\"a\");\nreturn tabs;"
+    }
+  ],
+  "ToolbarButton": [
+    {
+      "id": "ToolbarButton/toolbarbutton",
+      "caption": "ToolbarButton",
+      "code": "return new ToolbarButton(\"Action\");",
+      "demoId": "compact-button"
+    }
+  ],
+  "center": [
+    {
+      "id": "center/center",
+      "caption": "Center",
+      "code": "const host = new Container().setStyle(\"minHeight\", [\"4rem\"]);\n  host.add(center(new Badge(\"Centered via center()\")));\n  return host;",
+      "demoId": "center"
+    }
+  ],
+  "InputText": [
+    {
+      "id": "InputText/inputtext",
+      "caption": "InputText",
+      "code": "const field = new InputText();\n  field.dom.placeholder = \"Enter value…\";\n  return field;",
+      "demoId": "input"
+    }
+  ],
+  "InputSearch": [
+    {
+      "id": "InputSearch/inputsearch",
+      "caption": "InputSearch",
+      "code": "return new InputSearch(\"Search layers…\", (value) => {\n    console.log(\"search:\", value);\n  });",
+      "demoId": "search-input"
+    }
+  ],
+  "Icon": [
+    {
+      "id": "Icon/icon-library",
+      "caption": "Icon library",
+      "code": "const grid = new Grid().addClass(\"Gallery-iconGrid\");\n  grid.setStyle(\"display\", [\"grid\"]);\n  grid.setStyle(\"gridTemplateColumns\", [\"repeat(auto-fill, minmax(5.5rem, 1fr))\"]);\n  grid.setStyle(\"gap\", [\"0.75rem\"]);\n\n  Object.entries(ICONS).forEach(([key, name]) => {\n    grid.add(\n      new StackPanel({ isVertical: true })\n        .addClass(\"Gallery-iconCell\")\n        .setStyle(\"alignItems\", [\"center\"])\n        .setStyle(\"gap\", [\"0.25rem\"])\n        .setStyle(\"padding\", [\"0.5rem\"])\n        .add(new Icon(name))\n        .add(new Caption(key)),\n    );\n  });\n\n  return grid;",
+      "demoId": "icons-grid"
+    }
+  ],
+  "InputTextArea": [
+    {
+      "id": "InputTextArea/inputtextarea",
+      "caption": "InputTextArea",
+      "code": "const field = new InputTextArea();\n  field.dom.placeholder = \"Multi-line notes…\";\n  return field;",
+      "demoId": "textarea"
+    }
+  ],
+  "InputDropdown": [
+    {
+      "id": "InputDropdown/inputdropdown",
+      "caption": "InputDropdown",
+      "code": "return new InputDropdown().setOptions({ user: \"User\", admin: \"Admin\" });",
+      "demoId": "select"
+    }
+  ],
+  "Checkbox": [
+    {
+      "id": "Checkbox/checkbox",
+      "caption": "Checkbox",
+      "code": "return row()\n  .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n  .add(new TextBlock(\"Agree to terms\"));",
+      "demoId": "checkbox"
+    }
+  ],
+  "InputColor": [
+    {
+      "id": "InputColor/inputcolor",
+      "caption": "InputColor",
+      "code": "return new InputColor();",
+      "demoId": "color"
+    }
+  ],
+  "InputNumber": [
+    {
+      "id": "InputNumber/inputnumber",
+      "caption": "InputNumber",
+      "code": "return new InputNumber(2);",
+      "demoId": "number"
+    }
+  ],
+  "InputInteger": [
+    {
+      "id": "InputInteger/inputinteger",
+      "caption": "InputInteger",
+      "code": "return new InputInteger(1);",
+      "demoId": "integer"
+    }
+  ],
+  "Slider": [
+    {
+      "id": "Slider/slider",
+      "caption": "Slider",
+      "code": "return new Slider(42).setRange(0, 100).setStep(1).setPrecision(0);",
+      "demoId": "slider"
+    }
+  ],
+  "LineBreak": [
+    {
+      "id": "LineBreak/line-break",
+      "caption": "Line break",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new TextBlock(\"Line one\"))\n  .add(new LineBreak())\n  .add(new TextBlock(\"Line two\"));",
+      "demoId": "line-break"
+    }
+  ],
+  "Line": [
+    {
+      "id": "Line/divider",
+      "caption": "Divider",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.5rem\")\n  .add(new TextBlock(\"Above the rule\"))\n  .add(new Line())\n  .add(new TextBlock(\"Below the rule\"));",
+      "demoId": "divider"
+    }
+  ],
+  "Button": [
+    {
+      "id": "Button/button",
+      "caption": "Button",
+      "code": "return new Button(\"Primary\").addClass(\"primary\");",
+      "demoId": "button-primary"
+    }
+  ],
+  "IconButton": [
+    {
+      "id": "IconButton/iconbutton",
+      "caption": "IconButton",
+      "code": "return new IconButton(\"Export\", { icon: \"download\", meta: \".ifc\" });",
+      "demoId": "square-button"
+    }
+  ],
+  "RibbonButton": [
+    {
+      "id": "RibbonButton/ribbonbutton",
+      "caption": "RibbonButton",
+      "code": "return new RibbonButton(\"Project\", { icon: \"folder_open\" });",
+      "demoId": "ribbon-button"
+    }
+  ],
+  "ProgressBar": [
+    {
+      "id": "ProgressBar/progressbar",
+      "caption": "ProgressBar",
+      "code": "return new ProgressBar(0.65);",
+      "demoId": "progress"
+    }
+  ],
+  "TabView": [
+    {
+      "id": "TabView/tabview",
+      "caption": "TabView",
+      "code": "const tabs = new TabView();\n  tabs.addTab(\"tab-a\", \"Overview\", [new TextBlock(\"Tab A content\")]);\n  tabs.addTab(\"tab-b\", \"Details\", [new TextBlock(\"Tab B content\")]);\n  tabs.select(\"tab-a\");\n  return tabs;",
+      "demoId": "tabbed-panel"
+    }
+  ],
+  "InputList": [
+    {
+      "id": "InputList/inputlist",
+      "caption": "InputList",
+      "code": "const list = new InputList();\n  list.setItems([\n    { id: \"layer-01\", name: \"Layer 01\" },\n    { id: \"layer-02\", name: \"Layer 02\" },\n    { id: \"layer-03\", name: \"Layer 03\" },\n  ]);\n  return list;",
+      "demoId": "list"
+    }
+  ],
+  "InputDate": [
+    {
+      "id": "InputDate/inputdate",
+      "caption": "InputDate",
+      "code": "return new InputDate(new Date());",
+      "demoId": "date"
+    }
+  ],
+  "ProgressRing": [
+    {
+      "id": "ProgressRing/progressring",
+      "caption": "ProgressRing",
+      "code": "return new ProgressRing({ text: \"Loading model…\" });",
+      "demoId": "spinner"
+    }
+  ],
+  "Tooltip": [
+    {
+      "id": "Tooltip/tooltip",
+      "caption": "Tooltip",
+      "code": "const target = new Button(\"Hover for tooltip\").addClass(\"secondary\");\n  new Tooltip(\"Saved to cloud\", { theme: \"dark\" }).attachTo(target);\n  return target;",
+      "demoId": "tooltip"
+    }
+  ],
+  "DrawUI": [
+    {
+      "id": "DrawUI/basic",
+      "caption": "Basic",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.5rem\")\n  .add(DrawUI.Button(\"Save\"))\n  .add(DrawUI.Badge(\"New\"));"
+    }
+  ],
+  "ContentPanel": [
+    {
+      "id": "ContentPanel/contentpanel",
+      "caption": "ContentPanel",
+      "code": "return new ContentPanel()\n  .header(\"Inspector\", \"info\")\n  .add(new TextBlock(\"ContentPanel content area\"))\n  .add(\n    new StackPanel({ isVertical: false })\n      .gap(\"0.5rem\")\n      .add(new Button(\"Action\").addClass(\"primary\"))\n      .add(new Button(\"Cancel\").addClass(\"secondary\")),\n  );",
+      "demoId": "base-panel"
+    }
+  ],
+  "FloatingDialog": [
+    {
+      "id": "FloatingDialog/floatingdialog",
+      "caption": "FloatingDialog",
+      "code": "return new Button(\"Open FloatingDialog\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow, .Header\").forEach((node) => {\n      const shell = node.closest(\".FloatingWindow\") || node.closest(\".Rectangle\");\n      if (shell?.parentElement === document.body) shell.remove();\n    });\n    const win = new FloatingDialog({ title: \"Floating window\", icon: \"info\" });\n    win\n      .content(new TextBlock(\"floatingDialog() content\"))\n      .add(\n        new Button(\"Close\")\n          .addClass(\"secondary\")\n          .onClick(() => win.destroy()),\n      )\n      .show();\n  });",
+      "demoId": "floating-window"
+    }
+  ],
+  "WorkspacePanel": [
+    {
+      "id": "WorkspacePanel/workspacepanel",
+      "caption": "WorkspacePanel",
+      "code": "const wrap = new StackPanel({ isVertical: true }).gap(\"0.75rem\");\n\n  let panel = null;\n\n  const openButton = new Button(\"Open floating tab panel\")\n    .addClass(\"primary\")\n    .onClick(() => {\n      if (!panel) {\n        panel = new WorkspacePanel({\n          context: { ui: { model: {} } },\n          tabId: \"gallery-demo-tab\",\n          tabLabel: \"Demo panel\",\n          icon: \"tab\",\n          title: \"Floating tab panel\",\n          startFloating: true,\n          floatingStyles: { width: \"320px\", height: \"260px\" },\n        });\n        panel.add(\n          new StackPanel({ isVertical: true })\n            .gap(\"0.5rem\")\n            .setStyle(\"padding\", [\"0.75rem\"])\n            .add(new TextBlock(\"WorkspacePanel content — dock buttons appear when a WorkspaceLayout context is provided.\"))\n            .add(new Badge(\"startFloating: true\")),\n        );\n      }\n      panel.show();\n    });\n\n  wrap.add(openButton);\n  wrap.add(\n    new Caption(\n      \"Without a WorkspaceLayout the panel opens as a floating window; inside a workspace it docks as a CollapsiblePanel (undock transfers content into a FloatingWindow).\",\n    ),\n  );\n  return wrap;",
+      "demoId": "tab-panel"
+    }
+  ],
+  "Header": [
+    {
+      "id": "Header/header",
+      "caption": "Header",
+      "code": "return new Header({\n    title: \"Inspector\",\n    icon: \"info\",\n    actions: [new Button(\"…\").addClass(\"secondary\")],\n  });",
+      "demoId": "header"
+    }
+  ],
+  "RibbonBar": [
+    {
+      "id": "RibbonBar/ribbonbar",
+      "caption": "RibbonBar",
+      "code": "return new RibbonBar(\n    [\n      new RibbonButton(\"Project\", { icon: \"folder_open\" }),\n      new RibbonButton(\"Properties\", { icon: \"tune\", active: true }),\n      new RibbonButton(\"Console\", { icon: \"terminal\" }),\n    ],\n    \"flex-start\",\n  );",
+      "demoId": "ribbon-bar"
+    }
+  ],
+  "Flyout": [
+    {
+      "id": "Flyout/flyout",
+      "caption": "Flyout",
+      "code": "const host = new Container().setStyle(\"position\", [\"relative\"]).setStyle(\"minHeight\", [\"5rem\"]);\n  const panel = new Flyout({\n    title: \"Alerts\",\n    icon: \"notifications\",\n    badgeCount: 2,\n    position: { top: \"0.5rem\", right: \"0.5rem\" },\n  });\n  panel.content(new StackPanel({ isVertical: true }).add(new TextBlock(\"Collapsible panel content\")));\n  host.add(panel);\n  return host;",
+      "demoId": "collapsible-panel"
+    }
+  ],
+  "CollapsiblePanel": [
+    {
+      "id": "CollapsiblePanel/collapsiblepanel",
+      "caption": "CollapsiblePanel",
+      "code": "const section = new CollapsiblePanel({ title: \"Parameters\", icon: \"tune\" });\n  section.content(new TextBlock(\"Section body built with textBlock()\"));\n  return section;",
+      "demoId": "collapsible-section"
+    }
+  ],
+  "InstructionPanel": [
+    {
+      "id": "InstructionPanel/instruction-panel",
+      "caption": "Instruction panel",
+      "code": "return new InstructionPanel(\"Viewport\", \"3d_rotation\", [\n    [\"MMB\", \"Orbit around the scene\"],\n    [\"Shift + MMB\", \"Pan the view\"],\n    [\"Scroll\", \"Zoom in / out\"],\n    [\"Alt + MMB\", \"Roll the camera\"],\n  ]);",
+      "demoId": "instruction-panel"
+    }
+  ],
+  "SplitContainer": [
+    {
+      "id": "SplitContainer/split-container",
+      "caption": "Split container",
+      "code": "const left = new Rectangle()\n    .add(new TextBlock(\"Left pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const right = new Rectangle()\n    .add(new TextBlock(\"Right pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const split = new SplitContainer(\"horizontal\", [left, right]);\n  split.setStyle(\"height\", [\"7rem\"]);\n  return split;",
+      "demoId": "split-container"
+    }
+  ],
+  "Toast": [
+    {
+      "id": "Toast/progress-toast",
+      "caption": "Progress toast",
+      "code": "const inlineHost = new Container();\n  inlineHost.dom.id = \"inline-progress-host\";\n  inlineHost.setStyle(\"position\", [\"relative\"]).setStyle(\"minHeight\", [\"3rem\"]);\n  const toast = new Toast();\n\n  return new StackPanel({ isVertical: true })\n    .gap(\"0.75rem\")\n    .add(\n      new Button(\"Run inline progress\").addClass(\"secondary\").onClick(() => {\n        toast.show(\"#inline-progress-host\", \"Exporting…\");\n        let pct = 0;\n        const timer = setInterval(() => {\n          pct += 10;\n          toast.update(pct, `${pct}%`);\n          if (pct >= 100) {\n            clearInterval(timer);\n            setTimeout(() => toast.hide(), 400);\n          }\n        }, 120);\n      }),\n    )\n    .add(inlineHost);",
+      "demoId": "progress-helpers"
+    },
+    {
+      "id": "Toast/toast",
+      "caption": "Toast",
+      "code": "return new Button(\"Show toast\").addClass(\"primary\").onClick(() => {\n    new Toast(\"Changes saved\", \"success\", { duration: 2500 });\n  });",
+      "demoId": "toast"
+    }
+  ],
+  "Operator": [
+    {
+      "id": "Operator/icon-button",
+      "caption": "Icon button",
+      "code": "return new Operator(\"settings\");",
+      "demoId": "operator"
+    }
+  ],
+  "LabeledBoxItem": [
+    {
+      "id": "LabeledBoxItem/labeled-box-item",
+      "caption": "Labeled box item",
+      "code": "const menuList = new InputList();\n  menuList.add(\n    new LabeledBoxItem({ id: \"visibility\", label: \"Visibility\", checked: true }, {\n      visibility: \"visibility\",\n      default: \"layers\",\n    }),\n  );\n  menuList.add(\n    new LabeledBoxItem({ id: \"materials\", label: \"Materials\", checked: false }, {\n      materials: \"palette\",\n      default: \"layers\",\n    }),\n  );\n  return menuList;",
+      "demoId": "labeled-box-item"
+    }
+  ],
+  "WorkspaceLayout": [
+    {
+      "id": "WorkspaceLayout/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"WorkspaceLayout requires a full #World DOM tree — use the templates example app.\",\n);"
+    }
+  ],
+  "buildWorldFromConfig": [
+    {
+      "id": "buildWorldFromConfig/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"buildWorldFromConfig builds an app shell into a host — see docs/examples/templates.\",\n);"
+    }
+  ],
+  "createDefaultWorldConfig": [
+    {
+      "id": "createDefaultWorldConfig/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"createDefaultWorldConfig returns a config object, not a Control.\",\n);"
+    }
+  ],
+  "FloatingWindow": [
+    {
+      "id": "FloatingWindow/floatingwindow",
+      "caption": "FloatingWindow",
+      "code": "return new Button(\"Open FloatingWindow\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow\").forEach((node) => {\n      if (node.parentElement === document.body) node.remove();\n    });\n    const panel = new FloatingWindow({ title: \"Overlay\", width: \"320px\" });\n    panel.setContent(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.5rem\")\n        .add(new Heading(3, \"FloatingWindow\"))\n        .add(new TextBlock(\"Free-floating overlay panel\")),\n    );\n    panel.dom.style.height = \"auto\";\n    panel.dom.style.maxHeight = \"70vh\";\n    panel.show();\n  });",
+      "demoId": "floating-panel"
+    }
+  ],
+  "NavigationList": [
+    {
+      "id": "NavigationList/navigationlist",
+      "caption": "NavigationList",
+      "code": "const sampleTree = {\n    name: \"Project\",\n    children: [\n      {\n        name: \"Site\",\n        children: [\n          { name: \"Building A\", children: [{ name: \"Level 01\" }, { name: \"Level 02\" }] },\n          { name: \"Building B\" },\n        ],\n      },\n      { name: \"Library\", children: [{ name: \"Materials\" }, { name: \"Profiles\" }] },\n    ],\n  };\n  const drill = new NavigationList({\n    getLabel: (item) => item.name,\n    getChildren: (item) => item.children || [],\n    onItemClick: (item) => console.log(\"selected\", item),\n    onNavigate: (item, direction) => console.log(\"navigate\", direction, item.name),\n  });\n  drill.setData(sampleTree);\n  return drill.panel;",
+      "demoId": "drill-down"
+    }
+  ],
+  "TreeView": [
+    {
+      "id": "TreeView/treeview",
+      "caption": "TreeView",
+      "code": "const sampleTree = {\n    name: \"Project\",\n    children: [\n      {\n        name: \"Site\",\n        children: [\n          { name: \"Building A\", children: [{ name: \"Level 01\" }, { name: \"Level 02\" }] },\n          { name: \"Building B\" },\n        ],\n      },\n      { name: \"Library\", children: [{ name: \"Materials\" }, { name: \"Profiles\" }] },\n    ],\n  };\n  const tree = new TreeView({\n    getLabel: (item) => item.name,\n    getChildren: (item) => item.children || [],\n    onItemClick: (item) => console.log(\"selected\", item),\n  });\n  tree.setData(sampleTree);\n  return tree.panel;",
+      "demoId": "tree-view"
+    }
+  ],
+  "Markdown": [
+    {
+      "id": "Markdown/markdown",
+      "caption": "Markdown",
+      "code": "return new Markdown(\n    [\n      \"## Min-build markdown\",\n      \"\",\n      \"Built-in converter — **no Showdown**. Supports headings, **bold**, *italic*,\",\n      \"`inline code`, lists, and fenced blocks.\",\n      \"\",\n      \"- Item one\",\n      \"- Item two\",\n      \"\",\n      \"1. Ordered\",\n      \"2. Lists\",\n      \"\",\n      \"```js\",\n      \"new Markdown(\\\"# Hello\\\");\",\n      \"```\",\n    ].join(\"\\n\"),\n  );",
+      "demoId": "markdown"
+    },
+    {
+      "id": "Markdown/markdown-showdown",
+      "caption": "Markdown (Showdown)",
+      "code": "return new Markdown(\n    [\n      \"Full build renders GitHub-flavored markdown via **Showdown**, with optional\",\n      \"Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,\",\n      \"and `inline code` all work.\",\n      \"\",\n      \"## Feature matrix\",\n      \"\",\n      \"| Feature | Supported | Notes |\",\n      \"| --- | --- | --- |\",\n      \"| Tables | yes | Pipe tables with header row |\",\n      \"| Task lists | yes | Checkboxes below |\",\n      \"| Fenced code | yes | Highlight.js when available |\",\n      \"| Autolinks | yes | https://github.com/myoualid/drawui |\",\n      \"| Emoji | yes | :sparkles: :rocket: |\",\n      \"\",\n      \"## Lists & tasks\",\n      \"\",\n      \"- Nested lists\",\n      \"  - Second level\",\n      \"  - Another item\",\n      \"- Ordered next\",\n      \"\",\n      \"1. Install peers\",\n      \"2. Call `new Markdown(text)`\",\n      \"3. Attach to the DOM\",\n      \"\",\n      \"- [x] Headings and paragraphs\",\n      \"- [x] Bold / italic / strike\",\n      \"- [x] Tables and task lists\",\n      \"- [x] Highlighted code blocks\",\n      \"\",\n      \"## Quote\",\n      \"\",\n      \"> Prefer the full build when you need GFM tables, task lists, or syntax-highlighted\",\n      \"> fences. The min build keeps a small built-in converter instead.\",\n      \"\",\n      \"## Code\",\n      \"\",\n      \"```js\",\n      \"import { Markdown } from \\\"drawui\\\";\",\n      \"\",\n      \"const md = new Markdown(\",\n      \"  \\\"# Hello\\\\n\\\\n**Showdown** + Highlight.js\\\",\",\n      \"  { isMarkdown: true },\",\n      \");\",\n      \"\",\n      \"document.body.appendChild(md.dom);\",\n      \"```\",\n      \"\",\n      \"```css\",\n      \".Markdown pre {\",\n      \"  overflow-x: auto;\",\n      \"}\",\n      \"```\",\n    ].join(\"\\n\"),\n    { isMarkdown: true },\n  );",
+      "demoId": "markdown-full"
+    }
+  ],
+  "Chart": [
+    {
+      "id": "Chart/bar",
+      "caption": "Bar",
+      "code": "return makeChart({\n    type: \"bar\",\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          label: \"Tickets\",\n          data: [12, 19, 8, 15, 22],\n          backgroundColor: CHART_PALETTE[0],\n          borderColor: CHART_BORDERS[0],\n          borderWidth: 1,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-bar"
+    },
+    {
+      "id": "Chart/horizontal-bar",
+      "caption": "Horizontal bar",
+      "code": "return makeChart({\n    type: \"bar\",\n    data: {\n      labels: [\"Design\", \"Build\", \"Test\", \"Ship\"],\n      datasets: [\n        {\n          label: \"Hours\",\n          data: [32, 48, 24, 16],\n          backgroundColor: CHART_PALETTE[1],\n          borderColor: CHART_BORDERS[1],\n          borderWidth: 1,\n        },\n      ],\n    },\n    options: {\n      indexAxis: \"y\",\n    },\n  });",
+      "demoId": "chart-bar-horizontal"
+    },
+    {
+      "id": "Chart/stacked-bar",
+      "caption": "Stacked bar",
+      "code": "return makeChart({\n    type: \"bar\",\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          label: \"Open\",\n          data: [8, 11, 5, 9, 12],\n          backgroundColor: CHART_PALETTE[0],\n          borderColor: CHART_BORDERS[0],\n          borderWidth: 1,\n        },\n        {\n          label: \"Closed\",\n          data: [4, 8, 3, 6, 10],\n          backgroundColor: CHART_PALETTE[1],\n          borderColor: CHART_BORDERS[1],\n          borderWidth: 1,\n        },\n      ],\n    },\n    options: {\n      scales: {\n        x: { stacked: true },\n        y: { stacked: true },\n      },\n    },\n  });",
+      "demoId": "chart-bar-stacked"
+    },
+    {
+      "id": "Chart/line",
+      "caption": "Line",
+      "code": "return makeChart({\n    type: \"line\",\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          label: \"Latency (ms)\",\n          data: [42, 38, 51, 45, 33],\n          borderColor: CHART_BORDERS[0],\n          backgroundColor: CHART_PALETTE[0],\n          tension: 0.3,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-line"
+    },
+    {
+      "id": "Chart/multi-series-line",
+      "caption": "Multi-series line",
+      "code": "return makeChart({\n    type: \"line\",\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          label: \"API\",\n          data: [42, 38, 51, 45, 33],\n          borderColor: CHART_BORDERS[0],\n          backgroundColor: CHART_PALETTE[0],\n          tension: 0.3,\n        },\n        {\n          label: \"UI\",\n          data: [28, 31, 27, 34, 29],\n          borderColor: CHART_BORDERS[1],\n          backgroundColor: CHART_PALETTE[1],\n          tension: 0.3,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-line-multi"
+    },
+    {
+      "id": "Chart/area",
+      "caption": "Area",
+      "code": "return makeChart({\n    type: \"line\",\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          label: \"Active users\",\n          data: [120, 145, 132, 168, 190],\n          borderColor: CHART_BORDERS[2],\n          backgroundColor: \"rgba(220, 220, 170, 0.35)\",\n          fill: true,\n          tension: 0.35,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-area"
+    },
+    {
+      "id": "Chart/pie",
+      "caption": "Pie",
+      "code": "return makeChart({\n    type: \"pie\",\n    data: {\n      labels: [\"Docs\", \"Code\", \"Review\", \"Meetings\", \"Other\"],\n      datasets: [\n        {\n          data: [28, 35, 18, 12, 7],\n          backgroundColor: CHART_PALETTE,\n          borderColor: CHART_BORDERS,\n          borderWidth: 1,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-pie"
+    },
+    {
+      "id": "Chart/doughnut",
+      "caption": "Doughnut",
+      "code": "return makeChart({\n    type: \"doughnut\",\n    data: {\n      labels: [\"Passed\", \"Failed\", \"Skipped\"],\n      datasets: [\n        {\n          data: [72, 18, 10],\n          backgroundColor: [CHART_PALETTE[1], CHART_PALETTE[3], CHART_PALETTE[2]],\n          borderColor: [CHART_BORDERS[1], CHART_BORDERS[3], CHART_BORDERS[2]],\n          borderWidth: 1,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-doughnut"
+    },
+    {
+      "id": "Chart/polar-area",
+      "caption": "Polar area",
+      "code": "return makeChart({\n    type: \"polarArea\",\n    data: {\n      labels: [\"Speed\", \"Reliability\", \"UX\", \"Docs\", \"Support\"],\n      datasets: [\n        {\n          data: [11, 16, 14, 9, 12],\n          backgroundColor: CHART_PALETTE,\n          borderColor: CHART_BORDERS,\n          borderWidth: 1,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-polar-area"
+    },
+    {
+      "id": "Chart/radar",
+      "caption": "Radar",
+      "code": "return makeChart({\n    type: \"radar\",\n    data: {\n      labels: [\"Speed\", \"Reliability\", \"UX\", \"Docs\", \"Support\"],\n      datasets: [\n        {\n          label: \"Current\",\n          data: [65, 78, 72, 55, 68],\n          borderColor: CHART_BORDERS[0],\n          backgroundColor: \"rgba(86, 156, 214, 0.25)\",\n        },\n        {\n          label: \"Target\",\n          data: [80, 85, 80, 75, 80],\n          borderColor: CHART_BORDERS[1],\n          backgroundColor: \"rgba(78, 201, 176, 0.2)\",\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-radar"
+    },
+    {
+      "id": "Chart/scatter",
+      "caption": "Scatter",
+      "code": "return makeChart({\n    type: \"scatter\",\n    data: {\n      datasets: [\n        {\n          label: \"Samples\",\n          data: [\n            { x: 2, y: 14 },\n            { x: 4, y: 9 },\n            { x: 6, y: 18 },\n            { x: 8, y: 12 },\n            { x: 10, y: 22 },\n            { x: 12, y: 16 },\n          ],\n          backgroundColor: CHART_PALETTE[0],\n          borderColor: CHART_BORDERS[0],\n        },\n      ],\n    },\n    options: {\n      scales: {\n        x: { title: { display: true, text: \"Effort\" } },\n        y: { title: { display: true, text: \"Impact\" } },\n      },\n    },\n  });",
+      "demoId": "chart-scatter"
+    },
+    {
+      "id": "Chart/bubble",
+      "caption": "Bubble",
+      "code": "return makeChart({\n    type: \"bubble\",\n    data: {\n      datasets: [\n        {\n          label: \"Initiatives\",\n          data: [\n            { x: 20, y: 30, r: 8 },\n            { x: 35, y: 45, r: 14 },\n            { x: 50, y: 25, r: 10 },\n            { x: 65, y: 55, r: 18 },\n            { x: 80, y: 40, r: 12 },\n          ],\n          backgroundColor: CHART_PALETTE[4],\n          borderColor: CHART_BORDERS[4],\n        },\n      ],\n    },\n    options: {\n      scales: {\n        x: { title: { display: true, text: \"Cost\" } },\n        y: { title: { display: true, text: \"Value\" } },\n      },\n    },\n  });",
+      "demoId": "chart-bubble"
+    },
+    {
+      "id": "Chart/bar-line",
+      "caption": "Bar + line",
+      "code": "return makeChart({\n    data: {\n      labels: CHART_LABELS,\n      datasets: [\n        {\n          type: \"bar\",\n          label: \"Volume\",\n          data: [12, 19, 8, 15, 22],\n          backgroundColor: CHART_PALETTE[0],\n          borderColor: CHART_BORDERS[0],\n          borderWidth: 1,\n          order: 2,\n        },\n        {\n          type: \"line\",\n          label: \"Trend\",\n          data: [10, 14, 12, 16, 20],\n          borderColor: CHART_BORDERS[3],\n          backgroundColor: CHART_PALETTE[3],\n          tension: 0.3,\n          order: 1,\n        },\n      ],\n    },\n  });",
+      "demoId": "chart-mixed"
+    }
+  ],
+  "DataGrid": [
+    {
+      "id": "DataGrid/datagrid",
+      "caption": "DataGrid",
+      "code": "const sheet = new DataGrid({\n    height: \"280px\",\n    data: [\n      { name: \"Ada Lovelace\", role: \"Analyst\", score: 98 },\n      { name: \"Alan Turing\", role: \"Engineer\", score: 95 },\n      { name: \"Grace Hopper\", role: \"Lead\", score: 97 },\n    ],\n    columnNameMapper: {\n      name: \"Name\",\n      role: \"Role\",\n      score: \"Score\",\n    },\n  });\n\n  return afterAttach(sheet, () => sheet.init());",
+      "demoId": "spreadsheet"
+    }
+  ],
+  "GanttChart": [
+    {
+      "id": "GanttChart/gantt",
+      "caption": "Gantt",
+      "code": "const host = new Container()\n    .setStyle(\"height\", [\"320px\"])\n    .setStyle(\"overflow\", [\"auto\"])\n    .setStyle(\"width\", [\"100%\"]);\n\n  const gantt = new GanttChart({});\n  gantt.render(SAMPLE_TASKS, host);\n  return host;",
+      "demoId": "gantt"
+    }
+  ],
+  "SortableList": [
+    {
+      "id": "SortableList/sortablelist",
+      "caption": "SortableList",
+      "code": "return new SortableList(\n    [{ label: \"Wall\", checked: true }, { label: \"Slab\", checked: false }, { label: \"Column\" }, { label: \"Beam\" }],\n    (items) => console.log(\"reordered\", items),\n  ).container;",
+      "demoId": "reorderable-list"
+    }
+  ],
+  "RadialMenu": [
+    {
+      "id": "RadialMenu/radialmenu",
+      "caption": "RadialMenu",
+      "code": "const wrap = new StackPanel({ isVertical: true }).gap(\"0.75rem\");\n\n  const status = new Caption(\"Last action: none\");\n\n  const viewport = new Container()\n    .setStyle(\"position\", [\"relative\"])\n    .setStyle(\"height\", [\"340px\"])\n    .setStyle(\"border\", [\"1px dashed var(--dui-color-border, #444)\"])\n    .setStyle(\"borderRadius\", [\"8px\"])\n    .setStyle(\"overflow\", [\"hidden\"]);\n\n  const hint = new Caption(\"Hover this area and press P, or use the button below.\");\n  hint.setStyle(\"position\", [\"absolute\"]);\n  hint.setStyle(\"top\", [\"0.5rem\"]);\n  hint.setStyle(\"left\", [\"0.75rem\"]);\n  viewport.add(hint);\n\n  const operators = {\n    canExecute: () => true,\n    execute: async (operatorId) => {\n      status.setTextContent(`Last action: ${operatorId}`);\n    },\n  };\n\n  const menu = new RadialMenu({\n    viewport: viewport.dom,\n    operators,\n    items: [\n      { operator: \"demo.select_all\", icon: \"select_all\", name: \"Select all\" },\n      { operator: \"demo.duplicate\", icon: \"content_copy\", name: \"Duplicate\" },\n      { operator: \"demo.group\", icon: \"category\", name: \"Group\" },\n      { operator: \"demo.hide\", icon: \"visibility_off\", name: \"Hide\" },\n      { operator: \"demo.delete\", icon: \"delete\", name: \"Delete\" },\n    ],\n  });\n\n  const toggleButton = new Button(\"Toggle pie menu\")\n    .addClass(\"primary\")\n    .onClick(() => menu.toggle());\n\n  wrap.add(viewport);\n  wrap.add(new StackPanel({ isVertical: false }).gap(\"0.75rem\").setStyle(\"alignItems\", [\"center\"]).add(toggleButton).add(status));\n  return wrap;",
+      "demoId": "pie-menu"
+    }
+  ],
+  "AppShell": [
+    {
+      "id": "AppShell/compact-shell",
+      "caption": "Compact shell",
+      "code": "const host = new Container()\n  .setStyle(\"height\", [\"260px\"])\n  .setStyle(\"overflow\", [\"hidden\"]);\nconst shell = new AppShell({\n  sidebarTitle: \"Nav\",\n  layout: {\n    sidebarWidth: \"160px\",\n    sidebarMinWidth: \"120px\",\n    sidebarMaxWidth: \"240px\",\n  },\n});\nshell.setSidebarContent(new TextBlock(\"Sidebar\"));\nshell.setMainContent(new TextBlock(\"Main page\"));\nhost.add(shell);\nreturn host;"
+    }
+  ],
+  "NavigationView": [
+    {
+      "id": "NavigationView/navigationview",
+      "caption": "NavigationView",
+      "code": "const host = new Container().setStyle(\"height\", [\"260px\"]).setStyle(\"overflow\", [\"hidden\"]);\n  const layout = new NavigationView({\n    sidebarWidth: \"180px\",\n    sidebarMinWidth: \"140px\",\n    sidebarMaxWidth: \"320px\",\n    sidebarResizable : true,\n  });\n  layout.setSidebarTitle(\"Explorer\");\n  layout.setSidebarContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.25rem\")\n      .add(new TextBlock(\"Site\"))\n      .add(new TextBlock(\"Building\")),\n  );\n  layout.setMainContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.5rem\")\n      .add(new Heading(3, \"Viewport\"))\n      .add(new TextBlock(\"Main content\")),\n  );\n  host.add(layout);\n  return host;",
+      "demoId": "sidebar-layout"
+    }
+  ],
+  "PropertyGrid": [
+    {
+      "id": "PropertyGrid/propertygrid",
+      "caption": "PropertyGrid",
+      "code": "const nameField = new InputText().setValue(\"Beam-12\");\n  const typeSelect = new InputDropdown().setOptions({\n    IfcBeam: \"IfcBeam\",\n    IfcColumn: \"IfcColumn\",\n    IfcSlab: \"IfcSlab\",\n  }).setValue(\"IfcBeam\");\n  const notes = new InputTextArea().setValue(\"Primary span member\");\n  notes.dom.rows = 2;\n  const visible = new Checkbox(true).addClass(\"Card-checkbox\");\n  const length = new InputNumber(12.5).setRange(0, 100).setUnit(\"m\");\n  const count = new InputInteger(4).setRange(0, 99);\n  const opacity = new Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2);\n  const color = new InputColor().setValue(\"#70ba35\");\n  const created = new InputDate(new Date());\n  const progress = new ProgressBar(0.45);\n\n  return new PropertyGrid({\n    compact: true,\n    title: \"All value types\",\n    rows: {\n      staticText: { label: \"Text\", value: \"IfcBeam\" },\n      name: { label: \"Input\", value: nameField },\n      type: { label: \"Select\", value: typeSelect },\n      notes: { label: \"Textarea\", value: notes },\n      visible: { label: \"Checkbox\", value: visible },\n      length: { label: \"Number\", value: length },\n      count: { label: \"Integer\", value: count },\n      opacity: { label: \"Slider\", value: opacity },\n      color: { label: \"Color\", value: color },\n      created: { label: \"Date\", value: created },\n      progress: { label: \"Progress\", value: progress },\n    },\n  });",
+      "demoId": "property-table"
+    }
+  ],
+  "NodeGraph": [
+    {
+      "id": "NodeGraph/nodegraph",
+      "caption": "NodeGraph",
+      "code": "const host = new Container()\n    .setStyle(\"height\", [\"420px\"])\n    .setStyle(\"display\", [\"flex\"])\n    .setStyle(\"flexDirection\", [\"column\"])\n    .setStyle(\"width\", [\"100%\"]);\n\n  const nodes = new NodeGraph({\n    embedded: true,\n    nodes: [\n      { id: 1, name: \"Source\", status: \"Active\", level: 0, parent: 0, children: [2, 3] },\n      { id: 2, name: \"Transform\", status: \"Pending\", level: 1, parent: 1, children: [4] },\n      { id: 3, name: \"Validate\", status: \"Active\", level: 1, parent: 1, children: [4] },\n      { id: 4, name: \"Output\", status: \"Done\", level: 2, parent: 2, children: [] },\n    ],\n    connections: [\n      { source: 1, sourceHandle: \"output\", target: 2, targetHandle: \"input\" },\n      { source: 1, sourceHandle: \"output\", target: 3, targetHandle: \"input\" },\n      { source: 2, sourceHandle: \"output\", target: 4, targetHandle: \"input\" },\n      { source: 3, sourceHandle: \"output\", target: 4, targetHandle: \"input\" },\n    ],\n    onEdit: (node) => alert(`Edit node: ${node.name}`),\n  });\n\n  host.add(nodes);\n  return host;",
+      "demoId": "nodes"
+    }
+  ],
+  "StatusBar": [
+    {
+      "id": "StatusBar/statusbar",
+      "caption": "StatusBar",
+      "code": "const loadingHost = new Container().setStyle(\"position\", [\"relative\"]).setStyle(\"minHeight\", [\"2.5rem\"]);\n  const loadingBar = new StatusBar({ initialText: \"Processing…\" });\n  loadingHost.add(loadingBar);\n  loadingHost.add(\n    new Button(\"Run StatusBar\").addClass(\"secondary\").onClick(() => {\n      loadingBar.show();\n      loadingBar.update(0.35, \"Step 1/3\");\n      setTimeout(() => loadingBar.update(0.7, \"Step 2/3\"), 600);\n      setTimeout(() => loadingBar.update(1, \"Done\"), 1200);\n      setTimeout(() => loadingBar.hide(), 1800);\n    }),\n  );\n  return loadingHost;",
+      "demoId": "loading-bar-component"
+    }
+  ],
+  "ThemeToggle": [
+    {
+      "id": "ThemeToggle/themetoggle",
+      "caption": "ThemeToggle",
+      "code": "const context = {\n    config: { ui: { theme: { current: \"night\", default: \"night\" } } },\n    signals: {\n      themeChanged: {\n        add() {},\n      },\n    },\n  };\n  const ops = {\n    execute(_cmd, ctx, theme) {\n      document.documentElement.dataset.theme = theme === \"day\" ? \"light\" : \"dark\";\n      ctx.config.ui.theme.current = theme;\n    },\n  };\n  return new ThemeToggle(context, ops);",
+      "demoId": "day-night"
+    }
+  ],
+  "PropertyGridRow": [
+    {
+      "id": "PropertyGridRow/propertygridrow",
+      "caption": "PropertyGridRow",
+      "code": "const nameField = new InputText().setValue(\"Custom\");\n  return new StackPanel({ isVertical: true })\n    .addClass(\"PropertyGrid\")\n    .add(new PropertyGridRow(\"Label\", nameField, \"Editable value cell\"))\n    .add(new PropertyGridRow(\"Status\", \"Ready\"));",
+      "demoId": "property-row"
+    }
+  ],
+  "ICONS": [
+    {
+      "id": "ICONS/sample-icons",
+      "caption": "Sample icons",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.75rem\")\n  .setStyle(\"alignItems\", [\"center\"])\n  .add(new Icon(ICONS.settings))\n  .add(new Icon(ICONS.download))\n  .add(new Icon(ICONS.search))\n  .add(new Caption(\"ICONS.*\"));"
+    }
+  ],
+  "makeDraggable": [
+    {
+      "id": "makeDraggable/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"makeDraggable(panel, header) attaches drag behavior — used by FloatingWindow / FloatingDialog.\",\n);"
+    }
+  ],
+  "makeResizable": [
+    {
+      "id": "makeResizable/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"makeResizable(panel, directions) attaches edge resize — used by floating overlays.\",\n);"
+    }
+  ],
+  "makeFlexResizer": [
+    {
+      "id": "makeFlexResizer/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"makeFlexResizer(options) returns a teardown function for flex sibling resizing.\",\n);"
+    }
+  ],
+  "createSplitResizer": [
+    {
+      "id": "createSplitResizer/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"createSplitResizer(splitNode, childIndex) builds a resizer for SplitContainer children.\",\n);"
+    }
+  ],
+  "createLayoutResizerHandle": [
+    {
+      "id": "createLayoutResizerHandle/right-handle",
+      "caption": "Right handle",
+      "code": "return createLayoutResizerHandle(\"right\").setStyle(\"height\", [\"4rem\"]);"
+    }
+  ],
+  "buildWorkspaceDockHandlers": [
+    {
+      "id": "buildWorkspaceDockHandlers/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"buildWorkspaceDockHandlers({ layoutManager, tabId, tabLabel }) wires WorkspacePanel dock chrome.\",\n);"
+    }
+  ]
+}

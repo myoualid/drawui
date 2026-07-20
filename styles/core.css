@@ -17,9 +17,9 @@
     flex-direction: row;
     justify-content: center;
     margin-left: 0 !important;
-    padding-inline: var(--phi-1);
-    scroll-padding-inline-end: var(--phi-0-5);
-    scroll-padding-inline-start: calc(var(--config-width) + var(--phi-0-5));
+    padding-inline: var(--dui-space-4);
+    scroll-padding-inline-end: var(--dui-space-2);
+    scroll-padding-inline-start: calc(var(--dui-config-width) + var(--dui-space-2));
     width: 100% !important;
     z-index: 1;
   }
@@ -30,31 +30,31 @@
      =========================================== */
 @media screen and (max-width: 1023px) {
   :root {
-    --sidebar-width: 44px;
-    --margin: var(--phi-1);
-    --logo-size: calc(44px - var(--phi-0-5));
-    --logo-wordmark-max-width: 150px;
-    --logo-area-width: calc(var(--logo-wordmark-max-width) + var(--phi-0-5));
-    --config-width: var(--logo-area-width);
+    --dui-sidebar-width: 44px;
+    --dui-shell-margin: var(--dui-space-4);
+    --dui-logo-size: calc(44px - var(--dui-space-2));
+    --dui-logo-wordmark-max-width: 150px;
+    --dui-logo-area-width: calc(var(--dui-logo-wordmark-max-width) + var(--dui-space-2));
+    --dui-config-width: var(--dui-logo-area-width);
   }
 
   .World .HeaderBar {
     height: 44px;
-    width: calc(100% - var(--sidebar-width));
+    width: calc(100% - var(--dui-sidebar-width));
   }
 
   .World .HeaderBar .Logo {
     flex: 0 0 auto;
     min-width: 0;
     overflow: visible;
-    padding-inline: var(--phi-0-2-5);
+    padding-inline: var(--dui-space-1);
     width: auto;
   }
 
   .World .HeaderBar .Logo > .Image {
-    height: var(--logo-size);
-    max-height: calc(100% - var(--phi-0-5));
-    max-width: var(--logo-wordmark-max-width);
+    height: var(--dui-logo-size);
+    max-height: calc(100% - var(--dui-space-2));
+    max-width: var(--dui-logo-wordmark-max-width);
     width: auto;
   }
 
@@ -62,8 +62,8 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    gap: var(--phi-0-5);
-    padding-inline: var(--phi-0-5);
+    gap: var(--dui-space-2);
+    padding-inline: var(--dui-space-2);
   }
 
   .World .HeaderBar .ContextMenu::-webkit-scrollbar {
@@ -72,18 +72,18 @@
 
   .World .HeaderBar .ContextMenu .ContextModules {
     flex-shrink: 0;
-    padding-inline: var(--phi-0-5);
+    padding-inline: var(--dui-space-2);
     font-size: 11px;
   }
 
-  .FloatingPanel {
+  .FloatingWindow {
     min-width: 280px;
-    max-width: calc(100vw - var(--sidebar-width) - var(--phi-1));
+    max-width: calc(100vw - var(--dui-sidebar-width) - var(--dui-space-4));
   }
 
-  .TabbedPanel {
+  .TabView {
     min-width: 280px;
-    max-width: calc(100vw - var(--sidebar-width) - var(--phi-1));
+    max-width: calc(100vw - var(--dui-sidebar-width) - var(--dui-space-4));
   }
 
   .NotificationsPanel {

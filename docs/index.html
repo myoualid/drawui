@@ -3,138 +3,257 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DrawUI</title>
+  <title>DrawUI — Documentation</title>
   <meta name="description" content="Framework-free ESM UI library for DOM-native tools, panels, and controls.">
 
-  <link rel="stylesheet" href="./dist/drawui.min.css">
-  <link rel="stylesheet" href="./styles/themes/dark.css">
-  <link rel="stylesheet" href="./styles/themes/light.css">
-  <link rel="stylesheet" href="./examples/examples.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
+    :root {
+      --term-bg: #121412;
+      --term-panel: #181b18;
+      --term-panel-2: #1e221e;
+      --term-border: #2a302a;
+      --term-text: #c8cdc4;
+      --term-muted: #6e766c;
+      --term-dim: #4a5248;
+      --term-accent: #7ec84a;
+      --term-font: "IBM Plex Mono", ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+    }
+
     html, body {
-      background: var(--dui-color-bg, #1c1f1c);
-      color: var(--dui-color-text, #eeeeec);
-      font-family: var(--dui-font-ui, system-ui, sans-serif);
-    }
-
-    #app {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1.25rem 1.25rem;
-    }
-
-    .landing-page {
-      flex: 1;
-      width: 100%;
+      margin: 0;
       min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: var(--term-bg);
+      color: var(--term-text);
+      font-family: var(--term-font);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
-    .landing-main {
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem 1rem 2rem;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(126, 200, 74, 0.07), transparent 55%),
+        linear-gradient(180deg, #141714 0%, var(--term-bg) 45%, #0e100e 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.3;
+      background-image:
+        linear-gradient(rgba(126, 200, 74, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126, 200, 74, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
+    }
+
+    .term {
+      width: min(36rem, 100%);
+      background: var(--term-panel);
+      border: 1px solid var(--term-border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.65);
+    }
+
+    .term-chrome {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.9rem;
+      background: var(--term-panel-2);
+      border-bottom: 1px solid var(--term-border);
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .term-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--term-dim);
+    }
+
+    .term-dots span:nth-child(1) { background: #5a3a3a; }
+    .term-dots span:nth-child(2) { background: #5a5238; }
+    .term-dots span:nth-child(3) { background: #3a5238; }
+
+    .term-path {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .landing {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-    }
-
-    @media (max-width: 480px) {
-      .landing {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-    }
-
-    .landing-hero {
-      font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      color: var(--dui-color-accent, #70ba35);
-      white-space: pre;
-    }
-
-    .landing-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .landing-links .Link {
-      font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
-      font-size: 1.125rem;
-      color: var(--dui-color-text, #eeeeec);
-      text-decoration: none;
-    }
-
-    .landing-links .Link:hover {
-      color: var(--dui-color-accent, #70ba35);
-    }
-
-    .landing-footer {
-      max-width: 36rem;
-      margin-top: auto;
-      padding-top: 2rem;
-      color: var(--dui-color-text-muted, #babdb6);
-      font-size: 0.875rem;
-      line-height: 1.5;
       text-align: center;
+      font-size: 0.75rem;
+      color: var(--term-muted);
+    }
+
+    .term-body { padding: 1.35rem 1.25rem 1.1rem; }
+
+    .term-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.15rem;
+      margin: 0 0 0.4rem;
+    }
+
+    .term-brand h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 4.5vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--term-accent);
+      line-height: 1.1;
+    }
+
+    .term-cursor {
+      display: inline-block;
+      width: 0.55ch;
+      height: 1.05em;
+      background: var(--term-accent);
+      vertical-align: text-bottom;
+      animation: blink 1.1s step-end infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .term-tagline {
+      margin: 0 0 1.5rem;
+      color: var(--term-muted);
+      font-size: 0.8125rem;
+    }
+
+    .term-section { margin: 0 0 1.15rem; }
+    .term-section:last-of-type { margin-bottom: 1.25rem; }
+
+    .term-section-head {
+      margin: 0 0 0.3rem;
+      font-size: 0.75rem;
+      color: var(--term-dim);
+      user-select: none;
+    }
+
+    .term-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .term-list a {
+      display: flex;
+      gap: 0.65rem;
+      align-items: baseline;
+      padding: 0.35rem 0.5rem;
+      margin: 0 -0.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--term-text);
+    }
+
+    .term-list a:hover,
+    .term-list a:focus-visible {
+      background: rgba(126, 200, 74, 0.08);
+      color: var(--term-accent);
+      outline: none;
+    }
+
+    .term-list .marker {
+      color: var(--term-dim);
+      flex-shrink: 0;
+    }
+
+    .term-list a:hover .marker { color: var(--term-accent); }
+
+    .term-footer {
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--term-border);
+      font-size: 0.75rem;
+      color: var(--term-dim);
+    }
+
+    .term-footer code {
+      color: var(--term-muted);
+      font-family: inherit;
     }
   </style>
-
-  <script type="importmap">
-  {
-    "imports": {
-      "drawui": "./dist/drawui.min.js"
-    }
-  }
-  </script>
 </head>
 <body>
-  <div id="app"></div>
+  <main class="term" aria-label="drawui documentation">
+    <header class="term-chrome">
+      <div class="term-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="term-path">~/docs</div>
+    </header>
+
+    <div class="term-body">
+      <div class="term-brand">
+        <h1>drawui</h1>
+        <span class="term-cursor" aria-hidden="true"></span>
+      </div>
+      <p class="term-tagline">Framework-free ESM UI.</p>
+
+      <nav id="nav" aria-label="Documentation"></nav>
+
+      <footer class="term-footer">
+        <code>npm run examples</code> · <code>npm run docs</code>
+      </footer>
+    </div>
+  </main>
 
   <script type="module">
-    import { DrawUI } from "drawui";
+    const href = (path) => new URL(path, import.meta.url).href;
 
-    const pageHref = (path) => new URL(path, import.meta.url).href;
+    const sections = [
+      ["# reference", [
+        ["generated/typedoc/index.html", "TypeDoc"],
+        ["generated/api/index.html", "API pages"],
+      ]],
+      ["# templates", [
+        ["examples/templates/", "3D Viewer Workspace"],
+        ["examples/templates/site/", "Site Logistics"],
+        ["examples/templates/ops/", "Ops Board"],
+      ]],
+      ["# ai", [
+        ["generated/component-index.html", "Component index"],
+        ["SKILL.html", "AI usage guide"],
+      ]],
+      ["# guides", [
+        ["getting-started.html", "Getting started"],
+        ["styling.html", "Styling"],
+        ["publishing.html", "Publishing"],
+        ["examples/min/", "Quick start"],
+      ]],
+    ];
 
-    const page = DrawUI.column()
-      .addClass("landing-page")
-      .add(
-        DrawUI.div()
-          .addClass("landing-main")
-          .add(
-            DrawUI.row()
-              .gap("2.5rem")
-              .addClass("landing")
-              .add(DrawUI.text("> drawui").addClass("landing-hero"))
-              .add(
-                DrawUI.column()
-                  .gap("0.5rem")
-                  .addClass("landing-links")
-                  .add(DrawUI.link("min", pageHref("examples/components/"), undefined, false))
-                  .add(DrawUI.link("full", pageHref("examples/components/full.html"), undefined, false)),
-              ),
-          ),
-      )
-      .add(
-        DrawUI.text(
-          "DOM-native UI primitives and components. Zero bundler required in these demos — just ESM + CSS.",
-        ).addClass("landing-footer"),
-      );
+    const nav = document.getElementById("nav");
 
-    document.getElementById("app").appendChild(page.dom);
+    for (const [title, links] of sections) {
+      const block = document.createElement("section");
+      block.className = "term-section";
+      block.innerHTML = `<div class="term-section-head">${title}</div>`;
+
+      const list = document.createElement("ul");
+      list.className = "term-list";
+
+      for (const [path, label] of links) {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${href(path)}"><span class="marker" aria-hidden="true">›</span>${label}</a>`;
+        list.appendChild(li);
+      }
+
+      block.appendChild(list);
+      nav.appendChild(block);
+    }
   </script>
 </body>
 </html>

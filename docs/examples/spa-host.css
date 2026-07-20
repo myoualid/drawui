@@ -1,4 +1,4 @@
-/* Full-viewport host for DrawUI.spa() example pages */
+/* Full-viewport host for AppShell example pages (opt-in; not part of core DrawUI CSS). */
 html,
 body,
 #app {
@@ -6,8 +6,11 @@ body,
   min-height: 100%;
   margin: 0;
   overflow: hidden;
+  background: var(--dui-color-bg);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
 }
 
-#app > .SpaLayout {
+#app > .AppShell {
   height: 100%;
 }

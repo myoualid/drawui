@@ -1,191 +1,51 @@
 {
-  "generatedAt": "2026-07-16T12:14:04.409Z",
+  "generatedAt": "2026-07-20T22:45:12.869Z",
   "build": "shared",
-  "title": "DrawUI — Component Reference",
-  "subtitle": "Live reference for DrawUI factories, classes, and helpers. Open full.html for peer-dependent components.",
+  "title": "DrawUI — Component reference",
+  "subtitle": "Live reference organized by class hierarchy: Control leaves (Text, Inputs), Container branches (Layout, Collections, Panels, Overlays, Shell), and Peers. Open full.html for Chart, DataGrid, GanttChart, and NodeGraph.",
   "stats": {
-    "categories": 19,
-    "items": 64,
-    "peerCategories": 6,
-    "peerItems": 11,
-    "drawUiFactories": 77,
-    "namedExports": 66
+    "categories": 24,
+    "items": 75,
+    "peerCategories": 5,
+    "peerItems": 10,
+    "drawUiFactories": 0,
+    "namedExports": 3
   },
   "apiIndex": {
-    "drawUi": [
-      "DrawUI.div()",
-      "DrawUI.center()",
-      "DrawUI.h1()",
-      "DrawUI.h2()",
-      "DrawUI.h3()",
-      "DrawUI.h4()",
-      "DrawUI.h5()",
-      "DrawUI.h6()",
-      "DrawUI.paragraph()",
-      "DrawUI.spinner()",
-      "DrawUI.tooltip()",
-      "DrawUI.text()",
-      "DrawUI.smallText()",
-      "DrawUI.title()",
-      "DrawUI.disclaimer()",
-      "DrawUI.code()",
-      "DrawUI.list()",
-      "DrawUI.handle()",
-      "DrawUI.reorderableList()",
-      "DrawUI.listItem()",
-      "DrawUI.propertyTable()",
-      "DrawUI.propertyRow()",
-      "DrawUI.badge()",
-      "DrawUI.toast()",
-      "DrawUI.floatingWindow()",
-      "DrawUI.select()",
-      "DrawUI.row()",
-      "DrawUI.column()",
-      "DrawUI.grid()",
-      "DrawUI.icon()",
-      "DrawUI.operator()",
-      "DrawUI.link()",
-      "DrawUI.image()",
-      "DrawUI.svg()",
-      "DrawUI.span()",
-      "DrawUI.kbd()",
-      "DrawUI.divider()",
-      "DrawUI.spacer()",
-      "DrawUI.hspacer()",
-      "DrawUI.number()",
-      "DrawUI.integer()",
-      "DrawUI.slider()",
-      "DrawUI.color()",
-      "DrawUI.progress()",
-      "DrawUI.textarea()",
-      "DrawUI.tabbedPanel()",
-      "DrawUI.lineBreak()",
-      "DrawUI.instructionLine()",
-      "DrawUI.instructionPanel()",
-      "DrawUI.labeledBoxItem()",
-      "DrawUI.date()",
-      "DrawUI.button()",
-      "DrawUI.squareButton()",
-      "DrawUI.input()",
-      "DrawUI.compactField()",
-      "DrawUI.compactButton()",
-      "DrawUI.searchInput()",
-      "DrawUI.checkbox()",
-      "DrawUI.panel()",
-      "DrawUI.label()",
-      "DrawUI.form()",
-      "DrawUI.card()",
-      "DrawUI.basePanel()",
-      "DrawUI.collapsiblePanel()",
-      "DrawUI.collapsibleSection()",
-      "DrawUI.sidebarLayout()",
-      "DrawUI.spa()",
-      "DrawUI.layoutPane()",
-      "DrawUI.sidebarLayoutPane()",
-      "DrawUI.sidebarPane()",
-      "DrawUI.mainPane()",
-      "DrawUI.tabPanel()",
-      "DrawUI.drillDownUpList()",
-      "DrawUI.treeView()",
-      "DrawUI.splitContainer()",
-      "DrawUI.flexResizer()",
-      "DrawUI.markdown()"
-    ],
+    "drawUi": [],
     "exports": [
-      "ICONS",
-      "BasePanel",
-      "SimpleFloatingWindow",
-      "TabPanel",
-      "PanelHeader",
-      "PanelFooter",
-      "LayoutPane",
-      "FloatingPanel",
-      "CollapsiblePanel",
-      "CollapsibleSection",
-      "DayNightCheckBox",
-      "LoadingBar",
-      "PropertyTable",
-      "PropertyRow",
-      "Nodes",
-      "ReorderableList",
-      "TreeView",
-      "SidebarLayout",
-      "SpaLayout",
-      "hideProgressBar",
-      "showProgressBar",
-      "updateProgressBar",
-      "buildWorkspaceDockHandlers",
-      "makeDraggable",
-      "makeResizable",
-      "UIElement",
-      "UILink",
-      "UIImage",
-      "UISVG",
-      "UIParagraph",
-      "UIH1",
-      "UIH2",
-      "UIH3",
-      "UIH4",
-      "UIH5",
-      "UIH6",
-      "UISpan",
-      "UIDiv",
-      "UIRow",
-      "UIColumn",
-      "UIPanel",
-      "UILabel",
-      "UIForm",
-      "UIText",
-      "UISmallText",
-      "UIInput",
-      "UIIcon",
-      "UITextArea",
-      "UISelect",
-      "UICheckbox",
-      "UIColor",
-      "UINumber",
-      "UIInteger",
-      "UISlider",
-      "UIBreak",
-      "UIHorizontalRule",
-      "UIButton",
-      "UISquareButton",
-      "UIProgress",
-      "UITabbedPanel",
-      "UIGrid",
-      "UIListbox",
-      "ListboxItem",
-      "UIDatePicker",
-      "UISpinner",
-      "UITooltip"
+      "DrawUI",
+      "Markdown",
+      "markdownToHtml"
     ]
   },
   "categories": [
     {
       "id": "text-headings",
       "title": "Headings & titles",
-      "group": "primitives",
+      "group": "text",
       "description": "Semantic headings and section titles.",
       "items": [
         {
           "id": "headings",
           "title": "Headings",
           "apis": [
-            "DrawUI.h1()",
-            "DrawUI.h2()",
-            "DrawUI.h3()",
-            "DrawUI.h4()",
-            "DrawUI.h5()",
-            "DrawUI.h6()"
+            "new Heading(level, text?)",
+            "new Heading(1)",
+            "new Heading(2)",
+            "new Heading(3)",
+            "new Heading(4)",
+            "new Heading(5)",
+            "new Heading(6)"
           ],
-          "summary": "Semantic heading wrappers from h1 through h6.",
+          "summary": "Semantic Heading primitive — level-specific h1–h6 factories are shortcuts.",
           "demo": "headings"
         },
         {
           "id": "title",
           "title": "Title",
           "apis": [
-            "DrawUI.title(text?)"
+            "new Title(text?)"
           ],
           "summary": "Panel-style title text for section headers.",
           "demo": "title"
@@ -195,41 +55,50 @@
     {
       "id": "text-body",
       "title": "Body text",
-      "group": "primitives",
+      "group": "text",
       "description": "Body copy at different weights and block styles.",
       "items": [
         {
           "id": "text",
           "title": "Text",
           "apis": [
-            "DrawUI.text(text?)"
+            "new TextBlock(text?)"
           ],
           "summary": "Default body copy.",
           "demo": "text"
         },
         {
           "id": "small-text",
-          "title": "Small text",
+          "title": "Caption",
           "apis": [
-            "DrawUI.smallText(text?)"
+            "new Caption(text?)"
           ],
-          "summary": "Secondary, smaller body text.",
+          "summary": "Secondary body copy via Caption (`new Caption()`).",
           "demo": "small-text"
         },
         {
           "id": "paragraph",
           "title": "Paragraph",
           "apis": [
-            "DrawUI.paragraph(text?)"
+            "new Paragraph(text?)"
           ],
           "summary": "Block paragraph wrapper.",
           "demo": "paragraph"
         },
         {
+          "id": "span",
+          "title": "Span",
+          "apis": [
+            "new Span()"
+          ],
+          "summary": "Generic inline wrapper for flowing text.",
+          "demo": "span"
+        },
+        {
           "id": "disclaimer",
           "title": "Disclaimer",
           "apis": [
-            "DrawUI.disclaimer(text?)"
+            "new Disclaimer(text?)"
           ],
           "summary": "Muted helper or legal copy in a bordered callout.",
           "demo": "disclaimer"
@@ -239,25 +108,25 @@
     {
       "id": "text-rich",
       "title": "Rich text",
-      "group": "primitives",
+      "group": "text",
       "description": "Markdown and links.",
       "items": [
         {
           "id": "markdown",
           "title": "Markdown",
           "apis": [
-            "DrawUI.markdown(text?, options?)"
+            "new Markdown(text?, options?)"
           ],
-          "summary": "Built-in markdown renderer — no Showdown dependency.",
+          "summary": "Markdown renderer — built-in converter in min; Showdown when peers are present.",
           "demo": "markdown"
         },
         {
           "id": "link",
-          "title": "Link",
+          "title": "Hyperlink",
           "apis": [
-            "DrawUI.link(text, href, icon?, external?)"
+            "new Hyperlink(text, href, icon?, external?)"
           ],
-          "summary": "Text link with optional Material icon.",
+          "summary": "Anchor with optional Material icon (`Hyperlink`).",
           "demo": "inline-link"
         }
       ]
@@ -265,14 +134,14 @@
     {
       "id": "inline-labels",
       "title": "Inline labels",
-      "group": "primitives",
+      "group": "text",
       "description": "Compact status and keyboard hints.",
       "items": [
         {
           "id": "badge",
           "title": "Badge",
           "apis": [
-            "DrawUI.badge(text?)"
+            "new Badge(text?)"
           ],
           "summary": "Compact pill label for counts, status, or tags.",
           "demo": "badge"
@@ -281,24 +150,33 @@
           "id": "kbd",
           "title": "Keyboard hint",
           "apis": [
-            "DrawUI.kbd(key?)"
+            "new Kbd(key?)"
           ],
           "summary": "Styled keyboard shortcut chip.",
           "demo": "kbd"
+        },
+        {
+          "id": "code",
+          "title": "Code",
+          "apis": [
+            "new Code(text?)"
+          ],
+          "summary": "Inline code / API signature chip.",
+          "demo": "code"
         }
       ]
     },
     {
       "id": "icons",
       "title": "Icons",
-      "group": "primitives",
+      "group": "text",
       "description": "Material Symbols exported from the ICONS map.",
       "items": [
         {
           "id": "icons",
           "title": "Icon library",
           "apis": [
-            "DrawUI.icon(name?)",
+            "new Icon(name?)",
             "ICONS"
           ],
           "summary": "All Material icon names shipped in the exported ICONS map.",
@@ -307,18 +185,54 @@
       ]
     },
     {
+      "id": "media",
+      "title": "Media",
+      "group": "text",
+      "description": "Images, SVG, and canvas drawing surfaces.",
+      "items": [
+        {
+          "id": "image",
+          "title": "Image",
+          "apis": [
+            "new Image(path)"
+          ],
+          "summary": "Image wrapper around `img`.",
+          "demo": "image"
+        },
+        {
+          "id": "svg",
+          "title": "Svg",
+          "apis": [
+            "new Svg(pathOrElement)"
+          ],
+          "summary": "Loads or clones an SVG with optional ID retargeting.",
+          "demo": "svg"
+        },
+        {
+          "id": "canvas",
+          "title": "Canvas",
+          "apis": [
+            "new Canvas()"
+          ],
+          "summary": "HTML canvas wrapper for custom 2D drawing.",
+          "demo": "canvas"
+        }
+      ]
+    },
+    {
       "id": "actions",
       "title": "Actions",
-      "group": "primitives",
+      "group": "inputs",
       "description": "Buttons and icon-only triggers.",
       "items": [
         {
           "id": "button",
           "title": "Button",
           "apis": [
-            "DrawUI.button(text?)"
+            "new Button(text?)"
           ],
           "summary": "Standard text button. Style variants use `.addClass(\"primary\")` or `.addClass(\"secondary\")`.",
+          "demo": "button-primary",
           "variants": [
             {
               "name": "Primary",
@@ -332,30 +246,40 @@
         },
         {
           "id": "square-button",
-          "title": "Square button",
+          "title": "IconButton",
           "apis": [
-            "DrawUI.squareButton(label?, options?)"
+            "new IconButton(label?, options?)"
           ],
-          "summary": "Large tile button with icon, label, and optional meta line.",
+          "summary": "Tile-style IconButton with icon, label, and optional meta line.",
           "options": "{ icon?: string, meta?: string, active?: boolean }",
           "demo": "square-button"
+        },
+        {
+          "id": "ribbon-button",
+          "title": "RibbonButton",
+          "apis": [
+            "new RibbonButton(label?, options?)"
+          ],
+          "summary": "Borderless icon+label control with tab-style accent when selected.",
+          "options": "{ icon?: string, active?: boolean }",
+          "demo": "ribbon-button"
         },
         {
           "id": "operator",
           "title": "Icon button",
           "apis": [
-            "DrawUI.operator(name?)"
+            "new Operator(name?)"
           ],
           "summary": "Toolbar-style icon button with no label.",
           "demo": "operator"
         },
         {
           "id": "compact-button",
-          "title": "Compact button",
+          "title": "ToolbarButton",
           "apis": [
-            "DrawUI.compactButton(text?)"
+            "new ToolbarButton(text?)"
           ],
-          "summary": "Small toolbar button — often nested inside compact fields.",
+          "summary": "Compact ToolbarButton for toolbars and fieldControl wrappers.",
           "demo": "compact-button"
         }
       ]
@@ -363,50 +287,50 @@
     {
       "id": "form-inputs",
       "title": "Form inputs",
-      "group": "primitives",
+      "group": "inputs",
       "description": "Labels, text fields, pickers, and toolbar-style field wrappers.",
       "items": [
         {
           "id": "label",
           "title": "Label",
           "apis": [
-            "DrawUI.label(text?)"
+            "new Label(text?)"
           ],
           "summary": "Field label text.",
           "demo": "label"
         },
         {
           "id": "input",
-          "title": "Input",
+          "title": "InputText",
           "apis": [
-            "DrawUI.input()"
+            "new InputText()"
           ],
           "summary": "Single-line text input.",
           "demo": "input"
         },
         {
           "id": "textarea",
-          "title": "Textarea",
+          "title": "InputTextArea",
           "apis": [
-            "DrawUI.textarea()"
+            "new InputTextArea()"
           ],
           "summary": "Multi-line text input.",
           "demo": "textarea"
         },
         {
           "id": "select",
-          "title": "Select",
+          "title": "InputDropdown",
           "apis": [
-            "DrawUI.select()"
+            "new InputDropdown()"
           ],
           "summary": "Dropdown select. Use `.setOptions({ key: label, … })` to populate choices.",
           "demo": "select"
         },
         {
           "id": "search-input",
-          "title": "Search input",
+          "title": "InputSearch",
           "apis": [
-            "DrawUI.searchInput(placeholder?, onInput?)"
+            "new InputSearch(placeholder?, onInput?)"
           ],
           "summary": "Search field with icon and callback on input.",
           "options": "onInput?: (value: string) => void",
@@ -416,25 +340,25 @@
           "id": "checkbox",
           "title": "Checkbox",
           "apis": [
-            "DrawUI.checkbox(checked?)"
+            "new Checkbox(checked?).addClass(\"Card-checkbox\")"
           ],
           "summary": "Boolean checkbox input.",
           "demo": "checkbox"
         },
         {
           "id": "number",
-          "title": "Number",
+          "title": "InputNumber",
           "apis": [
-            "DrawUI.number(value?)"
+            "new InputNumber(value?)"
           ],
           "summary": "Floating-point numeric field.",
           "demo": "number"
         },
         {
           "id": "integer",
-          "title": "Integer",
+          "title": "InputInteger",
           "apis": [
-            "DrawUI.integer(value?)"
+            "new InputInteger(value?)"
           ],
           "summary": "Whole-number field — same interaction model as number.",
           "demo": "integer"
@@ -443,165 +367,86 @@
           "id": "slider",
           "title": "Slider",
           "apis": [
-            "DrawUI.slider(value?)"
+            "new Slider(value?)"
           ],
           "summary": "Range track synced with a number field. Use `.setRange(min, max)`, `.setStep()`, `.setPrecision()`.",
           "demo": "slider"
         },
         {
           "id": "color",
-          "title": "Color picker",
+          "title": "InputColor",
           "apis": [
-            "DrawUI.color()"
+            "new InputColor()"
           ],
-          "summary": "Native color input.",
+          "summary": "Native color input (`InputColor`).",
           "demo": "color"
         },
         {
           "id": "date",
-          "title": "Date picker",
+          "title": "InputDate",
           "apis": [
-            "DrawUI.date(date?)"
+            "new InputDate(date?)"
           ],
-          "summary": "Composite date and time picker.",
+          "summary": "Composite date and time picker (`InputDate`).",
           "demo": "date"
-        },
-        {
-          "id": "compact-field",
-          "title": "Compact field",
-          "apis": [
-            "DrawUI.compactField(control, styles?)"
-          ],
-          "summary": "Wraps an existing control with compact toolbar styling.",
-          "options": "styles?: object — extra inline style overrides",
-          "demo": "compact-field"
-        }
-      ]
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback & overlays",
-      "group": "primitives",
-      "description": "Loading states, progress, notifications, and tooltips.",
-      "items": [
-        {
-          "id": "progress",
-          "title": "Progress bar",
-          "apis": [
-            "DrawUI.progress(value?)"
-          ],
-          "summary": "Native progress element. Value is 0–1.",
-          "options": "value?: number — completion ratio (0–1)",
-          "demo": "progress"
-        },
-        {
-          "id": "spinner",
-          "title": "Spinner",
-          "apis": [
-            "DrawUI.spinner(options?)"
-          ],
-          "summary": "Inline loading spinner with optional text.",
-          "options": "{ text?: string }",
-          "demo": "spinner"
-        },
-        {
-          "id": "loading-bar-component",
-          "title": "Loading bar",
-          "apis": [
-            "LoadingBar"
-          ],
-          "summary": "Embeddable progress bar with show/update/hide methods.",
-          "options": "{ initialText?: string }",
-          "demo": "loading-bar-component"
-        },
-        {
-          "id": "progress-helpers",
-          "title": "Progress helpers",
-          "apis": [
-            "showProgressBar(...)",
-            "updateProgressBar(...)",
-            "hideProgressBar()"
-          ],
-          "summary": "Attach a transient progress overlay to any DOM selector.",
-          "demo": "progress-helpers"
-        },
-        {
-          "id": "toast",
-          "title": "Toast",
-          "apis": [
-            "DrawUI.toast(message, type?, options?)"
-          ],
-          "summary": "Transient notification banner.",
-          "options": "type?: \"success\" | \"error\" | \"info\", options?: { duration?: number }",
-          "demo": "toast"
-        },
-        {
-          "id": "tooltip",
-          "title": "Tooltip",
-          "apis": [
-            "DrawUI.tooltip(text?, options?)"
-          ],
-          "summary": "Hover tooltip attached to a host element via `.attachTo(dom)`.",
-          "options": "{ theme?: \"dark\" | \"light\" }",
-          "demo": "tooltip"
         }
       ]
     },
     {
       "id": "data-forms",
       "title": "Forms",
-      "group": "data-shapes",
+      "group": "inputs",
       "description": "Composed form layouts built from field primitives.",
       "items": [
         {
           "id": "form",
           "title": "Form",
           "apis": [
-            "DrawUI.form()",
-            "DrawUI.label(text?)",
-            "DrawUI.input()",
-            "DrawUI.select()",
-            "DrawUI.textarea()",
-            "DrawUI.checkbox(checked?)",
-            "DrawUI.button(text?)"
+            "new Form()",
+            "new Label(text?)",
+            "new InputText()",
+            "new InputDropdown()",
+            "new InputTextArea()",
+            "new Checkbox(checked?).addClass(\"Card-checkbox\")",
+            "new Button(text?)"
           ],
           "summary": "A typical form: labels, fields, checkbox, and actions.",
           "demo": "form-composed",
-          "buildingBlocks": "Composed from Form inputs and Actions. Parts below are the same primitives shown individually under Primitives.",
+          "buildingBlocks": "Composed from Form inputs and Actions. Parts below are the same primitives shown individually under Inputs.",
           "parts": [
             {
               "name": "Label",
-              "api": "DrawUI.label(text?)",
+              "api": "new Label(text?)",
               "summary": "Field label text.",
               "demo": "label"
             },
             {
-              "name": "Input",
-              "api": "DrawUI.input()",
+              "name": "InputText",
+              "api": "new InputText()",
               "summary": "Single-line text input.",
               "demo": "input"
             },
             {
-              "name": "Select",
-              "api": "DrawUI.select()",
+              "name": "InputDropdown",
+              "api": "new InputDropdown()",
               "summary": "Dropdown select.",
               "demo": "select"
             },
             {
-              "name": "Textarea",
-              "api": "DrawUI.textarea()",
+              "name": "InputTextArea",
+              "api": "new InputTextArea()",
               "summary": "Multi-line text input.",
               "demo": "textarea"
             },
             {
               "name": "Checkbox",
-              "api": "DrawUI.checkbox(checked?)",
+              "api": "new Checkbox(checked?).addClass(\"Card-checkbox\")",
               "summary": "Boolean checkbox input.",
               "demo": "checkbox"
             },
             {
               "name": "Button",
-              "api": "DrawUI.button(text?)",
+              "api": "new Button(text?)",
               "summary": "Standard text button.",
               "demo": "button-primary"
             }
@@ -610,158 +455,19 @@
       ]
     },
     {
-      "id": "data-lists",
-      "title": "Lists",
-      "group": "data-shapes",
-      "description": "Selectable rows, rich list items, and drag-and-drop reorder.",
-      "items": [
-        {
-          "id": "list",
-          "title": "Listbox",
-          "apis": [
-            "DrawUI.list()"
-          ],
-          "summary": "Container for listItem rows. Handles selection state.",
-          "demo": "list"
-        },
-        {
-          "id": "list-item",
-          "title": "List item",
-          "apis": [
-            "DrawUI.listItem(text?)"
-          ],
-          "summary": "Single selectable row — add to a listbox via `.add()`.",
-          "demo": "list-item"
-        },
-        {
-          "id": "labeled-box-item",
-          "title": "Labeled box item",
-          "apis": [
-            "DrawUI.labeledBoxItem(data, iconMap)"
-          ],
-          "summary": "List row with icon, label, and checkbox.",
-          "options": "data: { id, label, checked? }, iconMap: Record<string, string>",
-          "demo": "labeled-box-item"
-        },
-        {
-          "id": "reorderable-list",
-          "title": "Reorderable list",
-          "apis": [
-            "DrawUI.reorderableList(items?, onReorder?)",
-            "ReorderableList"
-          ],
-          "summary": "Drag-and-drop reorder list with optional checkboxes.",
-          "options": "items?: { label, checked? }[], onReorder?: (items) => void",
-          "demo": "reorderable-list"
-        }
-      ]
-    },
-    {
-      "id": "data-hierarchy",
-      "title": "Hierarchy",
-      "group": "data-shapes",
-      "description": "Nested data navigation — drill-down or expandable tree.",
-      "items": [
-        {
-          "id": "drill-down",
-          "title": "Drill-down list",
-          "apis": [
-            "DrawUI.drillDownUpList(options?)",
-            "DrillDownUpList"
-          ],
-          "summary": "One-level-at-a-time hierarchical navigation with a back control.",
-          "options": "{ getLabel, getChildren, onItemClick, onNavigate, autoNavigate?}",
-          "demo": "drill-down"
-        },
-        {
-          "id": "tree-view",
-          "title": "Tree view",
-          "apis": [
-            "DrawUI.treeView(options?)",
-            "TreeView"
-          ],
-          "summary": "Expandable nested tree for the same hierarchical data shape.",
-          "options": "{ getLabel, getChildren, getId?, onItemClick, onToggle, expandRoot?}",
-          "demo": "tree-view"
-        }
-      ]
-    },
-    {
-      "id": "data-properties",
-      "title": "Property grids",
-      "group": "data-shapes",
-      "description": "Label/value grids with editable cells.",
-      "items": [
-        {
-          "id": "property-table",
-          "title": "Property table",
-          "apis": [
-            "DrawUI.propertyTable(options?)",
-            "PropertyTable"
-          ],
-          "summary": "Composed grid that renders label/value rows. Demo shows every common value type.",
-          "options": "{ compact?: boolean, title?: string, rows: Record<string, { label, value }> }",
-          "demo": "property-table"
-        },
-        {
-          "id": "property-row",
-          "title": "Property row",
-          "apis": [
-            "DrawUI.propertyRow(...)",
-            "PropertyRow"
-          ],
-          "summary": "Single label/value row used standalone or inside PropertyTable.",
-          "demo": "property-row"
-        }
-      ]
-    },
-    {
-      "id": "data-reference",
-      "title": "Reference",
-      "group": "data-shapes",
-      "description": "Keyboard shortcut and help blocks.",
-      "items": [
-        {
-          "id": "instruction-panel",
-          "title": "Instruction panel",
-          "apis": [
-            "DrawUI.instructionPanel(title, icon, rows?)",
-            "DrawUI.instructionLine(key, description)"
-          ],
-          "summary": "Keyboard shortcut reference block.",
-          "demo": "instruction-panel",
-          "parts": [
-            {
-              "name": "Instruction panel",
-              "api": "DrawUI.instructionPanel(title, icon, rows?)",
-              "summary": "Composed shortcut panel — pass an array of [key, description] pairs.",
-              "options": "rows?: [string, string][]",
-              "demo": "instruction-panel"
-            },
-            {
-              "name": "Instruction line",
-              "api": "DrawUI.instructionLine(key, description)",
-              "summary": "Single shortcut row. Usually composed inside instructionPanel.",
-              "note": "Use instructionPanel for the full block; instructionLine builds individual rows."
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "theme",
       "title": "Theme",
-      "group": "data-shapes",
+      "group": "inputs",
       "description": "Theme toggle and appearance helpers.",
       "items": [
         {
           "id": "day-night",
-          "title": "Day / night toggle",
+          "title": "ThemeToggle",
           "apis": [
-            "DayNightCheckBox"
+            "new ThemeToggle(context, ops)"
           ],
-          "summary": "Day/night theme switch — requires application context and theme signals.",
-          "note": "Not interactive in this gallery; wire via your app context and theme.execute handler."
+          "summary": "Light/dark theme switch. Needs app `context` (config + signals) and an `ops.execute` handler.",
+          "demo": "day-night"
         }
       ]
     },
@@ -773,27 +479,29 @@
       "items": [
         {
           "id": "row",
-          "title": "Row",
+          "title": "StackPanel (row)",
           "apis": [
-            "DrawUI.row()"
+            "new StackPanel({ isVertical: false })",
+            "new StackPanel({ isVertical: false })"
           ],
-          "summary": "Horizontal flex container. Chain `.gap()`, `.add()`, and style helpers.",
+          "summary": "Horizontal StackPanel. `new StackPanel({ isVertical: false })` is a shortcut for `isVertical: false`.",
           "demo": "row"
         },
         {
           "id": "column",
-          "title": "Column",
+          "title": "StackPanel (column)",
           "apis": [
-            "DrawUI.column()"
+            "new StackPanel({ isVertical: true })",
+            "new StackPanel({ isVertical: true })"
           ],
-          "summary": "Vertical flex container.",
+          "summary": "Vertical StackPanel. `new StackPanel({ isVertical: true })` is a shortcut for `isVertical: true`.",
           "demo": "column"
         },
         {
           "id": "grid",
           "title": "Grid",
           "apis": [
-            "DrawUI.grid()"
+            "new Grid()"
           ],
           "summary": "CSS grid container with column helpers.",
           "demo": "grid"
@@ -802,7 +510,7 @@
           "id": "hspacer",
           "title": "Horizontal spacer",
           "apis": [
-            "DrawUI.hspacer(size?)"
+            "new HSpacer(size?)"
           ],
           "summary": "Adds horizontal space between inline or row items.",
           "options": "size?: string — CSS length (e.g. \"1rem\", \"2rem\")",
@@ -812,26 +520,36 @@
           "id": "spacer",
           "title": "Vertical spacer",
           "apis": [
-            "DrawUI.spacer(size?)"
+            "new Spacer(size?)"
           ],
           "summary": "Adds vertical space between stacked items.",
           "options": "size?: string — CSS length",
           "demo": "spacer"
         },
         {
-          "id": "div",
-          "title": "Div",
+          "id": "handle",
+          "title": "Handle",
           "apis": [
-            "DrawUI.div()"
+            "new Handle(type?)"
           ],
-          "summary": "Unstyled block container — base building block.",
+          "summary": "Drag or resize handle element. Pass `\"drag\"` or `\"resize\"` for the handle class.",
+          "options": "type?: \"drag\" | \"resize\" — defaults to \"drag\"",
+          "demo": "handle"
+        },
+        {
+          "id": "div",
+          "title": "Container",
+          "apis": [
+            "new Container()"
+          ],
+          "summary": "Generic block Container — base building block.",
           "demo": "div"
         },
         {
           "id": "center",
           "title": "Center",
           "apis": [
-            "DrawUI.center(component)"
+            "center(component)"
           ],
           "summary": "Centers a child component via the centered class.",
           "demo": "center"
@@ -840,7 +558,7 @@
           "id": "divider",
           "title": "Divider",
           "apis": [
-            "DrawUI.divider()"
+            "new Line()"
           ],
           "summary": "Horizontal rule between block content.",
           "demo": "divider"
@@ -849,7 +567,7 @@
           "id": "line-break",
           "title": "Line break",
           "apis": [
-            "DrawUI.lineBreak()"
+            "new LineBreak()"
           ],
           "summary": "Forces a new line inside flowing text.",
           "demo": "line-break"
@@ -866,82 +584,180 @@
           "id": "card",
           "title": "Card",
           "apis": [
-            "DrawUI.card()"
+            "new Card()"
           ],
           "summary": "Elevated surface for grouped content.",
           "demo": "card"
         },
         {
           "id": "panel",
-          "title": "Panel",
+          "title": "Rectangle",
           "apis": [
-            "DrawUI.panel()"
+            "new Rectangle()"
           ],
-          "summary": "Neutral bordered panel.",
+          "summary": "Neutral bordered panel shell (`Rectangle`).",
           "demo": "panel"
         }
       ]
     },
     {
-      "id": "layout-shells",
-      "title": "Shells",
+      "id": "layout-tabs",
+      "title": "Tabs",
       "group": "layout",
-      "description": "Split panes, sidebar layouts, and resizable panel scaffolds.",
+      "description": "Self-managed tab containers (TabView extends Container).",
       "items": [
         {
-          "id": "split-container",
-          "title": "Split container",
+          "id": "tabbed-panel",
+          "title": "TabView",
           "apis": [
-            "DrawUI.splitContainer(direction, children?)"
+            "new TabView()",
+            "TabItem"
           ],
-          "summary": "Flex split layout for resizable panes.",
-          "options": "direction: \"horizontal\" | \"vertical\"",
-          "demo": "split-container"
+          "summary": "Self-managed TabView container. Use `.addTab(id, label, content)` and `.select(id)`. `TabItem` is the tab chrome created by `addTab`.",
+          "demo": "tabbed-panel"
+        }
+      ]
+    },
+    {
+      "id": "data-lists",
+      "title": "Lists",
+      "group": "collections",
+      "description": "Selectable rows, rich list items, and drag-and-drop reorder.",
+      "items": [
+        {
+          "id": "list",
+          "title": "InputList",
+          "apis": [
+            "new InputList()",
+            "InputList"
+          ],
+          "summary": "Selectable list container (`InputList`). Rows are created via `setItems()`. For label/value editors use PropertyGridRow.",
+          "demo": "list"
         },
         {
-          "id": "sidebar-layout",
-          "title": "Sidebar layout",
+          "id": "labeled-box-item",
+          "title": "Labeled box item",
           "apis": [
-            "DrawUI.sidebarLayout(options?)",
-            "SidebarLayout",
-            "DrawUI.layoutPane()",
-            "LayoutPane"
+            "new LabeledBoxItem(data, iconMap)"
           ],
-          "summary": "Sidebar + main content split layout.",
-          "options": "{ sidebarWidth?: string }",
-          "demo": "sidebar-layout",
-          "parts": [
-            {
-              "name": "Sidebar layout",
-              "api": "DrawUI.sidebarLayout(options?)",
-              "summary": "Full shell with header, toggle, sidebar body, and main pane.",
-              "options": "{ sidebarWidth?: string }",
-              "demo": "sidebar-layout"
-            },
-            {
-              "name": "Layout pane",
-              "api": "DrawUI.layoutPane()",
-              "summary": "Flex-fill column region used inside SidebarLayout and other composed shells.",
-              "demo": "layout-pane"
-            }
-          ]
+          "summary": "List row with icon, label, and checkbox.",
+          "options": "data: { id, label, checked? }, iconMap: Record<string, string>",
+          "demo": "labeled-box-item"
         },
+        {
+          "id": "reorderable-list",
+          "title": "SortableList",
+          "apis": [
+            "new SortableList(items?, onReorder?).container",
+            "SortableList"
+          ],
+          "summary": "Drag-and-drop reorder list with optional checkboxes.",
+          "options": "items?: { label, checked? }[], onReorder?: (items) => void",
+          "demo": "reorderable-list"
+        }
+      ]
+    },
+    {
+      "id": "data-hierarchy",
+      "title": "Hierarchy",
+      "group": "collections",
+      "description": "Nested data navigation — drill-down or expandable tree.",
+      "items": [
+        {
+          "id": "drill-down",
+          "title": "NavigationList",
+          "apis": [
+            "new NavigationList(options?)",
+            "NavigationList"
+          ],
+          "summary": "One-level-at-a-time hierarchical navigation with a back control.",
+          "options": "{ getLabel, getChildren, onItemClick, onNavigate, autoNavigate?}",
+          "demo": "drill-down"
+        },
+        {
+          "id": "tree-view",
+          "title": "TreeView",
+          "apis": [
+            "new TreeView(options?)",
+            "TreeView"
+          ],
+          "summary": "Expandable nested tree for the same hierarchical data shape.",
+          "options": "{ getLabel, getChildren, getId?, onItemClick, onToggle, expandRoot?}",
+          "demo": "tree-view"
+        }
+      ]
+    },
+    {
+      "id": "data-properties",
+      "title": "Property grids",
+      "group": "collections",
+      "description": "Label/value grids with editable cells.",
+      "items": [
+        {
+          "id": "property-table",
+          "title": "PropertyGrid",
+          "apis": [
+            "new PropertyGrid(options?)",
+            "PropertyGrid"
+          ],
+          "summary": "Label/value property editor grid. Demo shows common value types.",
+          "options": "{ compact?: boolean, title?: string, rows: Record<string, { label, value }> }",
+          "demo": "property-table"
+        },
+        {
+          "id": "property-row",
+          "title": "PropertyGridRow",
+          "apis": [
+            "new PropertyGridRow(...)",
+            "PropertyGridRow"
+          ],
+          "summary": "Single label/value row used standalone or inside PropertyGrid.",
+          "demo": "property-row"
+        }
+      ]
+    },
+    {
+      "id": "panels-chrome",
+      "title": "Panel chrome",
+      "group": "panels",
+      "description": "ContentPanel scaffolds and accordion sections (Container specializations).",
+      "items": [
         {
           "id": "base-panel",
-          "title": "Base panel",
+          "title": "ContentPanel",
           "apis": [
-            "DrawUI.basePanel(options?)",
-            "BasePanel"
+            "new ContentPanel(options?)",
+            "ContentPanel"
           ],
-          "summary": "Resizable panel scaffold with header and content areas.",
+          "summary": "Resizable panel scaffold with Header and RibbonBar regions.",
           "demo": "base-panel"
         },
         {
-          "id": "collapsible-section",
-          "title": "Collapsible section",
+          "id": "header",
+          "title": "Header",
           "apis": [
-            "DrawUI.collapsibleSection(options?)",
-            "CollapsibleSection"
+            "new Header(options?)"
+          ],
+          "summary": "Shared title/icon/actions row for panel chrome.",
+          "options": "{ title?: string, icon?: string, actions?: Control[], alwaysActionsColumn?: boolean }",
+          "demo": "header"
+        },
+        {
+          "id": "ribbon-bar",
+          "title": "RibbonBar",
+          "apis": [
+            "new RibbonBar(elements?, justify?)"
+          ],
+          "summary": "Horizontal ribbon row for panel footers or the app shell. Pair with RibbonButton.",
+          "options": "elements?: Control[], justify?: string — defaults to \"flex-end\"",
+          "demo": "ribbon-bar"
+        },
+        {
+          "id": "collapsible-section",
+          "title": "CollapsiblePanel",
+          "apis": [
+            "new CollapsiblePanel(options?)",
+            "CollapsiblePanel"
           ],
           "summary": "Inline accordion section for sidebar or form groups.",
           "options": "{ title?: string, icon?: string, collapsed?: boolean, className?: string }",
@@ -950,71 +766,265 @@
       ]
     },
     {
-      "id": "layout-tabs",
-      "title": "Tabs",
-      "group": "layout",
-      "description": "Self-managed tab containers and dockable workspace panels.",
+      "id": "data-reference",
+      "title": "Reference",
+      "group": "panels",
+      "description": "Keyboard shortcut and help blocks.",
       "items": [
         {
-          "id": "tabbed-panel",
-          "title": "Tabbed panel",
+          "id": "instruction-panel",
+          "title": "Instruction panel",
           "apis": [
-            "DrawUI.tabbedPanel()"
+            "new InstructionPanel(title, icon, rows?)",
+            "new InstructionLine(key, description)"
           ],
-          "summary": "Self-managed tab container. Use `.addTab(id, label, content)` and `.select(id)`.",
-          "demo": "tabbed-panel"
+          "summary": "Keyboard shortcut reference block.",
+          "demo": "instruction-panel",
+          "parts": [
+            {
+              "name": "Instruction panel",
+              "api": "new InstructionPanel(title, icon, rows?)",
+              "summary": "Composed shortcut panel — pass an array of [key, description] pairs.",
+              "options": "rows?: [string, string][]",
+              "demo": "instruction-panel"
+            },
+            {
+              "name": "Instruction line",
+              "api": "new InstructionLine(key, description)",
+              "summary": "Single shortcut row. Usually composed inside instructionPanel.",
+              "note": "Use instructionPanel for the full block; instructionLine builds individual rows."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback",
+      "group": "panels",
+      "description": "Progress, status, toasts, and tooltips.",
+      "items": [
+        {
+          "id": "progress",
+          "title": "ProgressBar",
+          "apis": [
+            "new ProgressBar(value?)"
+          ],
+          "summary": "Native progress element (`ProgressBar`). Value is 0–1.",
+          "options": "value?: number — completion ratio (0–1)",
+          "demo": "progress"
         },
         {
-          "id": "tab-panel",
-          "title": "Tab panel",
+          "id": "spinner",
+          "title": "ProgressRing",
           "apis": [
-            "DrawUI.tabPanel(options)",
-            "TabPanel"
+            "new ProgressRing(options?)"
           ],
-          "summary": "Dockable workspace panel. With startFloating it works standalone as a floating window.",
-          "options": "{ context, tabId, tabLabel, icon?, title?, position?, startFloating?, floatingStyles? }",
-          "note": "Full build. Docking into left/right/bottom tabs requires a LayoutManager. Open full.html for the live demo.",
-          "demo": "tab-panel"
+          "summary": "Inline loading spinner with optional text (`ProgressRing`).",
+          "options": "{ text?: string }",
+          "demo": "spinner"
+        },
+        {
+          "id": "loading-bar-component",
+          "title": "StatusBar",
+          "apis": [
+            "StatusBar"
+          ],
+          "summary": "Embeddable status bar with show/update/hide progress helpers.",
+          "options": "{ initialText?: string }",
+          "demo": "loading-bar-component"
+        },
+        {
+          "id": "progress-helpers",
+          "title": "Progress toast",
+          "apis": [
+            "new Toast()"
+          ],
+          "summary": "Progress overlay: `toast.show(target?, text?)`, `toast.update(pct, text?)`, `toast.hide()`.",
+          "demo": "progress-helpers"
+        },
+        {
+          "id": "toast",
+          "title": "Toast",
+          "apis": [
+            "new Toast(message, type?, options?)"
+          ],
+          "summary": "Transient notification banner. Progress mode uses the same class with show/update/hide.",
+          "options": "type?: \"success\" | \"error\" | \"info\", options?: { duration?: number }",
+          "demo": "toast"
+        },
+        {
+          "id": "tooltip",
+          "title": "Tooltip",
+          "apis": [
+            "new Tooltip(text?, options?)"
+          ],
+          "summary": "Hover tooltip attached to a host element via `.attachTo(dom)`.",
+          "options": "{ theme?: \"dark\" | \"light\" }",
+          "demo": "tooltip"
         }
       ]
     },
     {
       "id": "layout-floating",
       "title": "Floating windows",
-      "group": "layout",
+      "group": "overlays",
       "description": "Draggable and dockable floating surfaces.",
       "items": [
         {
           "id": "floating-window",
-          "title": "Floating window",
+          "title": "FloatingDialog",
           "apis": [
-            "DrawUI.floatingWindow(options?)",
-            "SimpleFloatingWindow"
+            "new FloatingDialog(options?)",
+            "FloatingDialog"
           ],
-          "summary": "Lightweight draggable floating window.",
+          "summary": "Lightweight draggable floating dialog built on ContentPanel.",
           "options": "{ title?: string, icon?: string }",
           "demo": "floating-window"
         },
         {
           "id": "floating-panel",
-          "title": "Floating panel",
+          "title": "FloatingWindow",
           "apis": [
-            "FloatingPanel"
+            "FloatingWindow"
           ],
-          "summary": "Free-floating overlay panel with docking controls.",
+          "summary": "Free-floating overlay window with docking controls.",
           "options": "{ title, position?: \"left\" | \"right\", width?: string }",
           "demo": "floating-panel"
         },
         {
           "id": "collapsible-panel",
-          "title": "Collapsible panel",
+          "title": "Flyout",
           "apis": [
-            "DrawUI.collapsiblePanel(options?)",
-            "CollapsiblePanel"
+            "new Flyout(options?)",
+            "Flyout"
           ],
-          "summary": "Floating tool panel with badge and search row.",
+          "summary": "Expandable tool panel with badge and optional search row.",
           "options": "{ title, icon, badgeCount?, position?: { top, right, … } }",
           "demo": "collapsible-panel"
+        }
+      ]
+    },
+    {
+      "id": "overlays-WorkspacePanel",
+      "title": "Dockable windows",
+      "group": "overlays",
+      "description": "WorkspacePanel — dockable workspace panels that can also float.",
+      "items": [
+        {
+          "id": "tab-panel",
+          "title": "WorkspacePanel",
+          "apis": [
+            "new WorkspacePanel(options)",
+            "WorkspacePanel"
+          ],
+          "summary": "Dockable workspace panel. With startFloating it works standalone as a floating window.",
+          "options": "{ context, tabId, tabLabel, icon?, title?, position?, startFloating?, floatingStyles? }",
+          "note": "Full build. Docking into left/right/bottom tabs requires a WorkspaceLayout. Open full.html for the live demo.",
+          "demo": "tab-panel"
+        }
+      ]
+    },
+    {
+      "id": "menus",
+      "title": "Menus",
+      "group": "overlays",
+      "description": "Radial and contextual overlay menus.",
+      "items": [
+        {
+          "id": "pie-menu",
+          "title": "RadialMenu",
+          "apis": [
+            "RadialMenu"
+          ],
+          "summary": "Radial operator menu bound to a viewport element.",
+          "demo": "pie-menu",
+          "options": "{ viewport, operators, items, shortcut?, context? }",
+          "note": "operators needs { canExecute(op, ctx), execute(op, ctx) }. Link styles/components/pie-menu.css."
+        }
+      ]
+    },
+    {
+      "id": "shell-views",
+      "title": "Navigation & splits",
+      "group": "shell",
+      "description": "SplitContainer and NavigationView — the AppShell base chain.",
+      "items": [
+        {
+          "id": "split-container",
+          "title": "Split container",
+          "apis": [
+            "new SplitContainer(direction, children?)"
+          ],
+          "summary": "Flex split layout for resizable panes.",
+          "options": "direction: \"horizontal\" | \"vertical\"",
+          "demo": "split-container"
+        },
+        {
+          "id": "sidebar-layout",
+          "title": "NavigationView",
+          "apis": [
+            "new NavigationView(options?)",
+            "NavigationView",
+            "new ScrollViewer()",
+            "ScrollViewer"
+          ],
+          "summary": "Sidebar + main content shell.",
+          "options": "{ sidebarWidth?: string }",
+          "demo": "sidebar-layout",
+          "parts": [
+            {
+              "name": "NavigationView",
+              "api": "new NavigationView(options?)",
+              "summary": "Full shell with header, toggle, sidebar body, and main pane.",
+              "options": "{ sidebarWidth?: string }",
+              "demo": "sidebar-layout"
+            },
+            {
+              "name": "ScrollViewer",
+              "api": "new ScrollViewer()",
+              "summary": "Flex-fill scroll region used inside NavigationView and other shells.",
+              "demo": "layout-pane"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shell-workspace",
+      "title": "Workspace",
+      "group": "shell",
+      "description": "AppShell, WorkspaceLayout, and declarative world config.",
+      "items": [
+        {
+          "id": "app-shell",
+          "title": "AppShell",
+          "apis": [
+            "new AppShell(options?)",
+            "AppShell"
+          ],
+          "summary": "SPA host with sidebar navigation and hash routing — powers this gallery.",
+          "note": "The component reference itself is built with AppShell."
+        },
+        {
+          "id": "workspace-layout",
+          "title": "WorkspaceLayout",
+          "apis": [
+            "new WorkspaceLayout(options?)",
+            "WorkspaceLayout"
+          ],
+          "summary": "Grid workspace with dockable WorkspacePanel stacks and resizers.",
+          "note": "See examples/templates/ for a full workspace demo with WorldBuilder."
+        },
+        {
+          "id": "world-builder",
+          "title": "WorldBuilder",
+          "apis": [
+            "buildWorldFromConfig(config, container?, options?)",
+            "createDefaultWorldConfig(overrides?)"
+          ],
+          "summary": "Build the workspace DOM tree from declarative config before WorkspaceLayout init.",
+          "note": "See examples/templates/ for a full WorldBuilder + WorkspaceLayout demo."
         }
       ]
     }
@@ -1023,13 +1033,13 @@
     {
       "id": "charts",
       "title": "Charts",
-      "description": "Chart.js visualizations via DrawUI.chart(). Call .init() after the element is in the DOM. Peer: chart.js@4.4.7",
+      "description": "Chart.js visualizations via DrawUI.Chart(). Call .init() after the element is in the DOM. Peer: chart.js@4.4.7",
       "items": [
         {
           "id": "chart-bar",
           "title": "Bar",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Vertical, horizontal, and stacked bar charts.",
           "options": "{ chartConfiguration: { type: \"bar\", data, options }, height?, width?, minHeight? }",
@@ -1037,21 +1047,21 @@
           "siblings": [
             {
               "name": "Bar",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Vertical columns — Chart.js type \"bar\".",
               "options": "type: \"bar\"",
               "demo": "chart-bar"
             },
             {
               "name": "Horizontal bar",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Bars along the Y axis via indexAxis: \"y\".",
               "options": "type: \"bar\", options.scales / indexAxis: \"y\"",
               "demo": "chart-bar-horizontal"
             },
             {
               "name": "Stacked bar",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Multiple datasets stacked on a shared category axis.",
               "options": "type: \"bar\", scales.x/y.stacked: true",
               "demo": "chart-bar-stacked"
@@ -1062,7 +1072,7 @@
           "id": "chart-line",
           "title": "Line",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Line and filled area series.",
           "options": "{ chartConfiguration: { type: \"line\", data, options }, height?, width?, minHeight? }",
@@ -1070,21 +1080,21 @@
           "siblings": [
             {
               "name": "Line",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Connected points over categories or time.",
               "options": "type: \"line\"",
               "demo": "chart-line"
             },
             {
               "name": "Multi-series line",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Several line datasets on one chart.",
               "options": "type: \"line\", multiple datasets",
               "demo": "chart-line-multi"
             },
             {
               "name": "Area",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Line chart with filled region under the curve.",
               "options": "type: \"line\", dataset.fill: true",
               "demo": "chart-area"
@@ -1095,7 +1105,7 @@
           "id": "chart-pie",
           "title": "Pie & doughnut",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Part-to-whole circular charts.",
           "options": "{ chartConfiguration: { type: \"pie\" | \"doughnut\", data, options }, height?, width?, minHeight? }",
@@ -1103,14 +1113,14 @@
           "siblings": [
             {
               "name": "Pie",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Full pie slices from categorical data.",
               "options": "type: \"pie\"",
               "demo": "chart-pie"
             },
             {
               "name": "Doughnut",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Pie with a hollow center.",
               "options": "type: \"doughnut\"",
               "demo": "chart-doughnut"
@@ -1121,7 +1131,7 @@
           "id": "chart-polar-radar",
           "title": "Polar area & radar",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Radial charts for categorical magnitudes and multi-axis profiles.",
           "options": "{ chartConfiguration: { type: \"polarArea\" | \"radar\", data, options }, height?, width?, minHeight? }",
@@ -1129,14 +1139,14 @@
           "siblings": [
             {
               "name": "Polar area",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Sectors with equal angles and variable radius.",
               "options": "type: \"polarArea\"",
               "demo": "chart-polar-area"
             },
             {
               "name": "Radar",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Spider/web chart across several axes.",
               "options": "type: \"radar\"",
               "demo": "chart-radar"
@@ -1147,7 +1157,7 @@
           "id": "chart-scatter-bubble",
           "title": "Scatter & bubble",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Point charts in continuous X/Y space; bubbles add a third size dimension.",
           "options": "{ chartConfiguration: { type: \"scatter\" | \"bubble\", data, options }, height?, width?, minHeight? }",
@@ -1155,14 +1165,14 @@
           "siblings": [
             {
               "name": "Scatter",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Individual points plotted by x and y.",
               "options": "type: \"scatter\"",
               "demo": "chart-scatter"
             },
             {
               "name": "Bubble",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Scatter points sized by a third value (r).",
               "options": "type: \"bubble\"",
               "demo": "chart-bubble"
@@ -1173,7 +1183,7 @@
           "id": "chart-mixed",
           "title": "Mixed",
           "apis": [
-            "DrawUI.chart(options?)"
+            "DrawUI.Chart(options?)"
           ],
           "summary": "Combine chart types in one panel (e.g. bar + line) via per-dataset type.",
           "options": "{ chartConfiguration: { data: { datasets: [{ type, ... }, ...] }, options }, height?, width?, minHeight? }",
@@ -1181,7 +1191,7 @@
           "siblings": [
             {
               "name": "Bar + line",
-              "api": "DrawUI.chart(options?)",
+              "api": "DrawUI.Chart(options?)",
               "summary": "Bars for volume with a line overlay for trend.",
               "options": "datasets with type: \"bar\" and type: \"line\"",
               "demo": "chart-mixed"
@@ -1197,11 +1207,12 @@
       "items": [
         {
           "id": "spreadsheet",
-          "title": "Spreadsheet",
+          "title": "DataGrid",
           "apis": [
-            "DrawUI.spreadsheet(options)"
+            "DrawUI.Spreadsheet(options)",
+            "DataGrid"
           ],
-          "summary": "Editable ag-grid spreadsheet — call .init() after attach.",
+          "summary": "Editable AG Grid spreadsheet — call .init() after attach.",
           "demo": "spreadsheet",
           "options": "{ data, columnConfig?, columnNameMapper?, height?, width? }",
           "note": "Peer: ag-grid-community@35.2.1"
@@ -1217,7 +1228,7 @@
           "id": "gantt",
           "title": "Gantt",
           "apis": [
-            "GanttComponent"
+            "GanttChart"
           ],
           "summary": "jsGantt-improved timeline. Pass task JSON to .render(tasks, container).",
           "demo": "gantt",
@@ -1227,17 +1238,16 @@
     },
     {
       "id": "markdown",
-      "title": "Markdown",
-      "description": "Showdown-backed markdown with optional Highlight.js. Peers: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1",
+      "title": "Markdown (GFM)",
+      "description": "Same `Markdown` component with Showdown + Highlight.js peers loaded. Peers: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1",
       "items": [
         {
           "id": "markdown-full",
           "title": "Markdown (Showdown)",
           "apis": [
-            "DrawUI.markdown(text?, options?)",
-            "MarkdownComponent"
+            "new Markdown(text?, options?)"
           ],
-          "summary": "Full build markdown via Showdown with optional Highlight.js code blocks.",
+          "summary": "GFM tables, task lists, and highlighted fences when Showdown peers are loaded.",
           "demo": "markdown-full",
           "note": "Peers: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1"
         }
@@ -1245,37 +1255,19 @@
     },
     {
       "id": "nodes",
-      "title": "Nodes",
+      "title": "NodeGraph",
       "description": "Node graph editor (full build).",
       "items": [
         {
           "id": "nodes",
-          "title": "Nodes",
+          "title": "NodeGraph",
           "apis": [
-            "Nodes"
+            "NodeGraph"
           ],
           "summary": "Node graph editor — pass { nodes, connections } with id/name/status/level/children per node.",
           "demo": "nodes",
           "options": "{ nodes, connections, embedded?, readOnly?, onEdit?, onDelete?, onNodeClick? }",
           "note": "Full build only. Link styles/components/nodes.css (and hud.css for meta labels)."
-        }
-      ]
-    },
-    {
-      "id": "menus",
-      "title": "Menus",
-      "description": "Vendor overlays and radial menus.",
-      "items": [
-        {
-          "id": "pie-menu",
-          "title": "Pie menu",
-          "apis": [
-            "PieMenu"
-          ],
-          "summary": "Radial operator menu bound to a viewport element — import from drawui/overlays.",
-          "demo": "pie-menu",
-          "options": "{ viewport, operators, items, shortcut?, context? }",
-          "note": "operators needs { canExecute(op, ctx), execute(op, ctx) }. Link styles/components/pie-menu.css."
         }
       ]
     }
@@ -1287,11 +1279,12 @@
     "items": [
       {
         "id": "spreadsheet",
-        "title": "Spreadsheet",
+        "title": "DataGrid",
         "apis": [
-          "DrawUI.spreadsheet(options)"
+          "DrawUI.Spreadsheet(options)",
+          "DataGrid"
         ],
-        "summary": "Editable ag-grid spreadsheet — call .init() after attach.",
+        "summary": "Editable AG Grid spreadsheet — call .init() after attach.",
         "demo": "spreadsheet",
         "options": "{ data, columnConfig?, columnNameMapper?, height?, width? }",
         "note": "Peer: ag-grid-community@35.2.1"
@@ -1300,36 +1293,28 @@
   },
   "fullBuildOnly": [
     {
-      "api": "DrawUI.chart()",
+      "api": "DrawUI.Chart()",
       "peer": "chart.js"
     },
     {
-      "api": "DrawUI.spreadsheet()",
+      "api": "DrawUI.Spreadsheet()",
       "peer": "ag-grid-community"
     },
     {
-      "api": "GanttComponent",
+      "api": "GanttChart",
       "peer": "jsgantt-improved"
     },
     {
-      "api": "MarkdownComponent",
-      "peer": "showdown + @highlightjs/cdn-assets"
-    },
-    {
-      "api": "Nodes",
+      "api": "NodeGraph",
       "peer": "internal node graph editor"
     },
     {
-      "api": "DrawUI.tabPanel()",
-      "peer": "requires LayoutManager context"
+      "api": "DrawUI.WorkspacePanel()",
+      "peer": "requires WorkspaceLayout context"
     },
     {
-      "api": "TabPanel",
+      "api": "WorkspacePanel",
       "peer": "workspace layout integration"
-    },
-    {
-      "api": "PieMenu",
-      "peer": "drawui/overlays"
     }
   ]
 }

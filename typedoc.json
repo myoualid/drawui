@@ -1,0 +1,54 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "tsconfig": "tsconfig.typedoc.json",
+  "entryPoints": ["src/index.js"],
+  "entryPointStrategy": "resolve",
+  "excludeReferences": true,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "out": "docs/generated/typedoc",
+  "readme": "none",
+  "name": "DrawUI API",
+  "hideGenerator": true,
+  "logLevel": "Warn",
+  "validation": {
+    "notExported": false,
+    "invalidLink": false
+  },
+  "intentionallyNotExported": [
+    "SpaNavGroup",
+    "SpaPage",
+    "HierarchyToggleUtil",
+    "LayoutPosition",
+    "TabRegistry",
+    "WorldComponentNode",
+    "ToolbarButton",
+    "LayoutResizerOptions",
+    "DateTimeCellEditor",
+    "StyleProperties",
+    "AppShellOptions",
+    "SidebarSizeOptions",
+    "ToolWindowOptions",
+    "WorkspaceStack",
+    "AddTabOptions",
+    "RemoveTabOptions",
+    "SelectTabOptions",
+    "SpreadsheetOptions"
+  ],
+  "navigation": {
+    "includeCategories": true
+  },
+  "categoryOrder": [
+    "Text",
+    "Inputs",
+    "Layout",
+    "Collections",
+    "Panels",
+    "Overlays",
+    "Shell",
+    "Peers",
+    "Utils",
+    "Facade",
+    "*"
+  ]
+}

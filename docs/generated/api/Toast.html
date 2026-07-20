@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast — DrawUI API</title>
+  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.full.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="toast">Toast</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> panels<br />
+<strong>Import:</strong> <code>drawui</code><br />
+<strong>Emitted class(es):</strong> <code>Toast</code>, <code>Toast--{type}</code>, <code>Toast--fade-out</code>, <code>Toast-close</code>, <code>status-bar</code>, <code>status-bar-fill</code></p>
+<p>Transient notification or progress overlay.</p>
+<p>Notification:</p>
+<pre><code class="js language-js">new Toast("Changes saved", "success");
+</code></pre>
+<p>Progress:</p>
+<pre><code class="js language-js">const toast = new Toast();
+toast.show("#host", "Exporting…");
+toast.update(50, "50%");
+toast.hide();
+</code></pre>
+<p><em>Source: <code>src/components/feedback/Toast.js</code></em></p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { Toast } from "drawui";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="progresstoast">Progress toast</h3>
+<pre><code class="js language-js">const inlineHost = new Container();
+  inlineHost.dom.id = "inline-progress-host";
+  inlineHost.setStyle("position", ["relative"]).setStyle("minHeight", ["3rem"]);
+  const toast = new Toast();
+
+  return new StackPanel({ isVertical: true })
+    .gap("0.75rem")
+    .add(
+      new Button("Run inline progress").addClass("secondary").onClick(() =&gt; {
+        toast.show("#inline-progress-host", "Exporting…");
+        let pct = 0;
+        const timer = setInterval(() =&gt; {
+          pct += 10;
+          toast.update(pct, `${pct}%`);
+          if (pct &gt;= 100) {
+            clearInterval(timer);
+            setTimeout(() =&gt; toast.hide(), 400);
+          }
+        }, 120);
+      }),
+    )
+    .add(inlineHost);
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Toast/progress-toast" aria-label="Live preview"></div>
+<h3 id="toast-1">Toast</h3>
+<pre><code class="js language-js">return new Button("Show toast").addClass("primary").onClick(() =&gt; {
+    new Toast("Changes saved", "success", { duration: 2500 });
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Toast/toast" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

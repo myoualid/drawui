@@ -1,0 +1,36 @@
+/* AppShell host — scroll lives in the main body, not the page. */
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--dui-color-bg);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
+}
+
+#app > .AppShell {
+  height: 100%;
+}
+
+.site-page {
+  box-sizing: border-box;
+  padding: 0.25rem 0 1.5rem;
+  max-width: 72rem;
+}
+
+.site-kpi {
+  flex: 1 1 10rem;
+  min-width: 9rem;
+}
+
+.site-chart-card {
+  min-height: 0;
+}
+
+.site-gantt-host {
+  height: 360px;
+  overflow: auto;
+  width: 100%;
+}

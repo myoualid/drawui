@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FloatingWindow — DrawUI API</title>
+  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.full.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="floatingwindow">FloatingWindow</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> overlays<br />
+<strong>Import:</strong> <code>drawui</code><br />
+<strong>Emitted class(es):</strong> <code>FloatingWindow</code>, <code>FloatingWindow-header</code>, <code>FloatingWindow-content</code>, <code>circle</code>, <code>pos-btn</code>, <code>green</code>, <code>red</code>, <code>Row</code>, <code>centered-vertical</code>, <code>justify-between</code>, <code>fill-width</code>, <code>fill-height</code></p>
+<p>Free-floating window with docking controls.</p>
+<p><em>Source: <code>src/overlays/FloatingWindow.js</code></em></p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { FloatingWindow } from "drawui";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="floatingwindow-1">FloatingWindow</h3>
+<pre><code class="js language-js">return new Button("Open FloatingWindow").addClass("secondary").onClick(() =&gt; {
+    document.querySelectorAll(".FloatingWindow").forEach((node) =&gt; {
+      if (node.parentElement === document.body) node.remove();
+    });
+    const panel = new FloatingWindow({ title: "Overlay", width: "320px" });
+    panel.setContent(
+      new StackPanel({ isVertical: true })
+        .gap("0.5rem")
+        .add(new Heading(3, "FloatingWindow"))
+        .add(new TextBlock("Free-floating overlay panel")),
+    );
+    panel.dom.style.height = "auto";
+    panel.dom.style.maxHeight = "70vh";
+    panel.show();
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="FloatingWindow/floatingwindow" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

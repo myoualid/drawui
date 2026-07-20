@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting started — DrawUI</title>
+  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <link rel="stylesheet" href="./styles/themes/dark.css">
+  <link rel="stylesheet" href="./styles/themes/light.css">
+  <link rel="stylesheet" href="./examples/examples.css">
+  <link rel="stylesheet" href="./doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a href="./generated/typedoc/index.html">TypeDoc</a>
+      <a href="./generated/component-index.html">Component index</a>
+      <a href="./SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="drawuijsgettingstarted">DrawUI.js Getting Started</h1>
+<h2 id="install">Install</h2>
+<p>Add DrawUI as a package dependency:</p>
+<pre><code class="json language-json">{
+  "dependencies": {
+    "drawui": "file:./drawUI"
+  }
+}
+</code></pre>
+<p>DrawUI ships source ESM and CSS entrypoints, so your toolchain should support ES modules and CSS imports.</p>
+<h2 id="baseimports">Base Imports</h2>
+<pre><code class="js language-js">import { StackPanel, Heading, TextBlock } from "drawui";
+import "drawui/styles/core.css";
+import "drawui/styles/themes/dark.css";
+</code></pre>
+<p>Import <code>drawui/styles/icons.css</code> when you use components that render Material Symbols icons.</p>
+<h2 id="firstpanel">First Panel</h2>
+<pre><code class="js language-js">import { FloatingWindow, StackPanel, Heading, TextBlock } from "drawui";
+import "drawui/styles/core.css";
+import "drawui/styles/icons.css";
+
+const panel = new FloatingWindow({
+  title: "Layers",
+  position: "left",
+  width: "280px"
+});
+
+const content = new StackPanel({ isVertical: true })
+  .add(new Heading(3, "Visible Items"))
+  .add(new TextBlock("Nothing loaded"));
+
+panel.content.add(content);
+document.body.appendChild(panel.dom);
+</code></pre>
+<h2 id="typicalpattern">Typical Pattern</h2>
+<ol>
+<li>Import <code>drawui/styles/core.css</code> once at application startup.</li>
+<li>Add a theme stylesheet such as <code>drawui/styles/themes/dark.css</code> or <code>drawui/styles/themes/light.css</code>.</li>
+<li>Build layouts with <code>new StackPanel({ isVertical: false|true })</code> (or other primitives).</li>
+<li>Mount the component <code>.dom</code> into your host application.</li>
+<li>Call <code>dispose()</code> during teardown for components that attach global listeners or external mounts.</li>
+</ol>
+<h2 id="nextreads">Next Reads</h2>
+<ul>
+<li><a href="../README.html">README.md</a> for the package overview.</li>
+<li><a href="generated/component-index.html">Component index</a> for the generated export inventory.</li>
+<li><a href="generated/api/index.html">API reference</a> for per-symbol pages.</li>
+<li><a href="styling.html">styling.html</a> for tokens, themes, and CSS entrypoints.</li>
+<li><a href="publishing.html">publishing.html</a> for distribution, builds, and GitHub Pages.</li>
+<li><a href="SKILL.html">SKILL.html</a> for agent-focused implementation rules.</li>
+</ul></main>
+  </div>
+</body>
+</html>

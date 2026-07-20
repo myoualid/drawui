@@ -1,0 +1,99 @@
+/* Rendered documentation pages (guides + generated reference) */
+html,
+body {
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  overflow: auto;
+  background: var(--dui-color-bg, #1c1f1c);
+  color: var(--dui-color-text, #eeeeec);
+  font-family: var(--dui-font-ui, system-ui, sans-serif);
+}
+
+.doc-shell {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.doc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--dui-color-border, #555753);
+  font-size: 0.875rem;
+}
+
+.doc-nav a {
+  color: var(--dui-color-text-muted, #babdb6);
+  text-decoration: none;
+}
+
+.doc-nav a:hover,
+.doc-nav a.is-active {
+  color: var(--dui-color-accent, #70ba35);
+}
+
+.doc-nav-home {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+}
+
+.doc-content {
+  line-height: 1.6;
+}
+
+.doc-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.doc-content th,
+.doc-content td {
+  border: 1px solid var(--dui-color-border, #555753);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc-content th {
+  background: var(--dui-color-surface, #2e3436);
+}
+
+.doc-content code {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 0.875em;
+}
+
+.doc-content pre {
+  overflow-x: auto;
+  padding: 0.75rem 1rem;
+  border-radius: var(--dui-radius, 4px);
+  background: var(--dui-color-surface, #2e3436);
+  border: 1px solid var(--dui-color-border, #555753);
+}
+
+.doc-content pre code {
+  font-size: 0.8125rem;
+}
+
+.doc-content a {
+  color: var(--dui-color-accent, #70ba35);
+}
+
+/* Registry API pages: demos mount in the light DOM (docs/api-live.js).
+   TypeDoc pages isolate demos in iframes instead. */
+.doc-live-demo {
+  display: block;
+  margin: 0.75rem 0 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  min-height: 1px;
+}

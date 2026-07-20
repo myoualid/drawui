@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API reference — DrawUI</title>
+  <link rel="stylesheet" href="../../dist/drawui.min.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+      <a href="../../SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="drawuiapireference">DrawUI API Reference</h1>
+<p>Generated from <code>src/api/registry.json</code> and JSDoc in <code>src/</code>. Manual guides:</p>
+<ul>
+<li><a href="../../getting-started.html">Getting started</a></li>
+<li><a href="../../styling.html">Styling guide</a></li>
+<li><a href="../../publishing.html">Publishing</a></li>
+<li><a href="../component-index.html">Component index</a></li>
+<li><a href="../../SKILL.html">AI usage guide</a></li>
+<li><a href="../typedoc/index.html">TypeDoc HTML reference</a> (DrawUI factories and documented classes)</li>
+</ul>
+<p>Per-symbol pages include JSDoc descriptions, <code>@example</code> snippets, and live previews for examples marked <code>// live</code>.</p>
+<h2 id="symbols">Symbols</h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Status</th>
+<th>Category</th>
+<th>Import</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./Control.html">Control</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Hyperlink.html">Hyperlink</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Image.html">Image</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Svg.html">Svg</a></td>
+<td>Experimental</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Paragraph.html">Paragraph</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Heading.html">Heading</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Span.html">Span</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Container.html">Container</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./StackPanel.html">StackPanel</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ScrollViewer.html">ScrollViewer</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Grid.html">Grid</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Rectangle.html">Rectangle</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Label.html">Label</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Form.html">Form</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./TextBlock.html">TextBlock</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Caption.html">Caption</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Title.html">Title</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Disclaimer.html">Disclaimer</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Code.html">Code</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Kbd.html">Kbd</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Badge.html">Badge</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Canvas.html">Canvas</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Card.html">Card</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Spacer.html">Spacer</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./HSpacer.html">HSpacer</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Handle.html">Handle</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./TabItem.html">TabItem</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ToolbarButton.html">ToolbarButton</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./center.html">center</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputText.html">InputText</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputSearch.html">InputSearch</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Icon.html">Icon</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputTextArea.html">InputTextArea</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputDropdown.html">InputDropdown</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Checkbox.html">Checkbox</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputColor.html">InputColor</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputNumber.html">InputNumber</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputInteger.html">InputInteger</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Slider.html">Slider</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./LineBreak.html">LineBreak</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Line.html">Line</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Button.html">Button</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./IconButton.html">IconButton</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./RibbonButton.html">RibbonButton</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ProgressBar.html">ProgressBar</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./TabView.html">TabView</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputList.html">InputList</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputListItem.html">InputListItem</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InputDate.html">InputDate</a></td>
+<td>Experimental</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ProgressRing.html">ProgressRing</a></td>
+<td>Experimental</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Tooltip.html">Tooltip</a></td>
+<td>Experimental</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./DrawUI.html">DrawUI</a></td>
+<td>Stable</td>
+<td>facade</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ContentPanel.html">ContentPanel</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./FloatingDialog.html">FloatingDialog</a></td>
+<td>Stable</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./WorkspacePanel.html">WorkspacePanel</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Header.html">Header</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./RibbonBar.html">RibbonBar</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Flyout.html">Flyout</a></td>
+<td>Stable</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./CollapsiblePanel.html">CollapsiblePanel</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InstructionPanel.html">InstructionPanel</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./InstructionLine.html">InstructionLine</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./SplitContainer.html">SplitContainer</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Toast.html">Toast</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Operator.html">Operator</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./LabeledBoxItem.html">LabeledBoxItem</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./WorkspaceLayout.html">WorkspaceLayout</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./buildWorldFromConfig.html">buildWorldFromConfig</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./createDefaultWorldConfig.html">createDefaultWorldConfig</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./FloatingWindow.html">FloatingWindow</a></td>
+<td>Stable</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./NavigationList.html">NavigationList</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./TreeView.html">TreeView</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Markdown.html">Markdown</a></td>
+<td>Stable</td>
+<td>text</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./Chart.html">Chart</a></td>
+<td>Stable</td>
+<td>peers</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./DataGrid.html">DataGrid</a></td>
+<td>Stable</td>
+<td>peers</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./GanttChart.html">GanttChart</a></td>
+<td>Stable</td>
+<td>peers</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./SortableList.html">SortableList</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./RadialMenu.html">RadialMenu</a></td>
+<td>Experimental</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./AppShell.html">AppShell</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./NavigationView.html">NavigationView</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./PropertyGrid.html">PropertyGrid</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./NodeGraph.html">NodeGraph</a></td>
+<td>Stable</td>
+<td>peers</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./StatusBar.html">StatusBar</a></td>
+<td>Stable</td>
+<td>panels</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ThemeToggle.html">ThemeToggle</a></td>
+<td>Stable</td>
+<td>inputs</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./PropertyGridRow.html">PropertyGridRow</a></td>
+<td>Stable</td>
+<td>collections</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./ICONS.html">ICONS</a></td>
+<td>Stable</td>
+<td>facade</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./makeDraggable.html">makeDraggable</a></td>
+<td>Stable</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./makeResizable.html">makeResizable</a></td>
+<td>Stable</td>
+<td>overlays</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./makeFlexResizer.html">makeFlexResizer</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./createSplitResizer.html">createSplitResizer</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./createLayoutResizerHandle.html">createLayoutResizerHandle</a></td>
+<td>Stable</td>
+<td>layout</td>
+<td><code>drawui</code></td>
+</tr>
+<tr>
+<td><a href="./buildWorkspaceDockHandlers.html">buildWorkspaceDockHandlers</a></td>
+<td>Stable</td>
+<td>shell</td>
+<td><code>drawui</code></td>
+</tr>
+</tbody>
+</table></main>
+  </div>
+</body>
+</html>

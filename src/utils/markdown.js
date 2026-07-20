@@ -1,11 +1,12 @@
 
-import { escapeHtml } from "./escape-html.js";
+import { escapeHtml } from "./escapeHtml.js";
 
 /**
  * Minimal markdown-to-HTML (no Showdown). Supports headings, fenced code blocks,
  * paragraphs, bold/italic, and lists. Code blocks get language-* class for CodeMirror/hljs.
  * @param {string} markdown - The markdown text to convert.
  * @returns {Object} Object with html property containing the converted HTML.
+ * @category Utils
  */
 export function simpleMarkdownToHtml(markdown) {
   if (!markdown || typeof markdown !== 'string') return { html: '', codes: [] };
@@ -88,6 +89,7 @@ export function simpleMarkdownToHtml(markdown) {
  * Sanitize HTML for safe injection into lesson notes (allow-list of tags and attributes).
  * @param {string} html - Raw HTML string
  * @returns {string} Sanitized HTML string
+ * @category Utils
  */
 export function sanitizeHtml(html) {
   if (!html || typeof html !== 'string') return '';
@@ -102,7 +104,7 @@ export function sanitizeHtml(html) {
     const tag = node.tagName.toLowerCase();
     if (!allowedTags.has(tag)) {
       const frag = document.createDocumentFragment();
-      for (const child of node.childNodes) {
+      for (const child of node.childNodeGraph) {
         const c = sanitizeNode(child);
         if (c) frag.appendChild(c);
       }
@@ -118,7 +120,7 @@ export function sanitizeHtml(html) {
       }
       if (allowedAttrs.has(name)) out.setAttribute(name, a.value);
     }
-    for (const child of node.childNodes) {
+    for (const child of node.childNodeGraph) {
       const c = sanitizeNode(child);
       if (c) out.appendChild(c);
     }
@@ -126,7 +128,7 @@ export function sanitizeHtml(html) {
   }
 
   const fragment = document.createDocumentFragment();
-  for (const child of tmp.childNodes) {
+  for (const child of tmp.childNodeGraph) {
     const c = sanitizeNode(child);
     if (c) fragment.appendChild(c);
   }

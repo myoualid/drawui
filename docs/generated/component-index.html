@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component index — DrawUI</title>
+  <link rel="stylesheet" href="../dist/drawui.min.css">
+  <link rel="stylesheet" href="../styles/themes/dark.css">
+  <link rel="stylesheet" href="../styles/themes/light.css">
+  <link rel="stylesheet" href="../examples/examples.css">
+  <link rel="stylesheet" href="../doc-page.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../index.html">← drawui docs</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="./api/index.html">API pages</a>
+      <a href="../../SKILL.html">AI usage guide</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="drawuijscomponentindex">DrawUI.js Component Index</h1>
+<p>This index documents the maintained public surface of the DrawUI package.
+Sections follow the class hierarchy: <strong>Text</strong> and <strong>Inputs</strong> are <code>Control</code> leaves; <strong>Layout</strong>, <strong>Collections</strong>, <strong>Panels</strong>, <strong>Overlays</strong>, and <strong>Shell</strong> are <code>Container</code> branches; <strong>Peers</strong> need external packages; <strong>Facade</strong> is the package entry surface.</p>
+<h2 id="importsurfaces">Import Surfaces</h2>
+<p>Use package exports for all public DrawUI consumption:</p>
+<pre><code class="js language-js">import { DrawUI, FloatingWindow, Button, RadialMenu } from "drawui";
+import "drawui/styles/core.css";
+</code></pre>
+<h2 id="statuslegend">Status Legend</h2>
+<ul>
+<li><strong>Stable</strong>: documented, maintained package API.</li>
+<li><strong>Experimental</strong>: public, but behavior or styling may still evolve.</li>
+<li><strong>Internal</strong>: repository code that should not be treated as package API.</li>
+</ul>
+<p>See also the <a href="./api/index.html">API reference</a> for per-symbol pages.</p>
+<h2 id="text">Text</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Hyperlink</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Link</code></td>
+<td>Anchor wrapper with optional icon and external-target behavior.</td>
+</tr>
+<tr>
+<td><code>Image</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Image</code></td>
+<td>Image wrapper around <code>img</code>.</td>
+</tr>
+<tr>
+<td><code>Svg</code></td>
+<td>Experimental</td>
+<td><code>drawui</code></td>
+<td><code>SVG</code></td>
+<td>Supports fetch, clone, and ID retargeting for reusable SVGs.</td>
+</tr>
+<tr>
+<td><code>Paragraph</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Semantic <code>p</code> wrapper.</td>
+</tr>
+<tr>
+<td><code>Heading</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Semantic heading wrapper (<code>h1</code>–<code>h6</code> via level option).</td>
+</tr>
+<tr>
+<td><code>Span</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Generic inline wrapper.</td>
+</tr>
+<tr>
+<td><code>TextBlock</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>TextBlock</code></td>
+<td>Inline text primitive.</td>
+</tr>
+<tr>
+<td><code>Caption</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Thin <code>small</code> wrapper.</td>
+</tr>
+<tr>
+<td><code>Title</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Title</code></td>
+<td>Panel-style title text for section headers.</td>
+</tr>
+<tr>
+<td><code>Disclaimer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>disclaimer</code></td>
+<td>Muted helper or legal copy.</td>
+</tr>
+<tr>
+<td><code>Code</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Code</code></td>
+<td>Inline code / API signature chip.</td>
+</tr>
+<tr>
+<td><code>Kbd</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>kbd</code></td>
+<td>Keyboard shortcut chip.</td>
+</tr>
+<tr>
+<td><code>Badge</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Badge</code></td>
+<td>Compact status / label badge.</td>
+</tr>
+<tr>
+<td><code>Canvas</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Canvas</code></td>
+<td>HTML canvas wrapper for custom drawing.</td>
+</tr>
+<tr>
+<td><code>Icon</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>material-symbols-outlined</code>, <code>Icon</code></td>
+<td>Material Symbols icon span.</td>
+</tr>
+<tr>
+<td><code>LineBreak</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>LineBreak</code></td>
+<td>Thin <code>br</code> wrapper.</td>
+</tr>
+<tr>
+<td><code>Line</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Line</code></td>
+<td>Divider wrapper around <code>hr</code>.</td>
+</tr>
+<tr>
+<td><code>Markdown</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Markdown</code></td>
+<td>Markdown (or sanitized HTML) renderer. Min build uses the built-in converter; full build uses Showdown + Highlight.js when those peers are present.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inputs">Inputs</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Label</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Label wrapper for form controls.</td>
+</tr>
+<tr>
+<td><code>Form</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Form wrapper with submit helpers.</td>
+</tr>
+<tr>
+<td><code>ToolbarButton</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Button</code></td>
+<td>Compact button for toolbars and field-control wrappers.</td>
+</tr>
+<tr>
+<td><code>InputText</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputText</code></td>
+<td>Single-line input with editor-style propagation guards.</td>
+</tr>
+<tr>
+<td><code>InputSearch</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputSearch</code></td>
+<td>Search input variant of <code>InputText</code>.</td>
+</tr>
+<tr>
+<td><code>InputTextArea</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputTextArea</code></td>
+<td>Multiline editor primitive with tab insertion support.</td>
+</tr>
+<tr>
+<td><code>InputDropdown</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputDropdown</code></td>
+<td>Native select wrapper.</td>
+</tr>
+<tr>
+<td><code>Checkbox</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Checkbox</code></td>
+<td>Checkbox input primitive.</td>
+</tr>
+<tr>
+<td><code>InputColor</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputColor</code></td>
+<td>Color input primitive.</td>
+</tr>
+<tr>
+<td><code>InputNumber</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputNumber</code></td>
+<td>Numeric input with drag and keyboard adjustments.</td>
+</tr>
+<tr>
+<td><code>InputInteger</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputNumber</code></td>
+<td>Integer-specialized numeric input.</td>
+</tr>
+<tr>
+<td><code>Slider</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Slider</code></td>
+<td>Range track plus numeric field for continuous values.</td>
+</tr>
+<tr>
+<td><code>Button</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Button</code></td>
+<td>Button primitive with optional prepended icon.</td>
+</tr>
+<tr>
+<td><code>IconButton</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Button</code>, <code>SquareButton</code>, <code>SquareButton-label</code>, <code>SquareButton-meta</code>, <code>Active</code>, <code>Button--active</code></td>
+<td>Tile-style button for icon + label + meta content.</td>
+</tr>
+<tr>
+<td><code>RibbonButton</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Button</code>, <code>RibbonButton</code>, <code>RibbonButton-label</code>, <code>Active</code>, <code>selected</code></td>
+<td>Borderless icon+label control with tab-style accent when selected. Use in RibbonBar.</td>
+</tr>
+<tr>
+<td><code>ProgressBar</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Native progress wrapper.</td>
+</tr>
+<tr>
+<td><code>InputDate</code></td>
+<td>Experimental</td>
+<td><code>drawui</code></td>
+<td><code>InputDate</code>, <code>InputDate-input</code>, <code>InputDate-calendar</code></td>
+<td>Composite date and time picker.</td>
+</tr>
+<tr>
+<td><code>ProgressRing</code></td>
+<td>Experimental</td>
+<td><code>drawui</code></td>
+<td><code>spinner-container</code>, <code>spinner-wrapper</code>, <code>spinner</code>, <code>spinner-text</code>, <code>spinner-percentage</code></td>
+<td>Overlay spinner with text and percentage states.</td>
+</tr>
+<tr>
+<td><code>Tooltip</code></td>
+<td>Experimental</td>
+<td><code>drawui</code></td>
+<td><code>Tooltip</code>, <code>Tooltip--{theme}</code>, <code>visible</code></td>
+<td>Hover tooltip with theme variants.</td>
+</tr>
+<tr>
+<td><code>Operator</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Operator</code></td>
+<td>Icon-only operator control shell.</td>
+</tr>
+<tr>
+<td><code>ThemeToggle</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>ThemeToggle</code></td>
+<td>Light/dark theme toggle control.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="layout">Layout</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Control</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Base chainable wrapper around a DOM node.</td>
+</tr>
+<tr>
+<td><code>Container</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Generic block wrapper.</td>
+</tr>
+<tr>
+<td><code>StackPanel</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Row</code>, <code>Column</code></td>
+<td>Row/column layout primitive used throughout panel layouts (<code>new StackPanel({ isVertical: false|true })</code>).</td>
+</tr>
+<tr>
+<td><code>ScrollViewer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Scrollable container wrapper.</td>
+</tr>
+<tr>
+<td><code>Grid</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Grid</code></td>
+<td>Grid layout primitive with explicit column or auto-fit helpers.</td>
+</tr>
+<tr>
+<td><code>Rectangle</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Rectangle</code></td>
+<td>Generic panel container.</td>
+</tr>
+<tr>
+<td><code>Card</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Card</code></td>
+<td>Elevated surface shell (<code>Rectangle</code> + <code>Card</code> class).</td>
+</tr>
+<tr>
+<td><code>Spacer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Vertical spacer between stacked items.</td>
+</tr>
+<tr>
+<td><code>HSpacer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Horizontal spacer between inline or row items.</td>
+</tr>
+<tr>
+<td><code>Handle</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>drag-handle</code>, <code>resize-handle</code></td>
+<td>Drag / resize handle element (<code>new Handle("drag"|"resize")</code>).</td>
+</tr>
+<tr>
+<td><code>TabItem</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Tab</code></td>
+<td>Tab chrome created by <code>TabView.addTab()</code> — not usually constructed directly.</td>
+</tr>
+<tr>
+<td><code>center</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>centered</code></td>
+<td>Adds the shared <code>centered</code> class to a control.</td>
+</tr>
+<tr>
+<td><code>TabView</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>TabView</code>, <code>TabView-tabs</code>, <code>TabView-content</code>, <code>Tab</code>, <code>Tab-float</code>, <code>selected</code></td>
+<td>Self-managed tab container.</td>
+</tr>
+<tr>
+<td><code>makeFlexResizer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Creates a pointer-driven flex size resizer between siblings.</td>
+</tr>
+<tr>
+<td><code>createSplitResizer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Builds a resizer control for a split-pane child index.</td>
+</tr>
+<tr>
+<td><code>createLayoutResizerHandle</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Creates a left/right/bottom workspace layout resizer handle.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="collections">Collections</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InputList</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputList</code>, <code>Active</code></td>
+<td>Selectable list container.</td>
+</tr>
+<tr>
+<td><code>InputListItem</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>InputListItem</code></td>
+<td>Clickable row for <code>InputList</code>.</td>
+</tr>
+<tr>
+<td><code>LabeledBoxItem</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>workspace-menu-item</code></td>
+<td>Checkbox + icon + label menu row for workspace menus.</td>
+</tr>
+<tr>
+<td><code>NavigationList</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>dui-drill</code>, <code>dui-drill-header</code>, <code>dui-drill-item</code>, <code>NavigableList</code></td>
+<td>One-level-at-a-time hierarchical navigation with back control.</td>
+</tr>
+<tr>
+<td><code>TreeView</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>dui-tree</code>, <code>dui-tree-item</code>, <code>dui-tree-toggle</code>, <code>dui-tree-label</code>, <code>dui-tree-children</code>, <code>is-expanded</code>, <code>is-selected</code></td>
+<td>Expandable nested tree; same data options shape as <code>NavigationList</code>.</td>
+</tr>
+<tr>
+<td><code>SortableList</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>reorderable-list</code>, <code>reorderable-item</code>, <code>drag-handle</code>, <code>reorderable-placeholder</code>, <code>is-dragging</code>, <code>InputList</code>, <code>InputListItem</code>, <code>Checkbox</code></td>
+<td>Drag-and-drop reorder list with optional checkboxes.</td>
+</tr>
+<tr>
+<td><code>PropertyGrid</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>PropertyGrid</code>, <code>PropertyGrid-row</code></td>
+<td>Key/value property editor grid.</td>
+</tr>
+<tr>
+<td><code>PropertyGridRow</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>PropertyGrid-row</code></td>
+<td>Single row helper for <code>PropertyGrid</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="panels">Panels</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ContentPanel</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>ContentPanel</code>, <code>Rectangle</code>, <code>Header</code>, <code>PanelContent</code>, <code>RibbonBar</code></td>
+<td>Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content.</td>
+</tr>
+<tr>
+<td><code>WorkspacePanel</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>WorkspacePanel</code>, <code>CollapsiblePanel</code>, <code>ContentPanel</code>, <code>Header</code>, <code>PanelContent</code>, <code>RibbonBar</code></td>
+<td>Collapsible ContentPanel mounted as a tab in a WorkspaceRegion (left/right/bottom).</td>
+</tr>
+<tr>
+<td><code>Header</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Header</code></td>
+<td>Shared title/icon/actions row for panel chrome (<code>ContentPanel</code>, <code>CollapsiblePanel</code>, <code>WorkspacePanel</code>).</td>
+</tr>
+<tr>
+<td><code>RibbonBar</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>RibbonBar</code></td>
+<td>Horizontal ribbon / action row for panel footers or the app shell. Pair with RibbonButton.</td>
+</tr>
+<tr>
+<td><code>CollapsiblePanel</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>CollapsiblePanel</code>, <code>CollapsiblePanel-toggle</code>, <code>ContentPanel</code>, <code>Header</code>, <code>PanelContent</code>, <code>collapsed</code></td>
+<td>ContentPanel with a header collapse toggle.</td>
+</tr>
+<tr>
+<td><code>InstructionPanel</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Titled panel of keyboard / pointer instruction rows.</td>
+</tr>
+<tr>
+<td><code>InstructionLine</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>One keyboard shortcut row: key chip + description.</td>
+</tr>
+<tr>
+<td><code>Toast</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Toast</code>, <code>Toast--{type}</code>, <code>Toast--fade-out</code>, <code>Toast-close</code>, <code>status-bar</code>, <code>status-bar-fill</code></td>
+<td>Transient notification (<code>new Toast(message, type)</code>) or progress overlay (<code>toast.show</code> / <code>update</code> / <code>hide</code>).</td>
+</tr>
+<tr>
+<td><code>StatusBar</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>StatusBar</code></td>
+<td>Application status bar with message regions.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="overlays">Overlays</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FloatingDialog</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>ContentPanel</code>, <code>Header</code>, <code>PanelContent</code>, <code>RibbonBar</code></td>
+<td>Lightweight floating panel built on <code>ContentPanel</code>.</td>
+</tr>
+<tr>
+<td><code>Flyout</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Flyout</code>, <code>Flyout-header</code>, <code>Flyout-icon</code>, <code>Flyout-title</code>, <code>Flyout-content</code>, <code>Flyout-search</code>, <code>expanded</code>, <code>Badge</code>, <code>centered</code></td>
+<td>Expandable tool panel with optional search row.</td>
+</tr>
+<tr>
+<td><code>FloatingWindow</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>FloatingWindow</code>, <code>FloatingWindow-header</code>, <code>FloatingWindow-content</code>, <code>circle</code>, <code>pos-btn</code>, <code>green</code>, <code>red</code>, <code>Row</code>, <code>centered-vertical</code>, <code>justify-between</code>, <code>fill-width</code>, <code>fill-height</code></td>
+<td>Free-floating window with docking controls.</td>
+</tr>
+<tr>
+<td><code>RadialMenu</code></td>
+<td>Experimental</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Radial interaction overlay.</td>
+</tr>
+<tr>
+<td><code>makeDraggable</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Attaches drag behavior to a panel via a header handle element.</td>
+</tr>
+<tr>
+<td><code>makeResizable</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Attaches edge resize behavior to a floating panel.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="shell">Shell</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SplitContainer</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>split-container</code></td>
+<td>Flex host for horizontal/vertical split panes.</td>
+</tr>
+<tr>
+<td><code>WorkspaceLayout</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>World</code>, <code>workspace-layout</code>, <code>WorkspaceStack</code></td>
+<td>Applies workspace grid, resizers, and stacked CollapsiblePanel / WorkspacePanel roots. Undock transfers content into a FloatingWindow.</td>
+</tr>
+<tr>
+<td><code>buildWorldFromConfig</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>World</code></td>
+<td>Build the <code>#World</code> DOM tree from declarative config before <code>WorkspaceLayout.init()</code>.</td>
+</tr>
+<tr>
+<td><code>createDefaultWorldConfig</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Default workspace shell config with stable region ids for <code>WorkspaceLayout</code>.</td>
+</tr>
+<tr>
+<td><code>AppShell</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>AppShell</code>, <code>AppShell-sidebar</code>, <code>AppShell-main</code></td>
+<td>SPA host with sidebar navigation and hash routing.</td>
+</tr>
+<tr>
+<td><code>NavigationView</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>NavigationView</code>, <code>NavigationView-sidebar</code>, <code>NavigationView-content</code></td>
+<td>Sidebar + content navigation scaffold.</td>
+</tr>
+<tr>
+<td><code>buildWorkspaceDockHandlers</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Returns dock/undock handlers for WorkspacePanel chrome wired to a WorkspaceLayout.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="peers">Peers</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Chart</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Rectangle</code>, <code>chart-ui-component</code></td>
+<td>Chart.js-backed visualization panel used by <code>DrawUI.Chart()</code>.</td>
+</tr>
+<tr>
+<td><code>DataGrid</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Rectangle</code>, <code>ag-grid-custom</code></td>
+<td>AG Grid-backed spreadsheet panel used by <code>DrawUI.Spreadsheet()</code>.</td>
+</tr>
+<tr>
+<td><code>GanttChart</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>Rectangle</code>, <code>gantt-container</code></td>
+<td>jsGantt-improved-backed scheduling chart.</td>
+</tr>
+<tr>
+<td><code>NodeGraph</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td><code>dui-node-graph</code>, <code>dui-node</code>, <code>dui-node-port</code></td>
+<td>Interactive node graph editor.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="facade">Facade</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Import</th>
+<th>Emitted class(es)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DrawUI</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Main facade for primitives and composed helpers. Emitted classes vary by factory method.</td>
+</tr>
+<tr>
+<td><code>ICONS</code></td>
+<td>Stable</td>
+<td><code>drawui</code></td>
+<td>None by default</td>
+<td>Material Symbols icon name constants.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="drawuifactoryadditions">DrawUI Factory Additions</h3>
+<ul>
+<li><code>new Grid()</code> — Package-owned CSS grid layout primitive.</li>
+<li><code>new IconButton(label, options)</code> — Tile-style action button without module-local styling.</li>
+</ul>
+<h2 id="cssentrypoints">CSS Entry Points</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Status</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>styles/core.css</code></td>
+<td>Stable</td>
+<td>Imports token, reset, primitive, and generic component layers.</td>
+</tr>
+<tr>
+<td><code>styles/tokens.css</code></td>
+<td>Stable</td>
+<td>Package-owned <code>--dui-*</code> design tokens.</td>
+</tr>
+<tr>
+<td><code>styles/reset.css</code></td>
+<td>Stable</td>
+<td>Scoped reset helpers.</td>
+</tr>
+<tr>
+<td><code>styles/primitives.css</code></td>
+<td>Stable</td>
+<td>Base primitive classes.</td>
+</tr>
+<tr>
+<td><code>styles/components.css</code></td>
+<td>Stable</td>
+<td>Generic component classes.</td>
+</tr>
+<tr>
+<td><code>styles/icons.css</code></td>
+<td>Stable</td>
+<td>Material Symbols stylesheet for icon-emitting components.</td>
+</tr>
+<tr>
+<td><code>styles/themes/dark.css</code></td>
+<td>Stable</td>
+<td>Dark theme token values.</td>
+</tr>
+<tr>
+<td><code>styles/themes/light.css</code></td>
+<td>Stable</td>
+<td>Light theme token values.</td>
+</tr>
+</tbody>
+</table></main>
+  </div>
+</body>
+</html>

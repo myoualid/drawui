@@ -1,0 +1,32 @@
+/**
+ * Optional full-viewport app host.
+ * Import only in DrawUI application shells — not in docs, embeds, or partial hosts.
+ *
+ *   import "drawui/styles/core.css";
+ *   import "drawui/styles/app-host.css";
+ *   import "drawui/styles/themes/dark.css";
+ */
+
+html {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--dui-color-bg);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-md);
+  font-weight: 400;
+  height: 100%;
+  letter-spacing: var(--dui-letter-spacing);
+  line-height: var(--dui-line-height);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

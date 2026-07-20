@@ -1,6 +1,4 @@
 .spinner-container {
-  --spinner-color: var(--dui-color-accent);
-  --spinner-color-alpha: var(--dui-color-accent-soft);
   align-items: center;
   display: flex;
   justify-content: center;
@@ -22,8 +20,8 @@
 }
 
 .spinner > div {
-  background-color: var(--spinner-color-alpha);
-  border: 2px solid var(--spinner-color);
+  background-color: var(--dui-color-accent-soft);
+  border: 2px solid var(--dui-color-accent);
   box-sizing: border-box;
   height: 100%;
   position: absolute;
@@ -31,7 +29,7 @@
 }
 
 .spinner div:nth-of-type(1) {
-  background-color: var(--spinner-color);
+  background-color: var(--dui-color-accent);
   transform: translateZ(-12.5px) rotateY(180deg);
 }
 
@@ -81,7 +79,7 @@
 }
 
 .spinner-percentage {
-  color: var(--spinner-color);
+  color: var(--dui-color-accent);
   font-family: var(--dui-font-ui);
   font-size: var(--dui-font-size-sm);
   font-weight: 600;

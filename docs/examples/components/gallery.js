@@ -1,19 +1,34 @@
-import { DrawUI } from "drawui";
+import {
+  StackPanel,
+  Container,
+  TextBlock,
+  Caption,
+  Button,
+  Code,
+  Disclaimer,
+} from "drawui";
 import { DEMO_BUILDERS } from "./demos.js";
 
-/** @type {Record<string, () => import("drawui").UIElement>} */
+/** @type {Record<string, () => import("drawui").Control>} */
 let demoBuilders = { ...DEMO_BUILDERS };
 
 const CATEGORY_ICONS = {
-  primitives: "widgets",
-  "data-shapes": "layers",
-  vendor: "storefront",
+  text: "title",
+  inputs: "edit_note",
   layout: "dashboard",
+  collections: "list",
+  panels: "view_agenda",
+  overlays: "open_in_new",
+  shell: "view_sidebar",
+  peers: "extension",
   "layout-spacing": "view_quilt",
   "layout-surfaces": "crop_square",
-  "layout-shells": "view_sidebar",
   "layout-tabs": "tab",
   "layout-floating": "open_in_new",
+  "panels-chrome": "web_asset",
+  "shell-views": "view_sidebar",
+  "shell-workspace": "workspaces",
+  "overlays-toolwindow": "tab",
   "text-headings": "title",
   "text-body": "notes",
   "text-rich": "article",
@@ -34,9 +49,19 @@ const CATEGORY_ICONS = {
   markdown: "article",
   nodes: "account_tree",
   menus: "pie_chart",
-  peers: "extension",
   "full-build": "extension",
 };
+
+/** Top-level gallery tabs — mirrors Control → Container hierarchy. */
+const GALLERY_TABS = [
+  { id: "text", label: "Text" },
+  { id: "inputs", label: "Inputs" },
+  { id: "layout", label: "Layout" },
+  { id: "collections", label: "Collections" },
+  { id: "panels", label: "Panels" },
+  { id: "overlays", label: "Overlays" },
+  { id: "shell", label: "Shell" },
+];
 
 const JUMP_NAV_THRESHOLD = 3;
 
@@ -83,56 +108,56 @@ function slugify(value) {
 }
 
 function apiChip(api) {
-  const chip = DrawUI.code(api);
+  const chip = new Code(api);
   chip.addClass("Gallery-apiChip");
   return chip;
 }
 
 function optionsRow(options) {
-  const row = DrawUI.row().addClass("Gallery-optionsRow");
-  const label = DrawUI.smallText("Options");
+  const row = new StackPanel({ isVertical: false }).addClass("Gallery-optionsRow");
+  const label = new Caption("Options");
   label.addClass("Gallery-optionsLabel");
   row.add(label).add(apiChip(options));
   return row;
 }
 
 function sectionLabel(text) {
-  const label = DrawUI.smallText(text);
+  const label = new Caption(text);
   label.addClass("Gallery-sectionLabel");
   return label;
 }
 
 /**
  * Table-like row: name + summary above preview | API on the right.
- * @param {{ name?: string, summary?: string, demo?: import("drawui").UIElement | null, apis?: string[] }} parts
+ * @param {{ name?: string, summary?: string, demo?: import("drawui").Control | null, apis?: string[] }} parts
  */
 function buildComponentRow({ name, summary, demo, apis }) {
-  const row = DrawUI.div().addClass("Gallery-componentRow");
+  const row = new Container().addClass("Gallery-componentRow");
 
-  const main = DrawUI.div().addClass("Gallery-componentMain");
+  const main = new Container().addClass("Gallery-componentMain");
 
-  const meta = DrawUI.div().addClass("Gallery-componentMeta");
+  const meta = new Container().addClass("Gallery-componentMeta");
   if (name) {
-    const title = DrawUI.text(name);
+    const title = new TextBlock(name);
     title.addClass("Gallery-siblingTitle");
     meta.add(title);
   }
   if (summary) {
-    const summaryEl = DrawUI.smallText(summary);
+    const summaryEl = new Caption(summary);
     summaryEl.addClass("Gallery-summary");
     meta.add(summaryEl);
   }
   main.add(meta);
 
   if (demo) {
-    const preview = DrawUI.div().addClass("Gallery-componentPreview");
+    const preview = new Container().addClass("Gallery-componentPreview");
     preview.add(demo);
     main.add(preview);
   }
 
   row.add(main);
 
-  const apiCol = DrawUI.div().addClass("Gallery-componentApi");
+  const apiCol = new Container().addClass("Gallery-componentApi");
   (apis ?? []).forEach((api) => apiCol.add(apiChip(api)));
   row.add(apiCol);
 
@@ -140,15 +165,15 @@ function buildComponentRow({ name, summary, demo, apis }) {
 }
 
 function buildStyleVariants(variants) {
-  const wrap = DrawUI.column().addClass("Gallery-styleVariants");
-  const label = DrawUI.smallText("Variants");
+  const wrap = new StackPanel({ isVertical: true }).addClass("Gallery-styleVariants");
+  const label = new Caption("Variants");
   label.addClass("Gallery-styleVariantsLabel");
   wrap.add(label);
 
-  const row = DrawUI.row().addClass("Gallery-styleVariantsRow");
+  const row = new StackPanel({ isVertical: false }).addClass("Gallery-styleVariantsRow");
   variants.forEach((variant) => {
-    const cell = DrawUI.column().addClass("Gallery-styleVariant");
-    const name = DrawUI.smallText(variant.name);
+    const cell = new StackPanel({ isVertical: true }).addClass("Gallery-styleVariant");
+    const name = new Caption(variant.name);
     name.addClass("Gallery-styleVariantName");
     cell.add(name);
     if (variant.demo && demoBuilders[variant.demo]) {
@@ -161,7 +186,7 @@ function buildStyleVariants(variants) {
 }
 
 function buildSiblingSection(sibling, { sectionId } = {}) {
-  const section = DrawUI.column().addClass("Gallery-sibling");
+  const section = new StackPanel({ isVertical: true }).addClass("Gallery-sibling");
   if (sectionId) {
     section.dom.id = sectionId;
     section.dom.dataset.siblingId = sectionId;
@@ -186,17 +211,17 @@ function buildSiblingSection(sibling, { sectionId } = {}) {
   }
 
   if (sibling.options) section.add(optionsRow(sibling.options));
-  if (sibling.note) section.add(DrawUI.disclaimer(sibling.note));
+  if (sibling.note) section.add(new Disclaimer(sibling.note));
 
   return section;
 }
 
 function buildJumpNav(siblings, sectionIds) {
-  const nav = DrawUI.row().addClass("Gallery-jumpNav");
+  const nav = new StackPanel({ isVertical: false }).addClass("Gallery-jumpNav");
   const chips = [];
 
   siblings.forEach((sibling, index) => {
-    const chip = DrawUI.button(sibling.name);
+    const chip = new Button(sibling.name);
     chip.addClass("Gallery-jumpChip");
     if (index === 0) chip.addClass("is-active");
     chip.onClick(() => {
@@ -213,7 +238,7 @@ function buildJumpNav(siblings, sectionIds) {
 }
 
 function buildStackPage(item, siblings, { labeled = false, label = "Parts" } = {}) {
-  const page = DrawUI.column().addClass("Gallery-page");
+  const page = new StackPanel({ isVertical: true }).addClass("Gallery-page");
   if (labeled) {
     page.add(sectionLabel(label));
   }
@@ -234,13 +259,13 @@ function buildStackPage(item, siblings, { labeled = false, label = "Parts" } = {
 }
 
 function buildComparePage(item, siblings, { labeled = false, label = "Alternatives" } = {}) {
-  const page = DrawUI.column().addClass("Gallery-page");
+  const page = new StackPanel({ isVertical: true }).addClass("Gallery-page");
   if (labeled) {
     page.add(sectionLabel(label));
   }
 
-  const strip = DrawUI.div().addClass("Gallery-compareStrip");
-  const detailHost = DrawUI.column().addClass("Gallery-compareDetail");
+  const strip = new Container().addClass("Gallery-compareStrip");
+  const detailHost = new StackPanel({ isVertical: true }).addClass("Gallery-compareDetail");
   const cards = [];
 
   function renderDetail(index) {
@@ -253,15 +278,15 @@ function buildComparePage(item, siblings, { labeled = false, label = "Alternativ
   }
 
   siblings.forEach((sibling, index) => {
-    const card = DrawUI.div().addClass("Gallery-compareCard");
+    const card = new Container().addClass("Gallery-compareCard");
     card.dom.setAttribute("role", "button");
     card.dom.tabIndex = 0;
 
-    const title = DrawUI.text(sibling.name);
+    const title = new TextBlock(sibling.name);
     title.addClass("Gallery-compareCardTitle");
     card.add(title);
 
-    const preview = DrawUI.div().addClass("Gallery-compareCardPreview");
+    const preview = new Container().addClass("Gallery-compareCardPreview");
     if (sibling.demo && demoBuilders[sibling.demo]) {
       preview.add(demoBuilders[sibling.demo]());
     }
@@ -285,8 +310,8 @@ function buildComparePage(item, siblings, { labeled = false, label = "Alternativ
 }
 
 function buildOverviewBlock(item) {
-  const overview = DrawUI.column().addClass("Gallery-overview");
-  const label = DrawUI.smallText("Overview");
+  const overview = new StackPanel({ isVertical: true }).addClass("Gallery-overview");
+  const label = new Caption("Overview");
   label.addClass("Gallery-overviewLabel");
   overview.add(label);
 
@@ -295,25 +320,25 @@ function buildOverviewBlock(item) {
   }
 
   if (item.summary && (item.alternatives?.length || item.parts?.length)) {
-    const summaryEl = DrawUI.smallText(item.summary);
+    const summaryEl = new Caption(item.summary);
     summaryEl.addClass("Gallery-summary");
     overview.add(summaryEl);
   }
 
   if (item.buildingBlocks) {
-    const note = DrawUI.text(item.buildingBlocks);
+    const note = new TextBlock(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     overview.add(note);
   }
 
   if (item.options) overview.add(optionsRow(item.options));
-  if (item.note) overview.add(DrawUI.disclaimer(item.note));
+  if (item.note) overview.add(new Disclaimer(item.note));
 
   return overview;
 }
 
 function buildSingleItemPage(item) {
-  const page = DrawUI.column().addClass("Gallery-page");
+  const page = new StackPanel({ isVertical: true }).addClass("Gallery-page");
 
   const demo =
     item.demo && demoBuilders[item.demo] ? demoBuilders[item.demo]() : null;
@@ -333,9 +358,9 @@ function buildSingleItemPage(item) {
   }
 
   if (item.options) page.add(optionsRow(item.options));
-  if (item.note) page.add(DrawUI.disclaimer(item.note));
+  if (item.note) page.add(new Disclaimer(item.note));
   if (item.buildingBlocks) {
-    const note = DrawUI.text(item.buildingBlocks);
+    const note = new TextBlock(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     page.add(note);
   }
@@ -358,7 +383,7 @@ function wrapWithOverview(item, body) {
     }
   }
 
-  const page = DrawUI.column().addClass("Gallery-page");
+  const page = new StackPanel({ isVertical: true }).addClass("Gallery-page");
 
   if (item.overviewDemo && demoBuilders[item.overviewDemo]) {
     page.add(
@@ -375,7 +400,7 @@ function wrapWithOverview(item, body) {
       page.add(buildOverviewBlock(item));
     }
   } else if (item.buildingBlocks) {
-    const note = DrawUI.text(item.buildingBlocks);
+    const note = new TextBlock(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     page.add(note);
   }
@@ -391,7 +416,7 @@ function buildItemPage(item) {
   const hasStructured = alternatives.length > 0 || parts.length > 0;
 
   if (hasStructured) {
-    const page = DrawUI.column().addClass("Gallery-page");
+    const page = new StackPanel({ isVertical: true }).addClass("Gallery-page");
 
     if (item.demo || item.buildingBlocks || item.options || item.note || item.overviewDemo) {
       if (item.overviewDemo && demoBuilders[item.overviewDemo]) {
@@ -451,22 +476,22 @@ function buildItemPage(item) {
 }
 
 function buildFullBuildPage(entries) {
-  const page = DrawUI.column().addClass("Gallery-page").gap("0.5rem");
+  const page = new StackPanel({ isVertical: true }).addClass("Gallery-page").gap("0.5rem");
 
   page.add(
-    DrawUI.disclaimer(
-      "These APIs ship only in the full DrawUI entry. Open full.html to try live demos with peer packages under Data shapes → Vendor.",
+    new Disclaimer(
+      "These APIs ship only in the full DrawUI entry. Open full.html to try live demos with peer packages under the Peers tab.",
     ),
   );
 
   (entries ?? []).forEach((entry) => {
     page.add(
-      DrawUI.row()
+      new StackPanel({ isVertical: false })
         .gap("0.5rem")
         .setStyle("alignItems", ["center"])
         .setStyle("flexWrap", ["wrap"])
         .add(apiChip(entry.api))
-        .add(DrawUI.smallText(`→ ${entry.peer}`)),
+        .add(new Caption(`→ ${entry.peer}`)),
     );
   });
 
@@ -489,29 +514,16 @@ function categoryToLeaf(category, { collapsed }) {
 }
 
 function buildGroups(catalog, { build }) {
-  const primitives = [];
-  const dataShapes = [];
-  const layout = [];
+  /** @type {Record<string, ReturnType<typeof categoryToLeaf>[]>} */
+  const byTab = Object.fromEntries(GALLERY_TABS.map((tab) => [tab.id, []]));
 
   catalog.categories.forEach((category) => {
-    const leaf = categoryToLeaf(category, { collapsed: true });
-    if (category.group === "data-shapes") {
-      dataShapes.push(leaf);
-    } else if (category.group === "layout") {
-      layout.push(leaf);
-    } else {
-      primitives.push(leaf);
-    }
+    const tabId = byTab[category.group] ? category.group : "panels";
+    byTab[tabId].push(categoryToLeaf(category, { collapsed: true }));
   });
 
-  if (primitives.length) {
-    primitives[0].collapsed = false;
-  }
-  if (dataShapes.length) {
-    dataShapes[0].collapsed = false;
-  }
-  if (layout.length) {
-    layout[0].collapsed = false;
+  for (const tab of GALLERY_TABS) {
+    if (byTab[tab.id].length) byTab[tab.id][0].collapsed = false;
   }
 
   const peerCategories = catalog.peerCategories?.length
@@ -521,15 +533,15 @@ function buildGroups(catalog, { build }) {
       : [];
 
   /** @type {ReturnType<typeof categoryToLeaf>[]} */
-  const vendor = [];
+  const peerLeaves = [];
 
   if (build === "full" && peerCategories.length) {
     peerCategories.forEach((peer, index) => {
       if (!peer.items?.length) return;
-      vendor.push(categoryToLeaf(peer, { collapsed: index !== 0 }));
+      peerLeaves.push(categoryToLeaf(peer, { collapsed: index !== 0 }));
     });
   } else {
-    vendor.push({
+    peerLeaves.push({
       id: "full-build",
       label: "Full build only",
       icon: CATEGORY_ICONS["full-build"],
@@ -545,36 +557,25 @@ function buildGroups(catalog, { build }) {
     });
   }
 
-  const dataShapeGroups = [...dataShapes];
-  if (vendor.length) {
-    dataShapeGroups.push({ type: "divider" });
-    dataShapeGroups.push({ type: "heading", label: "Vendor" });
-    dataShapeGroups.push(...vendor);
+  const groups = GALLERY_TABS.filter((tab) => byTab[tab.id].length).map((tab, index) => ({
+    id: tab.id,
+    label: tab.label,
+    icon: CATEGORY_ICONS[tab.id] ?? "widgets",
+    collapsed: index !== 0,
+    groups: byTab[tab.id],
+  }));
+
+  if (peerLeaves.length) {
+    groups.push({
+      id: "peers",
+      label: "Peers",
+      icon: CATEGORY_ICONS.peers,
+      collapsed: true,
+      groups: peerLeaves,
+    });
   }
 
-  return [
-    {
-      id: "primitives",
-      label: "Primitives",
-      icon: CATEGORY_ICONS.primitives,
-      collapsed: false,
-      groups: primitives,
-    },
-    {
-      id: "data-shapes",
-      label: "Data shapes",
-      icon: CATEGORY_ICONS["data-shapes"],
-      collapsed: true,
-      groups: dataShapeGroups,
-    },
-    {
-      id: "layout",
-      label: "Layout",
-      icon: CATEGORY_ICONS.layout,
-      collapsed: true,
-      groups: layout,
-    },
-  ];
+  return groups;
 }
 
 /**
@@ -596,13 +597,13 @@ export async function mountGallery(mountEl, { build = "min" } = {}) {
 
   const catalog = await response.json();
 
-  const spa = DrawUI.spa({
-    sidebarTitle: build === "full" ? "Full components" : "Min components",
+  const spa = new AppShell({
+    sidebarTitle: build === "full" ? "Full reference" : "Core reference",
     groups: buildGroups(catalog, { build }),
   });
 
   const theme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
-  const themeToggle = DrawUI.button(theme === "light" ? "Switch to dark" : "Switch to light")
+  const themeToggle = new Button(theme === "light" ? "Switch to dark" : "Switch to light")
     .addClass("secondary")
     .addClass("Gallery-themeToggle")
     .onClick(() => {

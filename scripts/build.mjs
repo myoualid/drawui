@@ -1,7 +1,7 @@
 import * as esbuild from "esbuild";
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const rootDir = fileURLToPath(new URL("..", import.meta.url));
 const distDir = path.join(rootDir, "docs/dist");
@@ -34,14 +34,14 @@ const buildOptions = {
   platform: "browser",
   target: "es2020",
   minify: true,
-  sourcemap: true,
+  sourcemap: false,
   logLevel: "info",
 };
 
 async function buildJavaScript() {
   await esbuild.build({
     ...buildOptions,
-    entryPoints: [path.join(rootDir, "src/core.js")],
+    entryPoints: [path.join(rootDir, "src/bundle/min.js")],
     outfile: path.join(distDir, "drawui.min.js"),
   });
 
@@ -50,12 +50,6 @@ async function buildJavaScript() {
     entryPoints: [path.join(rootDir, "src/index.js")],
     outfile: path.join(distDir, "drawui.full.js"),
     external: peerExternals,
-  });
-
-  await esbuild.build({
-    ...buildOptions,
-    entryPoints: [path.join(rootDir, "src/overlays/index.js")],
-    outfile: path.join(distDir, "drawui.overlays.js"),
   });
 }
 
@@ -89,7 +83,6 @@ async function writeFullImportMap() {
   const importMap = {
     imports: {
       "drawui/full": "./drawui.full.js",
-      "drawui/overlays": "./drawui.overlays.js",
       "chart.js/auto": `https://cdn.jsdelivr.net/npm/chart.js@${versions["chart.js"]}/auto/+esm`,
       "ag-grid-community": `https://cdn.jsdelivr.net/npm/ag-grid-community@${versions["ag-grid-community"]}/dist/package/main.esm.mjs`,
       "jsgantt-improved": `https://cdn.jsdelivr.net/npm/jsgantt-improved@${versions["jsgantt-improved"]}/+esm`,
@@ -133,13 +126,56 @@ async function verifyDist() {
   for (const file of [
     "drawui.min.js",
     "drawui.full.js",
-    "drawui.overlays.js",
     "drawui.min.css",
     "drawui.full.css",
     "importmap.full.json",
   ]) {
     await readFile(path.join(distDir, file), "utf8");
   }
+}
+
+const distArtifacts = [
+  "drawui.min.js",
+  "drawui.full.js",
+  "drawui.min.css",
+  "drawui.full.css",
+  "importmap.full.json",
+];
+
+async function resolveLocalVendorDir() {
+  if (process.env.DRAWUI_LOCAL_VENDOR) {
+    return path.resolve(process.env.DRAWUI_LOCAL_VENDOR);
+  }
+
+  const localVendorPath = path.join(scriptsDir, "local-vendor.mjs");
+  try {
+    await access(localVendorPath);
+  } catch {
+    return null;
+  }
+
+  const local = await import(pathToFileURL(localVendorPath).href);
+  return local.default ? path.resolve(local.default) : null;
+}
+
+async function syncLocalVendor() {
+  const vendorDir = await resolveLocalVendorDir();
+  if (!vendorDir) {
+    return;
+  }
+
+  await mkdir(vendorDir, { recursive: true });
+
+  for (const file of distArtifacts) {
+    await cp(path.join(distDir, file), path.join(vendorDir, file));
+  }
+
+  await cp(
+    path.join(rootDir, "types/index.d.ts"),
+    path.join(vendorDir, "index.d.ts"),
+  );
+
+  console.log(`Synced local vendor: ${vendorDir}`);
 }
 
 async function syncDocsAssets() {
@@ -172,10 +208,10 @@ await buildStylesheets();
 await writeFullImportMap();
 await verifyDist();
 await syncDocsAssets();
+await syncLocalVendor();
 
 console.log("Built docs/dist/:");
 console.log("- drawui.min.js / drawui.min.css");
 console.log("- drawui.full.js / drawui.full.css");
-console.log("- drawui.overlays.js");
 console.log("- importmap.full.json");
 console.log("Synced docs/styles/ for GitHub Pages.");

@@ -5,17 +5,19 @@ import path from "node:path";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const examplesDir = path.join(root, "docs/examples/components");
 const manifestPath = path.join(examplesDir, "catalog.manifest.json");
-const minEntryPath = path.join(root, "src/core.js");
+const minEntryPath = path.join(root, "src/bundle/min.js");
+const drawUiSourcePath = path.join(root, "src/DrawUI/DrawUI.js");
 const demosPath = path.join(examplesDir, "demos.js");
 const demosFullPath = path.join(examplesDir, "demos.full.js");
 const outputPath = path.join(examplesDir, "catalog.json");
 
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const minSource = await readFile(minEntryPath, "utf8");
+const drawUiSource = await readFile(drawUiSourcePath, "utf8");
 const demosSource = await readFile(demosPath, "utf8");
 const demosFullSource = await readFile(demosFullPath, "utf8");
 
-const drawUiMethods = [...minSource.matchAll(/static\s+(\w+)\s*\(/g)].map((match) => match[1]);
+const drawUiMethods = [...drawUiSource.matchAll(/static\s+(\w+)\s*\(/g)].map((match) => match[1]);
 const namedExports = [...minSource.matchAll(/^export\s+\{\s*([^}]+)\s*\}/gm)]
   .flatMap((match) =>
     match[1]
@@ -77,10 +79,6 @@ if (missingDemos.length) {
 const fullOnlyCategoryDemos = manifestDemoIds.filter(
   (id) => !demoIds.includes(id) && fullDemoIds.includes(id),
 );
-if (fullOnlyCategoryDemos.length) {
-  console.warn("Category items reference full-build-only demos (ok for full.html gallery):");
-  fullOnlyCategoryDemos.forEach((id) => console.warn(`  - ${id}`));
-}
 
 const missingFullDemos = peerDemoIds.filter((id) => !fullDemoIds.includes(id) && !demoIds.includes(id));
 if (missingFullDemos.length) {
@@ -139,3 +137,6 @@ console.log(`  ${peerItems} peer-only items`);
 console.log(
   `  ${catalog.stats.drawUiFactories} DrawUI factories, ${catalog.stats.namedExports} named exports`,
 );
+if (fullOnlyCategoryDemos.length) {
+  console.log(`  ${fullOnlyCategoryDemos.length} full-build-only category demos`);
+}

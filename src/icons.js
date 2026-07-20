@@ -1,4 +1,18 @@
-/** Material Symbols icon names used across DrawUI components. */
+/**
+ * Material Symbols icon names used across DrawUI components.
+ *
+ * @example <caption>Sample icons</caption>
+ * // live
+ * return new StackPanel({ isVertical: false })
+ *   .gap("0.75rem")
+ *   .setStyle("alignItems", ["center"])
+ *   .add(new Icon(ICONS.settings))
+ *   .add(new Icon(ICONS.download))
+ *   .add(new Icon(ICONS.search))
+ *   .add(new Caption("ICONS.*"));
+ *
+ * @category Facade
+ */
 export const ICONS = {
   home: "home",
   camera: "photo_camera",

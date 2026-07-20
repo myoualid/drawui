@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICONS — DrawUI API</title>
+  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.full.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="icons">ICONS</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> facade<br />
+<strong>Import:</strong> <code>drawui</code><br />
+<strong>Emitted class(es):</strong> None by default</p>
+<p>Material Symbols icon names used across DrawUI components.</p>
+<p><em>Source: <code>src/icons.js</code></em></p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { ICONS } from "drawui";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="sampleicons">Sample icons</h3>
+<pre><code class="js language-js">return new StackPanel({ isVertical: false })
+  .gap("0.75rem")
+  .setStyle("alignItems", ["center"])
+  .add(new Icon(ICONS.settings))
+  .add(new Icon(ICONS.download))
+  .add(new Icon(ICONS.search))
+  .add(new Caption("ICONS.*"));
+</code></pre>
+<div class="doc-live-demo" data-live-demo="ICONS/sample-icons" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

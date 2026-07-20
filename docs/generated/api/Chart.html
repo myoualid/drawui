@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chart — DrawUI API</title>
+  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "drawui": "../../dist/drawui.full.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="chart">Chart</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> peers<br />
+<strong>Import:</strong> <code>drawui</code><br />
+<strong>Emitted class(es):</strong> <code>Rectangle</code>, <code>chart-ui-component</code></p>
+<p>Chart.js-backed visualization panel used by <code>DrawUI.Chart()</code>.</p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { Chart } from "drawui";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="bar">Bar</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "bar",
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          label: "Tickets",
+          data: [12, 19, 8, 15, 22],
+          backgroundColor: CHART_PALETTE[0],
+          borderColor: CHART_BORDERS[0],
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/bar" aria-label="Live preview"></div>
+<h3 id="horizontalbar">Horizontal bar</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "bar",
+    data: {
+      labels: ["Design", "Build", "Test", "Ship"],
+      datasets: [
+        {
+          label: "Hours",
+          data: [32, 48, 24, 16],
+          backgroundColor: CHART_PALETTE[1],
+          borderColor: CHART_BORDERS[1],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      indexAxis: "y",
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/horizontal-bar" aria-label="Live preview"></div>
+<h3 id="stackedbar">Stacked bar</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "bar",
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          label: "Open",
+          data: [8, 11, 5, 9, 12],
+          backgroundColor: CHART_PALETTE[0],
+          borderColor: CHART_BORDERS[0],
+          borderWidth: 1,
+        },
+        {
+          label: "Closed",
+          data: [4, 8, 3, 6, 10],
+          backgroundColor: CHART_PALETTE[1],
+          borderColor: CHART_BORDERS[1],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true },
+      },
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/stacked-bar" aria-label="Live preview"></div>
+<h3 id="line">Line</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "line",
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          label: "Latency (ms)",
+          data: [42, 38, 51, 45, 33],
+          borderColor: CHART_BORDERS[0],
+          backgroundColor: CHART_PALETTE[0],
+          tension: 0.3,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/line" aria-label="Live preview"></div>
+<h3 id="multiseriesline">Multi-series line</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "line",
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          label: "API",
+          data: [42, 38, 51, 45, 33],
+          borderColor: CHART_BORDERS[0],
+          backgroundColor: CHART_PALETTE[0],
+          tension: 0.3,
+        },
+        {
+          label: "UI",
+          data: [28, 31, 27, 34, 29],
+          borderColor: CHART_BORDERS[1],
+          backgroundColor: CHART_PALETTE[1],
+          tension: 0.3,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/multi-series-line" aria-label="Live preview"></div>
+<h3 id="area">Area</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "line",
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          label: "Active users",
+          data: [120, 145, 132, 168, 190],
+          borderColor: CHART_BORDERS[2],
+          backgroundColor: "rgba(220, 220, 170, 0.35)",
+          fill: true,
+          tension: 0.35,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/area" aria-label="Live preview"></div>
+<h3 id="pie">Pie</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "pie",
+    data: {
+      labels: ["Docs", "Code", "Review", "Meetings", "Other"],
+      datasets: [
+        {
+          data: [28, 35, 18, 12, 7],
+          backgroundColor: CHART_PALETTE,
+          borderColor: CHART_BORDERS,
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/pie" aria-label="Live preview"></div>
+<h3 id="doughnut">Doughnut</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "doughnut",
+    data: {
+      labels: ["Passed", "Failed", "Skipped"],
+      datasets: [
+        {
+          data: [72, 18, 10],
+          backgroundColor: [CHART_PALETTE[1], CHART_PALETTE[3], CHART_PALETTE[2]],
+          borderColor: [CHART_BORDERS[1], CHART_BORDERS[3], CHART_BORDERS[2]],
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/doughnut" aria-label="Live preview"></div>
+<h3 id="polararea">Polar area</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "polarArea",
+    data: {
+      labels: ["Speed", "Reliability", "UX", "Docs", "Support"],
+      datasets: [
+        {
+          data: [11, 16, 14, 9, 12],
+          backgroundColor: CHART_PALETTE,
+          borderColor: CHART_BORDERS,
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/polar-area" aria-label="Live preview"></div>
+<h3 id="radar">Radar</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "radar",
+    data: {
+      labels: ["Speed", "Reliability", "UX", "Docs", "Support"],
+      datasets: [
+        {
+          label: "Current",
+          data: [65, 78, 72, 55, 68],
+          borderColor: CHART_BORDERS[0],
+          backgroundColor: "rgba(86, 156, 214, 0.25)",
+        },
+        {
+          label: "Target",
+          data: [80, 85, 80, 75, 80],
+          borderColor: CHART_BORDERS[1],
+          backgroundColor: "rgba(78, 201, 176, 0.2)",
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/radar" aria-label="Live preview"></div>
+<h3 id="scatter">Scatter</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "scatter",
+    data: {
+      datasets: [
+        {
+          label: "Samples",
+          data: [
+            { x: 2, y: 14 },
+            { x: 4, y: 9 },
+            { x: 6, y: 18 },
+            { x: 8, y: 12 },
+            { x: 10, y: 22 },
+            { x: 12, y: 16 },
+          ],
+          backgroundColor: CHART_PALETTE[0],
+          borderColor: CHART_BORDERS[0],
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: { title: { display: true, text: "Effort" } },
+        y: { title: { display: true, text: "Impact" } },
+      },
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/scatter" aria-label="Live preview"></div>
+<h3 id="bubble">Bubble</h3>
+<pre><code class="js language-js">return makeChart({
+    type: "bubble",
+    data: {
+      datasets: [
+        {
+          label: "Initiatives",
+          data: [
+            { x: 20, y: 30, r: 8 },
+            { x: 35, y: 45, r: 14 },
+            { x: 50, y: 25, r: 10 },
+            { x: 65, y: 55, r: 18 },
+            { x: 80, y: 40, r: 12 },
+          ],
+          backgroundColor: CHART_PALETTE[4],
+          borderColor: CHART_BORDERS[4],
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: { title: { display: true, text: "Cost" } },
+        y: { title: { display: true, text: "Value" } },
+      },
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/bubble" aria-label="Live preview"></div>
+<h3 id="barline">Bar + line</h3>
+<pre><code class="js language-js">return makeChart({
+    data: {
+      labels: CHART_LABELS,
+      datasets: [
+        {
+          type: "bar",
+          label: "Volume",
+          data: [12, 19, 8, 15, 22],
+          backgroundColor: CHART_PALETTE[0],
+          borderColor: CHART_BORDERS[0],
+          borderWidth: 1,
+          order: 2,
+        },
+        {
+          type: "line",
+          label: "Trend",
+          data: [10, 14, 12, 16, 20],
+          borderColor: CHART_BORDERS[3],
+          backgroundColor: CHART_PALETTE[3],
+          tension: 0.3,
+          order: 1,
+        },
+      ],
+    },
+  });
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Chart/bar-line" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

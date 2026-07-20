@@ -1,5 +1,17 @@
-import { DrawUI, GanttComponent, Nodes, TabPanel } from "drawui";
-import { PieMenu } from "drawui/overlays";
+import {
+  DrawUI,
+  Markdown,
+  GanttChart,
+  NodeGraph,
+  WorkspacePanel,
+  DataGrid,
+  Container,
+  StackPanel,
+  Button,
+  TextBlock,
+  Caption,
+  Badge,
+} from "drawui";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {
@@ -104,7 +116,7 @@ const defaultChartOptions = {
  * @param {string} [height]
  */
 function makeChart(chartConfiguration, height = "260px") {
-  const chart = DrawUI.chart({
+  const chart = DrawUI.Chart({
     height,
     chartConfiguration: {
       ...chartConfiguration,
@@ -121,7 +133,7 @@ function makeChart(chartConfiguration, height = "260px") {
   return afterAttach(chart, () => chart.init());
 }
 
-/** @type {Record<string, () => import("drawui").UIElement>} */
+/** @type {Record<string, () => import("drawui").Control>} */
 export const FULL_DEMO_BUILDERS = {
   "chart-bar": () =>
     makeChart({
@@ -402,7 +414,7 @@ export const FULL_DEMO_BUILDERS = {
     }),
 
   "spreadsheet": () => {
-    const sheet = DrawUI.spreadsheet({
+    const sheet = new DataGrid({
       height: "280px",
       data: [
         { name: "Ada Lovelace", role: "Analyst", score: 98 },
@@ -420,24 +432,24 @@ export const FULL_DEMO_BUILDERS = {
   },
 
   "gantt": () => {
-    const host = DrawUI.div()
+    const host = new Container()
       .setStyle("height", ["320px"])
       .setStyle("overflow", ["auto"])
       .setStyle("width", ["100%"]);
 
-    const gantt = new GanttComponent({});
+    const gantt = new GanttChart({});
     gantt.render(SAMPLE_TASKS, host);
     return host;
   },
 
   "nodes": () => {
-    const host = DrawUI.div()
+    const host = new Container()
       .setStyle("height", ["420px"])
       .setStyle("display", ["flex"])
       .setStyle("flexDirection", ["column"])
       .setStyle("width", ["100%"]);
 
-    const nodes = new Nodes({
+    const nodes = new NodeGraph({
       embedded: true,
       nodes: [
         { id: 1, name: "Source", status: "Active", level: 0, parent: 0, children: [2, 3] },
@@ -459,15 +471,15 @@ export const FULL_DEMO_BUILDERS = {
   },
 
   "tab-panel": () => {
-    const wrap = DrawUI.column().gap("0.75rem");
+    const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
 
     let panel = null;
 
-    const openButton = DrawUI.button("Open floating tab panel")
+    const openButton = new Button("Open floating tab panel")
       .addClass("primary")
       .onClick(() => {
         if (!panel) {
-          panel = new TabPanel({
+          panel = new WorkspacePanel({
             context: { ui: { model: {} } },
             tabId: "gallery-demo-tab",
             tabLabel: "Demo panel",
@@ -476,12 +488,12 @@ export const FULL_DEMO_BUILDERS = {
             startFloating: true,
             floatingStyles: { width: "320px", height: "260px" },
           });
-          panel.content.add(
-            DrawUI.column()
+          panel.add(
+            new StackPanel({ isVertical: true })
               .gap("0.5rem")
               .setStyle("padding", ["0.75rem"])
-              .add(DrawUI.text("TabPanel content — dock buttons appear when a LayoutManager context is provided."))
-              .add(DrawUI.badge("startFloating: true")),
+              .add(new TextBlock("WorkspacePanel content — dock buttons appear when a WorkspaceLayout context is provided."))
+              .add(new Badge("startFloating: true")),
           );
         }
         panel.show();
@@ -489,61 +501,15 @@ export const FULL_DEMO_BUILDERS = {
 
     wrap.add(openButton);
     wrap.add(
-      DrawUI.smallText(
-        "Without a LayoutManager the panel opens as a floating window; inside a workspace it docks as a left/right/bottom tab.",
+      new Caption(
+        "Without a WorkspaceLayout the panel opens as a floating window; inside a workspace it docks as a CollapsiblePanel (undock transfers content into a FloatingWindow).",
       ),
     );
     return wrap;
   },
 
-  "pie-menu": () => {
-    const wrap = DrawUI.column().gap("0.75rem");
-
-    const status = DrawUI.smallText("Last action: none");
-
-    const viewport = DrawUI.div()
-      .setStyle("position", ["relative"])
-      .setStyle("height", ["340px"])
-      .setStyle("border", ["1px dashed var(--dui-color-border, #444)"])
-      .setStyle("borderRadius", ["8px"])
-      .setStyle("overflow", ["hidden"]);
-
-    const hint = DrawUI.smallText("Hover this area and press P, or use the button below.");
-    hint.setStyle("position", ["absolute"]);
-    hint.setStyle("top", ["0.5rem"]);
-    hint.setStyle("left", ["0.75rem"]);
-    viewport.add(hint);
-
-    const operators = {
-      canExecute: () => true,
-      execute: async (operatorId) => {
-        status.setTextContent(`Last action: ${operatorId}`);
-      },
-    };
-
-    const menu = new PieMenu({
-      viewport: viewport.dom,
-      operators,
-      items: [
-        { operator: "demo.select_all", icon: "select_all", name: "Select all" },
-        { operator: "demo.duplicate", icon: "content_copy", name: "Duplicate" },
-        { operator: "demo.group", icon: "category", name: "Group" },
-        { operator: "demo.hide", icon: "visibility_off", name: "Hide" },
-        { operator: "demo.delete", icon: "delete", name: "Delete" },
-      ],
-    });
-
-    const toggleButton = DrawUI.button("Toggle pie menu")
-      .addClass("primary")
-      .onClick(() => menu.toggle());
-
-    wrap.add(viewport);
-    wrap.add(DrawUI.row().gap("0.75rem").setStyle("alignItems", ["center"]).add(toggleButton).add(status));
-    return wrap;
-  },
-
   "markdown-full": () =>
-    DrawUI.markdown(
+    new Markdown(
       [
         "Full build renders GitHub-flavored markdown via **Showdown**, with optional",
         "Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,",
@@ -567,7 +533,7 @@ export const FULL_DEMO_BUILDERS = {
         "- Ordered next",
         "",
         "1. Install peers",
-        "2. Call `DrawUI.markdown(text)`",
+        "2. Call `new Markdown(text)`",
         "3. Attach to the DOM",
         "",
         "- [x] Headings and paragraphs",
@@ -583,9 +549,9 @@ export const FULL_DEMO_BUILDERS = {
         "## Code",
         "",
         "```js",
-        "import { DrawUI } from \"drawui\";",
+        "import { Markdown } from \"drawui\";",
         "",
-        "const md = DrawUI.markdown(",
+        "const md = new Markdown(",
         "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",
         "  { isMarkdown: true },",
         ");",

@@ -1,7 +1,7 @@
 
 /* HUD Labels */
 .hud-label {
-  color: var(--brand-color);
+  color: var(--dui-color-accent);
   font-family: 'Orbitron', monospace;
   font-size: 0.62rem;
   font-weight: 600;
@@ -17,10 +17,10 @@
 .hud-input {
   background: transparent;
   border: 0;
-  color: var(--theme-text);
+  color: var(--dui-color-text);
   min-width: 0;
   outline: none;
-  padding: var(--phi-0-2-5) 0;
+  padding: var(--dui-space-1) 0;
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
   transition: all 0.2s ease;
 }
@@ -37,7 +37,7 @@
 
 /* HUD Coins Display */
 .hud-coins {
-  color: var(--brand-color);
+  color: var(--dui-color-accent);
   font-family: 'Orbitron', monospace;
 }
 
@@ -50,10 +50,10 @@
 }
 
 .GameHUD {
-  font-family: var(--game-font);
-  padding: var(--phi-0-5);
+  font-family: var(--dui-font-ui);
+  padding: var(--dui-space-2);
   position: absolute;
-  gap: var(--phi-0-5);
+  gap: var(--dui-space-2);
   z-index: 8;
 }
 

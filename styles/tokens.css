@@ -79,6 +79,7 @@
   --dui-focus-ring: 0 0 0 3px var(--dui-color-accent-soft);
   --dui-transition-fast: 0.15s ease;
   --dui-transition-medium: 0.2s ease;
+  --dui-transition-slow: 0.25s ease;
 
   /*
    * Liquid-glass hooks — surfaces use the palette above by default.
@@ -90,4 +91,21 @@
   --dui-surface-control-bg: var(--dui-color-control);
   --dui-surface-blur: none;
   --dui-surface-saturate: 1;
+
+  /* ——— App shell layout (World / HeaderBar / viewport chrome) ——— */
+  --dui-headerbar-height: 36px;
+  --dui-sidebar-width: 44px;
+  --dui-shell-margin: var(--dui-space-5);
+  --dui-logo-size: calc(var(--dui-headerbar-height) - var(--dui-space-2));
+  --dui-logo-wordmark-max-width: 150px;
+  --dui-logo-area-width: calc(var(--dui-logo-wordmark-max-width) + var(--dui-space-4));
+  --dui-config-width: var(--dui-logo-area-width);
+  --dui-viewport-gizmo-size: 80px;
+  --dui-viewport-gizmo-left: var(--dui-space-2);
+  --dui-viewport-info-width: calc(var(--dui-viewport-gizmo-size) + var(--dui-sidebar-width));
+  --dui-state-bar-right: calc(var(--dui-space-2) + var(--dui-viewport-info-width));
+  --dui-nav-horizontal-inset: var(--dui-space-2);
+  --dui-nav-bottom-inset: var(--dui-space-2);
+  --dui-nav-left-stack-max-width: min(92vw, 320px);
+  --dui-nav-right-stack-offset: var(--dui-sidebar-width);
 }

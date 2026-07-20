@@ -1,13 +1,13 @@
 .DropZone {
-  border: 3px dashed var(--border);
+  border: 3px dashed var(--dui-color-border);
   border-radius: var(--dui-radius);
-  padding: var(--phi-0-5);
+  padding: var(--dui-space-2);
   text-align: center;
   font-size: 14px;
   font-weight: 500;
   border-style: dashed;
   border-width: 3px;
-  border-image: repeating-linear-gradient(90deg, var(--border) 0 10px, transparent 10px 20px) 1;
+  border-image: repeating-linear-gradient(90deg, var(--dui-color-border) 0 10px, transparent 10px 20px) 1;
 }
 
 .Disabled {
@@ -31,99 +31,266 @@
 }
 
 .PropertyValue {
-  color: var(--brand-color);
-  font-family: var(--font-mono);
+  color: var(--dui-color-accent);
+  font-family: var(--dui-font-mono);
   text-align: right;
   min-width: 96px;
   white-space: nowrap;
 }
 
-.PropertyTable {
+.PropertyGrid {
+  container-name: property-grid;
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: 0;
+  min-width: 0;
   width: 100%;
 }
 
-.PropertyTable-title,
-.PropertyTable-header,
-.PropertyTable-row {
+.PropertyGrid-title,
+.PropertyGrid-header,
+.PropertyGrid-body,
+.PropertyGrid-row {
   box-sizing: border-box;
+  min-width: 0;
   width: 100%;
 }
 
-.PropertyTable-title {
-  color: var(--theme-text-secondary);
+.PropertyGrid-title {
+  color: var(--dui-color-text-muted);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  margin-bottom: var(--phi-0-2-5);
+  margin-bottom: var(--dui-space-1);
   text-transform: uppercase;
 }
 
-.PropertyTable-header {
-  border-bottom: 1px solid var(--glass-border);
-  border-top: 1px solid var(--glass-border-hover);
-  color: var(--theme-text-secondary);
+.PropertyGrid-header {
+  border-bottom: 1px solid var(--dui-color-border);
+  border-top: 1px solid var(--dui-color-border-strong);
+  color: var(--dui-color-text-muted);
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   padding: 8px 14px;
   text-transform: uppercase;
 }
 
-.PropertyTable-row {
-  align-items: center;
-  border-bottom: 1px solid var(--dui-color-separator);
-  display: flex;
-  gap: 12px;
-  min-height: var(--dui-control-height);
-  padding: 6px 10px;
+/* Shared label | value tracks so every row aligns; values take the leftover space. */
+.PropertyGrid-body,
+.PropertyGrid-body.Column {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
 }
 
-.PropertyTable-row:last-child {
+/* Neutralize InputListItem chrome — PropertyGrid rows are form layout, not list picks. */
+.PropertyGrid-row.InputListItem,
+.PropertyGrid-row {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--dui-color-separator);
+  border-radius: 0;
+  cursor: default;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  min-height: var(--dui-control-height);
+  overflow: visible;
+  padding: 0.3rem 0;
+  position: relative;
+}
+
+.PropertyGrid-body > .PropertyGrid-row {
+  column-gap: 0.5rem;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+/* Multi-cell rows (label + 2+ values) fall back to flex across the full width. */
+.PropertyGrid-body > .PropertyGrid-row:has(> :nth-child(3)) {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.PropertyGrid-row.InputListItem:hover,
+.PropertyGrid-row:hover {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: var(--dui-color-separator);
+  color: inherit;
+}
+
+.PropertyGrid-row:last-child {
   border-bottom-color: transparent;
 }
 
-.PropertyTable-cell {
+.PropertyGrid-cell {
   min-width: 0;
 }
 
-.PropertyTable-label {
-  flex: 1;
+.PropertyGrid-label {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.PropertyGrid-value {
+  color: var(--dui-color-text);
+  display: flex;
+  flex: 1 1 0%;
+  font-size: var(--dui-font-size-sm);
+  justify-content: flex-end;
   min-width: 0;
+  text-align: right;
 }
 
-.PropertyTable-value {
-  flex: 0 1 10rem;
+.PropertyGrid-value:not(:has(*)) {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.PropertyGrid-value > .InputText,
+.PropertyGrid-value > .InputSearch,
+.PropertyGrid-value > .InputTextArea,
+.PropertyGrid-value > .InputDropdown,
+.PropertyGrid-value > .InputNumber,
+.PropertyGrid-value > .InputDate,
+.PropertyGrid-value > .InputColor,
+.PropertyGrid-value > .Slider,
+.PropertyGrid-value > progress {
+  max-width: 100%;
   min-width: 0;
+  width: 100%;
 }
 
-.PropertyTable-value:has(.Slider),
-.PropertyTable-value:has(.TextArea),
-.PropertyTable-value:has(.Progress) {
-  flex: 1 1 14rem;
+.PropertyGrid-row:has(.InputTextArea),
+.PropertyGrid-row:has(.Slider) {
+  align-items: start;
 }
 
-.TabPanel, .Panel {
+.PropertyGrid-row:has(.InputTextArea) .PropertyGrid-label {
+  padding-top: var(--dui-control-padding-y);
+}
+
+@container property-grid (max-width: 11rem) {
+  .PropertyGrid-body,
+  .PropertyGrid-body.Column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .PropertyGrid-body > .PropertyGrid-row {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    grid-column: auto;
+    grid-template-columns: none;
+    padding-block: 0.4rem;
+  }
+
+  .PropertyGrid-label {
+    max-width: none;
+    white-space: normal;
+  }
+
+  .PropertyGrid-value {
+    justify-content: stretch;
+    text-align: left;
+  }
+}
+
+.Rectangle,
+.WorkspacePanel {
   background: var(--dui-surface-bg);
   border-radius: var(--dui-radius);
 }
 
-.TabPanel > .TabPanelHeader {
+.WorkspacePanel > .Header.is-panel-drag-handle {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.WorkspacePanel.is-panel-dragging {
+  opacity: 0.55;
+}
+
+.WorkspacePanel-float {
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+}
+
+.WorkspacePanel-float:hover {
+  color: var(--dui-color-accent);
+}
+
+/*
+ * Shared panel chrome (InstructionPanel look):
+ * ContentPanel → InstructionPanel / CollapsiblePanel / WorkspacePanel
+ */
+.ContentPanel {
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ContentPanel > .Header,
+.ContentPanel > .RibbonBar {
   flex-shrink: 0;
 }
 
-.TabPanel > .PanelContent {
-  flex: 1 1 0%;
+.ContentPanel > .RibbonBar:empty {
+  display: none;
+}
+
+.ContentPanel > .Header {
+  align-items: center;
+  background: var(--dui-surface-bg);
+  border-bottom: 1px solid var(--dui-color-border);
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
   min-height: 0;
+  padding: 12px 16px;
+  width: 100%;
+}
+
+.ContentPanel > .Header .Icon:not(.CollapsiblePanel-toggle) {
+  color: var(--dui-color-accent);
+  font-size: 20px;
+}
+
+.ContentPanel > .Header .TextBlock {
+  color: var(--dui-color-text-muted);
+  flex: 1 1 auto;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.ContentPanel > .PanelContent {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: var(--dui-space-2);
+  min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
+  padding: var(--dui-space-2);
+  width: 100%;
 }
 
-.TabPanel > .TabPanelFooter {
-  flex-shrink: 0;
-}
-
-.TabPanel .PanelContent > .TabbedPanel {
+.ContentPanel > .PanelContent > .TabView {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
@@ -132,25 +299,23 @@
   min-width: 0;
 }
 
-.TabPanel .PanelContent > .TabbedPanel .Tabs {
+.ContentPanel > .PanelContent > .TabView .TabView-tabs {
   flex-shrink: 0;
 }
 
-.TabPanel .PanelContent > .TabbedPanel .Panels {
+.ContentPanel > .PanelContent > .TabView .TabView-content {
   flex: 1 1 0;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  position: relative;
-  top: auto;
 }
 
 
-#objectTab .Panel,
-#geometryTab .Panel,
-#materialTab .Panel,
-#scriptTab .Panel {
-  padding: var(--phi-0-5);
+#objectTab .Rectangle,
+#geometryTab .Rectangle,
+#materialTab .Rectangle,
+#scriptTab .Rectangle {
+  padding: var(--dui-space-2);
 }
 
 
@@ -160,8 +325,8 @@
 }
 
 .ContextModules .ModuleCount {
-  backdrop-filter: var(--glass-blur);
-  background: var(--red);
+  backdrop-filter: var(--dui-surface-blur);
+  background: var(--dui-color-danger);
   border-radius: var(--dui-radius);
   padding: 1px 3px;
   position: absolute;
@@ -169,14 +334,14 @@
   top: 80%;
 }
 
-.CollapsibleSection-body:has(.ag-theme-quartz),
-.CollapsibleSection-body:has(.ag-theme-quartz-dark) {
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz),
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz-dark) {
   display: flex;
   flex-direction: column;
 }
 
-.CollapsibleSection-body:has(.ag-theme-quartz) .ag-theme-quartz,
-.CollapsibleSection-body:has(.ag-theme-quartz-dark) .ag-theme-quartz-dark {
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz) .ag-theme-quartz,
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz-dark) .ag-theme-quartz-dark {
   flex: 0 0 auto;
 }
 
@@ -193,7 +358,7 @@
 
 .Module:hover,
 .IndependentModule:hover {
-  color: var(--brand-color);
+  color: var(--dui-color-accent);
 }
 
 
@@ -202,15 +367,15 @@
 }
 
 .Link {
-  color: var(--brand-color);
+  color: var(--dui-color-accent);
   display: inline-block;
   font-size: 13px;
-  margin-top: var(--phi-0-5);
+  margin-top: var(--dui-space-2);
   text-decoration: underline;
 }
 
-.ListBoxItem .Link {
-  color: var(--theme-text-light);
+.InputListItem .Link {
+  color: var(--dui-color-text-muted);
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.2px;
@@ -219,8 +384,8 @@
   transition: color 0.2s ease;
 }
 
-.ListBoxItem:hover .Link {
-  color: var(--theme-text);
+.InputListItem:hover .Link {
+  color: var(--dui-color-text);
 }
 
 .Row {
@@ -228,29 +393,25 @@
   flex-direction: row;
 }
 
-.FloatingPanel .Panels .Panel {
-  padding: var(--phi-0-5);
+.FloatingWindow .TabView-content .Rectangle {
+  padding: var(--dui-space-2);
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-.FloatingPanel .Panel .Row {
-  gap: var(--spacing-md);
-  padding: var(--phi-0-5);
-}
 
 #sidebar .Row .Label,
 #properties .Row .Label,
 .SideBar .Row .Label {
-  color: var(--theme-text-secondary);
+  color: var(--dui-color-text-muted);
   flex-shrink: 0;
   font-size: 12px;
   font-weight: 500;
   width: 100px;
 }
 
-.properties-panel .Panel {
+.properties-panel .Rectangle {
   height: 100%;
   margin: 0;
   overflow: auto;
@@ -266,8 +427,7 @@
 }
 
 
-.ListBoxItem,
-.ListboxItem {
+.InputListItem {
   align-items: center;
   background: transparent;
   border: 1px solid transparent;
@@ -287,21 +447,19 @@
     border-color var(--dui-transition-fast);
 }
 
-.ListBoxItem:hover,
-.ListboxItem:hover {
+.InputListItem:hover {
   background: var(--dui-color-surface-hover);
   border-color: transparent;
   color: var(--dui-color-text);
 }
 
-.ListBoxItem.Active,
-.ListboxItem.Active {
+.InputListItem.Active {
   background: var(--dui-color-surface-selected);
   border-color: transparent;
   color: var(--dui-color-text);
 }
 
-.ListboxItem.workspace-menu-item {
+.InputListItem.workspace-menu-item {
   gap: var(--dui-space-3);
   min-height: 32px;
   padding: 4px 8px;
@@ -321,8 +479,8 @@
   opacity: 0.85;
 }
 
-.ListboxItem.workspace-menu-item:hover .workspace-menu-item-icon,
-.ListboxItem.workspace-menu-item:hover .material-symbols-outlined {
+.InputListItem.workspace-menu-item:hover .workspace-menu-item-icon,
+.InputListItem.workspace-menu-item:hover .material-symbols-outlined {
   color: var(--dui-color-text);
   opacity: 1;
 }
@@ -346,7 +504,7 @@
 }
 
 
-.Panel {
+.Rectangle {
   background: var(--dui-surface-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
@@ -364,21 +522,21 @@
   z-index: 7;
 }
 
-input.Color {
+input.InputColor {
   align-items: center;
   border-radius: var(--dui-radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--dui-color-border);
   display: flex;
   justify-content: center;
-  margin: var(--spacing-xs);
+  margin: var(--dui-space-1);
   position: relative;
 }
 
 .Click {
-  background: var(--glass-surface);
-  border: 1px solid var(--border);
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--dui-shadow-md);
   cursor: pointer;
   padding: 8px 12px;
   transition: all 0.2s ease;
@@ -389,12 +547,12 @@ input.Color {
   width: 6px;
 }
 
-.FloatingPanel f-node {
+.FloatingWindow f-node {
   z-index: 5;
 }
 
-.FloatingPanel flow,
-.FloatingPanel-content flow {
+.FloatingWindow flow,
+.FloatingWindow-content flow {
   display: block;
   height: 100%;
   overflow: hidden;
@@ -405,10 +563,10 @@ input.Color {
 .ws-node-group-background {
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
-  box-shadow: var(--glass-shadow-sm);
+  box-shadow: var(--dui-shadow-sm);
   pointer-events: none;
   position: absolute;
-  transition: all var(--transition-fast);
+  transition: all var(--dui-transition-fast);
 }
 
 header {
@@ -686,10 +844,9 @@ header {
   padding: var(--dui-space-3) var(--dui-space-4);
 }
 
-small,
-.SmallText {
-  color: var(--theme-text-light);
-  font-size: var(--font-size-sm, 14px);
+small {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm, 14px);
   line-height: 1.45;
 }
 
@@ -701,7 +858,7 @@ small,
 
 button,
 .Button,
-.Operator {
+.ToolButton {
   align-items: center;
   background: var(--dui-surface-control-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
@@ -726,7 +883,7 @@ button,
     box-shadow var(--dui-transition-fast);
 }
 
-.Operator {
+.ToolButton {
   background: transparent;
   border-color: transparent;
   min-height: var(--dui-control-height-sm);
@@ -736,7 +893,7 @@ button,
 }
 
 
-.Listbox {
+.InputList {
   border-radius: var(--dui-radius);
   cursor: default;
   font-size: var(--dui-font-size-sm);
@@ -746,19 +903,58 @@ button,
   width: 100%;
 }
 
-.FloatingPanel f-canvas f-content {
+.FloatingWindow f-canvas f-content {
   left: 0;
   position: absolute;
   top: 0;
 }
 
-.CollapsibleSection {
-  margin-bottom: 2px;
+/*
+ * CollapsiblePanel is content-sized (height: fit-content). Override ContentPanel's
+ * fill-remaining flex so expand/collapse sizes to the body — same for WorkspacePanel.
+ */
+.CollapsiblePanel > .PanelContent {
+  flex: 0 0 auto;
+  min-height: auto;
   overflow: visible;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.FloatingPanel f-canvas {
+.CollapsiblePanel > .PanelContent > .TabView {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: auto;
+}
+
+.CollapsiblePanel > .PanelContent > .TabView .TabView-content {
+  flex: 0 0 auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.CollapsiblePanel > .PanelContent > .InputList {
+  padding: 2px 4px 8px;
+}
+
+.CollapsiblePanel-toggle {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity var(--dui-transition-fast);
+}
+
+.CollapsiblePanel:hover .CollapsiblePanel-toggle {
+  opacity: 1;
+}
+
+.CollapsiblePanel.collapsed > .PanelContent {
+  display: none;
+}
+
+.CollapsiblePanel.collapsed .CollapsiblePanel-toggle {
+  transform: rotate(-90deg);
+}
+
+.FloatingWindow f-canvas {
   height: 100% !important;
   left: 0 !important;
   position: absolute !important;
@@ -773,10 +969,10 @@ button,
 }
 
 .Badge {
-  background: var(--theme-bg-elevated, color-mix(in srgb, var(--dui-color-text) 6%, transparent));
-  border: 1px solid var(--theme-border, var(--dui-color-border));
+  background: var(--dui-color-surface-raised, color-mix(in srgb, var(--dui-color-text) 6%, transparent));
+  border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
-  color: var(--theme-text-light, var(--dui-color-text-muted));
+  color: var(--dui-color-text-muted);
   display: inline-block;
   font-family: var(--dui-font-mono);
   font-size: var(--dui-font-size-xs);
@@ -837,7 +1033,7 @@ button:active,
   color: var(--dui-color-text);
 }
 
-.Operator:hover {
+.ToolButton:hover {
   background: var(--dui-color-surface-hover);
   color: var(--dui-color-text);
 }
@@ -854,79 +1050,7 @@ button:active,
   transform: scale(1.05);
 }
 
-.CollapsibleSection-body {
-  -webkit-overflow-scrolling: touch;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
-}
-
-.CollapsibleSection-body > .Listbox {
-  padding: 2px 4px 8px;
-}
-
-.CollapsibleSection-header {
-  align-items: center;
-  background: transparent;
-  border-bottom: none;
-  cursor: pointer;
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  padding: 10px 12px 6px;
-  transition: opacity var(--transition-fast);
-}
-
-.CollapsibleSection-header:hover {
-  background: transparent;
-}
-
-.CollapsibleSection-header:hover .CollapsibleSection-leftIcon {
-  color: var(--theme-text-light);
-  opacity: 0.85;
-}
-
-.CollapsibleSection-leftIcon {
-  color: var(--theme-text-light);
-  flex-shrink: 0;
-  opacity: 0.7;
-  transition: opacity var(--transition-fast);
-}
-
-.CollapsibleSection-title {
-  color: var(--theme-text-light);
-  flex: 1 1 auto;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  min-width: 0;
-  text-transform: uppercase;
-}
-
-.CollapsibleSection-toggle {
-  color: var(--theme-text-light);
-  flex-shrink: 0;
-  opacity: 0.5;
-  transition: opacity var(--transition-fast);
-}
-
-.CollapsibleSection:hover .CollapsibleSection-toggle {
-  opacity: 1;
-}
-
-.CollapsibleSection.collapsed .CollapsibleSection-body {
-  display: none;
-}
-
-.CollapsibleSection.collapsed .CollapsibleSection-toggle {
-  transform: rotate(-90deg);
-}
-
-
-
-
-.FloatingPanel {
+.FloatingWindow {
   background: var(--dui-surface-overlay-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
@@ -958,36 +1082,36 @@ button:active,
   }
 }
 
-.FloatingPanel.is-entering {
+.FloatingWindow.is-entering {
   animation: floating-panel-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.FloatingPanel-header.PanelHeader {
+.FloatingWindow-header.Header {
   border-bottom: 1px solid var(--dui-color-separator);
   cursor: move;
   flex-shrink: 0;
   gap: 0.5rem;
 }
 
-.FloatingPanel-tools {
+.FloatingWindow-tools {
   align-items: center;
   display: inline-flex;
   flex-shrink: 0;
   gap: 0.25rem;
 }
 
-.FloatingPanel-tool.Operator {
+.FloatingWindow-tool.ToolButton {
   border-radius: var(--dui-radius);
   color: var(--dui-color-text-muted);
   min-height: var(--dui-control-height-sm);
   min-width: var(--dui-control-height-sm);
 }
 
-.FloatingPanel-tool.Operator:hover {
+.FloatingWindow-tool.ToolButton:hover {
   color: var(--dui-color-text);
 }
 
-.FloatingPanel-content {
+.FloatingWindow-content {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -997,27 +1121,11 @@ button:active,
   position: relative;
 }
 
-.FloatingPanel-content:not(:has(> .TabPanel)) {
+.FloatingWindow-content {
   padding: var(--dui-space-3) var(--dui-space-4);
 }
 
-.FloatingPanel-content:has(> .TabPanel) {
-  overflow: hidden;
-}
-
-.FloatingPanel-content > .TabPanel {
-  box-sizing: border-box;
-  display: flex;
-  flex: 1 1 0%;
-  flex-direction: column;
-  max-width: 100%;
-  min-height: 0;
-  min-width: 0;
-  overflow: hidden;
-  width: 100%;
-}
-
-.FloatingPanel.maximized {
+.FloatingWindow.maximized {
   height: 100% !important;
   left: 0 !important;
   top: 0 !important;
@@ -1025,7 +1133,7 @@ button:active,
   z-index: 9999 !important;
 }
 
-.FloatingPanel.minimized {
+.FloatingWindow.minimized {
   height: 30px !important;
 }
 
@@ -1036,29 +1144,22 @@ button:active,
   font-weight: 700;
 }
 
-.Header {
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  padding: 1rem;
-}
-
 #startPython,
 #startIM,
 #startBIM {
-  color: var(--brand-color);
+  color: var(--dui-color-accent);
   padding: 1rem 2rem;
   transition: background-color 0.3s ease;
 }
 
 #toolbar {
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  background: var(--glass-surface);
-  border: 1px solid var(--border);
+  -webkit-backdrop-filter: var(--dui-surface-blur);
+  backdrop-filter: var(--dui-surface-blur);
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
-  box-shadow: var(--glass-shadow);
-  padding: var(--spacing-sm) 0;
+  box-shadow: var(--dui-shadow-md);
+  padding: var(--dui-space-2) 0;
   position: relative;
   text-align: center;
 }
@@ -1076,10 +1177,8 @@ button:active,
   object-fit: contain;
 }
 
-.ListBoxItem .Image,
-.ListBoxItem .SVG,
-.ListboxItem .Image,
-.ListboxItem .SVG {
+.InputListItem .Image,
+.InputListItem .SVG {
   filter: grayscale(100%) brightness(1.2);
   height: 20px;
   opacity: 0.5;
@@ -1087,58 +1186,135 @@ button:active,
   width: 20px;
 }
 
-.ListBoxItem:hover .Image,
-.ListBoxItem:hover .SVG,
-.ListboxItem:hover .Image,
-.ListboxItem:hover .SVG {
+.InputListItem:hover .Image,
+.InputListItem:hover .SVG {
   filter: grayscale(0%);
   opacity: 0.85;
 }
 
-.ListBoxItem:hover .material-symbols-outlined,
-.ListboxItem:hover .material-symbols-outlined {
-  color: var(--theme-text);
+.InputListItem:hover .material-symbols-outlined {
+  color: var(--dui-color-text);
   opacity: 0.9;
 }
 
 
-.PanelContent {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  width: 100%;
-}
-  
-.PanelFooter {
-  flex-shrink: 0;
-  padding: var(--phi-0-5);
-}
-
-.PanelHeader {
-  border-bottom: 1px solid var(--border);
-  align-items: center;
+.RibbonBar {
+  align-items: stretch;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
-  
-  
+.ContentPanel > .RibbonBar {
+  justify-content: flex-end;
+  padding: var(--dui-space-2);
+}
+
+.Button.RibbonButton,
+.RibbonButton {
+  align-items: center;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  font-family: var(--dui-font-ui);
+  gap: 4px;
+  justify-content: center;
+  min-height: 0;
+  min-width: 72px;
+  padding: 6px 12px 4px;
+  position: relative;
+  transition:
+    background-color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast),
+    color var(--dui-transition-fast);
+}
+
+button.RibbonButton:hover,
+.Button.RibbonButton:hover,
+.RibbonButton:hover {
+  background: color-mix(in srgb, var(--dui-color-accent) 6%, transparent 94%);
+  border-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+  color: var(--dui-color-text);
+}
+
+button.RibbonButton:active,
+.Button.RibbonButton:active,
+.RibbonButton:active {
+  background: transparent;
+}
+
+.Button.RibbonButton.Active,
+.Button.RibbonButton.selected,
+.RibbonButton.Active,
+.RibbonButton.selected,
+button.RibbonButton.Active:hover,
+.Button.RibbonButton.Active:hover,
+.RibbonButton.Active:hover {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: var(--dui-color-accent);
+  color: var(--dui-color-text);
+}
+
+.RibbonButton:focus-visible {
+  outline: 2px solid var(--dui-color-accent);
+  outline-offset: -2px;
+}
+
+.RibbonButton .Icon,
+.RibbonButton .material-symbols-outlined {
+  color: var(--dui-color-accent);
+  display: block;
+  font-size: 22px;
+  height: 22px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.RibbonButton-label {
+  color: inherit;
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  max-width: 104px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .Network {
   max-width: 100% !important;
   min-width: 100% !important;
 }
 
-.NodesControls {
+.NodeGraphControls {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
 
-  gap: var(--phi-0-5);
-  left: var(--phi-0-5);
+  gap: var(--dui-space-2);
+  left: var(--dui-space-2);
   position: absolute;
-  top: var(--phi-0-5);
+  top: var(--dui-space-2);
   z-index: 2;
 
 }
@@ -1156,7 +1332,7 @@ button:active,
 
   display: flex;
   flex-direction: column;
-  font-size: var(--phi-1);
+  font-size: var(--dui-space-4);
   justify-content: center;
   margin: 0 !important;
 }
@@ -1166,18 +1342,18 @@ button:active,
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: var(--phi-0-5);
+  gap: var(--dui-space-2);
   border-radius: var(--dui-radius);
   background: var(--dui-surface-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
-  padding: var(--phi-0-5);
-  border: 1px solid var(--border);
+  padding: var(--dui-space-2);
+  border: 1px solid var(--dui-color-border);
   align-items: center;
 }
 
 #LayoutToggleBar {
-  margin-right: var(--phi-1);
+  margin-right: var(--dui-space-4);
 }
 
 .NotificationsModule {
@@ -1191,7 +1367,7 @@ button:active,
 }
 
 .ModuleCount{
-  font-size: var(--phi-0);
+  font-size: var(--dui-space-3);
   position: absolute;
   bottom: 50%;
   right: 0;
@@ -1200,14 +1376,14 @@ button:active,
 
 .SquareOperator {
   align-items: center;
-  background: var(--glass-surface);
-  border: 1px solid var(--border);
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: var(--phi-0-2-5);
-  padding: var(--phi-0-5);
-  transition: all var(--transition-slow);
+  gap: var(--dui-space-1);
+  padding: var(--dui-space-2);
+  transition: all var(--dui-transition-slow);
   width: fit-content;
 }
 
@@ -1273,7 +1449,7 @@ button:active,
 }
 
 .Title {
-  font-size: var(--font-size-lg, 18px);
+  font-size: var(--dui-font-size-lg, 18px);
   font-weight: 600;
   letter-spacing: 0.01em;
   overflow: hidden;
@@ -1282,46 +1458,45 @@ button:active,
 }
 
 .MainPanel-header {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--dui-color-border);
   flex-shrink: 0;
   padding: 0.75rem 1rem;
 }
 
 
-.Tabs .Tab:hover > .Operator.Tab-float,
-.Tabs .Tab.selected > .Operator.Tab-float {
+.TabView-tabs .Tab:hover > .ToolButton.Tab-float,
+.TabView-tabs .Tab.selected > .ToolButton.Tab-float {
   opacity: 1;
 }
 
-.TabbedPanel {
+.TabView {
   background: transparent;
   border: none;
   border-radius: 0;
   display: flex;
   flex-direction: column;
-  max-width: calc(100vw - var(--sidebar-width) - var(--margin));
+  max-width: calc(100vw - var(--dui-sidebar-width) - var(--dui-shell-margin));
   overflow: hidden;
   transition:
     0.3s ease,
     left 0.3s ease;
 }
 
-.TabbedPanel .Panels {
+.TabView .TabView-content {
   display: block;
   min-height: 3.5rem;
-  padding: var(--dui-space-4) 0 0;
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-/* Editor sidebar rows use ListBoxItem layout but are not list navigation */
-.TabbedPanel .Panels .ListBoxItem {
+/* Editor sidebar rows use InputListItem layout but are not list navigation */
+.TabView .TabView-content .InputListItem {
   cursor: default;
 }
 
-.Tabs,
-.TabbedPanel .Tabs {
+.TabView-tabs,
+.TabView .TabView-tabs {
   align-items: stretch;
   background: transparent;
   border-bottom: 1px solid var(--dui-color-separator);
@@ -1335,11 +1510,11 @@ button:active,
   width: 100%;
 }
 
-.Tabs::-webkit-scrollbar {
+.TabView-tabs::-webkit-scrollbar {
   display: none;
 }
 
-.Tabs .Tab {
+.TabView-tabs .Tab {
   align-items: center;
   background: transparent;
   border: none;
@@ -1347,7 +1522,7 @@ button:active,
   color: var(--dui-color-text-muted);
   cursor: pointer;
   display: flex;
-  font-family: var(--font-ui);
+  font-family: var(--dui-font-ui);
   font-size: var(--dui-font-size-xs, 11px);
   font-weight: 600;
   gap: 6px;
@@ -1357,12 +1532,12 @@ button:active,
   padding: 0.55rem 0.875rem;
   text-transform: uppercase;
   transition:
-    color var(--transition-fast),
-    border-color var(--transition-fast);
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
   white-space: nowrap;
 }
 
-.Tabs .Tab .Title {
+.TabView-tabs .Tab .Title {
   color: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -1370,13 +1545,13 @@ button:active,
   line-height: 1.2;
 }
 
-.Tabs .Tab:hover {
+.TabView-tabs .Tab:hover {
   background: transparent;
   color: var(--dui-color-text);
 }
 
-.Tabs .Tab.active,
-.Tabs .Tab.selected {
+.TabView-tabs .Tab.active,
+.TabView-tabs .Tab.selected {
   background: transparent;
   border-bottom-color: var(--dui-color-accent);
   color: var(--dui-color-text);
@@ -1390,7 +1565,7 @@ button:active,
   border-radius: var(--dui-radius);
   box-shadow: var(--dui-shadow-md);
   color: var(--dui-color-text);
-  font-family: var(--font-ui);
+  font-family: var(--dui-font-ui);
   font-size: var(--dui-font-size-xs);
   font-weight: 500;
   left: 100%;
@@ -1442,44 +1617,44 @@ button:active,
 
 .MobileLandscapeGuidance {
   align-items: center;
-  background: var(--glass-surface);
+  background: var(--dui-surface-bg);
   backdrop-filter: blur(8px);
   box-sizing: border-box;
   display: none;
   flex-direction: column;
   inset: 0;
   justify-content: center;
-  padding: var(--phi-2);
+  padding: var(--dui-space-5);
   pointer-events: auto;
   position: fixed;
   z-index: 100;
 }
 
 .selected {
-  border-color: var(--brand-color) !important;
+  border-color: var(--dui-color-accent) !important;
 }
 
 .SelectionToggle {
   align-items: center;
-  background: var(--glass-surface);
-  border: 1px solid var(--border);
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
   cursor: pointer;
   display: inline-flex;
-  gap: var(--phi-0-5);
-  padding: var(--phi-0-5) var(--phi-1);
-  transition: var(--transition-fast);
+  gap: var(--dui-space-2);
+  padding: var(--dui-space-2) var(--dui-space-4);
+  transition: var(--dui-transition-fast);
 }
 
 .SelectionToggle:hover {
-  background: var(--glass-surface-hover);
-  border-color: var(--glass-border-hover);
+  background: var(--dui-color-surface-hover);
+  border-color: var(--dui-color-border-strong);
 }
 
 .SelectionToggle.active {
-  background: var(--brand-color-alpha);
-  border-color: var(--brand-color);
-  color: var(--on-brand-color);
+  background: var(--dui-color-accent-soft);
+  border-color: var(--dui-color-accent);
+  color: var(--dui-color-on-accent);
 }
 
 .layout-panel {
@@ -1508,7 +1683,7 @@ button:active,
 
 .layout-resizer:hover,
 .layout-resizer.active {
-  background: var(--brand-color-alpha) !important;
+  background: var(--dui-color-accent-soft) !important;
 }
 
 .layout-resizer-left,
@@ -1519,7 +1694,7 @@ button:active,
 
 .layout-resizer-left::before,
 .layout-resizer-right::before {
-  background: radial-gradient(circle, var(--brand-color) 1px, transparent 1.6px)
+  background: radial-gradient(circle, var(--dui-color-accent) 1px, transparent 1.6px)
     center / 2px 6px repeat-y;
   height: 18px;
   left: 50%;
@@ -1534,7 +1709,7 @@ button:active,
 }
 
 .layout-resizer-bottom::before {
-  background: radial-gradient(circle, var(--brand-color) 1px, transparent 1.6px)
+  background: radial-gradient(circle, var(--dui-color-accent) 1px, transparent 1.6px)
     center / 6px 2px repeat-x;
   height: 2px;
   left: 50%;
@@ -1555,7 +1730,7 @@ button:active,
 }
 
 
-.SidebarLayout {
+.NavigationView {
   --dui-sidebar-width: 240px;
   --dui-sidebar-min-width: 180px;
   --dui-sidebar-max-width: 280px;
@@ -1568,8 +1743,8 @@ button:active,
   width: 100%;
 }
 
-.SidebarLayout > .SideBar {
-  border-right: 1px solid var(--border);
+.NavigationView > .SideBar {
+  border-right: 1px solid var(--dui-color-border);
   display: flex;
   flex: 0 0 var(--dui-sidebar-width);
   flex-direction: column;
@@ -1580,15 +1755,15 @@ button:active,
   width: var(--dui-sidebar-width);
 }
 
-.SidebarLayout.is-sidebar-hidden > .SideBar {
+.NavigationView.is-sidebar-hidden > .SideBar {
   display: none;
 }
 
-.SidebarLayout > .layout-resizer-right {
+.NavigationView > .layout-resizer-right {
   flex: 0 0 4px;
 }
 
-.SidebarLayout.is-sidebar-hidden > .layout-resizer-right {
+.NavigationView.is-sidebar-hidden > .layout-resizer-right {
   display: none;
 }
 
@@ -1608,7 +1783,7 @@ button:active,
   background: var(--dui-surface-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--dui-color-border);
   padding: 0.75rem 1rem;
 }
 
@@ -1648,7 +1823,7 @@ button:active,
   padding: 0.75rem 0.5rem 1rem;
 }
 
-.SidebarLayout > .MainPanel {
+.NavigationView > .MainPanel {
   background: transparent;
   display: flex;
   flex: 1 1 auto;
@@ -1659,31 +1834,31 @@ button:active,
   position: relative;
 }
 
-.SpaLayout {
+.AppShell {
   height: 100%;
   min-height: 0;
 }
 
-.SpaLayout > .SideBar > .SideBar-body:has(.SpaLayout-nav--tabs) {
+.AppShell > .SideBar > .SideBar-body:has(.AppShell-nav--tabs) {
   overflow: hidden;
 }
 
-.SpaLayout-body {
+.AppShell-body {
   padding: 1rem 1.25rem 1.5rem;
 }
 
-.SpaLayout .SpaLayout-nav {
+.AppShell .AppShell-nav {
   min-height: 0;
 }
 
-.SpaLayout .SpaLayout-nav--tabs {
+.AppShell .AppShell-nav--tabs {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
 }
 
-.SpaLayout .SpaLayout-groupTabs.TabbedPanel {
+.AppShell .AppShell-groupTabs.TabView {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -1692,13 +1867,13 @@ button:active,
   overflow: hidden;
 }
 
-.SpaLayout .SpaLayout-groupTabs > .Tabs {
+.AppShell .AppShell-groupTabs > .TabView-tabs {
   flex-shrink: 0;
   gap: 0;
   max-height: none;
 }
 
-.SpaLayout .SpaLayout-groupTabs > .Tabs .Tab {
+.AppShell .AppShell-groupTabs > .TabView-tabs .Tab {
   flex: 1 1 0;
   justify-content: center;
   max-width: none;
@@ -1706,29 +1881,29 @@ button:active,
   text-align: center;
 }
 
-.SpaLayout .SpaLayout-groupTabs > .Tabs .Tab .Title {
+.AppShell .AppShell-groupTabs > .TabView-tabs .Tab .Title {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.SpaLayout .SpaLayout-groupTabs > .Panels {
+.AppShell .AppShell-groupTabs > .TabView-content {
   flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
   padding: 0.5rem 0 0;
 }
 
-.SpaLayout .SpaLayout-groupTabs > .Panels > * {
+.AppShell .AppShell-groupTabs > .TabView-content > * {
   min-height: 0;
 }
 
-.SpaLayout-navDivider.HorizontalRule {
+.AppShell-navDivider.Line {
   border: 0;
   border-top: 1px solid var(--dui-color-border);
   margin: 0.5rem 0;
 }
 
-.SpaLayout-navHeading {
+.AppShell-navHeading {
   color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-xs);
   font-weight: 600;
@@ -1771,7 +1946,7 @@ button:active,
   color: var(--dui-color-accent-hover);
 }
 
-.HorizontalRule,
+.Line,
 hr {
   background: var(--dui-color-separator);
   border: 0;
@@ -1780,15 +1955,17 @@ hr {
   width: 100%;
 }
 
-.Input,
-.TextArea,
-.Select,
-.Number,
-.DatePicker-input,
-input.Input,
-input.Number,
-textarea.TextArea,
-select.Select {
+.InputText,
+.InputSearch,
+.InputTextArea,
+.InputDropdown,
+.InputNumber,
+.InputDate-input,
+input.InputText,
+input.InputSearch,
+input.InputNumber,
+textarea.InputTextArea,
+select.InputDropdown {
   background: var(--dui-surface-control-bg);
   border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
@@ -1803,81 +1980,48 @@ select.Select {
     background var(--dui-transition-fast),
     border-color var(--dui-transition-fast),
     box-shadow var(--dui-transition-fast);
-}
-
-.Input,
-.TextArea,
-.Select,
-.DatePicker-input,
-input.Input,
-textarea.TextArea,
-select.Select {
   width: 100%;
 }
 
-.TextArea,
-textarea.TextArea {
+.InputTextArea,
+textarea.InputTextArea {
+  display: block;
   min-height: 4.5rem;
   resize: vertical;
 }
 
-.Input:hover,
-.TextArea:hover,
-.Select:hover,
-.Number:hover,
-.DatePicker-input:hover,
-input.Input:hover,
-input.Number:hover,
-textarea.TextArea:hover,
-select.Select:hover {
-  background: var(--dui-color-control-hover);
-  border: 1px solid var(--dui-color-border-strong) !important;
-}
-
-.Input:focus,
-.TextArea:focus,
-.Select:focus,
-.Number:focus,
-.DatePicker-input:focus,
-input.Input:focus,
-input.Number:focus,
-textarea.TextArea:focus,
-select.Select:focus,
-.Input:focus-visible,
-.TextArea:focus-visible,
-.Select:focus-visible,
-.Number:focus-visible,
-.DatePicker-input:focus-visible,
-input.Input:focus-visible,
-input.Number:focus-visible,
-textarea.TextArea:focus-visible,
-select.Select:focus-visible {
-  background: var(--dui-surface-control-bg);
-  border: 1px solid var(--dui-color-focus) !important;
-  box-shadow: var(--dui-focus-ring);
-  outline: none;
-}
-
-.CompactField {
-  border: 1px solid var(--dui-color-border);
-}
-
-.CompactField:hover {
+.InputText:hover,
+.InputSearch:hover,
+.InputTextArea:hover,
+.InputDropdown:hover,
+.InputNumber:hover,
+.InputDate-input:hover {
   background: var(--dui-color-control-hover);
   border-color: var(--dui-color-border-strong);
 }
 
-.CompactField:focus,
-.CompactField:focus-visible {
+.InputText:focus,
+.InputSearch:focus,
+.InputTextArea:focus,
+.InputDropdown:focus,
+.InputNumber:focus,
+.InputDate-input:focus,
+.InputText:focus-visible,
+.InputSearch:focus-visible,
+.InputTextArea:focus-visible,
+.InputDropdown:focus-visible,
+.InputNumber:focus-visible,
+.InputDate-input:focus-visible {
   background: var(--dui-surface-control-bg);
   border-color: var(--dui-color-focus);
   box-shadow: var(--dui-focus-ring);
   outline: none;
 }
 
-.Input::placeholder,
-.TextArea::placeholder,
-.DatePicker-input::placeholder {
+.InputText::placeholder,
+.InputSearch::placeholder,
+.InputTextArea::placeholder,
+.InputDate-input::placeholder {
   color: var(--dui-color-text-subtle);
 }
 
@@ -1995,16 +2139,15 @@ input.Slider-range {
 }
 
 .Slider-value,
-.Slider .Number,
-.Slider input.Number {
+.Slider .InputNumber,
+.Slider input.InputNumber {
   flex: 0 0 4.25rem;
   min-width: 4.25rem;
   text-align: right;
   width: 4.25rem;
 }
 
-progress,
-.Progress {
+progress {
   appearance: none;
   background: var(--dui-color-control);
   border: none;
@@ -2019,8 +2162,7 @@ progress::-webkit-progress-bar {
   border-radius: var(--dui-radius);
 }
 
-progress::-webkit-progress-value,
-.Progress::-webkit-progress-value {
+progress::-webkit-progress-value {
   background: var(--dui-color-accent);
   border-radius: var(--dui-radius);
 }
@@ -2030,14 +2172,14 @@ progress::-moz-progress-bar {
   border-radius: var(--dui-radius);
 }
 
-.DatePicker {
+.InputDate {
   display: inline-flex;
   flex-direction: column;
   gap: var(--dui-space-2);
   position: relative;
 }
 
-.DatePicker-calendar {
+.InputDate-calendar {
   background: var(--dui-surface-overlay-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
@@ -2049,26 +2191,7 @@ progress::-moz-progress-bar {
   z-index: 20;
 }
 
-.CollapsibleSection {
-  border: 1px solid transparent;
-  border-radius: var(--dui-radius);
-  margin-bottom: 2px;
-  overflow: hidden;
-  transition: background var(--dui-transition-fast);
-}
-
-
-.CollapsibleSection-header {
-  padding: 8px 10px;
-}
-
-.CollapsibleSection-title {
-  font-size: var(--dui-font-size-xs);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.CollapsiblePanel {
+.Flyout {
   background: var(--dui-surface-overlay-bg);
   -webkit-backdrop-filter: var(--dui-surface-blur);
   backdrop-filter: var(--dui-surface-blur);
@@ -2080,7 +2203,7 @@ progress::-moz-progress-bar {
   overflow: hidden;
 }
 
-.CollapsiblePanel-header {
+.Flyout-header {
   align-items: center;
   background: var(--dui-surface-raised-bg);
   border-bottom: 1px solid var(--dui-color-separator);
@@ -2096,15 +2219,14 @@ progress::-moz-progress-bar {
   text-transform: uppercase;
 }
 
-.PanelHeader {
-  background: var(--dui-surface-raised-bg);
-  border-bottom: 1px solid var(--dui-color-separator);
-  min-height: 36px;
-  padding: 6px 10px;
-}
-
-.PanelContent {
-  padding: var(--dui-space-3) var(--dui-space-4);
+/* Generic header; panel chrome overrides live under .ContentPanel > .Header */
+.Header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  gap: 8px;
+  justify-content: space-between;
 }
 
 .Toast {
@@ -2156,7 +2278,7 @@ progress::-moz-progress-bar {
   transition: opacity 0.3s ease;
 }
 
-.LoadingBar {
+.StatusBar {
   align-items: center;
   background: var(--dui-surface-raised-bg);
   border: 1px solid var(--dui-color-border);
@@ -2168,8 +2290,8 @@ progress::-moz-progress-bar {
   width: 100%;
 }
 
-.LoadingBar-track,
-.LoadingBar .track {
+.StatusBar-track,
+.StatusBar .track {
   background: var(--dui-color-control);
   border-radius: var(--dui-radius);
   height: 6px;
@@ -2177,8 +2299,8 @@ progress::-moz-progress-bar {
   width: 100%;
 }
 
-.LoadingBar-fill,
-.LoadingBar .fill {
+.StatusBar-fill,
+.StatusBar .fill {
   background: var(--dui-color-accent);
   border-radius: var(--dui-radius);
   height: 100%;
@@ -2186,14 +2308,14 @@ progress::-moz-progress-bar {
   width: 0%;
 }
 
-.LoadingBar-inner {
+.StatusBar-inner {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 100%;
 }
 
-.LoadingBar-meta {
+.StatusBar-meta {
   align-items: center;
   color: var(--dui-color-text-muted);
   display: flex;
@@ -2202,23 +2324,12 @@ progress::-moz-progress-bar {
   padding: 4px 2px;
 }
 
-.LoadingBar--simple {
+.StatusBar--simple {
   background: var(--dui-color-control);
   border-radius: var(--dui-radius);
   height: 6px;
   overflow: hidden;
   width: 100%;
-}
-
-.PropertyTable-label {
-  color: var(--dui-color-text-muted);
-  font-size: var(--dui-font-size-sm);
-}
-
-.PropertyTable-value {
-  color: var(--dui-color-text);
-  font-size: var(--dui-font-size-sm);
-  text-align: right;
 }
 
 .Title {
@@ -2234,7 +2345,7 @@ progress::-moz-progress-bar {
   backdrop-filter: var(--dui-surface-blur);
 }
 
-.SidebarLayout > .MainPanel {
+.NavigationView > .MainPanel {
   background: var(--dui-color-bg);
 }
 
@@ -2320,7 +2431,7 @@ button:disabled,
 }
 
 .dui-drill-header,
-.NavigableList > .PanelHeader,
+.NavigableList > .Header,
 .NavigableList > .Header {
   align-items: center;
   background: transparent;
@@ -2333,7 +2444,7 @@ button:disabled,
   padding: 4px 8px;
 }
 
-.dui-drill > .dui-drill-header.PanelHeader,
+.dui-drill > .dui-drill-header.Header,
 .dui-drill > .dui-drill-header.Header {
   background: transparent;
   justify-content: flex-start;
@@ -2395,8 +2506,8 @@ button:disabled,
 
 .dui-drill-title,
 .NavigableList-title,
-.dui-drill-title.Text,
-.NavigableList-title.Text {
+.dui-drill-title.TextBlock,
+.NavigableList-title.TextBlock {
   color: var(--dui-color-text);
   font-size: var(--dui-font-size-sm);
   font-weight: 600;
@@ -2418,8 +2529,8 @@ button:disabled,
 
 .dui-drill-empty,
 .NavigableList-empty,
-.dui-drill-empty.Text,
-.NavigableList-empty.Text {
+.dui-drill-empty.TextBlock,
+.NavigableList-empty.TextBlock {
   color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-sm);
   line-height: 1.3;
@@ -2462,8 +2573,8 @@ button:disabled,
 
 .dui-drill-item-label,
 .NavigableList-item-label,
-.dui-drill-item-label.Text,
-.NavigableList-item-label.Text {
+.dui-drill-item-label.TextBlock,
+.NavigableList-item-label.TextBlock {
   flex: 1;
   font-size: var(--dui-font-size-sm);
   line-height: 1.2;
@@ -2504,7 +2615,7 @@ button:disabled,
 }
 
 .dui-tree-empty,
-.dui-tree-empty.Text {
+.dui-tree-empty.TextBlock {
   color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-sm);
   line-height: 1.3;
@@ -2585,7 +2696,7 @@ button:disabled,
 }
 
 .dui-tree-label,
-.dui-tree-label.Text {
+.dui-tree-label.TextBlock {
   flex: 1;
   font-size: var(--dui-font-size-sm);
   line-height: 1.2;

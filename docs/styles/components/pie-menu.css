@@ -1,11 +1,11 @@
-.PieMenuOverlay {
+.RadialMenuOverlay {
   inset: 0;
   pointer-events: none;
   position: absolute;
   z-index: 36;
 }
 
-.PieMenu {
+.RadialMenu {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -17,9 +17,9 @@
   transform: translate(-50%, -50%);
 }
 
-.PieMenu::before {
-  background: var(--glass-surface);
-  backdrop-filter: var(--glass-blur);
+.RadialMenu::before {
+  background: var(--dui-surface-bg);
+  backdrop-filter: var(--dui-surface-blur);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50%;
   box-shadow:
@@ -30,23 +30,23 @@
   position: absolute;
 }
 
-.PieMenu-items {
+.RadialMenu-items {
   inset: 0;
   position: absolute;
 }
 
-.PieMenu-itemSlot {
+.RadialMenu-itemSlot {
   align-items: center;
   display: flex;
   justify-content: center;
-  /* Re-enable hits inside the pointer-events: none .PieMenu surface. */
+  /* Re-enable hits inside the pointer-events: none .RadialMenu surface. */
   pointer-events: auto;
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
-.PieMenu-dragHandle {
+.RadialMenu-dragHandle {
   align-items: center;
   background: rgba(23, 23, 23, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -65,9 +65,9 @@
   z-index: 3;
 }
 
-.PieMenu-hub {
+.RadialMenu-hub {
   align-items: center;
-  border: 1px solid var(--border,);
+  border: 1px solid var(--dui-color-border,);
   border-radius: 50%;
 
   cursor: default;

@@ -8,8 +8,8 @@
 }
 
 .Gallery-jumpNav {
-  background: var(--theme-bg, #1a1c1a);
-  border-bottom: 1px solid var(--theme-border, rgba(255, 255, 255, 0.08));
+  background: var(--dui-color-bg, #1a1c1a);
+  border-bottom: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.08));
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
@@ -23,9 +23,9 @@
 .Gallery-jumpChip.Button,
 .Gallery-jumpChip {
   background: transparent;
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.12));
   border-radius: var(--dui-radius, 4px);
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   cursor: pointer;
   font-size: var(--dui-font-size-xs, 12px);
   font-weight: 600;
@@ -35,18 +35,18 @@
 }
 
 .Gallery-jumpChip:hover {
-  border-color: var(--theme-text-light);
-  color: var(--theme-text);
+  border-color: var(--dui-color-text-muted);
+  color: var(--dui-color-text);
 }
 
 .Gallery-jumpChip.is-active {
-  background: var(--theme-bg-elevated, rgba(255, 255, 255, 0.06));
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.2));
-  color: var(--theme-text);
+  background: var(--dui-color-surface-raised, rgba(255, 255, 255, 0.06));
+  border-color: var(--dui-color-border, rgba(255, 255, 255, 0.2));
+  color: var(--dui-color-text);
 }
 
 .Gallery-sibling {
-  border-top: 1px solid var(--theme-border, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.08));
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -82,16 +82,16 @@
 }
 
 .Gallery-siblingTitle {
-  color: var(--theme-text);
+  color: var(--dui-color-text);
   flex-shrink: 0;
-  font-size: var(--font-size-md, 16px);
+  font-size: var(--dui-font-size-md, 16px);
   font-weight: 650;
   letter-spacing: -0.01em;
   margin: 0;
 }
 
 .Gallery-summary {
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   flex: 1 1 8rem;
   font-size: var(--dui-font-size-xs, 12px);
   line-height: 1.35;
@@ -111,16 +111,15 @@
 }
 
 /* Form-like demos fill the preview area */
-.Gallery-componentPreview > .Number,
+.Gallery-componentPreview > .InputNumber,
 .Gallery-componentPreview > .Slider,
-.Gallery-componentPreview > .Input,
-.Gallery-componentPreview > .Textarea,
-.Gallery-componentPreview > .Select,
-.Gallery-componentPreview > .Progress,
-.Gallery-componentPreview > .Color,
-.Gallery-componentPreview > .Date,
-.Gallery-componentPreview > .SearchInput,
-.Gallery-componentPreview > .CompactField,
+.Gallery-componentPreview > .InputText,
+.Gallery-componentPreview > .InputTextArea,
+.Gallery-componentPreview > .InputDropdown,
+.Gallery-componentPreview > progress,
+.Gallery-componentPreview > .InputColor,
+.Gallery-componentPreview > .InputDate,
+.Gallery-componentPreview > .InputSearch,
 .Gallery-componentPreview > .Row {
   flex: 1 1 auto;
   min-width: 0;
@@ -141,12 +140,12 @@
 .Gallery-sibling .Gallery-apiChip.Code,
 .Gallery-apiChip.Code,
 .Gallery-apiChip {
-  background: var(--theme-bg-elevated, rgba(255, 255, 255, 0.06)) !important;
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.1)) !important;
+  background: var(--dui-color-surface-raised, rgba(255, 255, 255, 0.06)) !important;
+  border: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.1)) !important;
   border-radius: var(--dui-radius, 4px);
-  color: var(--theme-text-light) !important;
+  color: var(--dui-color-text-muted) !important;
   display: inline-block;
-  font-family: var(--dui-font-mono, var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-family: var(--dui-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
   font-size: var(--dui-font-size-xs, 12px);
   line-height: 1.4;
   margin: 0;
@@ -179,7 +178,7 @@
 }
 
 .Gallery-optionsLabel {
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-xs, 12px);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -202,7 +201,7 @@
 }
 
 .Gallery-styleVariantsLabel {
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-xs, 12px);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -224,7 +223,7 @@
 }
 
 .Gallery-styleVariantName {
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-xs, 12px);
   font-weight: 600;
 }
@@ -238,7 +237,7 @@
 
 .Gallery-compareCard {
   background: transparent;
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.1));
   border-radius: var(--dui-radius, 4px);
   color: inherit;
   cursor: pointer;
@@ -250,17 +249,17 @@
 }
 
 .Gallery-compareCard:hover {
-  border-color: var(--theme-text-light);
+  border-color: var(--dui-color-text-muted);
 }
 
 .Gallery-compareCard.is-selected {
-  background: var(--theme-bg-elevated, rgba(255, 255, 255, 0.05));
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.22));
+  background: var(--dui-color-surface-raised, rgba(255, 255, 255, 0.05));
+  border-color: var(--dui-color-border, rgba(255, 255, 255, 0.22));
 }
 
 .Gallery-compareCardTitle {
-  color: var(--theme-text);
-  font-size: var(--font-size-sm, 14px);
+  color: var(--dui-color-text);
+  font-size: var(--dui-font-size-sm, 14px);
   font-weight: 650;
 }
 
@@ -271,7 +270,7 @@
 }
 
 .Gallery-compareDetail {
-  border-top: 1px solid var(--theme-border, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.08));
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -287,7 +286,7 @@
 
 .Gallery-overviewLabel,
 .Gallery-sectionLabel {
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
   font-size: var(--dui-font-size-xs, 12px);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -299,8 +298,8 @@
 }
 
 .Gallery-buildingBlocks {
-  color: var(--theme-text-light);
-  font-size: var(--font-size-sm, 14px);
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm, 14px);
   margin: 0;
 }
 
@@ -309,8 +308,8 @@
 }
 
 .Gallery-iconCell {
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
-  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--dui-color-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--dui-radius, 6px);
   text-align: center;
 }
 
@@ -318,9 +317,9 @@
   font-size: 1.5rem;
 }
 
-.Gallery-iconCell .SmallText {
+.Gallery-iconCell small {
   font-size: 0.65rem;
   word-break: break-all;
   line-height: 1.2;
-  color: var(--theme-text-light);
+  color: var(--dui-color-text-muted);
 }

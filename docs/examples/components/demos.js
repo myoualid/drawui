@@ -1,41 +1,33 @@
-import {
-  DrawUI,
-  ICONS,
-  LoadingBar,
-  FloatingPanel,
-  showProgressBar,
-  updateProgressBar,
-  hideProgressBar,
-} from "drawui";
+import * as DrawUI from "drawui";
 
 function row() {
-  return DrawUI.row().gap("0.75rem").setStyle("flexWrap", ["wrap"]).setStyle("alignItems", ["center"]);
+  return new DrawUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("flexWrap", ["wrap"]).setStyle("alignItems", ["center"]);
 }
 
-/** @type {Record<string, () => import("drawui").UIElement>} */
+/** @type {Record<string, () => import("drawui").Control>} */
 export const DEMO_BUILDERS = {
   "headings": () =>
-    DrawUI.column()
+    new DrawUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(DrawUI.h1("Heading 1"))
-      .add(DrawUI.h2("Heading 2"))
-      .add(DrawUI.h3("Heading 3"))
-      .add(DrawUI.h4("Heading 4"))
-      .add(DrawUI.h5("Heading 5"))
-      .add(DrawUI.h6("Heading 6")),
+      .add(new DrawUI.Heading(1, "Heading 1"))
+      .add(new DrawUI.Heading(2, "Heading 2"))
+      .add(new DrawUI.Heading(3, "Heading 3"))
+      .add(new DrawUI.Heading(4, "Heading 4"))
+      .add(new DrawUI.Heading(5, "Heading 5"))
+      .add(new DrawUI.Heading(6, "Heading 6")),
 
-  "title": () => DrawUI.title("Panel title style"),
+  "title": () => new DrawUI.Title("Panel title style"),
 
-  "text": () => DrawUI.text("Body text via DrawUI.text()"),
+  "text": () => new DrawUI.TextBlock("Body text via DrawUI.textBlock()"),
 
-  "small-text": () => DrawUI.smallText("Small text via DrawUI.smallText()"),
+  "small-text": () => new DrawUI.Caption("Small text via DrawUI.caption()"),
 
-  "paragraph": () => DrawUI.paragraph("Paragraph with inline content."),
+  "paragraph": () => new DrawUI.Paragraph("Paragraph with inline content."),
 
-  "disclaimer": () => DrawUI.disclaimer("Disclaimer copy for secondary legal or helper text."),
+  "disclaimer": () => new DrawUI.Disclaimer("Disclaimer copy for secondary legal or helper text."),
 
   "markdown": () =>
-    DrawUI.markdown(
+    new DrawUI.Markdown(
       [
         "## Min-build markdown",
         "",
@@ -49,75 +41,114 @@ export const DEMO_BUILDERS = {
         "2. Lists",
         "",
         "```js",
-        "DrawUI.markdown(\"# Hello\");",
+        "new Markdown(\"# Hello\");",
         "```",
       ].join("\n"),
     ),
 
-  "badge": () => DrawUI.badge("Badge"),
+  "badge": () => new DrawUI.Badge("Badge"),
 
-  "kbd": () => DrawUI.kbd("Ctrl"),
+  "kbd": () => new DrawUI.Kbd("Ctrl"),
 
-  "inline-link": () => DrawUI.link("DrawUI docs", "#", "open_in_new", false),
+  "code": () => new DrawUI.Code("new Button()"),
+
+  "span": () => new DrawUI.Span().setTextContent("Inline span"),
+
+  "image": () =>
+    new DrawUI.Image(
+      "data:image/svg+xml," +
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="8" fill="#70ba35"/></svg>',
+        ),
+    ).setStyle("width", ["4rem"]),
+
+  "svg": () =>
+    new DrawUI.Svg(
+      "data:image/svg+xml," +
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
+        ),
+    )
+      .setStyle("width", ["3rem"])
+      .setStyle("height", ["3rem"])
+      .setStyle("color", ["var(--dui-color-accent, #70ba35)"]),
+
+  "canvas": () => {
+    const canvas = new DrawUI.Canvas();
+    canvas.dom.width = 240;
+    canvas.dom.height = 120;
+    canvas
+      .setStyle("border", ["1px solid var(--dui-color-border, #444)"])
+      .setStyle("borderRadius", ["var(--dui-radius, 4px)"]);
+    const ctx = canvas.dom.getContext("2d");
+    ctx.fillStyle = "#70ba35";
+    ctx.fillRect(16, 16, 88, 88);
+    ctx.fillStyle = "#e8e8e8";
+    ctx.font = "14px sans-serif";
+    ctx.fillText("Canvas", 120, 70);
+    return canvas;
+  },
+
+  "inline-link": () => new DrawUI.Hyperlink("DrawUI docs", "#", "open_in_new", false),
 
   "icons-grid": () => {
-    const grid = DrawUI.grid().addClass("Gallery-iconGrid");
+    const grid = new DrawUI.Grid().addClass("Gallery-iconGrid");
     grid.setStyle("display", ["grid"]);
     grid.setStyle("gridTemplateColumns", ["repeat(auto-fill, minmax(5.5rem, 1fr))"]);
     grid.setStyle("gap", ["0.75rem"]);
 
-    Object.entries(ICONS).forEach(([key, name]) => {
+    Object.entries(DrawUI.ICONS).forEach(([key, name]) => {
       grid.add(
-        DrawUI.column()
+        new DrawUI.StackPanel({ isVertical: true })
           .addClass("Gallery-iconCell")
           .setStyle("alignItems", ["center"])
           .setStyle("gap", ["0.25rem"])
           .setStyle("padding", ["0.5rem"])
-          .add(DrawUI.icon(name))
-          .add(DrawUI.smallText(key)),
+          .add(new DrawUI.Icon(name))
+          .add(new DrawUI.Caption(key)),
       );
     });
 
     return grid;
   },
 
-  "operator": () => DrawUI.operator("settings"),
+  "operator": () => new DrawUI.Operator("settings"),
 
   "divider": () =>
-    DrawUI.column()
+    new DrawUI.StackPanel({ isVertical: true })
       .gap("0.5rem")
-      .add(DrawUI.text("Above the rule"))
-      .add(DrawUI.divider())
-      .add(DrawUI.text("Below the rule")),
+      .add(new DrawUI.TextBlock("Above the rule"))
+      .add(new DrawUI.Line())
+      .add(new DrawUI.TextBlock("Below the rule")),
 
   "line-break": () =>
-    DrawUI.column()
+    new DrawUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(DrawUI.text("Line one"))
-      .add(DrawUI.lineBreak())
-      .add(DrawUI.text("Line two")),
+      .add(new DrawUI.TextBlock("Line one"))
+      .add(new DrawUI.LineBreak())
+      .add(new DrawUI.TextBlock("Line two")),
 
   "row": () =>
-    DrawUI.row()
+    new DrawUI.StackPanel({ isVertical: false })
       .gap("0.5rem")
-      .add(DrawUI.badge("Row"))
-      .add(DrawUI.badge("Layout")),
+      .add(new DrawUI.Badge("Row"))
+      .add(new DrawUI.Badge("Layout")),
 
   "column": () =>
-    DrawUI.column()
+    new DrawUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(DrawUI.text("Column A"))
-      .add(DrawUI.text("Column B")),
+      .add(new DrawUI.TextBlock("Column A"))
+      .add(new DrawUI.TextBlock("Column B")),
 
   "grid": () => {
-    const grid = DrawUI.grid();
+    const grid = new DrawUI.Grid();
     grid.setStyle("display", ["grid"]);
     grid.setStyle("gridTemplateColumns", ["repeat(3, 1fr)"]);
     grid.setStyle("gap", ["0.5rem"]);
     ["A", "B", "C"].forEach((label) => {
       grid.add(
-        DrawUI.card()
-          .add(DrawUI.text(label))
+        new DrawUI.Card()
+          .add(new DrawUI.TextBlock(label))
           .setStyle("padding", ["0.5rem"])
           .setStyle("textAlign", ["center"]),
       );
@@ -127,149 +158,202 @@ export const DEMO_BUILDERS = {
 
   "hspacer": () =>
     row()
-      .add(DrawUI.text("Start"))
-      .add(DrawUI.hspacer("2rem"))
-      .add(DrawUI.text("End")),
+      .add(new DrawUI.TextBlock("Start"))
+      .add(new DrawUI.HSpacer("2rem"))
+      .add(new DrawUI.TextBlock("End")),
 
   "spacer": () =>
-    DrawUI.column()
-      .add(DrawUI.text("Above"))
-      .add(DrawUI.spacer("1rem"))
-      .add(DrawUI.text("Below")),
+    new DrawUI.StackPanel({ isVertical: true })
+      .add(new DrawUI.TextBlock("Above"))
+      .add(new DrawUI.Spacer("1rem"))
+      .add(new DrawUI.TextBlock("Below")),
+
+  "handle": () =>
+    row()
+      .add(
+        new DrawUI.Card()
+          .setStyle("padding", ["0.5rem 0.75rem"])
+          .setStyle("display", ["flex"])
+          .setStyle("alignItems", ["center"])
+          .setStyle("gap", ["0.5rem"])
+          .add(
+            new DrawUI.Handle("drag")
+              .add(new DrawUI.Icon("drag_indicator"))
+              .setStyle("cursor", ["grab"])
+              .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
+          )
+          .add(new DrawUI.TextBlock("Draggable row")),
+      ),
+
+  "header": () =>
+    new DrawUI.Header({
+      title: "Inspector",
+      icon: "info",
+      actions: [new DrawUI.Button("…").addClass("secondary")],
+    }),
+
+  "ribbon-button": () =>
+    new DrawUI.RibbonButton("Project", { icon: "folder_open" }),
+
+  "ribbon-bar": () =>
+    new DrawUI.RibbonBar(
+      [
+        new DrawUI.RibbonButton("Project", { icon: "folder_open" }),
+        new DrawUI.RibbonButton("Properties", { icon: "tune", active: true }),
+        new DrawUI.RibbonButton("Console", { icon: "terminal" }),
+      ],
+      "flex-start",
+    ),
+
+  "day-night": () => {
+    const context = {
+      config: { ui: { theme: { current: "night", default: "night" } } },
+      signals: {
+        themeChanged: {
+          add() {},
+        },
+      },
+    };
+    const ops = {
+      execute(_cmd, ctx, theme) {
+        document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
+        ctx.config.ui.theme.current = theme;
+      },
+    };
+    return new DrawUI.ThemeToggle(context, ops);
+  },
 
   "split-container": () => {
-    const left = DrawUI.panel()
-      .add(DrawUI.text("Left pane"))
+    const left = new DrawUI.Rectangle()
+      .add(new DrawUI.TextBlock("Left pane"))
       .setStyle("padding", ["0.75rem"])
       .setStyle("flex", ["1"]);
-    const right = DrawUI.panel()
-      .add(DrawUI.text("Right pane"))
+    const right = new DrawUI.Rectangle()
+      .add(new DrawUI.TextBlock("Right pane"))
       .setStyle("padding", ["0.75rem"])
       .setStyle("flex", ["1"]);
-    const split = DrawUI.splitContainer("horizontal", [left, right]);
+    const split = new DrawUI.SplitContainer("horizontal", [left, right]);
     split.setStyle("height", ["7rem"]);
     return split;
   },
 
   "card": () =>
-    DrawUI.card()
-      .add(DrawUI.text("DrawUI.card()"))
+    new DrawUI.Card()
+      .add(new DrawUI.TextBlock("new Card()"))
       .setStyle("padding", ["0.75rem"]),
 
   "panel": () =>
-    DrawUI.panel()
-      .add(DrawUI.text("DrawUI.panel()"))
+    new DrawUI.Rectangle()
+      .add(new DrawUI.TextBlock("DrawUI.rectangle()"))
       .setStyle("padding", ["0.75rem"]),
 
   "div": () =>
-    DrawUI.div()
-      .add(DrawUI.text("DrawUI.div() — generic block container"))
+    new DrawUI.Container()
+      .add(new DrawUI.TextBlock("DrawUI.container() — generic block container"))
       .setStyle("padding", ["0.75rem"]),
 
   "center": () => {
-    const host = DrawUI.div().setStyle("minHeight", ["4rem"]);
-    host.add(DrawUI.center(DrawUI.badge("Centered via DrawUI.center()")));
+    const host = new DrawUI.Container().setStyle("minHeight", ["4rem"]);
+    host.add(DrawUI.center(new DrawUI.Badge("Centered via center()")));
     return host;
   },
 
   "form-composed": () => {
-    const nameInput = DrawUI.input();
+    const nameInput = new DrawUI.InputText();
     nameInput.dom.placeholder = "Jane Doe";
-    const emailInput = DrawUI.input();
+    const emailInput = new DrawUI.InputText();
     emailInput.dom.placeholder = "jane@example.com";
     emailInput.dom.type = "email";
-    const notes = DrawUI.textarea();
+    const notes = new DrawUI.InputTextArea();
     notes.dom.placeholder = "Optional notes…";
-    const roleSelect = DrawUI.select().setOptions({ user: "User", admin: "Admin", editor: "Editor" });
-    const actions = DrawUI.row()
+    const roleSelect = new DrawUI.InputDropdown().setOptions({ user: "User", admin: "Admin", editor: "Editor" });
+    const actions = new DrawUI.StackPanel({ isVertical: false })
       .gap("0.5rem")
-      .add(DrawUI.button("Cancel").addClass("secondary"))
-      .add(DrawUI.button("Save").addClass("primary"));
-    return DrawUI.form()
+      .add(new DrawUI.Button("Cancel").addClass("secondary"))
+      .add(new DrawUI.Button("Save").addClass("primary"));
+    return new DrawUI.Form()
       .setStyle("display", ["flex"])
       .setStyle("flexDirection", ["column"])
       .gap("0.5rem")
-      .add(DrawUI.label("Name"))
+      .add(new DrawUI.Label("Name"))
       .add(nameInput)
-      .add(DrawUI.label("Email"))
+      .add(new DrawUI.Label("Email"))
       .add(emailInput)
-      .add(DrawUI.label("Role"))
+      .add(new DrawUI.Label("Role"))
       .add(roleSelect)
-      .add(DrawUI.label("Notes"))
+      .add(new DrawUI.Label("Notes"))
       .add(notes)
       .add(
-        DrawUI.row()
+        new DrawUI.StackPanel({ isVertical: false })
           .gap("0.5rem")
-          .add(DrawUI.checkbox(true))
-          .add(DrawUI.text("Email me updates")),
+          .add(new DrawUI.Checkbox(true).addClass("Card-checkbox"))
+          .add(new DrawUI.TextBlock("Email me updates")),
       )
-      .add(DrawUI.spacer("0.5rem"))
+      .add(new DrawUI.Spacer("0.5rem"))
       .add(actions);
   },
 
   "input": () => {
-    const field = DrawUI.input();
+    const field = new DrawUI.InputText();
     field.dom.placeholder = "Enter value…";
     return field;
   },
 
   "textarea": () => {
-    const field = DrawUI.textarea();
+    const field = new DrawUI.InputTextArea();
     field.dom.placeholder = "Multi-line notes…";
     return field;
   },
 
-  "select": () => DrawUI.select().setOptions({ user: "User", admin: "Admin" }),
+  "select": () => new DrawUI.InputDropdown().setOptions({ user: "User", admin: "Admin" }),
 
-  "label": () => DrawUI.label("Field label"),
+  "label": () => new DrawUI.Label("Field label"),
 
   "checkbox": () =>
     row()
-      .add(DrawUI.checkbox(true))
-      .add(DrawUI.text("Agree to terms")),
+      .add(new DrawUI.Checkbox(true).addClass("Card-checkbox"))
+      .add(new DrawUI.TextBlock("Agree to terms")),
 
-  "number": () => DrawUI.number(2),
+  "number": () => new DrawUI.InputNumber(2),
 
-  "integer": () => DrawUI.integer(1),
+  "integer": () => new DrawUI.InputInteger(1),
 
-  "slider": () => DrawUI.slider(42).setRange(0, 100).setStep(1).setPrecision(0),
+  "slider": () => new DrawUI.Slider(42).setRange(0, 100).setStep(1).setPrecision(0),
 
-  "color": () => DrawUI.color(),
+  "color": () => new DrawUI.InputColor(),
 
-  "progress": () => DrawUI.progress(0.65),
+  "progress": () => new DrawUI.ProgressBar(0.65),
 
-  "date": () => DrawUI.date(new Date()),
+  "date": () => new DrawUI.InputDate(new Date()),
 
-  "button-primary": () => DrawUI.button("Primary").addClass("primary"),
+  "button-primary": () => new DrawUI.Button("Primary").addClass("primary"),
 
-  "button-secondary": () => DrawUI.button("Secondary").addClass("secondary"),
+  "button-secondary": () => new DrawUI.Button("Secondary").addClass("secondary"),
 
-  "square-button": () => DrawUI.squareButton("Export", { icon: "download", meta: ".ifc" }),
+  "square-button": () => new DrawUI.IconButton("Export", { icon: "download", meta: ".ifc" }),
 
-  "compact-field": () => DrawUI.compactField(DrawUI.compactButton("Compact")),
-
-  "compact-button": () => DrawUI.compactButton("Action"),
+  "compact-button": () => new DrawUI.ToolbarButton("Action"),
 
   "search-input": () =>
-    DrawUI.searchInput("Search layers…", (value) => {
+    new DrawUI.InputSearch("Search layers…", (value) => {
       console.log("search:", value);
     }),
 
   "list": () => {
-    const list = DrawUI.list();
-    list.add(DrawUI.listItem("Layer 01"));
-    list.add(DrawUI.listItem("Layer 02"));
-    list.add(DrawUI.listItem("Layer 03"));
+    const list = new DrawUI.InputList();
+    list.setItems([
+      { id: "layer-01", name: "Layer 01" },
+      { id: "layer-02", name: "Layer 02" },
+      { id: "layer-03", name: "Layer 03" },
+    ]);
     return list;
   },
 
-  "list-item": () => DrawUI.listItem("Standalone list row"),
-
   "reorderable-list": () =>
-    DrawUI.reorderableList(
+    new DrawUI.SortableList(
       [{ label: "Wall", checked: true }, { label: "Slab", checked: false }, { label: "Column" }, { label: "Beam" }],
       (items) => console.log("reordered", items),
-    ),
+    ).container,
 
   "drill-down": () => {
     const sampleTree = {
@@ -285,7 +369,7 @@ export const DEMO_BUILDERS = {
         { name: "Library", children: [{ name: "Materials" }, { name: "Profiles" }] },
       ],
     };
-    const drill = DrawUI.drillDownUpList({
+    const drill = new DrawUI.NavigationList({
       getLabel: (item) => item.name,
       getChildren: (item) => item.children || [],
       onItemClick: (item) => console.log("selected", item),
@@ -309,7 +393,7 @@ export const DEMO_BUILDERS = {
         { name: "Library", children: [{ name: "Materials" }, { name: "Profiles" }] },
       ],
     };
-    const tree = DrawUI.treeView({
+    const tree = new DrawUI.TreeView({
       getLabel: (item) => item.name,
       getChildren: (item) => item.children || [],
       onItemClick: (item) => console.log("selected", item),
@@ -319,15 +403,15 @@ export const DEMO_BUILDERS = {
   },
 
   "labeled-box-item": () => {
-    const menuList = DrawUI.list();
+    const menuList = new DrawUI.InputList();
     menuList.add(
-      DrawUI.labeledBoxItem({ id: "visibility", label: "Visibility", checked: true }, {
+      new DrawUI.LabeledBoxItem({ id: "visibility", label: "Visibility", checked: true }, {
         visibility: "visibility",
         default: "layers",
       }),
     );
     menuList.add(
-      DrawUI.labeledBoxItem({ id: "materials", label: "Materials", checked: false }, {
+      new DrawUI.LabeledBoxItem({ id: "materials", label: "Materials", checked: false }, {
         materials: "palette",
         default: "layers",
       }),
@@ -336,31 +420,31 @@ export const DEMO_BUILDERS = {
   },
 
   "property-row": () => {
-    const nameField = DrawUI.input().setValue("Custom");
-    return DrawUI.column()
-      .addClass("PropertyTable")
-      .add(DrawUI.propertyRow("Label", nameField, "Editable value cell"))
-      .add(DrawUI.propertyRow("Status", "Ready"));
+    const nameField = new DrawUI.InputText().setValue("Custom");
+    return new DrawUI.StackPanel({ isVertical: true })
+      .addClass("PropertyGrid")
+      .add(new DrawUI.PropertyGridRow("Label", nameField, "Editable value cell"))
+      .add(new DrawUI.PropertyGridRow("Status", "Ready"));
   },
 
   "property-table": () => {
-    const nameField = DrawUI.input().setValue("Beam-12");
-    const typeSelect = DrawUI.select().setOptions({
+    const nameField = new DrawUI.InputText().setValue("Beam-12");
+    const typeSelect = new DrawUI.InputDropdown().setOptions({
       IfcBeam: "IfcBeam",
       IfcColumn: "IfcColumn",
       IfcSlab: "IfcSlab",
     }).setValue("IfcBeam");
-    const notes = DrawUI.textarea().setValue("Primary span member");
+    const notes = new DrawUI.InputTextArea().setValue("Primary span member");
     notes.dom.rows = 2;
-    const visible = DrawUI.checkbox(true);
-    const length = DrawUI.number(12.5).setRange(0, 100).setUnit("m");
-    const count = DrawUI.integer(4).setRange(0, 99);
-    const opacity = DrawUI.slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2);
-    const color = DrawUI.color().setValue("#70ba35");
-    const created = DrawUI.date(new Date());
-    const progress = DrawUI.progress(0.45);
+    const visible = new DrawUI.Checkbox(true).addClass("Card-checkbox");
+    const length = new DrawUI.InputNumber(12.5).setRange(0, 100).setUnit("m");
+    const count = new DrawUI.InputInteger(4).setRange(0, 99);
+    const opacity = new DrawUI.Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2);
+    const color = new DrawUI.InputColor().setValue("#70ba35");
+    const created = new DrawUI.InputDate(new Date());
+    const progress = new DrawUI.ProgressBar(0.45);
 
-    return DrawUI.propertyTable({
+    return new DrawUI.PropertyGrid({
       compact: true,
       title: "All value types",
       rows: {
@@ -380,7 +464,7 @@ export const DEMO_BUILDERS = {
   },
 
   "instruction-panel": () =>
-    DrawUI.instructionPanel("Viewport", "3d_rotation", [
+    new DrawUI.InstructionPanel("Viewport", "3d_rotation", [
       ["MMB", "Orbit around the scene"],
       ["Shift + MMB", "Pan the view"],
       ["Scroll", "Zoom in / out"],
@@ -388,35 +472,35 @@ export const DEMO_BUILDERS = {
     ]),
 
   "tabbed-panel": () => {
-    const tabs = DrawUI.tabbedPanel();
-    tabs.addTab("tab-a", "Overview", [DrawUI.text("Tab A content")]);
-    tabs.addTab("tab-b", "Details", [DrawUI.text("Tab B content")]);
+    const tabs = new DrawUI.TabView();
+    tabs.addTab("tab-a", "Overview", [new DrawUI.TextBlock("Tab A content")]);
+    tabs.addTab("tab-b", "Details", [new DrawUI.TextBlock("Tab B content")]);
     tabs.select("tab-a");
     return tabs;
   },
 
   "collapsible-section": () => {
-    const section = DrawUI.collapsibleSection({ title: "Parameters", icon: "tune" });
-    section.setContent(DrawUI.text("Section body built with DrawUI.text()"));
+    const section = new DrawUI.CollapsiblePanel({ title: "Parameters", icon: "tune" });
+    section.content(new DrawUI.TextBlock("Section body built with DrawUI.textBlock()"));
     return section;
   },
 
   "collapsible-panel": () => {
-    const host = DrawUI.div().setStyle("position", ["relative"]).setStyle("minHeight", ["5rem"]);
-    const panel = DrawUI.collapsiblePanel({
+    const host = new DrawUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["5rem"]);
+    const panel = new DrawUI.Flyout({
       title: "Alerts",
       icon: "notifications",
       badgeCount: 2,
       position: { top: "0.5rem", right: "0.5rem" },
     });
-    panel.setContent(DrawUI.column().add(DrawUI.text("Collapsible panel content")));
+    panel.content(new DrawUI.StackPanel({ isVertical: true }).add(new DrawUI.TextBlock("Collapsible panel content")));
     host.add(panel);
     return host;
   },
 
   "sidebar-layout": () => {
-    const host = DrawUI.div().setStyle("height", ["260px"]).setStyle("overflow", ["hidden"]);
-    const layout = DrawUI.sidebarLayout({
+    const host = new DrawUI.Container().setStyle("height", ["260px"]).setStyle("overflow", ["hidden"]);
+    const layout = new DrawUI.NavigationView({
       sidebarWidth: "180px",
       sidebarMinWidth: "140px",
       sidebarMaxWidth: "320px",
@@ -424,75 +508,72 @@ export const DEMO_BUILDERS = {
     });
     layout.setSidebarTitle("Explorer");
     layout.setSidebarContent(
-      DrawUI.column()
+      new DrawUI.StackPanel({ isVertical: true })
         .gap("0.25rem")
-        .add(DrawUI.text("Site"))
-        .add(DrawUI.text("Building")),
+        .add(new DrawUI.TextBlock("Site"))
+        .add(new DrawUI.TextBlock("Building")),
     );
     layout.setMainContent(
-      DrawUI.column()
+      new DrawUI.StackPanel({ isVertical: true })
         .gap("0.5rem")
-        .add(DrawUI.h3("Viewport"))
-        .add(DrawUI.text("Main content")),
+        .add(new DrawUI.Heading(3, "Viewport"))
+        .add(new DrawUI.TextBlock("Main content")),
     );
     host.add(layout);
     return host;
   },
 
   "layout-pane": () => {
-    const host = DrawUI.div()
+    const host = new DrawUI.Container()
       .setStyle("height", ["160px"])
       .setStyle("overflow", ["hidden"])
       .addClass("Panel");
 
-    const pane = DrawUI.layoutPane({ scrollable: true, className: "PanelContent" });
+    const pane = new DrawUI.ScrollViewer({ fill: true, scrollable: true, className: "PanelContent" });
     pane.add(
-      DrawUI.column()
+      new DrawUI.StackPanel({ isVertical: true })
         .gap("0.25rem")
-        .add(DrawUI.text("Scrollable region"))
-        .add(DrawUI.text("Line 2"))
-        .add(DrawUI.text("Line 3"))
-        .add(DrawUI.text("Line 4"))
-        .add(DrawUI.text("Line 5")),
+        .add(new DrawUI.TextBlock("Scrollable region"))
+        .add(new DrawUI.TextBlock("Line 2"))
+        .add(new DrawUI.TextBlock("Line 3"))
+        .add(new DrawUI.TextBlock("Line 4"))
+        .add(new DrawUI.TextBlock("Line 5")),
     );
     host.add(pane);
     return host;
   },
 
   "base-panel": () => {
-    const base = DrawUI.basePanel();
-    base.createHeader("Inspector", "info");
-    base.content
-      .gap("0.75rem")
-      .add(DrawUI.text("BasePanel content area"))
+    return new DrawUI.ContentPanel()
+      .header("Inspector", "info")
+      .add(new DrawUI.TextBlock("ContentPanel content area"))
       .add(
-        DrawUI.row()
+        new DrawUI.StackPanel({ isVertical: false })
           .gap("0.5rem")
-          .add(DrawUI.button("Action").addClass("primary"))
-          .add(DrawUI.button("Cancel").addClass("secondary")),
+          .add(new DrawUI.Button("Action").addClass("primary"))
+          .add(new DrawUI.Button("Cancel").addClass("secondary")),
       );
-    return base.panel;
   },
 
-  "spinner": () => DrawUI.spinner({ text: "Loading model…" }),
+  "spinner": () => new DrawUI.ProgressRing({ text: "Loading model…" }),
 
   "tooltip": () => {
-    const target = DrawUI.button("Hover for tooltip").addClass("secondary");
-    DrawUI.tooltip("Saved to cloud", { theme: "dark" }).attachTo(target);
+    const target = new DrawUI.Button("Hover for tooltip").addClass("secondary");
+    new DrawUI.Tooltip("Saved to cloud", { theme: "dark" }).attachTo(target);
     return target;
   },
 
   "toast": () =>
-    DrawUI.button("Show toast").addClass("primary").onClick(() => {
-      DrawUI.toast("Changes saved", "success", { duration: 2500 });
+    new DrawUI.Button("Show toast").addClass("primary").onClick(() => {
+      new DrawUI.Toast("Changes saved", "success", { duration: 2500 });
     }),
 
   "loading-bar-component": () => {
-    const loadingHost = DrawUI.div().setStyle("position", ["relative"]).setStyle("minHeight", ["2.5rem"]);
-    const loadingBar = new LoadingBar({ initialText: "Processing…" });
+    const loadingHost = new DrawUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["2.5rem"]);
+    const loadingBar = new DrawUI.StatusBar({ initialText: "Processing…" });
     loadingHost.add(loadingBar);
     loadingHost.add(
-      DrawUI.button("Run LoadingBar").addClass("secondary").onClick(() => {
+      new DrawUI.Button("Run StatusBar").addClass("secondary").onClick(() => {
         loadingBar.show();
         loadingBar.update(0.35, "Step 1/3");
         setTimeout(() => loadingBar.update(0.7, "Step 2/3"), 600);
@@ -504,22 +585,23 @@ export const DEMO_BUILDERS = {
   },
 
   "progress-helpers": () => {
-    const inlineHost = DrawUI.div();
+    const inlineHost = new DrawUI.Container();
     inlineHost.dom.id = "inline-progress-host";
     inlineHost.setStyle("position", ["relative"]).setStyle("minHeight", ["3rem"]);
+    const toast = new DrawUI.Toast();
 
-    return DrawUI.column()
+    return new DrawUI.StackPanel({ isVertical: true })
       .gap("0.75rem")
       .add(
-        DrawUI.button("Run inline progress").addClass("secondary").onClick(() => {
-          showProgressBar("#inline-progress-host", "Exporting…");
+        new DrawUI.Button("Run inline progress").addClass("secondary").onClick(() => {
+          toast.show("#inline-progress-host", "Exporting…");
           let pct = 0;
           const timer = setInterval(() => {
             pct += 10;
-            updateProgressBar(pct, `${pct}%`);
+            toast.update(pct, `${pct}%`);
             if (pct >= 100) {
               clearInterval(timer);
-              setTimeout(() => hideProgressBar(), 400);
+              setTimeout(() => toast.hide(), 400);
             }
           }, 120);
         }),
@@ -528,38 +610,84 @@ export const DEMO_BUILDERS = {
   },
 
   "floating-window": () =>
-    DrawUI.button("Open SimpleFloatingWindow").addClass("secondary").onClick(() => {
-      document.querySelectorAll(".FloatingPanel, .PanelHeader").forEach((node) => {
-        const shell = node.closest(".FloatingPanel") || node.closest(".Panel");
+    new DrawUI.Button("Open FloatingDialog").addClass("secondary").onClick(() => {
+      document.querySelectorAll(".FloatingWindow, .Header").forEach((node) => {
+        const shell = node.closest(".FloatingWindow") || node.closest(".Rectangle");
         if (shell?.parentElement === document.body) shell.remove();
       });
-      const win = DrawUI.floatingWindow({ title: "Floating window", icon: "info" });
-      win.content.clear();
-      win.content.add(DrawUI.text("DrawUI.floatingWindow() content"));
-      win.content.add(
-        DrawUI.button("Close")
-          .addClass("secondary")
-          .onClick(() => win.destroy()),
-      );
-      win.show();
+      const win = new DrawUI.FloatingDialog({ title: "Floating window", icon: "info" });
+      win
+        .content(new DrawUI.TextBlock("DrawUI.floatingDialog() content"))
+        .add(
+          new DrawUI.Button("Close")
+            .addClass("secondary")
+            .onClick(() => win.destroy()),
+        )
+        .show();
     }),
 
   "floating-panel": () =>
-    DrawUI.button("Open FloatingPanel").addClass("secondary").onClick(() => {
-      document.querySelectorAll(".FloatingPanel").forEach((node) => {
+    new DrawUI.Button("Open FloatingWindow").addClass("secondary").onClick(() => {
+      document.querySelectorAll(".FloatingWindow").forEach((node) => {
         if (node.parentElement === document.body) node.remove();
       });
-      const panel = new FloatingPanel({ title: "Overlay", width: "320px" });
+      const panel = new DrawUI.FloatingWindow({ title: "Overlay", width: "320px" });
       panel.setContent(
-        DrawUI.column()
+        new DrawUI.StackPanel({ isVertical: true })
           .gap("0.5rem")
-          .add(DrawUI.h3("FloatingPanel"))
-          .add(DrawUI.text("Free-floating overlay panel")),
+          .add(new DrawUI.Heading(3, "FloatingWindow"))
+          .add(new DrawUI.TextBlock("Free-floating overlay panel")),
       );
       panel.dom.style.height = "auto";
       panel.dom.style.maxHeight = "70vh";
       panel.show();
     }),
+
+  "pie-menu": () => {
+    const wrap = new DrawUI.StackPanel({ isVertical: true }).gap("0.75rem");
+
+    const status = new DrawUI.Caption("Last action: none");
+
+    const viewport = new DrawUI.Container()
+      .setStyle("position", ["relative"])
+      .setStyle("height", ["340px"])
+      .setStyle("border", ["1px dashed var(--dui-color-border, #444)"])
+      .setStyle("borderRadius", ["8px"])
+      .setStyle("overflow", ["hidden"]);
+
+    const hint = new DrawUI.Caption("Hover this area and press P, or use the button below.");
+    hint.setStyle("position", ["absolute"]);
+    hint.setStyle("top", ["0.5rem"]);
+    hint.setStyle("left", ["0.75rem"]);
+    viewport.add(hint);
+
+    const operators = {
+      canExecute: () => true,
+      execute: async (operatorId) => {
+        status.setTextContent(`Last action: ${operatorId}`);
+      },
+    };
+
+    const menu = new DrawUI.RadialMenu({
+      viewport: viewport.dom,
+      operators,
+      items: [
+        { operator: "demo.select_all", icon: "select_all", name: "Select all" },
+        { operator: "demo.duplicate", icon: "content_copy", name: "Duplicate" },
+        { operator: "demo.group", icon: "category", name: "Group" },
+        { operator: "demo.hide", icon: "visibility_off", name: "Hide" },
+        { operator: "demo.delete", icon: "delete", name: "Delete" },
+      ],
+    });
+
+    const toggleButton = new DrawUI.Button("Toggle pie menu")
+      .addClass("primary")
+      .onClick(() => menu.toggle());
+
+    wrap.add(viewport);
+    wrap.add(new DrawUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("alignItems", ["center"]).add(toggleButton).add(status));
+    return wrap;
+  },
 };
 
 export const DEMO_IDS = Object.keys(DEMO_BUILDERS);

@@ -17,7 +17,7 @@ DrawUI ships source ESM and CSS entrypoints, so your toolchain should support ES
 ## Base Imports
 
 ```js
-import { DrawUI } from "drawui";
+import { StackPanel, Heading, TextBlock } from "drawui";
 import "drawui/styles/core.css";
 import "drawui/styles/themes/dark.css";
 ```
@@ -27,43 +27,37 @@ Import `drawui/styles/icons.css` when you use components that render Material Sy
 ## First Panel
 
 ```js
-import { DrawUI, FloatingPanel } from "drawui";
+import { FloatingWindow, StackPanel, Heading, TextBlock } from "drawui";
 import "drawui/styles/core.css";
 import "drawui/styles/icons.css";
 
-const panel = new FloatingPanel({
+const panel = new FloatingWindow({
   title: "Layers",
   position: "left",
   width: "280px"
 });
 
-const content = DrawUI.column()
-  .add(DrawUI.h3("Visible Items"))
-  .add(DrawUI.text("Nothing loaded"));
+const content = new StackPanel({ isVertical: true })
+  .add(new Heading(3, "Visible Items"))
+  .add(new TextBlock("Nothing loaded"));
 
 panel.content.add(content);
 document.body.appendChild(panel.dom);
 ```
 
-## Choosing An Entrypoint
-
-- Use `drawui` when you want the main facade or high-level panel components.
-- Use `drawui/primitives` when you want direct access to DOM wrappers and low-level controls.
-- Use `drawui/components` for reusable composed widgets.
-- Use `drawui/layout` for panel shells.
-- Use `drawui/overlays` for floating overlays and radial interaction surfaces.
-
 ## Typical Pattern
 
 1. Import `drawui/styles/core.css` once at application startup.
 2. Add a theme stylesheet such as `drawui/styles/themes/dark.css` or `drawui/styles/themes/light.css`.
-3. Build layouts with `DrawUI.row()` and `DrawUI.column()` or direct primitives.
+3. Build layouts with `new StackPanel({ isVertical: false|true })` (or other primitives).
 4. Mount the component `.dom` into your host application.
 5. Call `dispose()` during teardown for components that attach global listeners or external mounts.
 
 ## Next Reads
 
 - [README.md](../README.md) for the package overview.
-- [component-index.md](component-index.md) for the full export inventory.
-- [styling.md](styling.md) for tokens, themes, and CSS entrypoints.
-- [ai-usage.md](ai-usage.md) for agent-focused implementation rules.
+- [Component index](generated/component-index.html) for the generated export inventory.
+- [API reference](generated/api/index.html) for per-symbol pages.
+- [styling.html](styling.html) for tokens, themes, and CSS entrypoints.
+- [publishing.html](publishing.html) for distribution, builds, and GitHub Pages.
+- [SKILL.html](SKILL.html) for agent-focused implementation rules.
