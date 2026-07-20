@@ -6,8 +6,7 @@ This README is the package guide. Detailed reference material lives in `docs/`:
 
 - [Docs hub](docs/index.html) (GitHub Pages landing page)
 - [TypeDoc](docs/generated/typedoc/index.html) (generated)
-- [Component index](docs/generated/component-index.md) (generated, AI docs)
-- [AI usage guide](docs/SKILL.md)
+- [AI docs](docs/ai/) — [component index](docs/ai/component-index.md) + [usage guide](docs/ai/SKILL.md)
 - [Getting started](docs/getting-started.md)
 - [Styling guide](docs/styling.md)
 - [Publishing](docs/publishing.md)
@@ -84,7 +83,7 @@ Only the exported files above are public package API. Workspace compatibility fi
 
 Use `new Markdown(text)` for markdown rendering (Showdown + Highlight.js when those peers are present; otherwise the built-in converter). The root `DrawUI` facade also exposes peer factories such as `DrawUI.Chart()` for Chart.js-backed data visualizations.
 
-See [docs/generated/component-index.md](docs/generated/component-index.md) for the complete export inventory and emitted class names.
+See [docs/ai/component-index.md](docs/ai/component-index.md) for the complete export inventory and emitted class names.
 
 ## Styling Model
 

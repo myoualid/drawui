@@ -8,6 +8,5 @@ docs/dist/*.map
 scripts/local-vendor.mjs
 
 # Personal / working notes (not package or public docs)
-docs/_PUBLISHING.md
 docs/REFACTOR-PLAN.md
 docs/primitives-babylon-naming.md

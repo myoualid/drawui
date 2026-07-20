@@ -4,10 +4,10 @@ This folder is produced by `npm run docs`. Do not edit files here by hand.
 
 | Output | Source |
 | --- | --- |
-| `component-index.md` + `.html` | `src/api/registry.json` |
 | `api/*.{md,html}` | `src/api/registry.json` + JSDoc in `src/` + gallery demos |
 | `live-demos.js` + `.json` | `docs/examples/components/demos.js` (+ `demos.full.js`) via `catalog.manifest.json`; JSDoc `// live` only when no gallery demo |
 | `typedoc/` | JSDoc in `src/` (TypeDoc) + live preview injection |
+| `../ai/component-index.*` | `src/api/registry.json` (AI retrieval folder) |
 | `../getting-started.html`, etc. | Hand-written guides in `docs/*.md` |
 
 ## Authoring live examples
@@ -40,4 +40,4 @@ Manual documentation lives alongside this folder:
 - [Getting started](../getting-started.html)
 - [Styling](../styling.html)
 - [Publishing](../publishing.html)
-- [AI usage guide](../SKILL.html)
+- [AI docs](../ai/) — component index + usage guide

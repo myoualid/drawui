@@ -21,7 +21,7 @@ import "drawui/styles/core.css";
 import "drawui/styles/icons.css";
 ```
 
-See the generated [component index](./generated/component-index.html) for the full export inventory.
+See the generated [component index](./ai/component-index.html) for the full export inventory.
 
 ## Builds
 
@@ -93,4 +93,4 @@ Manual docs (not generated):
 
 - [Styling guide](./styling.html)
 - [Getting started](./getting-started.html)
-- [AI usage guide](./SKILL.html)
+- [AI usage guide](./ai/SKILL.html)

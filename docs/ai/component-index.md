@@ -20,7 +20,7 @@ import "drawui/styles/core.css";
 - **Experimental**: public, but behavior or styling may still evolve.
 - **Internal**: repository code that should not be treated as package API.
 
-See also the [API reference](./api/index.html) for per-symbol pages.
+See also the [API reference](../generated/api/index.html) for per-symbol pages.
 
 ## Text
 

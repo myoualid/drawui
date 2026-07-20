@@ -56,8 +56,8 @@ document.body.appendChild(panel.dom);
 ## Next Reads
 
 - [README.md](../README.md) for the package overview.
-- [Component index](generated/component-index.html) for the generated export inventory.
+- [Component index](ai/component-index.html) for the generated export inventory.
 - [API reference](generated/api/index.html) for per-symbol pages.
 - [styling.html](styling.html) for tokens, themes, and CSS entrypoints.
 - [publishing.html](publishing.html) for distribution, builds, and GitHub Pages.
-- [SKILL.html](SKILL.html) for agent-focused implementation rules.
+- [AI usage guide](ai/SKILL.html) for agent-focused implementation rules.

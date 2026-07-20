@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T22:45:12.869Z",
+  "generatedAt": "2026-07-20T22:59:59.207Z",
   "build": "shared",
   "title": "DrawUI — Component reference",
   "subtitle": "Live reference organized by class hierarchy: Control leaves (Text, Inputs), Container branches (Layout, Collections, Panels, Overlays, Shell), and Peers. Open full.html for Chart, DataGrid, GanttChart, and NodeGraph.",

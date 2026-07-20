@@ -18,13 +18,23 @@ const demosPath = path.join(root, "docs/examples/components/demos.js");
 const demosFullPath = path.join(root, "docs/examples/components/demos.full.js");
 
 const docsDir = path.join(root, "docs");
+const aiDir = path.join(docsDir, "ai");
 
 const MANUAL_GUIDES = [
-  { file: "getting-started.md", title: "Getting started — DrawUI" },
-  { file: "styling.md", title: "Styling — DrawUI" },
-  { file: "publishing.md", title: "Publishing — DrawUI" },
-  { file: "SKILL.md", title: "AI usage guide — DrawUI" },
+  { file: "getting-started.md", title: "Getting started — DrawUI", assetPrefix: "./" },
+  { file: "styling.md", title: "Styling — DrawUI", assetPrefix: "./" },
+  { file: "publishing.md", title: "Publishing — DrawUI", assetPrefix: "./" },
+  { file: "ai/SKILL.md", title: "AI usage guide — DrawUI", assetPrefix: "../" },
 ];
+
+/** Shared doc-nav links relative to a page's assetPrefix (docs root = "./"). */
+function guideNavLinks(assetPrefix) {
+  return [
+    { href: `${assetPrefix}generated/typedoc/index.html`, label: "TypeDoc" },
+    { href: `${assetPrefix}ai/component-index.html`, label: "Component index" },
+    { href: `${assetPrefix}ai/SKILL.html`, label: "AI usage guide" },
+  ];
+}
 
 const markdownConverter = new showdown.Converter({
   tables: true,
@@ -122,17 +132,15 @@ async function writeMarkdownPage(markdown, mdPath, htmlPath, pageOptions) {
 async function writeGuideHtml(guide) {
   const mdPath = path.join(docsDir, guide.file);
   const htmlPath = path.join(docsDir, guide.file.replace(/\.md$/, ".html"));
+  const assetPrefix = guide.assetPrefix ?? "./";
   const markdown = await readFile(mdPath, "utf8");
+  await mkdir(path.dirname(htmlPath), { recursive: true });
   await writeFile(
     htmlPath,
     renderHtmlDocPage({
       title: guide.title,
-      assetPrefix: "./",
-      navLinks: [
-        { href: "./generated/typedoc/index.html", label: "TypeDoc" },
-        { href: "./generated/component-index.html", label: "Component index" },
-        { href: "./SKILL.html", label: "AI usage guide" },
-      ],
+      assetPrefix,
+      navLinks: guideNavLinks(assetPrefix),
       bodyHtml: markdownToHtml(markdown),
     }),
     "utf8",
@@ -393,7 +401,7 @@ import "drawui/styles/core.css";
 - **Experimental**: public, but behavior or styling may still evolve.
 - **Internal**: repository code that should not be treated as package API.
 
-See also the [API reference](./api/index.html) for per-symbol pages.
+See also the [API reference](../generated/api/index.html) for per-symbol pages.
 
 `;
 
@@ -440,8 +448,8 @@ Generated from \`src/api/registry.json\` and JSDoc in \`src/\`. Manual guides:
 - [Getting started](../../getting-started.html)
 - [Styling guide](../../styling.html)
 - [Publishing](../../publishing.html)
-- [Component index](../component-index.html)
-- [AI usage guide](../../SKILL.html)
+- [Component index](../../ai/component-index.html)
+- [AI usage guide](../../ai/SKILL.html)
 - [TypeDoc HTML reference](../typedoc/index.html) (DrawUI factories and documented classes)
 
 Per-symbol pages include JSDoc descriptions, \`@example\` snippets, and live previews for examples marked \`// live\`.
@@ -1030,18 +1038,20 @@ const galleryCatalog = buildGalleryLiveCatalog(manifest, demoBodies, knownSymbol
 await rm(apiDir, { recursive: true, force: true });
 await mkdir(apiDir, { recursive: true });
 
+await mkdir(aiDir, { recursive: true });
+
 const componentIndexMarkdown = renderComponentIndex(registry);
 await writeMarkdownPage(
   componentIndexMarkdown,
-  path.join(generatedDir, "component-index.md"),
-  path.join(generatedDir, "component-index.html"),
+  path.join(aiDir, "component-index.md"),
+  path.join(aiDir, "component-index.html"),
   {
     title: "Component index — DrawUI",
     assetPrefix: "../",
     navLinks: [
-      { href: "../typedoc/index.html", label: "TypeDoc" },
-      { href: "./api/index.html", label: "API pages" },
-      { href: "../../SKILL.html", label: "AI usage guide" },
+      { href: "../generated/typedoc/index.html", label: "TypeDoc" },
+      { href: "../generated/api/index.html", label: "API pages" },
+      { href: "./SKILL.html", label: "AI usage guide" },
     ],
   },
 );
@@ -1056,8 +1066,8 @@ await writeMarkdownPage(
     assetPrefix: "../../",
     navLinks: [
       { href: "../typedoc/index.html", label: "TypeDoc" },
-      { href: "../component-index.html", label: "Component index" },
-      { href: "../../SKILL.html", label: "AI usage guide" },
+      { href: "../../ai/component-index.html", label: "Component index" },
+      { href: "../../ai/SKILL.html", label: "AI usage guide" },
     ],
   },
 );
@@ -1111,7 +1121,7 @@ for (const symbol of registry.symbols) {
       navLinks: [
         { href: "./index.html", label: "API index", active: true },
         { href: "../typedoc/index.html", label: "TypeDoc" },
-        { href: "../component-index.html", label: "Component index" },
+        { href: "../../ai/component-index.html", label: "Component index" },
       ],
     },
   );
@@ -1144,10 +1154,10 @@ This folder is produced by \`npm run docs\`. Do not edit files here by hand.
 
 | Output | Source |
 | --- | --- |
-| \`component-index.md\` + \`.html\` | \`src/api/registry.json\` |
 | \`api/*.{md,html}\` | \`src/api/registry.json\` + JSDoc in \`src/\` + gallery demos |
 | \`live-demos.js\` + \`.json\` | \`docs/examples/components/demos.js\` (+ \`demos.full.js\`) via \`catalog.manifest.json\`; JSDoc \`// live\` only when no gallery demo |
 | \`typedoc/\` | JSDoc in \`src/\` (TypeDoc) + live preview injection |
+| \`../ai/component-index.*\` | \`src/api/registry.json\` (AI retrieval folder) |
 | \`../getting-started.html\`, etc. | Hand-written guides in \`docs/*.md\` |
 
 ## Authoring live examples
@@ -1180,7 +1190,7 @@ Manual documentation lives alongside this folder:
 - [Getting started](../getting-started.html)
 - [Styling](../styling.html)
 - [Publishing](../publishing.html)
-- [AI usage guide](../SKILL.html)
+- [AI docs](../ai/) — component index + usage guide
 `;
 
 await writeFile(path.join(generatedDir, "README.md"), generatedReadme, "utf8");
@@ -1191,7 +1201,7 @@ for (const guide of MANUAL_GUIDES) {
 
 const symbolPages = (await readdir(apiDir)).filter((file) => file.endsWith(".html") && file !== "index.html");
 
-console.log(`Wrote docs/generated/component-index.md + .html`);
+console.log(`Wrote docs/ai/component-index.md + .html`);
 console.log(`Wrote docs/generated/api/index.md + .html`);
 console.log(`Wrote ${symbolPages.length} symbol pages (.md + .html) under docs/generated/api/`);
 console.log(

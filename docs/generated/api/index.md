@@ -7,8 +7,8 @@ Generated from `src/api/registry.json` and JSDoc in `src/`. Manual guides:
 - [Getting started](../../getting-started.html)
 - [Styling guide](../../styling.html)
 - [Publishing](../../publishing.html)
-- [Component index](../component-index.html)
-- [AI usage guide](../../SKILL.html)
+- [Component index](../../ai/component-index.html)
+- [AI usage guide](../../ai/SKILL.html)
 - [TypeDoc HTML reference](../typedoc/index.html) (DrawUI factories and documented classes)
 
 Per-symbol pages include JSDoc descriptions, `@example` snippets, and live previews for examples marked `// live`.

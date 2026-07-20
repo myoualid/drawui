@@ -78,7 +78,7 @@
     "docs:index": "node ./scripts/generate-docs.mjs",
     "docs:api": "typedoc && node ./scripts/enhance-typedoc.mjs",
     "docs": "npm run docs:index && npm run docs:api && npm run build:catalog",
-    "check:docs": "npm run docs && git diff --exit-code docs/generated",
+    "check:docs": "npm run docs && git diff --exit-code docs/generated docs/ai",
     "check:entrypoints": "node ./scripts/check-entrypoints.mjs",
     "check:package-contents": "node ./scripts/check-package-contents.mjs"
   },
