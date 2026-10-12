@@ -2,7 +2,6 @@ import {
   Text,
   Checkbox,
   Icon,
-  Container,
   InputListItem,
   InputList,
 } from "../../primitives/ui.js";
@@ -27,11 +26,21 @@ class SortableList {
     this.container.addClass("SortableList");
     this.container.dom.setAttribute("role", "list");
 
+    this._pointerId = null;
+    this._dragActive = false;
+    this._startY = 0;
+    this._ghost = null;
+    this._ghostOffsetY = 0;
+
     this.render();
     this.setupDragAndDrop();
   }
 
   render() {
+    if (this._pointerId != null || this.draggedItem || this._ghost) {
+      this._clearDragVisuals();
+    }
+
     this.container.clear();
     this.container.listitems = [];
 
@@ -40,7 +49,6 @@ class SortableList {
       const listItem = new InputListItem(this.container);
 
       listItem.addClass("SortableList-item");
-      listItem.dom.draggable = true;
       listItem.dom.dataset.index = String(index);
       listItem.dom.setAttribute("role", "listitem");
 
@@ -72,81 +80,190 @@ class SortableList {
   setupDragAndDrop() {
     const root = this.container.dom;
 
-    root.addEventListener("dragstart", (e) => {
-      const item = e.target.closest(".SortableList-item");
-      if (!item || !root.contains(item)) return;
+    // Native HTML5 drag never starts here: the list sets user-select:none, and
+    // collapsing the source row inside dragstart cancels the gesture.
+    this._onPointerMove = (event) => {
+      if (event.pointerId !== this._pointerId || !this.draggedItem) return;
 
-      // Ignore drag starts from interactive controls
-      if (e.target.closest("input, button, label, .Checkbox")) {
-        e.preventDefault();
-        return;
+      if (!this._dragActive) {
+        if (Math.abs(event.clientY - this._startY) < 4) return;
+        this._dragActive = true;
+        this._beginDrag(this.draggedItem, event.clientY);
       }
 
+      event.preventDefault();
+      this._movePlaceholder(event.clientY);
+    };
+
+    this._onPointerUp = (event) => {
+      if (event.pointerId !== this._pointerId) return;
+      this._finishDrag(true);
+    };
+
+    this._onPointerCancel = (event) => {
+      if (event.pointerId !== this._pointerId) return;
+      this._finishDrag(false);
+    };
+
+    root.addEventListener("pointerdown", (event) => {
+      if (this._pointerId != null) return;
+      if (!event.isPrimary || event.button !== 0) return;
+
+      const item = event.target.closest?.(".SortableList-item");
+      if (!item || !root.contains(item) || item.classList.contains("is-dragging")) return;
+      if (event.target.closest("input, button, textarea, select, a, label, .Checkbox")) return;
+
+      event.stopPropagation();
+
+      this._pointerId = event.pointerId;
+      this._startY = event.clientY;
+      this._dragActive = false;
       this.draggedItem = item;
-      this._fromIndex = parseInt(item.dataset.index, 10);
-      e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("text/plain", String(this._fromIndex));
+      this._fromIndex = Number.parseInt(item.dataset.index, 10);
 
-      const height = item.offsetHeight;
-
-      this.placeholder = new Container()
-        .addClass("SortableList-placeholder")
-        .dom;
-      this.placeholder.setAttribute("aria-hidden", "true");
-      this.placeholder.style.height = `${height}px`;
-
-      // Placeholder takes the slot; hide the source row without canceling the drag
-      item.parentNode.insertBefore(this.placeholder, item);
-      item.classList.add("is-dragging");
-    });
-
-    root.addEventListener("dragend", () => {
-      if (this.draggedItem) {
-        this.draggedItem.classList.remove("is-dragging");
-        this.draggedItem = null;
+      try {
+        root.setPointerCapture(event.pointerId);
+      } catch {
+        /* pointer already released */
       }
-      this._fromIndex = -1;
-      this._removePlaceholder();
+
+      window.addEventListener("pointermove", this._onPointerMove, { passive: false });
+      window.addEventListener("pointerup", this._onPointerUp);
+      window.addEventListener("pointercancel", this._onPointerCancel);
     });
+  }
 
-    root.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
-      if (!this.placeholder) return;
+  /**
+   * @param {HTMLElement} item
+   * @param {number} clientY
+   */
+  _beginDrag(item, clientY) {
+    const rect = item.getBoundingClientRect();
 
-      const target = e.target.closest(".SortableList-item");
-      if (!target || target === this.draggedItem || !root.contains(target)) return;
+    const ghost = item.cloneNode(true);
+    ghost.classList.add("SortableList-ghost");
+    ghost.removeAttribute("id");
+    ghost.setAttribute("aria-hidden", "true");
+    ghost.style.position = "fixed";
+    ghost.style.left = `${rect.left}px`;
+    ghost.style.top = `${rect.top}px`;
+    ghost.style.width = `${rect.width}px`;
+    ghost.style.height = `${rect.height}px`;
+    ghost.style.margin = "0";
+    ghost.style.boxSizing = "border-box";
+    ghost.style.pointerEvents = "none";
+    document.body.appendChild(ghost);
 
-      const rect = target.getBoundingClientRect();
-      const before = e.clientY < rect.top + rect.height / 2;
+    const placeholder = document.createElement("div");
+    placeholder.className = "SortableList-placeholder";
+    placeholder.setAttribute("aria-hidden", "true");
+    placeholder.style.height = `${rect.height}px`;
+    item.parentNode.insertBefore(placeholder, item);
+    item.classList.add("is-dragging");
 
-      if (before) {
-        target.parentNode.insertBefore(this.placeholder, target);
-      } else {
-        target.parentNode.insertBefore(this.placeholder, target.nextSibling);
+    this._ghost = ghost;
+    this._ghostOffsetY = clientY - rect.top;
+    this.placeholder = placeholder;
+    document.documentElement.classList.add("SortableList-sorting");
+  }
+
+  /**
+   * @param {number} clientY
+   */
+  _movePlaceholder(clientY) {
+    if (this._ghost) {
+      this._ghost.style.top = `${clientY - this._ghostOffsetY}px`;
+    }
+    if (!this.placeholder) return;
+
+    const parent = this.container.dom;
+    const rows = parent.querySelectorAll(".SortableList-item:not(.is-dragging)");
+    let before = null;
+    for (const row of rows) {
+      const rect = row.getBoundingClientRect();
+      if (clientY < rect.top + rect.height / 2) {
+        before = row;
+        break;
       }
-    });
+    }
 
-    root.addEventListener("drop", (e) => {
-      e.preventDefault();
-      if (!this.draggedItem || !this.placeholder) return;
+    if (before) {
+      if (this.placeholder.nextElementSibling !== before) {
+        parent.insertBefore(this.placeholder, before);
+      }
+    } else if (parent.lastElementChild !== this.placeholder) {
+      parent.appendChild(this.placeholder);
+    }
+  }
 
-      const fromIndex = this._fromIndex;
-      const toIndex = this._placeholderIndex();
+  /**
+   * @param {boolean} commit
+   */
+  _finishDrag(commit) {
+    if (this._pointerId == null && !this.draggedItem) return;
 
-      this._removePlaceholder();
+    const fromIndex = this._fromIndex;
+    const toIndex = commit && this._dragActive ? this._placeholderIndex() : -1;
+    const didDrag = this._dragActive;
+
+    this._clearDragVisuals();
+    if (didDrag) this._suppressNextClick();
+
+    if (!commit || !Number.isInteger(fromIndex) || fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) {
+      return;
+    }
+
+    const [moved] = this.items.splice(fromIndex, 1);
+    this.items.splice(toIndex, 0, moved);
+    this.render();
+
+    if (this.onReorder) this.onReorder(this.getItems());
+  }
+
+  _clearDragVisuals() {
+    if (this._onPointerMove) {
+      window.removeEventListener("pointermove", this._onPointerMove);
+      window.removeEventListener("pointerup", this._onPointerUp);
+      window.removeEventListener("pointercancel", this._onPointerCancel);
+    }
+
+    const root = this.container?.dom;
+    if (root && this._pointerId != null && root.hasPointerCapture?.(this._pointerId)) {
+      try {
+        root.releasePointerCapture(this._pointerId);
+      } catch {
+        /* capture already released */
+      }
+    }
+
+    if (this.draggedItem) {
       this.draggedItem.classList.remove("is-dragging");
-      this.draggedItem = null;
-      this._fromIndex = -1;
+    }
 
-      if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) return;
+    this._removePlaceholder();
 
-      const [moved] = this.items.splice(fromIndex, 1);
-      this.items.splice(toIndex, 0, moved);
-      this.render();
+    if (this._ghost?.parentNode) {
+      this._ghost.parentNode.removeChild(this._ghost);
+    }
+    this._ghost = null;
+    document.documentElement.classList.remove("SortableList-sorting");
 
-      if (this.onReorder) this.onReorder(this.getItems());
-    });
+    this.draggedItem = null;
+    this._fromIndex = -1;
+    this._pointerId = null;
+    this._dragActive = false;
+  }
+
+  _suppressNextClick() {
+    const root = this.container.dom;
+    const stop = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      root.removeEventListener("click", stop, true);
+    };
+    root.addEventListener("click", stop, true);
+    // A drag may not be followed by a click. Don't let this swallow a later one.
+    window.setTimeout(() => root.removeEventListener("click", stop, true), 50);
   }
 
   /**

@@ -185,8 +185,7 @@
   width: 100%;
 }
 
-.PropertyGrid-row:has(.InputTextArea),
-.PropertyGrid-row:has(.Slider) {
+.PropertyGrid-row:has(.InputTextArea) {
   align-items: start;
 }
 
@@ -239,6 +238,15 @@
 .WorkspacePanel-float {
   color: var(--dui-color-text-subtle);
   cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dui-transition-fast), color var(--dui-transition-fast);
+}
+
+.WorkspacePanel > .Header:hover .WorkspacePanel-float,
+.WorkspacePanel > .Header:focus-within .WorkspacePanel-float {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .WorkspacePanel-float:hover {
@@ -278,7 +286,16 @@
   color: var(--dui-color-text-subtle);
   cursor: pointer;
   min-height: 0;
+  opacity: 0;
   padding: 2px;
+  pointer-events: none;
+  transition: opacity var(--dui-transition-fast), color var(--dui-transition-fast);
+}
+
+.Header:hover .Panel-close,
+.Header:focus-within .Panel-close {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .Header .Panel-close:hover,
@@ -286,6 +303,14 @@
   background: transparent;
   border-color: transparent;
   color: var(--dui-color-text);
+}
+
+@media (hover: none) {
+  .WorkspacePanel-float,
+  .Header .Panel-close {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 
@@ -580,7 +605,8 @@
   color: var(--dui-color-text-muted);
   flex-shrink: 0;
   opacity: 0.5;
-  transition: opacity var(--dui-transition-fast);
+  transform-origin: center;
+  transition: opacity var(--dui-transition-fast), transform var(--dui-transition-fast);
 }
 
 .CollapsiblePanel:hover .CollapsiblePanel-toggle {
@@ -633,8 +659,8 @@
   background: var(--dui-surface-overlay-bg);
   backdrop-filter: var(--dui-surface-blur);
   border: 1px solid var(--dui-color-border);
-  border-radius: var(--dui-radius);
-  box-shadow: var(--dui-shadow-overlay);
+  border-radius: 10px;
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.65);
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -665,14 +691,149 @@
 }
 
 .FloatingWindow > .Header {
-  cursor: move;
+  background: var(--dui-color-surface-raised);
+  border-bottom: 1px solid var(--dui-color-border);
+  cursor: grab;
+  padding: 0.6rem 0.9rem;
+  position: relative;
+}
+
+.FloatingWindow-dots {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+button.FloatingWindow-dot {
+  appearance: none;
+  background: var(--dui-color-text-subtle);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+  cursor: pointer;
+  display: block;
+  flex-shrink: 0;
+  height: 9px;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  width: 9px;
+}
+
+button.FloatingWindow-dot--close {
+  background: color-mix(in srgb, var(--dui-color-danger) 42%, var(--dui-color-surface-raised));
+}
+
+button.FloatingWindow-dot--minimize {
+  background: color-mix(in srgb, var(--dui-color-warning) 42%, var(--dui-color-surface-raised));
+}
+
+button.FloatingWindow-dot--maximize {
+  background: color-mix(in srgb, var(--dui-color-success) 48%, var(--dui-color-surface-raised));
+}
+
+button.FloatingWindow-dot--close:hover,
+button.FloatingWindow-dot--close:focus-visible,
+button.FloatingWindow-dot--close:active {
+  background: var(--dui-color-danger);
+  border-color: transparent;
+}
+
+button.FloatingWindow-dot--minimize:hover,
+button.FloatingWindow-dot--minimize:focus-visible,
+button.FloatingWindow-dot--minimize:active {
+  background: var(--dui-color-warning);
+  border-color: transparent;
+}
+
+button.FloatingWindow-dot--maximize:hover,
+button.FloatingWindow-dot--maximize:focus-visible,
+button.FloatingWindow-dot--maximize:active,
+.FloatingWindow.maximized button.FloatingWindow-dot--maximize {
+  background: var(--dui-color-success);
+  border-color: transparent;
+}
+
+button.FloatingWindow-dot:focus-visible {
+  box-shadow: 0 0 0 2px var(--dui-color-focus);
+}
+
+button.FloatingWindow-dot:active {
+  filter: brightness(1.08);
+}
+
+button.FloatingWindow-dot:disabled {
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.FloatingWindow-titleGroup {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  left: 50%;
+  max-width: calc(100% - 9.5rem);
+  min-width: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.FloatingWindow-title,
+.FloatingWindow-titleIcon {
+  color: var(--dui-color-text-muted);
+  font-family: var(--dui-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.FloatingWindow-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.FloatingWindow-titleIcon {
+  flex-shrink: 0;
+  font-size: 14px;
 }
 
 .FloatingWindow-tools {
   align-items: center;
   display: inline-flex;
   flex-shrink: 0;
-  gap: 0.25rem;
+  gap: 0.2rem;
+  justify-self: end;
+  opacity: 0;
+  transition: opacity var(--dui-transition-fast);
+}
+
+.FloatingWindow > .Header:hover .FloatingWindow-tools,
+.FloatingWindow > .Header:focus-within .FloatingWindow-tools {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .FloatingWindow-tools {
+    opacity: 1;
+  }
+}
+
+.FloatingWindow-tools .FloatingWindow-tool {
+  color: var(--dui-color-text-subtle);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.FloatingWindow-tools .FloatingWindow-tool:hover {
+  color: var(--dui-color-text);
 }
 
 .FloatingWindow-content {
@@ -682,6 +843,7 @@
   margin: 0;
   min-height: 0;
   overflow: auto;
+  padding: 0.15rem 0.7rem 0.55rem;
   position: relative;
 }
 
@@ -1321,7 +1483,7 @@ label,
 .Slider {
   align-items: center;
   display: flex;
-  gap: var(--dui-space-2);
+  gap: var(--dui-space-4);
   min-width: 0;
   width: 100%;
 }
@@ -1331,33 +1493,57 @@ input.Slider-range {
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
   flex: 1 1 auto;
-  height: var(--dui-space-6);
+  height: 22px;
   margin: 0;
-  min-width: 0;
+  min-width: 2.5rem;
   padding: 0;
 }
 
+.Slider-range:hover,
+.Slider-range:focus,
+.Slider-range:focus-visible,
+input.Slider-range:hover,
+input.Slider-range:focus,
+input.Slider-range:focus-visible {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
 .Slider-range::-webkit-slider-runnable-track {
-  background: var(--dui-color-control);
+  background: linear-gradient(
+    to right,
+    var(--dui-color-accent) var(--slider-fill, 0%),
+    color-mix(in srgb, var(--dui-color-text) 38%, transparent) var(--slider-fill, 0%)
+  );
   border-radius: 999px;
-  height: 6px;
+  height: 10px;
 }
 
 .Slider-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background: var(--dui-color-accent);
-  border: 0;
+  background: var(--dui-color-text);
+  border: 2px solid var(--dui-color-bg);
   border-radius: 50%;
-  cursor: pointer;
-  height: 14px;
+  box-shadow: 0 0 0 2px var(--dui-color-accent);
+  cursor: grab;
+  height: 18px;
   margin-top: -4px;
-  width: 14px;
+  width: 18px;
 }
 
 .Slider-range:hover::-webkit-slider-thumb {
-  background: var(--dui-color-accent-hover);
+  box-shadow: 0 0 0 3px var(--dui-color-accent-hover);
+}
+
+.Slider-range:active::-webkit-slider-thumb {
+  cursor: grabbing;
 }
 
 .Slider-range:focus-visible {
@@ -1365,40 +1551,112 @@ input.Slider-range {
 }
 
 .Slider-range:focus-visible::-webkit-slider-thumb {
-  box-shadow: var(--dui-focus-ring);
+  box-shadow: var(--dui-focus-ring), 0 0 0 2px var(--dui-color-accent);
 }
 
 .Slider-range::-moz-range-track {
-  background: var(--dui-color-control);
-  border: none;
+  background: linear-gradient(
+    to right,
+    var(--dui-color-accent) var(--slider-fill, 0%),
+    color-mix(in srgb, var(--dui-color-text) 38%, transparent) var(--slider-fill, 0%)
+  );
+  border: 0;
   border-radius: 999px;
-  height: 6px;
+  height: 10px;
 }
 
 .Slider-range::-moz-range-thumb {
-  background: var(--dui-color-accent);
-  border: 0;
+  background: var(--dui-color-text);
+  border: 2px solid var(--dui-color-bg);
   border-radius: 50%;
-  cursor: pointer;
-  height: 14px;
-  width: 14px;
+  box-shadow: 0 0 0 2px var(--dui-color-accent);
+  cursor: grab;
+  height: 18px;
+  width: 18px;
 }
 
 .Slider-range:hover::-moz-range-thumb {
-  background: var(--dui-color-accent-hover);
+  box-shadow: 0 0 0 3px var(--dui-color-accent-hover);
+}
+
+.Slider-range:active::-moz-range-thumb {
+  cursor: grabbing;
 }
 
 .Slider-range:focus-visible::-moz-range-thumb {
+  box-shadow: var(--dui-focus-ring), 0 0 0 2px var(--dui-color-accent);
+}
+
+.Slider-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.Slider-stepper {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0;
+}
+
+.Slider-step,
+button.Slider-step {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--dui-radius);
+  box-shadow: none;
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 1.15rem;
+  font-weight: 700;
+  height: 1.6rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.35rem;
+}
+
+.Slider-step:hover,
+button.Slider-step:hover {
+  background: var(--dui-color-surface-hover);
+  border: 0;
+  color: var(--dui-color-accent);
+}
+
+.Slider-step:focus-visible,
+button.Slider-step:focus-visible {
   box-shadow: var(--dui-focus-ring);
 }
 
 .Slider-value,
 .Slider .InputNumber,
 .Slider input.InputNumber {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   flex: 0 0 4.25rem;
   min-width: 4.25rem;
-  text-align: right;
+  padding: 0 0.15rem;
+  text-align: center;
   width: 4.25rem;
+}
+
+.Slider .InputNumber:hover,
+.Slider .InputNumber:focus,
+.Slider .InputNumber:focus-visible,
+.Slider input.InputNumber:hover,
+.Slider input.InputNumber:focus,
+.Slider input.InputNumber:focus-visible {
+  background: var(--dui-color-surface-hover);
+  border: 0;
+  box-shadow: none;
+}
+
+.Slider input.InputNumber:focus-visible {
+  box-shadow: var(--dui-focus-ring);
 }
 
 progress {
@@ -1513,7 +1771,7 @@ progress::-moz-progress-bar {
   border: 1px solid var(--dui-color-border);
   border-radius: var(--dui-radius);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 6px;
   padding: 10px 12px;
   width: 100%;
@@ -1575,10 +1833,24 @@ progress::-moz-progress-bar {
 
 .SortableList-item {
   cursor: grab;
+  touch-action: none;
 }
 
 .SortableList-item:active {
   cursor: grabbing;
+}
+
+.SortableList-ghost {
+  background: var(--dui-color-surface);
+  border-color: color-mix(in srgb, var(--dui-color-accent) 45%, var(--dui-color-border));
+  box-shadow: var(--dui-shadow-md);
+  opacity: 0.96;
+  z-index: 10060;
+}
+
+html.SortableList-sorting,
+html.SortableList-sorting * {
+  cursor: grabbing !important;
 }
 
 .SortableList-item .SortableList-handle {

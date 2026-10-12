@@ -1782,8 +1782,24 @@ class InputInteger extends InputNumber {
   }
 }
 
+function paintSlider(slider) {
+  const span = slider.max - slider.min;
+  const ratio = span === 0 ? 0 : (slider.value - slider.min) / span;
+
+  slider.range.style.setProperty(
+    "--slider-fill",
+    `${Math.min(1, Math.max(0, ratio)) * 100}%`,
+  );
+
+  const locked = slider.range.disabled;
+
+  slider.decrement.disabled = locked || slider.value <= slider.min;
+  slider.increment.disabled = locked || slider.value >= slider.max;
+}
+
 /**
  * Number slider: range track synced with a numeric field.
+ * The field keeps drag-to-scrub and adds step buttons.
  * Dispatches bubbling `input` / `change` on the root element.
  *
  * @example <caption>Basic</caption>
@@ -1813,8 +1829,23 @@ class Slider extends Control {
     this.field = new InputNumber(number);
     this.field.addClass("Slider-value");
 
-    this.dom.appendChild(this.range);
-    this.dom.appendChild(this.field.dom);
+    this.decrement = document.createElement("button");
+    this.decrement.type = "button";
+    this.decrement.className = "Slider-step";
+    this.decrement.textContent = "−";
+    this.decrement.setAttribute("aria-label", "Decrease");
+
+    this.increment = document.createElement("button");
+    this.increment.type = "button";
+    this.increment.className = "Slider-step";
+    this.increment.textContent = "+";
+    this.increment.setAttribute("aria-label", "Increase");
+
+    this.stepper = document.createElement("div");
+    this.stepper.className = "Slider-stepper";
+    this.stepper.append(this.decrement, this.field.dom, this.increment);
+
+    this.dom.append(this.range, this.stepper);
 
     const scope = this;
 
@@ -1825,6 +1856,14 @@ class Slider extends Control {
           cancelable: true,
         }),
       );
+    }
+
+    function stepBy(delta) {
+      if (scope.range.disabled) return;
+
+      scope.setValue(scope.value + delta);
+      emit("input");
+      emit("change");
     }
 
     function syncFromRange() {
@@ -1843,6 +1882,8 @@ class Slider extends Control {
       emit("change");
     }
 
+    this.decrement.addEventListener("click", () => stepBy(-scope.step));
+    this.increment.addEventListener("click", () => stepBy(scope.step));
     this.range.addEventListener("input", syncFromRange);
     this.range.addEventListener("change", commitFromRange);
     this.field.dom.addEventListener("change", syncFromField);
@@ -1873,6 +1914,7 @@ class Slider extends Control {
     this.value = value;
     this.range.value = String(value);
     this.field.setValue(value);
+    paintSlider(this);
 
     return this;
   }
@@ -1916,6 +1958,7 @@ class Slider extends Control {
 
     this.range.disabled = disabled;
     this.field.setDisabled(disabled);
+    paintSlider(this);
 
     return this;
   }

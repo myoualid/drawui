@@ -5,6 +5,7 @@ import {
   Container,
   Button,
   InputText,
+  Control,
 } from "../primitives/ui.js";
 
 import { Header } from "../components/panels/Header.js";
@@ -125,8 +126,22 @@ class FloatingWindow extends Rectangle {
   }
 
   setIcon(iconName) {
-    this.panelIcon = iconName;
-    this.header.setIcon(iconName || null);
+    this.panelIcon = iconName || null;
+
+    if (!iconName) {
+      this._titleIcon?.setHidden(true);
+      return this;
+    }
+
+    if (!this._titleIcon) {
+      this._titleIcon = new Icon(iconName);
+      this._titleIcon.addClass("FloatingWindow-titleIcon");
+      this.titleGroup.dom.insertBefore(this._titleIcon.dom, this.header.titleElement.dom);
+    } else {
+      this._titleIcon.setIcon(iconName);
+      this._titleIcon.setHidden(false);
+    }
+
     return this;
   }
 
@@ -225,6 +240,8 @@ class FloatingWindow extends Rectangle {
       this._pinned = null;
 
       this.isMaximized = false;
+
+      this._syncMaximizeDot();
     }
 
     return this;
@@ -395,23 +412,33 @@ class FloatingWindow extends Rectangle {
   // ==================== Private Build Methods ====================
 
   _buildHeader() {
+    const dots = new Container().addClass("FloatingWindow-dots");
+    this._closeDot = this._createDot("close", () => this.close(), "Close");
+    this._minimizeDot = this._createDot("minimize", () => this.minimize(), "Minimize");
+    this._maximizeDot = this._createDot("maximize", () => this._toggleMaximize(), "Maximize");
+    dots.add(this._closeDot, this._minimizeDot, this._maximizeDot);
+    if (!this.closable) /** @type {HTMLButtonElement} */ (this._closeDot.dom).disabled = true;
+
     const tools = [
       this._createHeaderButton("left_panel_open", () => this._togglePin("left"), "Dock left"),
       this._createHeaderButton("bottom_panel_open", () => this._togglePin("bottom"), "Dock bottom"),
       this._createHeaderButton("right_panel_open", () => this._togglePin("right"), "Dock right"),
-      this._createHeaderButton("open_in_full", () => this._toggleMaximize(), "Maximize"),
     ];
-
-    if (this.closable) {
-      tools.push(this._createHeaderButton("close", () => this.close(), "Close"));
-    }
 
     const header = new Header({
       title: "",
+      leadingActions: [dots],
       actions: tools,
       alwaysActionsColumn: true,
     });
+    header.addClass("FloatingWindow-header");
+    header.titleElement.addClass("FloatingWindow-title");
     header.actions?.addClass("FloatingWindow-tools");
+
+    this.titleGroup = new Container().addClass("FloatingWindow-titleGroup");
+    this.titleGroup.add(header.titleElement);
+    if (header.actions) header.dom.insertBefore(this.titleGroup.dom, header.actions.dom);
+    else header.add(this.titleGroup);
 
     this.add(header);
 
@@ -424,12 +451,38 @@ class FloatingWindow extends Rectangle {
     this.add(this.contentWrapper);
   }
 
+  _createDot(kind, onClick, label) {
+    const button = new Control(document.createElement("button"));
+    button.addClass("FloatingWindow-dot");
+    button.addClass(`FloatingWindow-dot--${kind}`);
+    /** @type {HTMLButtonElement} */ (button.dom).type = "button";
+    button.dom.title = label;
+    button.dom.setAttribute("aria-label", label);
+    button.dom.addEventListener("mousedown", (event) => event.stopPropagation());
+    button.dom.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onClick();
+    });
+    return button;
+  }
+
   _createHeaderButton(iconName, onClick, tooltip = "") {
     const button = new Icon(iconName);
     button.addClass("Operator");
     button.addClass("FloatingWindow-tool");
     button.dom.title = tooltip;
+    button.dom.setAttribute("role", "button");
+    button.dom.setAttribute("aria-label", tooltip);
+    button.dom.tabIndex = 0;
+    button.dom.addEventListener("mousedown", (event) => event.stopPropagation());
     button.dom.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onClick();
+    });
+    button.dom.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
       event.stopPropagation();
       onClick();
@@ -504,6 +557,8 @@ class FloatingWindow extends Rectangle {
 
       this.isMaximized = false;
 
+      this._syncMaximizeDot();
+
       return;
     }
 
@@ -517,6 +572,8 @@ class FloatingWindow extends Rectangle {
     this._pinned = position;
 
     this._applyPosition(PIN_CONFIGS[position]);
+
+    this._syncMaximizeDot();
   }
 
   _toggleMaximize() {
@@ -539,6 +596,14 @@ class FloatingWindow extends Rectangle {
       this.isMaximized = true;
     }
 
+    this._syncMaximizeDot();
+  }
+
+  _syncMaximizeDot() {
+    const label = this.isMaximized ? "Restore" : "Maximize";
+    this._maximizeDot.dom.title = label;
+    this._maximizeDot.dom.setAttribute("aria-label", label);
+    this._maximizeDot.dom.setAttribute("aria-pressed", this.isMaximized ? "true" : "false");
   }
 
   _getPanelContainer() {

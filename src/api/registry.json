@@ -725,16 +725,11 @@
       "emits": [
         "FloatingWindow",
         "FloatingWindow-header",
-        "FloatingWindow-content",
-        "circle",
-        "pos-btn",
-        "green",
-        "red",
-        "Row",
-        "centered-vertical",
-        "justify-between",
-        "fill-width",
-        "fill-height"
+        "FloatingWindow-dots",
+        "FloatingWindow-dot",
+        "FloatingWindow-title",
+        "FloatingWindow-tools",
+        "FloatingWindow-content"
       ],
       "notes": "Free-floating window with docking controls."
     },

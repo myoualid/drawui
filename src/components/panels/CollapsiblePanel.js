@@ -58,15 +58,14 @@ export class CollapsiblePanel extends Panel {
     if (className) this.addClass(className);
 
     this._collapsed = Boolean(collapsed);
-    this.toggleIcon = new Icon(this._collapsed ? "chevron_right" : "expand_less");
+    this.toggleIcon = new Icon("expand_more");
     this.toggleIcon.addClass("CollapsiblePanel-toggle");
 
     if (showHeader) {
       this.header({
         title,
         icon,
-        actions: [this.toggleIcon],
-        alwaysActionsColumn: true,
+        leadingActions: [this.toggleIcon],
       });
       this._bindCollapseHeader();
     }
@@ -98,7 +97,6 @@ export class CollapsiblePanel extends Panel {
   collapse() {
     this.addClass("collapsed");
     this._collapsed = true;
-    this.toggleIcon.modify("chevron_right");
     this._header?.dom.setAttribute("aria-expanded", "false");
     return this;
   }
@@ -107,7 +105,6 @@ export class CollapsiblePanel extends Panel {
   expand() {
     this.removeClass("collapsed");
     this._collapsed = false;
-    this.toggleIcon.modify("expand_less");
     this._header?.dom.setAttribute("aria-expanded", "true");
     return this;
   }
