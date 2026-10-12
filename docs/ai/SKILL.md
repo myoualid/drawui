@@ -37,8 +37,8 @@ Do not import from package-internal files unless the path is exported in `packag
 ## Component Selection
 
 - Use `StackPanel` and `Grid` to arrange components inside a panel.
-- Use `new World()`, then `new Layout(config).init(world)`, when the app docks panels.
-- Use `new Panel(...)` from `ifcopenshell/layout` for a docked panel.
+- Use `new World()`, then `new Layout(config).init(world)`, when the app docks panels. Listen with `layout.on("workspace", handler)` and `layout.on("tab:selected", handler)`.
+- Use `new Panel({ layout, position, id, label })` from `ifcopenshell/layout` for a docked panel. Call `panel.bindTo(button)` for a control the app owns.
 - Use `Panel` from `ifcopenshell/gui` for fixed header, content, and footer regions.
 - Use `FloatingWindow` for draggable or dockable floating windows.
 - Use `CollapsiblePanel` for accordion content inside another surface.
@@ -81,7 +81,7 @@ Before adding or changing a component:
 
 ## Do Not
 
-- Do not make IfcOpenShell GUI depend on host-application runtime objects.
+- Do not make IfcOpenShell GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.
 - Do not move app-specific CSS into package core layers.
 - Do not add framework dependencies for core components.
 - Do not introduce a `GUI.Button()` facade, a `peers` import, or `Layout.buildWorld()`.

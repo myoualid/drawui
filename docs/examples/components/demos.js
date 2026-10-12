@@ -192,23 +192,7 @@ export const DEMO_BUILDERS = {
       "flex-start",
     ),
 
-  "day-night": () => {
-    const context = {
-      config: { ui: { theme: { current: "night", default: "night" } } },
-      signals: {
-        themeChanged: {
-          add() {},
-        },
-      },
-    };
-    const ops = {
-      execute(_cmd, ctx, theme) {
-        document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-        ctx.config.ui.theme.current = theme;
-      },
-    };
-    return new GUI.ThemeToggle(context, ops);
-  },
+    "day-night": () => new GUI.ThemeToggle({ theme: "dark" }),
 
   "split-container": () => {
     const left = new GUI.Rectangle()
@@ -633,22 +617,14 @@ export const DEMO_BUILDERS = {
     hint.setStyle("left", ["0.75rem"]);
     viewport.add(hint);
 
-    const operators = {
-      canExecute: () => true,
-      execute: async (operatorId) => {
-        status.setTextContent(`Last action: ${operatorId}`);
-      },
-    };
-
     const menu = new RadialMenu({
       viewport: viewport.dom,
-      operators,
       items: [
-        { operator: "demo.select_all", icon: "select_all", name: "Select all" },
-        { operator: "demo.duplicate", icon: "content_copy", name: "Duplicate" },
-        { operator: "demo.group", icon: "category", name: "Group" },
-        { operator: "demo.hide", icon: "visibility_off", name: "Hide" },
-        { operator: "demo.delete", icon: "delete", name: "Delete" },
+        { icon: "select_all", name: "Select all", onSelect: () => status.setTextContent("Last action: Select all") },
+        { icon: "content_copy", name: "Duplicate", onSelect: () => status.setTextContent("Last action: Duplicate") },
+        { icon: "category", name: "Group", onSelect: () => status.setTextContent("Last action: Group") },
+        { icon: "visibility_off", name: "Hide", onSelect: () => status.setTextContent("Last action: Hide") },
+        { icon: "delete", name: "Delete", onSelect: () => status.setTextContent("Last action: Delete") },
       ],
     });
 

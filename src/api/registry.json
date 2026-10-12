@@ -676,7 +676,7 @@
       "emits": [
         "Operator"
       ],
-      "notes": "Icon-only operator control shell."
+      "notes": "Icon-only button."
     },
     {
       "name": "LabeledBoxItem",
@@ -698,11 +698,10 @@
         "ifcopenshell/layout"
       ],
       "emits": [
-        "World",
-        "WorkspaceStack",
-        "Resizer"
+        "Layout",
+        "Panel"
       ],
-      "notes": "Workspace shell, layout manager, and docked panel. `new World()`, `new Layout(config).init(world)`, `new Panel(...)`. Import from `ifcopenshell/layout`."
+      "notes": "Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `ifcopenshell/layout`."
     },
     {
       "name": "Panel",
@@ -714,7 +713,7 @@
       "emits": [
         "CollapsiblePanel"
       ],
-      "notes": "Docked workspace panel. `new Panel({ title, position, tabId, tabLabel })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`."
+      "notes": "Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`."
     },
     {
       "name": "FloatingWindow",

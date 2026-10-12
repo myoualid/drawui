@@ -32,7 +32,6 @@ export class Panel extends Rectangle {
     super();
 
     const {
-      id,
       parentId = null,
       panelStyles = {},
       resizeHandles = ['e', 's', 'se'],

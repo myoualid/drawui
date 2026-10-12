@@ -98,7 +98,7 @@ Three demos with **different layouts** — not the same ribbon/workspace chrome:
 | File | Role |
 | --- | --- |
 | [`index.html`](./templates/index.html) | Full-viewport entry |
-| [`world-config.js`](./templates/world-config.js) | Region ids + ribbon `moduleId`s |
+| [`world-config.js`](./templates/world-config.js) | Region ids and ribbon button ids |
 | [`app.js`](./templates/app.js) | Mount world, panels, viewport card |
 | [`templates.css`](./templates/templates.css) | Host chrome |
 

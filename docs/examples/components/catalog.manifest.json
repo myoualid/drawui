@@ -374,9 +374,10 @@
           "id": "day-night",
           "title": "ThemeToggle",
           "apis": [
-            "new ThemeToggle(context, ops)"
+            "new ThemeToggle(options?)"
           ],
-          "summary": "Light/dark theme switch. Needs app `context` (config + signals) and an `ops.execute` handler.",
+          "summary": "Light/dark switch. Sets data-theme on the document.",
+          "options": "{ theme?: \"light\" | \"dark\", onChange?(theme) }",
           "demo": "day-night"
         }
       ]
@@ -784,9 +785,9 @@
             "new Layout.Panel(options)",
             "Layout.Panel"
           ],
-          "summary": "Dockable workspace panel. With startFloating it works standalone as a floating window.",
-          "options": "{ context, tabId, tabLabel, icon?, title?, position?, startFloating?, floatingStyles? }",
-          "note": "Import Layout from ifcopenshell/layout. Docking into left/right/bottom tabs needs a Layout instance. Open full.html for the live demo.",
+          "summary": "Dockable workspace panel. startFloating opens it without a layout.",
+          "options": "{ layout, position?, id, label, title?, icon?, group?, floatable?, startFloating? }",
+          "note": "Import Panel from ifcopenshell/layout. Pass the Layout instance to dock into left, right, or bottom.",
           "demo": "tab-panel"
         }
       ]
@@ -821,10 +822,10 @@
           "apis": [
             "RadialMenu"
           ],
-          "summary": "Radial operator menu bound to a viewport element.",
+          "summary": "Radial menu bound to a viewport element.",
           "demo": "pie-menu",
-          "options": "{ viewport, operators, items, shortcut?, context? }",
-          "note": "operators needs { canExecute(op, ctx), execute(op, ctx) }. Link styles/components/pie-menu.css."
+          "options": "{ viewport, items: [{ icon, name, onSelect }], shortcut? }",
+          "note": "Each item calls onSelect. Link styles/components/pie-menu.css."
         }
       ]
     },
@@ -897,18 +898,18 @@
             "new Layout(options?)",
             "Layout"
           ],
-          "summary": "Grid workspace with dockable Layout.Panel stacks and resizers.",
-          "note": "Import from ifcopenshell/layout. See examples/templates/ for a workspace demo."
+          "summary": "Region grid: open, resize, and dock panels. See the method list on the Layout API page.",
+          "note": "Import from ifcopenshell/layout. new Layout(options).init(world)."
         },
         {
           "id": "world-builder",
-          "title": "Layout.buildWorld",
+          "title": "World",
           "apis": [
-            "Layout.buildWorld(config, container?, options?)",
-            "Layout.createConfig(overrides?)"
+            "new World(config?)",
+            "World"
           ],
-          "summary": "Build the workspace DOM tree from declarative config before Layout.init.",
-          "note": "See examples/templates/ for a Layout.buildWorld demo."
+          "summary": "Application shell. new World() builds ribbon, regions, viewport, and footer.",
+          "note": "world.mount(document.body), then new Layout(options).init(world)."
         }
       ]
     }

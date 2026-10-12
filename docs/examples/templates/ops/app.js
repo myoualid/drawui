@@ -72,27 +72,7 @@ const ALERTS = [
   { title: "cdn cache hit", detail: "Recovered to 94%", tone: "ok" },
 ];
 
-function createThemeContext() {
-  const listeners = new Set();
-  return {
-    config: { ui: { theme: { current: "night", default: "night" } } },
-    signals: {
-      themeChanged: {
-        add(fn) {
-          listeners.add(fn);
-        },
-        remove(fn) {
-          listeners.delete(fn);
-        },
-        dispatch(theme) {
-          for (const fn of listeners) fn(theme);
-        },
-      },
-    },
-  };
-}
-
-function buildHeader(context, themeOps, statusBar) {
+function buildHeader(statusBar) {
   return new StackPanel({ isVertical: false })
     .addClass("ops-header")
     .gap("0.75rem")
@@ -114,7 +94,7 @@ function buildHeader(context, themeOps, statusBar) {
           ],
           "flex-start",
         ),
-        new ThemeToggle(context, themeOps),
+        new ThemeToggle({ theme: "dark" }),
         new Button("Page on-call")
           .addClass("primary")
           .onClick(() => {
@@ -307,15 +287,6 @@ function buildMainPane() {
 }
 
 export function startOpsDemo(host) {
-  const context = createThemeContext();
-  const themeOps = {
-    execute(_cmd, ctx, theme) {
-      document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-      ctx.config.ui.theme.current = theme;
-      ctx.signals.themeChanged.dispatch(theme);
-    },
-  };
-
   const statusBar = new StatusBar({ initialText: "Ready" });
   statusBar.hide();
 
@@ -335,7 +306,7 @@ export function startOpsDemo(host) {
     ),
   );
 
-  root.add(buildHeader(context, themeOps, statusBar));
+  root.add(buildHeader(statusBar));
   root.add(mainWrap);
   root.add(footer);
   host.appendChild(root.dom);

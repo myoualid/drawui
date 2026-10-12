@@ -480,9 +480,8 @@ export const FULL_DEMO_BUILDERS = {
       .onClick(() => {
         if (!panel) {
           panel = new Layout.Panel({
-            context: { ui: { model: {} } },
-            tabId: "gallery-demo-tab",
-            tabLabel: "Demo panel",
+            id: "gallery-demo-tab",
+            label: "Demo panel",
             icon: "tab",
             title: "Floating tab panel",
             startFloating: true,
@@ -492,7 +491,7 @@ export const FULL_DEMO_BUILDERS = {
             new StackPanel({ isVertical: true })
               .gap("0.5rem")
               .setStyle("padding", ["0.75rem"])
-              .add(new Text("Layout.Panel content — dock buttons appear when a Layout context is provided."))
+              .add(new Text("Pass layout to dock this panel. startFloating opens it on its own."))
               .add(new Badge("startFloating: true")),
           );
         }
@@ -502,7 +501,7 @@ export const FULL_DEMO_BUILDERS = {
     wrap.add(openButton);
     wrap.add(
       new Caption(
-        "Without a Layout instance the panel opens as a floating window; inside a workspace it docks (undock transfers content into a FloatingWindow).",
+        "Without a layout instance the panel opens as a floating window. Pass layout to dock it into a region.",
       ),
     );
     return wrap;

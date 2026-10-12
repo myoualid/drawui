@@ -389,37 +389,7 @@ function pageBriefing() {
 
 /* ── Boot ─────────────────────────────────────────────────────── */
 
-function createThemeToggleStub() {
-  const listeners = new Set();
-  const signals = {
-    themeChanged: {
-      add(fn) {
-        listeners.add(fn);
-      },
-      remove(fn) {
-        listeners.delete(fn);
-      },
-      dispatch(theme) {
-        for (const fn of listeners) fn(theme);
-      },
-    },
-  };
-  return {
-    config: { ui: { theme: { current: "night", default: "night" } } },
-    signals,
-  };
-}
-
 export function startSiteDemo(host) {
-  const context = createThemeToggleStub();
-  const themeOps = {
-    execute(_cmd, ctx, theme) {
-      document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-      ctx.config.ui.theme.current = theme;
-      ctx.signals.themeChanged.dispatch(theme);
-    },
-  };
-
   const shell = new AppShell({
     sidebarTitle: "Site logistics",
     layout: {
@@ -459,7 +429,7 @@ export function startSiteDemo(host) {
     right: "1rem",
     zIndex: "20",
   });
-  themeHost.add(new ThemeToggle(context, themeOps));
+  themeHost.add(new ThemeToggle({ theme: "dark" }));
 
   host.appendChild(shell.dom);
   host.appendChild(themeHost.dom);

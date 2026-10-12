@@ -138,37 +138,20 @@ function removeDomNodeGraphWithTimelineIndicatorClass(linesParent) {
 }
 
 /** @category Peers */
-function normalizeConstructorArguments(contextOrOptions, maybeOptions) {
-    if (maybeOptions !== undefined) {
-        return {
-            context: contextOrOptions || null,
-            options: maybeOptions && typeof maybeOptions === "object" ? maybeOptions : {},
-        };
-    }
-
-    const options = contextOrOptions && typeof contextOrOptions === "object" ? contextOrOptions : {};
-
-    return {
-        context: options.context || null,
-        options,
-    };
-}
-
-/** @category Peers */
 class GanttChart {
-    constructor(contextOrOptions, maybeOptions) {
-        const { context, options } = normalizeConstructorArguments(contextOrOptions, maybeOptions);
+    /**
+     * @param {object} [options]
+     */
+    constructor(options = {}) {
+        const resolved = options && typeof options === "object" ? options : {};
 
-        this.context = context;
-        this.operators = options.operators || null;
-        this.shouldRunSelectTaskOnRowClick = options.shouldRunSelectTaskOnRowClick;
-        this.onTaskRowClick = options.onTaskRowClick;
-        this.onChartRendered = options.onChartRendered || null;
-        this.onDependencyAdded = options.onDependencyAdded || null;
-        this.onDependencyRemoved = options.onDependencyRemoved || null;
-        this.onDependencyModified = options.onDependencyModified || null;
-        this.resolveCurrentWorkscheduleId = options.resolveCurrentWorkscheduleId || null;
-        this.dateFormatter = options.dateFormatter || defaultDateFormatter;
+        this.onTaskRowClick = resolved.onTaskRowClick;
+        this.onChartRendered = resolved.onChartRendered || null;
+        this.onDependencyAdded = resolved.onDependencyAdded || null;
+        this.onDependencyRemoved = resolved.onDependencyRemoved || null;
+        this.onDependencyModified = resolved.onDependencyModified || null;
+        this.resolveCurrentWorkscheduleId = resolved.resolveCurrentWorkscheduleId || null;
+        this.dateFormatter = resolved.dateFormatter || defaultDateFormatter;
         this.ganttChart = null;
         this.jsganttNamespace = null;
         this.timelineIndicatorOverride = undefined;
@@ -180,15 +163,9 @@ class GanttChart {
         this.boundContextMenu = this.handleContextMenu.bind(this);
     }
 
-    dispatchSignal(signalName, payload, callback) {
+    dispatchSignal(_signalName, payload, callback) {
         if (typeof callback === "function") {
             callback(payload, this);
-        }
-
-        const signal = this.context?.signals?.[signalName];
-
-        if (signal && typeof signal.dispatch === "function") {
-            signal.dispatch(payload);
         }
     }
 
@@ -403,22 +380,8 @@ class GanttChart {
 
         this.ganttChart.vEventClickRow = (task) => {
             const taskId = task.getOriginalID();
-
             if (typeof this.onTaskRowClick === "function") {
                 this.onTaskRowClick(taskId, task, this);
-                return;
-            }
-
-            const shouldRun = typeof this.shouldRunSelectTaskOnRowClick === "function"
-                ? this.shouldRunSelectTaskOnRowClick(taskId, task, this)
-                : true;
-
-            if (!shouldRun) {
-                return;
-            }
-
-            if (this.operators && typeof this.operators.execute === "function") {
-                this.operators.execute("bim.enable_editing_task", this.context, taskId);
             }
         };
 
@@ -550,7 +513,7 @@ class GanttChart {
         addSection.add(addForm);
         content.add(addSection);
 
-        const panel = new FloatingDialog({ context: this.context });
+        const panel = new FloatingDialog({});
         panel
             .header(`Manage Dependencies for "${taskData.Name}"`)
             .content(content)

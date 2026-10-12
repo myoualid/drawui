@@ -56,8 +56,10 @@ document.body.appendChild(panel.dom);
 
 ## Workspace
 
+`ifcopenshell/layout` exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.
+
 ```js
-import { Text } from "ifcopenshell/gui";
+import { Text, Button } from "ifcopenshell/gui";
 import { World, Layout, Panel } from "ifcopenshell/layout";
 import "ifcopenshell-gui/styles/gui.css";
 import "ifcopenshell-gui/styles/layout.css";
@@ -66,9 +68,70 @@ const world = new World();
 world.mount(document.body);
 
 const layout = new Layout({ leftOpen: true }).init(world);
-const layers = new Panel({ title: "Layers" });
-layers.content.add(new Text("Layer list"));
+
+const layers = new Panel({
+  layout,
+  position: "left",
+  id: "layers",
+  label: "Layers",
+  title: "Layers",
+  floatable: true,
+});
+layers.add(new Text("Layer list"));
+layers.show();
+
+const openLayers = new Button("Layers").onClick(() => layers.toggle());
+layers.bindTo(openLayers.dom);
+
+layout.on("workspace", ({ position, open }) => {
+  console.log(position, open);
+});
 ```
+
+### World
+
+Builds the shell: ribbon, left / right / bottom regions, viewport, and footer.
+
+- `new World(config?)` — default regions, or a config node whose `id` is `"World"`
+- `world.mount(parent)` — append the shell
+- `world.dom` — root element
+- `world.root` — root control
+
+Region ids the layout looks up: `RibbonMenu`, `HeaderBar`, `LayoutToggleBar`, `WorkspaceLeft`, `WorkspaceRight`, `WorkspaceBottom`, `Viewport`, `Footer`.
+
+### Layout
+
+Attaches stacks, resizers, and the tab registry to a world. `position` is `"left"`, `"right"`, or `"bottom"`.
+
+- `new Layout(options).init(world | element | id)`
+- `on(event, handler)` / `off(event, handler)` — `tab:added`, `tab:removed`, `tab:selected`, `workspace`
+- `addTab(position, id, label, content, options?)`
+- `ensureTab`, `removeTab`, `selectTab`, `toggleTab`, `hasTab`
+- `getTabIds`, `getSelectedTabId`, `isTabSelected`, `clearTabs`, `setTabLabel`
+- `openWorkspace`, `closeWorkspace`, `toggleWorkspace`, `isWorkspaceOpen`
+- `setWorkspaceSize`, `getWorkspaceSize`, `resetLayout`
+- `moveSegment(from, to, group)` — move every panel that shares `group`
+- `bindToggle(element, position, id)` — a button the app owns shows and hides a tab
+- `prependToggleBarChild(node)` — insert a node in the header toggle row
+- `getFloatingWindowMountElement()`
+- `destroy()`
+
+Options include `leftOpen`, `rightOpen`, `bottomOpen`, and the default region sizes (`leftWorkspaceWidth`, `rightWorkspaceWidth`, `bottomWorkspaceHeight`).
+
+### Panel
+
+A docked collapsible panel. Pass the `layout` created above.
+
+- `new Panel({ layout, position, id, label, title, icon, group, floatable, startFloating })`
+- `add(...)` — panel content
+- `show()`, `hide()`, `toggle()`, `select()`
+- `bindTo(element)` / `unbind()`
+- `setLabel(label)`
+- `detachToFloatingWindow()`, `isFloating()`, `getFloatingWindow()`
+- `isVisible()`, `isSelected()`
+- `destroy()`
+
+`startFloating: true` opens the panel as a floating window when it is not docked. Panels that share `group` move between regions together.
 
 ## Typical Pattern
 

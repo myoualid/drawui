@@ -42,63 +42,19 @@ import {
 } from "ifcopenshell/gui";
 import { layoutConfig, worldConfig } from "./world-config.js";
 
-function createSignal(listeners, name) {
-  const subs = new Set();
-  return {
-    add(fn) {
-      subs.add(fn);
-    },
-    remove(fn) {
-      subs.delete(fn);
-    },
-    dispatch(payload) {
-      if (!listeners.has(name)) return;
-      for (const fn of subs) fn(payload);
-    },
-  };
-}
-
-/** Minimal app context for Layout and ThemeToggle. */
-function createContext(layoutManager) {
-  const listeners = new Set();
-  const signals = {
-    layoutTabChanged: createSignal(listeners, "layoutTabChanged"),
-    layoutTabAdded: createSignal(listeners, "layoutTabAdded"),
-    layoutTabRemoved: createSignal(listeners, "layoutTabRemoved"),
-    layoutWorkspaceChanged: createSignal(listeners, "layoutWorkspaceChanged"),
-    themeChanged: createSignal(listeners, "themeChanged"),
-  };
-
-  return {
-    config: {
-      ui: {
-        WorldComponent: worldConfig,
-        layout: layoutConfig,
-        theme: { current: "night", default: "night" },
-      },
-    },
-    ui: { model: { layoutManager } },
-    signals,
-    addListeners: (names) => {
-      for (const name of names) listeners.add(name);
-    },
-  };
-}
-
-function createWorkspacePanel(context, options, body) {
+function createWorkspacePanel(layout, options, body) {
   const panel = new Layout.Panel({
-    context,
+    layout,
     position: options.position,
-    moduleId: options.moduleId,
-    ownerId: options.ownerId,
-    tabId: options.tabId,
-    tabLabel: options.tabLabel,
+    group: options.group,
+    id: options.id,
+    label: options.label,
     icon: options.icon,
     title: options.title,
-    floatable: options.floatable ?? true,
-    autoShow: options.autoShow ?? true,
+    floatable: true,
+    autoShow: true,
+    toggle: options.toggle,
   });
-  // Same path as CollapsiblePanel: body goes straight into PanelContent.
   panel.add(body.addClass("templates-panel-body"));
   return panel;
 }
@@ -320,8 +276,8 @@ function bodyConsole() {
 
   const output = new StackPanel({ isVertical: true })
     .gap("0.5rem")
-    .add(new Caption("Operator output"))
-    .add(new Text("Last run: theme.change_to → night"))
+    .add(new Caption("Log"))
+    .add(new Text("Theme follows the document."))
     .add(new ProgressBar(1));
 
   const tabs = new TabView();
@@ -362,17 +318,9 @@ function openSelectionFloat() {
   win.show();
 }
 
-function mountViewport(context) {
+function mountViewport() {
   const viewport = document.getElementById("Viewport");
   if (!viewport) return;
-
-  const themeOps = {
-    execute(_cmd, ctx, theme) {
-      document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-      ctx.config.ui.theme.current = theme;
-      ctx.signals.themeChanged.dispatch(theme);
-    },
-  };
 
   const tools = new CollapsiblePanel({
     title: "Quick tools",
@@ -428,7 +376,7 @@ function mountViewport(context) {
         .gap("0.5rem")
         .add(
           row(
-            new ThemeToggle(context, themeOps),
+            new ThemeToggle({ theme: "dark" }),
             new Button("Float panel").addClass("secondary").onClick(openSelectionFloat),
           ).setStyle("flexWrap", ["nowrap"]),
         )
@@ -444,86 +392,84 @@ function mountViewport(context) {
 
 const demoPanels = [
   {
-    moduleId: "project",
+    group: "project",
     position: "left",
-    tabId: "project-panel",
-    tabLabel: "Project",
+    id: "project-panel",
+    label: "Project",
     icon: "folder_open",
     title: "Loaded Models",
+    toggle: "RB_ProjectPanel",
     body: bodyProject,
   },
   {
-    ownerId: "spatial-structure",
+    group: "spatial-structure",
     position: "left",
-    tabId: "spatial-panel",
-    tabLabel: "Spatial",
+    id: "spatial-panel",
+    label: "Spatial",
     icon: "account_tree",
     title: "Project Spatial Structure",
     body: bodySpatial,
   },
   {
-    ownerId: "filters",
+    group: "filters",
     position: "left",
-    tabId: "filters-panel",
-    tabLabel: "Filters",
+    id: "filters-panel",
+    label: "Filters",
     icon: "filter_list",
     title: "Filters",
     body: bodyFilters,
   },
   {
-    ownerId: "selection-sets",
+    group: "selection-sets",
     position: "left",
-    tabId: "selection-sets-panel",
-    tabLabel: "Sets",
+    id: "selection-sets-panel",
+    label: "Sets",
     icon: "bookmark",
     title: "Selection Sets",
     body: bodySelectionSets,
   },
   {
-    ownerId: "layers",
+    group: "layers",
     position: "left",
-    tabId: "layers-panel",
-    tabLabel: "Layers",
+    id: "layers-panel",
+    label: "Layers",
     icon: "layers",
     title: "Layers",
     body: bodyLayers,
   },
   {
-    moduleId: "properties",
+    group: "properties",
     position: "right",
-    tabId: "properties-panel",
-    tabLabel: "Properties",
+    id: "properties-panel",
+    label: "Properties",
     icon: "tune",
     title: "Properties",
+    toggle: "RB_PropertiesPanel",
     body: bodyProperties,
   },
   {
-    moduleId: "console",
+    group: "console",
     position: "bottom",
-    tabId: "console-panel",
-    tabLabel: "Console",
+    id: "console-panel",
+    label: "Console",
     icon: "terminal",
     title: "Console",
+    toggle: "RB_ConsolePanel",
     body: bodyConsole,
   },
 ];
 
 export function startTemplatesDemo() {
-  const knownModuleIds = new Set(["project", "properties", "console"]);
-  const world = new World(worldConfig, {
-    knownModuleIds,
-    activeModuleIds: [...knownModuleIds],
-  });
+  const world = new World(worldConfig);
 
   world.root.addClass("World");
   world.mount(document.body);
 
-  const layoutManager = new Layout(layoutConfig).init(world);
-  const context = createContext(layoutManager);
+  const layout = new Layout(layoutConfig).init(world);
 
   for (const { body, ...options } of demoPanels) {
-    createWorkspacePanel(context, options, body());
+    createWorkspacePanel(layout, options, body());
   }
 
-  mountViewport(context);
+  mountViewport();
 }

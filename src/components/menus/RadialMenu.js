@@ -39,7 +39,22 @@ function createOperatorButton(iconName) {
 	return button;
 }
 
-/** @category Overlays */
+/**
+ * Radial menu anchored to a viewport element.
+ *
+ * Each item is `{ icon, name, onSelect, enabled?, active? }`. The application
+ * decides what a click does. Call `setSelectionCount` when the selection changes.
+ *
+ * @example
+ * const menu = new RadialMenu({
+ *   viewport: host,
+ *   items: [
+ *     { icon: "content_copy", name: "Duplicate", onSelect: () => duplicate() },
+ *   ],
+ * });
+ *
+ * @category Overlays
+ */
 export class RadialMenu {
 	static instances = new Set();
 
@@ -142,19 +157,13 @@ export class RadialMenu {
 
 	constructor(options = {}) {
 		const {
-			context,
-			operators,
 			viewport,
 			items,
-			refreshSignals = [],
 			shortcut,
 			activationKeys = ["p", "P"],
 		} = options;
 
-		this.context = context;
-		this.operators = operators;
-		this.viewport = viewport || context?.viewport?.dom || null;
-		this.refreshSignals = Array.isArray(refreshSignals) ? refreshSignals : [];
+		this.viewport = viewport || null;
 		this.activationKeys = new Set();
 
 		this.overlay = null;
@@ -180,30 +189,33 @@ export class RadialMenu {
 
 		this.draw();
 		this.bindViewportTriggers();
-		this.bindSignals();
-		this.setOperators(items);
+		this.setItems(items);
 	}
 
-	normalizeOperatorItem(item, index) {
-		if (!item || !item.operator || !item.icon) {
+	normalizeItem(item, index) {
+		if (!item || !item.icon) {
 			return null;
 		}
 
 		return {
-			id: item.id || `pie-menu-item-${index}`,
-			name: item.name || item.operator,
+			id: item.id || item.name || `radial-item-${index}`,
+			name: item.name || "Action",
 			icon: item.icon,
-			operator: item.operator,
-			isActive: item.isActive,
+			enabled: item.enabled,
 			active: item.active,
+			onSelect: item.onSelect,
 		};
 	}
 
-	setOperators(items = []) {
+	/**
+	 * @param {Array<{ icon: string, name?: string, onSelect?: Function, enabled?: boolean|Function, active?: boolean|Function }>} [items]
+	 * @returns {this}
+	 */
+	setItems(items = []) {
 		const nextItems = Array.isArray(items) ? items : [];
 
 		this.items = nextItems
-			.map((item, index) => this.normalizeOperatorItem(item, index))
+			.map((item, index) => this.normalizeItem(item, index))
 			.filter(Boolean);
 
 		this.renderItems();
@@ -211,8 +223,8 @@ export class RadialMenu {
 		return this;
 	}
 
-	addOperator(item, index = this.items.length) {
-		const normalized = this.normalizeOperatorItem(item, this.items.length);
+	addItem(item, index = this.items.length) {
+		const normalized = this.normalizeItem(item, this.items.length);
 
 		if (!normalized) {
 			return this;
@@ -226,8 +238,8 @@ export class RadialMenu {
 		return this;
 	}
 
-	removeOperator(identifier) {
-		const index = this.findOperatorIndex(identifier);
+	removeItem(identifier) {
+		const index = this.findItemIndex(identifier);
 
 		if (index === -1) {
 			return false;
@@ -290,22 +302,22 @@ export class RadialMenu {
 		return keys;
 	}
 
-	hasOperator(identifier) {
-		return this.findOperatorIndex(identifier) !== -1;
+	hasItem(identifier) {
+		return this.findItemIndex(identifier) !== -1;
 	}
 
-	findOperatorIndex(identifier) {
+	findItemIndex(identifier) {
 		if (typeof identifier === "function") {
 			return this.items.findIndex(identifier);
 		}
 
 		return this.items.findIndex((item) => {
 			if (typeof identifier === "string") {
-				return item.id === identifier || item.operator === identifier;
+				return item.id === identifier || item.name === identifier;
 			}
 
 			if (identifier && typeof identifier === "object") {
-				return item.id === identifier.id || item.operator === identifier.operator;
+				return item.id === identifier.id || item.name === identifier.name;
 			}
 
 			return false;
@@ -393,28 +405,11 @@ export class RadialMenu {
 		this.hubIcon = hubIcon;
 	}
 
-	bindSignals() {
-		const signals = this.context?.editor?.signals;
-
-		if (!signals) {
-			return;
-		}
-
-		signals.selectionChanged.add((count) => {
-			this.selectionCount = Number(count) || 0;
-			this.updateHubLabel();
-			this.refreshItemStates();
-		});
-
-		for (const signalName of this.refreshSignals) {
-			const signal = signals[signalName];
-
-			if (signal && typeof signal.add === "function") {
-				signal.add(() => {
-					this.refreshItemStates();
-				});
-			}
-		}
+	setSelectionCount(count) {
+		this.selectionCount = Number(count) || 0;
+		this.updateHubLabel();
+		this.refreshItemStates();
+		return this;
 	}
 
 	bindDragHandle(handleEl) {
@@ -607,24 +602,25 @@ export class RadialMenu {
 		this.hubIcon.setIcon(icon || "touch_app");
 	}
 
-	isOperatorReady(item) {
-		try {
-			return this.operators.canExecute(item.operator, this.context);
-		} catch (error) {
-			return false;
+	isItemEnabled(item) {
+		if (typeof item.enabled === "function") {
+			try {
+				return Boolean(item.enabled(item));
+			} catch {
+				return false;
+			}
 		}
+
+		return item.enabled !== false;
 	}
 
-	isOperatorActive(item) {
-		if (typeof item.isActive === "function") {
-			return Boolean(
-				item.isActive({
-					context: this.context,
-					operators: this.operators,
-					item,
-					pieMenu: this,
-				})
-			);
+	isItemActive(item) {
+		if (typeof item.active === "function") {
+			try {
+				return Boolean(item.active(item));
+			} catch {
+				return false;
+			}
 		}
 
 		return Boolean(item.active);
@@ -632,8 +628,8 @@ export class RadialMenu {
 
 	refreshItemStates() {
 		for (const entry of this.itemButtons) {
-			const ready = this.isOperatorReady(entry.item);
-			const isActive = this.isOperatorActive(entry.item);
+			const ready = this.isItemEnabled(entry.item);
+			const isActive = this.isItemActive(entry.item);
 
 			entry.button.dom.classList.toggle("Disabled", !ready);
 			entry.button.dom.classList.toggle("Active", isActive);
@@ -686,11 +682,11 @@ export class RadialMenu {
 			});
 
 			button.onClick(async () => {
-				if (!this.isOperatorReady(item)) {
+				if (!this.isItemEnabled(item)) {
 					return;
 				}
 
-				await this.operators.execute(item.operator, this.context);
+				await item.onSelect?.(item);
 			});
 
 			slot.add(button);

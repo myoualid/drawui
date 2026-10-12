@@ -1,7 +1,5 @@
 /**
- * Workspace template derived from bonsai-web `configuration/config.ui.js`.
- *
- * Region ids must stay stable — Layout and structure.css target them:
+ * Workspace shell. Region ids must stay stable — Layout looks them up:
  * RibbonMenu, HeaderBar, RibbonBar, WorkspaceLeft/Right, WorkspaceBottom,
  * Viewport, Footer, LayoutToggleBar.
  */
@@ -12,25 +10,22 @@ const demoRibbon = [
     name: "Project",
     type: "Button",
     icon: "folder_open",
-    moduleId: "project",
   },
   {
     id: "RB_PropertiesPanel",
     name: "Properties",
     type: "Button",
     icon: "tune",
-    moduleId: "properties",
   },
   {
     id: "RB_ConsolePanel",
     name: "Console",
     type: "Button",
     icon: "terminal",
-    moduleId: "console",
   },
 ];
 
-/** Workspace template derived from bonsai-web WorldComponent. */
+/** Workspace template. Region ids are what Layout looks up. */
 export const worldConfig = {
   id: "World",
   name: "World",

@@ -322,12 +322,13 @@ function pageSlug(symbol, counts) {
  * Class JSDoc and gallery demos belong to the scaffold.
  */
 function docsForSymbol(symbol, allSymbolDocs) {
-  const docs = allSymbolDocs.get(symbol.name) ?? null;
-  if (!docs) return null;
   const layoutPanel = symbol.name === "Panel"
     && symbol.entrypoints.every((entry) => entry.endsWith("/layout"));
-  if (layoutPanel) return null;
-  return docs;
+  if (layoutPanel) return allSymbolDocs.get("WorkspacePanel") ?? null;
+  if (symbol.name === "Layout") {
+    return allSymbolDocs.get("WorkspaceLayout") ?? allSymbolDocs.get("Layout") ?? null;
+  }
+  return allSymbolDocs.get(symbol.name) ?? null;
 }
 
 function galleryForSymbol(symbol, galleryCatalog) {

@@ -1,7 +1,7 @@
 import { Container, Icon } from "../../primitives/ui.js";
 
 /**
- * Icon-only operator control (icon inside an Operator shell).
+ * Icon-only button.
  * @category Inputs
  */
 export class Operator extends Container {
