@@ -7,7 +7,10 @@
 **Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `ThemeToggle`
 
-Light/dark theme toggle control.
+Light/dark switch. Sets `data-theme` on `<html>` to `"light"` or `"dark"`,
+which is what the package stylesheets read.
+
+_Source: `src/components/controls/ThemeToggle.js`_
 
 ## Import
 
@@ -17,24 +20,21 @@ import { ThemeToggle } from "ifcopenshell/gui";
 
 ## Examples
 
+### Usage
+
+```js
+const toggle = new ThemeToggle({
+  theme: "dark",
+  onChange(theme) {
+    console.log(theme);
+  },
+});
+```
+
 ### ThemeToggle
 
 ```js
-const context = {
-    config: { ui: { theme: { current: "night", default: "night" } } },
-    signals: {
-      themeChanged: {
-        add() {},
-      },
-    },
-  };
-  const ops = {
-    execute(_cmd, ctx, theme) {
-      document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-      ctx.config.ui.theme.current = theme;
-    },
-  };
-  return new ThemeToggle(context, ops);
+return new ThemeToggle({ theme: "dark" });
 ```
 
 <div class="doc-live-demo" data-live-demo="ThemeToggle/themetoggle" aria-label="Live preview"></div>

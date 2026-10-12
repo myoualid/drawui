@@ -25,7 +25,6 @@ import {
   Line,
   LoadingCube,
   Markdown,
-  Panel,
   ProgressBar,
   RibbonBar,
   ScrollViewer,
@@ -41,10 +40,6 @@ import {
   makeFlexResizer,
   makeResizable,
 } from "ifcopenshell/gui";
-import {
-  Layout,
-  World,
-} from "ifcopenshell/layout";
 
 const BUILDERS = { ...DEMO_BUILDERS, ...FULL_DEMO_BUILDERS };
 
@@ -321,25 +316,5 @@ export const LIVE_DEMOS = {
       .gap("0.5rem")
       .add(new Button("Save"))
       .add(new Badge("New"));
-  },
-  "buildWorkspaceDockHandlers/note": () => {
-    return new Disclaimer(
-      "Layout.dockHandlers wires dock chrome for a Layout.Panel.",
-    );
-  },
-  "buildWorldFromConfig/note": () => {
-    return new Disclaimer(
-      "new World() builds an app shell into a host — see docs/examples/templates.",
-    );
-  },
-  "createDefaultWorldConfig/note": () => {
-    return new Disclaimer(
-      "createDefaultWorldConfig returns a config object, not a Control.",
-    );
-  },
-  "WorkspaceLayout/note": () => {
-    return new Disclaimer(
-      "new World() builds the shell. new Layout(config).init(world) attaches the regions.",
-    );
   },
 };

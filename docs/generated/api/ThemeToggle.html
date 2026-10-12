@@ -36,27 +36,23 @@
 <strong>Category:</strong> inputs<br />
 <strong>Import:</strong> <code>ifcopenshell/gui</code><br />
 <strong>Emitted class(es):</strong> <code>ThemeToggle</code></p>
-<p>Light/dark theme toggle control.</p>
+<p>Light/dark switch. Sets <code>data-theme</code> on <code>&lt;html&gt;</code> to <code>"light"</code> or <code>"dark"</code>,
+which is what the package stylesheets read.</p>
+<p><em>Source: <code>src/components/controls/ThemeToggle.js</code></em></p>
 <h2 id="import">Import</h2>
 <pre><code class="js language-js">import { ThemeToggle } from "ifcopenshell/gui";
 </code></pre>
 <h2 id="examples">Examples</h2>
+<h3 id="usage">Usage</h3>
+<pre><code class="js language-js">const toggle = new ThemeToggle({
+  theme: "dark",
+  onChange(theme) {
+    console.log(theme);
+  },
+});
+</code></pre>
 <h3 id="themetoggle-1">ThemeToggle</h3>
-<pre><code class="js language-js">const context = {
-    config: { ui: { theme: { current: "night", default: "night" } } },
-    signals: {
-      themeChanged: {
-        add() {},
-      },
-    },
-  };
-  const ops = {
-    execute(_cmd, ctx, theme) {
-      document.documentElement.dataset.theme = theme === "day" ? "light" : "dark";
-      ctx.config.ui.theme.current = theme;
-    },
-  };
-  return new ThemeToggle(context, ops);
+<pre><code class="js language-js">return new ThemeToggle({ theme: "dark" });
 </code></pre>
 <div class="doc-live-demo" data-live-demo="ThemeToggle/themetoggle" aria-label="Live preview"></div>
 <p><a href="./index.html">← Back to API index</a></p></main>

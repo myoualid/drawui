@@ -7,9 +7,12 @@
 **Import:** `ifcopenshell/layout`  
 **Emitted class(es):** `World`
 
-Application shell. The default constructor builds the standard world tree
-(ribbon, regions, viewport, footer). Pass a config node with an `id` to
-use that tree instead.
+Application shell. The default constructor builds the standard regions
+(ribbon, left, right, bottom, viewport, footer). Pass a config node that
+has an `id` to use that tree instead.
+
+Region ids the layout looks up: `RibbonMenu`, `HeaderBar`, `LayoutToggleBar`,
+`WorkspaceLeft`, `WorkspaceRight`, `WorkspaceBottom`, `Viewport`, `Footer`.
 
 _Source: `src/layout/World.js`_
 
@@ -26,6 +29,8 @@ import { World } from "ifcopenshell/layout";
 ```js
 const world = new World();
 world.mount(document.body);
+
+const layout = new Layout({ leftOpen: true }).init(world);
 ```
 
 [← Back to API index](./index.html)

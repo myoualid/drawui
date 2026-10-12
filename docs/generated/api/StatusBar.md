@@ -24,7 +24,7 @@ const loadingHost = new Container().setStyle("position", ["relative"]).setStyle(
   const loadingBar = new StatusBar({ initialText: "Processing…" });
   loadingHost.add(loadingBar);
   loadingHost.add(
-    new Button("Run StatusBar").addClass("secondary").onClick(() => {
+    new Button("Run StatusBar").setIcon("play_arrow").onClick(() => {
       loadingBar.show();
       loadingBar.update(0.35, "Step 1/3");
       setTimeout(() => loadingBar.update(0.7, "Step 2/3"), 600);

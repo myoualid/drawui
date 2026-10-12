@@ -7,12 +7,44 @@
 **Import:** `ifcopenshell/layout`  
 **Emitted class(es):** `CollapsiblePanel`
 
-Docked workspace panel. `new Panel({ title, position, tabId, tabLabel })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`.
+Docked panel for a Layout region. Exported as `Panel` from `ifcopenshell/layout`.
+
+Pass the `layout` instance directly. Content goes in with `add`.
+Call `bindTo` or `layout.bindToggle` with a button the application owns.
+
+### Methods
+
+- `show()` / `hide()` / `toggle()` / `select()`
+- `add(...)` — append content (inherited)
+- `bindTo(element)` / `unbind()` — wire a button the app owns
+- `setLabel(label)`
+- `detachToFloatingWindow()` / `isFloating()` / `getFloatingWindow()`
+- `isVisible()` / `isSelected()`
+- `destroy()`
+
+_Source: `src/components/panels/WorkspacePanel.js`_
 
 ## Import
 
 ```js
 import { Panel } from "ifcopenshell/layout";
+```
+
+## Examples
+
+### Usage
+
+```js
+const layers = new Panel({
+  layout,
+  position: "left",
+  id: "layers",
+  label: "Layers",
+  title: "Layers",
+  floatable: true,
+});
+layers.add(new Text("Layer list"));
+layers.show();
 ```
 
 [← Back to API index](./index.html)

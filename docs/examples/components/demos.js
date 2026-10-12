@@ -529,7 +529,7 @@ export const DEMO_BUILDERS = {
     const loadingBar = new GUI.StatusBar({ initialText: "Processing…" });
     loadingHost.add(loadingBar);
     loadingHost.add(
-      new GUI.Button("Run StatusBar").addClass("secondary").onClick(() => {
+      new GUI.Button("Run StatusBar").setIcon("play_arrow").onClick(() => {
         loadingBar.show();
         loadingBar.update(0.35, "Step 1/3");
         setTimeout(() => loadingBar.update(0.7, "Step 2/3"), 600);

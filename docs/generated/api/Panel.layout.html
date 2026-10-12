@@ -23,9 +23,35 @@
 <strong>Category:</strong> shell<br />
 <strong>Import:</strong> <code>ifcopenshell/layout</code><br />
 <strong>Emitted class(es):</strong> <code>CollapsiblePanel</code></p>
-<p>Docked workspace panel. <code>new Panel({ title, position, tabId, tabLabel })</code>. Import from <code>ifcopenshell/layout</code>. The header/content/footer scaffold is also named Panel and imports from <code>ifcopenshell/gui</code>.</p>
+<p>Docked panel for a Layout region. Exported as <code>Panel</code> from <code>ifcopenshell/layout</code>.</p>
+<p>Pass the <code>layout</code> instance directly. Content goes in with <code>add</code>.
+Call <code>bindTo</code> or <code>layout.bindToggle</code> with a button the application owns.</p>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><code>show()</code> / <code>hide()</code> / <code>toggle()</code> / <code>select()</code></li>
+<li><code>add(...)</code> — append content (inherited)</li>
+<li><code>bindTo(element)</code> / <code>unbind()</code> — wire a button the app owns</li>
+<li><code>setLabel(label)</code></li>
+<li><code>detachToFloatingWindow()</code> / <code>isFloating()</code> / <code>getFloatingWindow()</code></li>
+<li><code>isVisible()</code> / <code>isSelected()</code></li>
+<li><code>destroy()</code></li>
+</ul>
+<p><em>Source: <code>src/components/panels/WorkspacePanel.js</code></em></p>
 <h2 id="import">Import</h2>
 <pre><code class="js language-js">import { Panel } from "ifcopenshell/layout";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="usage">Usage</h3>
+<pre><code class="js language-js">const layers = new Panel({
+  layout,
+  position: "left",
+  id: "layers",
+  label: "Layers",
+  title: "Layers",
+  floatable: true,
+});
+layers.add(new Text("Layer list"));
+layers.show();
 </code></pre>
 <p><a href="./index.html">← Back to API index</a></p></main>
   </div>

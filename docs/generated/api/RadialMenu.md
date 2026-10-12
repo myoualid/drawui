@@ -7,7 +7,12 @@
 **Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
-Radial interaction overlay.
+Radial menu anchored to a viewport element.
+
+Each item is `{ icon, name, onSelect, enabled?, active? }`. The application
+decides what a click does. Call `setSelectionCount` when the selection changes.
+
+_Source: `src/components/menus/RadialMenu.js`_
 
 ## Import
 
@@ -16,6 +21,17 @@ import { RadialMenu } from "ifcopenshell/gui";
 ```
 
 ## Examples
+
+### Usage
+
+```js
+const menu = new RadialMenu({
+  viewport: host,
+  items: [
+    { icon: "content_copy", name: "Duplicate", onSelect: () => duplicate() },
+  ],
+});
+```
 
 ### RadialMenu
 
@@ -37,22 +53,14 @@ const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
   hint.setStyle("left", ["0.75rem"]);
   viewport.add(hint);
 
-  const operators = {
-    canExecute: () => true,
-    execute: async (operatorId) => {
-      status.setTextContent(`Last action: ${operatorId}`);
-    },
-  };
-
   const menu = new RadialMenu({
     viewport: viewport.dom,
-    operators,
     items: [
-      { operator: "demo.select_all", icon: "select_all", name: "Select all" },
-      { operator: "demo.duplicate", icon: "content_copy", name: "Duplicate" },
-      { operator: "demo.group", icon: "category", name: "Group" },
-      { operator: "demo.hide", icon: "visibility_off", name: "Hide" },
-      { operator: "demo.delete", icon: "delete", name: "Delete" },
+      { icon: "select_all", name: "Select all", onSelect: () => status.setTextContent("Last action: Select all") },
+      { icon: "content_copy", name: "Duplicate", onSelect: () => status.setTextContent("Last action: Duplicate") },
+      { icon: "category", name: "Group", onSelect: () => status.setTextContent("Last action: Group") },
+      { icon: "visibility_off", name: "Hide", onSelect: () => status.setTextContent("Last action: Hide") },
+      { icon: "delete", name: "Delete", onSelect: () => status.setTextContent("Last action: Delete") },
     ],
   });
 

@@ -65,7 +65,7 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
 | `Slider` | Stable | `ifcopenshell/gui` | `Slider` | Range track plus numeric field for continuous values. |
 | `Button` | Stable | `ifcopenshell/gui` | `Button` | Button primitive with optional prepended icon. |
 | `InputDate` | Experimental | `ifcopenshell/gui` | `InputDate`, `InputDate-input`, `InputDate-calendar` | Composite date and time picker. |
-| `Operator` | Stable | `ifcopenshell/gui` | `Operator` | Icon-only operator control shell. |
+| `Operator` | Stable | `ifcopenshell/gui` | `Operator` | Icon-only button. |
 | `ThemeToggle` | Stable | `ifcopenshell/gui` | `ThemeToggle` | Light/dark theme toggle control. |
 
 ## Feedback
@@ -140,8 +140,8 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
 | --- | --- | --- | --- | --- |
 | `World` | Stable | `ifcopenshell/layout` | `World` | Application shell. `new World()` builds the default ribbon, regions, and viewport. `world.mount(document.body)` attaches it. |
 | `SplitContainer` | Stable | `ifcopenshell/gui` | `SplitContainer` | Flex host for horizontal/vertical split panes. |
-| `Layout` | Stable | `ifcopenshell/layout` | `World`, `WorkspaceStack`, `Resizer` | Workspace shell, layout manager, and docked panel. `new World()`, `new Layout(config).init(world)`, `new Panel(...)`. Import from `ifcopenshell/layout`. |
-| `Panel` | Stable | `ifcopenshell/layout` | `CollapsiblePanel` | Docked workspace panel. `new Panel({ title, position, tabId, tabLabel })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`. |
+| `Layout` | Stable | `ifcopenshell/layout` | `Layout`, `Panel` | Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `ifcopenshell/layout`. |
+| `Panel` | Stable | `ifcopenshell/layout` | `CollapsiblePanel` | Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`. |
 | `AppShell` | Stable | `ifcopenshell/gui` | `AppShell`, `AppShell-sidebar`, `AppShell-main` | SPA host with sidebar navigation and hash routing. |
 | `NavigationView` | Stable | `ifcopenshell/gui` | `NavigationView`, `NavigationView-sidebar`, `NavigationView-content` | Sidebar + content navigation scaffold. |
 

@@ -36,11 +36,22 @@
 <strong>Category:</strong> overlays<br />
 <strong>Import:</strong> <code>ifcopenshell/gui</code><br />
 <strong>Emitted class(es):</strong> None by default</p>
-<p>Radial interaction overlay.</p>
+<p>Radial menu anchored to a viewport element.</p>
+<p>Each item is <code>{ icon, name, onSelect, enabled?, active? }</code>. The application
+decides what a click does. Call <code>setSelectionCount</code> when the selection changes.</p>
+<p><em>Source: <code>src/components/menus/RadialMenu.js</code></em></p>
 <h2 id="import">Import</h2>
 <pre><code class="js language-js">import { RadialMenu } from "ifcopenshell/gui";
 </code></pre>
 <h2 id="examples">Examples</h2>
+<h3 id="usage">Usage</h3>
+<pre><code class="js language-js">const menu = new RadialMenu({
+  viewport: host,
+  items: [
+    { icon: "content_copy", name: "Duplicate", onSelect: () =&gt; duplicate() },
+  ],
+});
+</code></pre>
 <h3 id="radialmenu-1">RadialMenu</h3>
 <pre><code class="js language-js">const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
 
@@ -59,22 +70,14 @@
   hint.setStyle("left", ["0.75rem"]);
   viewport.add(hint);
 
-  const operators = {
-    canExecute: () =&gt; true,
-    execute: async (operatorId) =&gt; {
-      status.setTextContent(`Last action: ${operatorId}`);
-    },
-  };
-
   const menu = new RadialMenu({
     viewport: viewport.dom,
-    operators,
     items: [
-      { operator: "demo.select_all", icon: "select_all", name: "Select all" },
-      { operator: "demo.duplicate", icon: "content_copy", name: "Duplicate" },
-      { operator: "demo.group", icon: "category", name: "Group" },
-      { operator: "demo.hide", icon: "visibility_off", name: "Hide" },
-      { operator: "demo.delete", icon: "delete", name: "Delete" },
+      { icon: "select_all", name: "Select all", onSelect: () =&gt; status.setTextContent("Last action: Select all") },
+      { icon: "content_copy", name: "Duplicate", onSelect: () =&gt; status.setTextContent("Last action: Duplicate") },
+      { icon: "category", name: "Group", onSelect: () =&gt; status.setTextContent("Last action: Group") },
+      { icon: "visibility_off", name: "Hide", onSelect: () =&gt; status.setTextContent("Last action: Hide") },
+      { icon: "delete", name: "Delete", onSelect: () =&gt; status.setTextContent("Last action: Delete") },
     ],
   });
 

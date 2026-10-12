@@ -319,7 +319,7 @@ function pageSlug(symbol, counts) {
 
 /**
  * `Panel` is both the gui scaffold and the layout dock panel.
- * Class JSDoc and gallery demos belong to the scaffold.
+ * Layout pages use the workspace class docs (`WorkspaceLayout`, `WorkspacePanel`).
  */
 function docsForSymbol(symbol, allSymbolDocs) {
   const layoutPanel = symbol.name === "Panel"

@@ -58,7 +58,8 @@ panel.content.add(content);
 document.body.appendChild(panel.dom);
 </code></pre>
 <h2 id="workspace">Workspace</h2>
-<pre><code class="js language-js">import { Text } from "ifcopenshell/gui";
+<p><code>ifcopenshell/layout</code> exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.</p>
+<pre><code class="js language-js">import { Text, Button } from "ifcopenshell/gui";
 import { World, Layout, Panel } from "ifcopenshell/layout";
 import "ifcopenshell-gui/styles/gui.css";
 import "ifcopenshell-gui/styles/layout.css";
@@ -67,9 +68,64 @@ const world = new World();
 world.mount(document.body);
 
 const layout = new Layout({ leftOpen: true }).init(world);
-const layers = new Panel({ title: "Layers" });
-layers.content.add(new Text("Layer list"));
+
+const layers = new Panel({
+  layout,
+  position: "left",
+  id: "layers",
+  label: "Layers",
+  title: "Layers",
+  floatable: true,
+});
+layers.add(new Text("Layer list"));
+layers.show();
+
+const openLayers = new Button("Layers").onClick(() =&gt; layers.toggle());
+layers.bindTo(openLayers.dom);
+
+layout.on("workspace", ({ position, open }) =&gt; {
+  console.log(position, open);
+});
 </code></pre>
+<h3 id="world">World</h3>
+<p>Builds the shell: ribbon, left / right / bottom regions, viewport, and footer.</p>
+<ul>
+<li><code>new World(config?)</code> — default regions, or a config node whose <code>id</code> is <code>"World"</code></li>
+<li><code>world.mount(parent)</code> — append the shell</li>
+<li><code>world.dom</code> — root element</li>
+<li><code>world.root</code> — root control</li>
+</ul>
+<p>Region ids the layout looks up: <code>RibbonMenu</code>, <code>HeaderBar</code>, <code>LayoutToggleBar</code>, <code>WorkspaceLeft</code>, <code>WorkspaceRight</code>, <code>WorkspaceBottom</code>, <code>Viewport</code>, <code>Footer</code>.</p>
+<h3 id="layout">Layout</h3>
+<p>Attaches stacks, resizers, and the tab registry to a world. <code>position</code> is <code>"left"</code>, <code>"right"</code>, or <code>"bottom"</code>.</p>
+<ul>
+<li><code>new Layout(options).init(world | element | id)</code></li>
+<li><code>on(event, handler)</code> / <code>off(event, handler)</code> — <code>tab:added</code>, <code>tab:removed</code>, <code>tab:selected</code>, <code>workspace</code></li>
+<li><code>addTab(position, id, label, content, options?)</code></li>
+<li><code>ensureTab</code>, <code>removeTab</code>, <code>selectTab</code>, <code>toggleTab</code>, <code>hasTab</code></li>
+<li><code>getTabIds</code>, <code>getSelectedTabId</code>, <code>isTabSelected</code>, <code>clearTabs</code>, <code>setTabLabel</code></li>
+<li><code>openWorkspace</code>, <code>closeWorkspace</code>, <code>toggleWorkspace</code>, <code>isWorkspaceOpen</code></li>
+<li><code>setWorkspaceSize</code>, <code>getWorkspaceSize</code>, <code>resetLayout</code></li>
+<li><code>moveSegment(from, to, group)</code> — move every panel that shares <code>group</code></li>
+<li><code>bindToggle(element, position, id)</code> — a button the app owns shows and hides a tab</li>
+<li><code>prependToggleBarChild(node)</code> — insert a node in the header toggle row</li>
+<li><code>getFloatingWindowMountElement()</code></li>
+<li><code>destroy()</code></li>
+</ul>
+<p>Options include <code>leftOpen</code>, <code>rightOpen</code>, <code>bottomOpen</code>, and the default region sizes (<code>leftWorkspaceWidth</code>, <code>rightWorkspaceWidth</code>, <code>bottomWorkspaceHeight</code>).</p>
+<h3 id="panel">Panel</h3>
+<p>A docked collapsible panel. Pass the <code>layout</code> created above.</p>
+<ul>
+<li><code>new Panel({ layout, position, id, label, title, icon, group, floatable, startFloating })</code></li>
+<li><code>add(...)</code> — panel content</li>
+<li><code>show()</code>, <code>hide()</code>, <code>toggle()</code>, <code>select()</code></li>
+<li><code>bindTo(element)</code> / <code>unbind()</code></li>
+<li><code>setLabel(label)</code></li>
+<li><code>detachToFloatingWindow()</code>, <code>isFloating()</code>, <code>getFloatingWindow()</code></li>
+<li><code>isVisible()</code>, <code>isSelected()</code></li>
+<li><code>destroy()</code></li>
+</ul>
+<p><code>startFloating: true</code> opens the panel as a floating window when it is not docked. Panels that share <code>group</code> move between regions together.</p>
 <h2 id="typicalpattern">Typical Pattern</h2>
 <ol>
 <li>Import <code>ifcopenshell-gui/styles/gui.css</code> once at application startup.</li>

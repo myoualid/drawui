@@ -23,9 +23,11 @@
 <strong>Category:</strong> shell<br />
 <strong>Import:</strong> <code>ifcopenshell/layout</code><br />
 <strong>Emitted class(es):</strong> <code>World</code></p>
-<p>Application shell. The default constructor builds the standard world tree
-(ribbon, regions, viewport, footer). Pass a config node with an <code>id</code> to
-use that tree instead.</p>
+<p>Application shell. The default constructor builds the standard regions
+(ribbon, left, right, bottom, viewport, footer). Pass a config node that
+has an <code>id</code> to use that tree instead.</p>
+<p>Region ids the layout looks up: <code>RibbonMenu</code>, <code>HeaderBar</code>, <code>LayoutToggleBar</code>,
+<code>WorkspaceLeft</code>, <code>WorkspaceRight</code>, <code>WorkspaceBottom</code>, <code>Viewport</code>, <code>Footer</code>.</p>
 <p><em>Source: <code>src/layout/World.js</code></em></p>
 <h2 id="import">Import</h2>
 <pre><code class="js language-js">import { World } from "ifcopenshell/layout";
@@ -34,6 +36,8 @@ use that tree instead.</p>
 <h3 id="usage">Usage</h3>
 <pre><code class="js language-js">const world = new World();
 world.mount(document.body);
+
+const layout = new Layout({ leftOpen: true }).init(world);
 </code></pre>
 <p><a href="./index.html">← Back to API index</a></p></main>
   </div>

@@ -44,8 +44,8 @@ import "ifcopenshell-gui/styles/layout.css";
 <h2 id="componentselection">Component Selection</h2>
 <ul>
 <li>Use <code>StackPanel</code> and <code>Grid</code> to arrange components inside a panel.</li>
-<li>Use <code>new World()</code>, then <code>new Layout(config).init(world)</code>, when the app docks panels.</li>
-<li>Use <code>new Panel(...)</code> from <code>ifcopenshell/layout</code> for a docked panel.</li>
+<li>Use <code>new World()</code>, then <code>new Layout(config).init(world)</code>, when the app docks panels. Listen with <code>layout.on("workspace", handler)</code> and <code>layout.on("tab:selected", handler)</code>.</li>
+<li>Use <code>new Panel({ layout, position, id, label })</code> from <code>ifcopenshell/layout</code> for a docked panel. Call <code>panel.bindTo(button)</code> for a control the app owns.</li>
 <li>Use <code>Panel</code> from <code>ifcopenshell/gui</code> for fixed header, content, and footer regions.</li>
 <li>Use <code>FloatingWindow</code> for draggable or dockable floating windows.</li>
 <li>Use <code>CollapsiblePanel</code> for accordion content inside another surface.</li>
@@ -87,7 +87,7 @@ import "ifcopenshell-gui/styles/layout.css";
 </ul>
 <h2 id="donot">Do Not</h2>
 <ul>
-<li>Do not make IfcOpenShell GUI depend on host-application runtime objects.</li>
+<li>Do not make IfcOpenShell GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.</li>
 <li>Do not move app-specific CSS into package core layers.</li>
 <li>Do not add framework dependencies for core components.</li>
 <li>Do not introduce a <code>GUI.Button()</code> facade, a <code>peers</code> import, or <code>Layout.buildWorld()</code>.</li>

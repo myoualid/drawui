@@ -263,7 +263,7 @@ import "ifcopenshell-gui/styles/layout.css";
 <td>Stable</td>
 <td><code>ifcopenshell/gui</code></td>
 <td><code>Operator</code></td>
-<td>Icon-only operator control shell.</td>
+<td>Icon-only button.</td>
 </tr>
 <tr>
 <td><code>ThemeToggle</code></td>
@@ -661,15 +661,15 @@ import "ifcopenshell-gui/styles/layout.css";
 <td><code>Layout</code></td>
 <td>Stable</td>
 <td><code>ifcopenshell/layout</code></td>
-<td><code>World</code>, <code>WorkspaceStack</code>, <code>Resizer</code></td>
-<td>Workspace shell, layout manager, and docked panel. <code>new World()</code>, <code>new Layout(config).init(world)</code>, <code>new Panel(...)</code>. Import from <code>ifcopenshell/layout</code>.</td>
+<td><code>Layout</code>, <code>Panel</code></td>
+<td>Workspace grid. <code>new Layout(options).init(world)</code> docks panels into left, right, and bottom. Listen with <code>layout.on</code>. Import from <code>ifcopenshell/layout</code>.</td>
 </tr>
 <tr>
 <td><code>Panel</code></td>
 <td>Stable</td>
 <td><code>ifcopenshell/layout</code></td>
 <td><code>CollapsiblePanel</code></td>
-<td>Docked workspace panel. <code>new Panel({ title, position, tabId, tabLabel })</code>. Import from <code>ifcopenshell/layout</code>. The header/content/footer scaffold is also named Panel and imports from <code>ifcopenshell/gui</code>.</td>
+<td>Docked workspace panel. <code>new Panel({ layout, position, id, label })</code>. Import from <code>ifcopenshell/layout</code>. The header/content/footer scaffold is also named Panel and imports from <code>ifcopenshell/gui</code>.</td>
 </tr>
 <tr>
 <td><code>AppShell</code></td>

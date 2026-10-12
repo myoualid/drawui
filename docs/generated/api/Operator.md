@@ -7,7 +7,7 @@
 **Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Operator`
 
-Icon-only operator control (icon inside an Operator shell).
+Icon-only button.
 
 _Source: `src/components/controls/Operator.js`_
 

@@ -5,9 +5,33 @@
 **Status:** Stable  
 **Category:** shell  
 **Import:** `ifcopenshell/layout`  
-**Emitted class(es):** `World`, `WorkspaceStack`, `Resizer`
+**Emitted class(es):** `Layout`, `Panel`
 
-Workspace shell, layout manager, and docked panel. `new World()`, `new Layout(config).init(world)`, `new Panel(...)`. Import from `ifcopenshell/layout`.
+Workspace grid, exported as Layout.
+
+`new World()` builds the regions. `new Layout(options).init(world)` attaches
+stacks, resizers, and the tab registry. Docked chrome is a Panel.
+The layout does not run application commands. Subscribe with `on` and handle
+the event in application code.
+
+### Methods
+
+- `init(world)` — bind to a World, an element, or an element id
+- `on(event, handler)` / `off(event, handler)` — `tab:added`, `tab:removed`, `tab:selected`, `workspace`
+- `addTab(position, id, label, content, options?)`
+- `ensureTab`, `removeTab`, `selectTab`, `toggleTab`, `hasTab`
+- `getTabIds`, `getSelectedTabId`, `isTabSelected`, `clearTabs`, `setTabLabel`
+- `openWorkspace`, `closeWorkspace`, `toggleWorkspace`, `isWorkspaceOpen`
+- `setWorkspaceSize`, `getWorkspaceSize`, `resetLayout`
+- `moveSegment(from, to, group)` — move every panel in a group
+- `bindToggle(element, position, id)` — click handler for a button the app owns
+- `prependToggleBarChild(node)` — insert a node into the header toggle row
+- `getFloatingWindowMountElement()`
+- `destroy()`
+
+`position` is `"left"`, `"right"`, or `"bottom"`.
+
+_Source: `src/workspace/WorkspaceLayout.js`_
 
 ## Import
 
@@ -16,6 +40,35 @@ import { Layout } from "ifcopenshell/layout";
 ```
 
 ## Examples
+
+### App
+
+```js
+import { Text } from "ifcopenshell/gui";
+import { World, Layout, Panel } from "ifcopenshell/layout";
+
+const world = new World();
+world.mount(document.body);
+
+const layout = new Layout({ leftOpen: true }).init(world);
+
+layout.on("workspace", ({ position, open }) => {
+  console.log(position, open);
+});
+
+const layers = new Panel({
+  layout,
+  position: "left",
+  id: "layers",
+  label: "Layers",
+  title: "Layers",
+  icon: "layers",
+  floatable: true,
+});
+layers.add(new Text("Layer list"));
+layers.show();
+layers.bindTo("layers-button");
+```
 
 ### Layout.Panel
 
@@ -29,9 +82,8 @@ const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
     .onClick(() => {
       if (!panel) {
         panel = new Layout.Panel({
-          context: { ui: { model: {} } },
-          tabId: "gallery-demo-tab",
-          tabLabel: "Demo panel",
+          id: "gallery-demo-tab",
+          label: "Demo panel",
           icon: "tab",
           title: "Floating tab panel",
           startFloating: true,
@@ -41,7 +93,7 @@ const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
           new StackPanel({ isVertical: true })
             .gap("0.5rem")
             .setStyle("padding", ["0.75rem"])
-            .add(new Text("Layout.Panel content — dock buttons appear when a Layout context is provided."))
+            .add(new Text("Pass layout to dock this panel. startFloating opens it on its own."))
             .add(new Badge("startFloating: true")),
         );
       }
@@ -51,7 +103,7 @@ const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
   wrap.add(openButton);
   wrap.add(
     new Caption(
-      "Without a Layout instance the panel opens as a floating window; inside a workspace it docks (undock transfers content into a FloatingWindow).",
+      "Without a layout instance the panel opens as a floating window. Pass layout to dock it into a region.",
     ),
   );
   return wrap;
