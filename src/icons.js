@@ -1,5 +1,5 @@
 /**
- * Material Symbols icon names used across DrawUI components.
+ * Material Symbols icon names used across GUI components.
  *
  * @example <caption>Sample icons</caption>
  * // live
@@ -11,7 +11,7 @@
  *   .add(new Icon(ICONS.search))
  *   .add(new Caption("ICONS.*"));
  *
- * @category Facade
+ * @category Media
  */
 export const ICONS = {
   home: "home",

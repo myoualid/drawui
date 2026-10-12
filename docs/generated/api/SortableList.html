@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SortableList — DrawUI API</title>
-  <link rel="stylesheet" href="../../dist/drawui.full.css">
+  <title>SortableList — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="../../dist/docs.css">
   <link rel="stylesheet" href="../../styles/themes/dark.css">
   <link rel="stylesheet" href="../../styles/themes/light.css">
   <link rel="stylesheet" href="../../examples/examples.css">
@@ -12,7 +12,8 @@
   <script type="importmap">
   {
     "imports": {
-      "drawui": "../../dist/drawui.full.js",
+      "ifcopenshell/gui": "../../dist/gui.js",
+      "ifcopenshell/layout": "../../dist/layout.js",
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
       "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
       "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
@@ -25,7 +26,7 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="../../index.html">← drawui docs</a>
+      <a class="doc-nav-home" href="../../index.html">← ifcopenshell-gui docs</a>
       <a href="./index.html" class="is-active">API index</a>
       <a href="../typedoc/index.html">TypeDoc</a>
       <a href="../../ai/component-index.html">Component index</a>
@@ -33,12 +34,12 @@
     <main class="doc-content Markdown"><h1 id="sortablelist">SortableList</h1>
 <p><strong>Status:</strong> Stable<br />
 <strong>Category:</strong> collections<br />
-<strong>Import:</strong> <code>drawui</code><br />
-<strong>Emitted class(es):</strong> <code>reorderable-list</code>, <code>reorderable-item</code>, <code>drag-handle</code>, <code>reorderable-placeholder</code>, <code>is-dragging</code>, <code>InputList</code>, <code>InputListItem</code>, <code>Checkbox</code></p>
+<strong>Import:</strong> <code>ifcopenshell/gui</code><br />
+<strong>Emitted class(es):</strong> <code>SortableList</code>, <code>SortableList-item</code>, <code>SortableList-handle</code>, <code>SortableList-placeholder</code>, <code>is-dragging</code>, <code>InputList</code>, <code>InputListItem</code>, <code>Checkbox</code></p>
 <p>Drag-and-drop reorderable list with optional per-item checkboxes.</p>
 <p><em>Source: <code>src/components/lists/SortableList.js</code></em></p>
 <h2 id="import">Import</h2>
-<pre><code class="js language-js">import { SortableList } from "drawui";
+<pre><code class="js language-js">import { SortableList } from "ifcopenshell/gui";
 </code></pre>
 <h2 id="examples">Examples</h2>
 <h3 id="sortablelist-1">SortableList</h3>

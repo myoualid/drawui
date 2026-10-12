@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Getting started — DrawUI</title>
-  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <title>Getting started — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="./dist/docs.css">
   <link rel="stylesheet" href="./styles/themes/dark.css">
   <link rel="stylesheet" href="./styles/themes/light.css">
   <link rel="stylesheet" href="./examples/examples.css">
@@ -13,31 +13,36 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a class="doc-nav-home" href="./index.html">← ifcopenshell-gui docs</a>
       <a href="./generated/typedoc/index.html">TypeDoc</a>
       <a href="./ai/component-index.html">Component index</a>
       <a href="./ai/SKILL.html">AI usage guide</a>
     </nav>
-    <main class="doc-content Markdown"><h1 id="drawuijsgettingstarted">DrawUI.js Getting Started</h1>
+    <main class="doc-content Markdown"><h1 id="ifcopenshellguigettingstarted">IfcOpenShell GUI Getting Started</h1>
 <h2 id="install">Install</h2>
-<p>Add DrawUI as a package dependency:</p>
-<pre><code class="json language-json">{
-  "dependencies": {
-    "drawui": "file:./drawUI"
+<pre><code class="sh language-sh">npm install ifcopenshell-gui
+</code></pre>
+<p>Point <code>ifcopenshell/gui</code> and <code>ifcopenshell/layout</code> at the installed package:</p>
+<pre><code class="html language-html">&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
+    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
   }
 }
+&lt;/script&gt;
 </code></pre>
-<p>DrawUI ships source ESM and CSS entrypoints, so your toolchain should support ES modules and CSS imports.</p>
+<h2 id="twoentrypoints">Two entry points</h2>
+<p><code>ifcopenshell/gui</code> is the component library. <code>ifcopenshell/layout</code> is the workspace manager: <code>World</code>, <code>Layout</code>, and <code>Panel</code>. Import <code>ifcopenshell-gui/styles/gui.css</code> for components. Import <code>ifcopenshell-gui/styles/layout.css</code> as well when the app docks panels.</p>
+<p><code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code> are named exports of <code>ifcopenshell/gui</code>. Their libraries load on first use.</p>
 <h2 id="baseimports">Base Imports</h2>
-<pre><code class="js language-js">import { StackPanel, Heading, TextBlock } from "drawui";
-import "drawui/styles/core.css";
-import "drawui/styles/themes/dark.css";
+<pre><code class="js language-js">import { StackPanel, Heading, Text } from "ifcopenshell/gui";
+import "ifcopenshell-gui/styles/gui.css";
 </code></pre>
-<p>Import <code>drawui/styles/icons.css</code> when you use components that render Material Symbols icons.</p>
+<p><code>styles/gui.css</code> already includes icons and both themes. <code>styles/core.css</code> is the token and component layer inside it, if you want to assemble CSS yourself.</p>
 <h2 id="firstpanel">First Panel</h2>
-<pre><code class="js language-js">import { FloatingWindow, StackPanel, Heading, TextBlock } from "drawui";
-import "drawui/styles/core.css";
-import "drawui/styles/icons.css";
+<pre><code class="js language-js">import { FloatingWindow, StackPanel, Heading, Text } from "ifcopenshell/gui";
+import "ifcopenshell-gui/styles/gui.css";
 
 const panel = new FloatingWindow({
   title: "Layers",
@@ -47,15 +52,28 @@ const panel = new FloatingWindow({
 
 const content = new StackPanel({ isVertical: true })
   .add(new Heading(3, "Visible Items"))
-  .add(new TextBlock("Nothing loaded"));
+  .add(new Text("Nothing loaded"));
 
 panel.content.add(content);
 document.body.appendChild(panel.dom);
 </code></pre>
+<h2 id="workspace">Workspace</h2>
+<pre><code class="js language-js">import { Text } from "ifcopenshell/gui";
+import { World, Layout, Panel } from "ifcopenshell/layout";
+import "ifcopenshell-gui/styles/gui.css";
+import "ifcopenshell-gui/styles/layout.css";
+
+const world = new World();
+world.mount(document.body);
+
+const layout = new Layout({ leftOpen: true }).init(world);
+const layers = new Panel({ title: "Layers" });
+layers.content.add(new Text("Layer list"));
+</code></pre>
 <h2 id="typicalpattern">Typical Pattern</h2>
 <ol>
-<li>Import <code>drawui/styles/core.css</code> once at application startup.</li>
-<li>Add a theme stylesheet such as <code>drawui/styles/themes/dark.css</code> or <code>drawui/styles/themes/light.css</code>.</li>
+<li>Import <code>ifcopenshell-gui/styles/gui.css</code> once at application startup.</li>
+<li>Import <code>ifcopenshell-gui/styles/layout.css</code> only if you use <code>Layout</code>.</li>
 <li>Build layouts with <code>new StackPanel({ isVertical: false|true })</code> (or other primitives).</li>
 <li>Mount the component <code>.dom</code> into your host application.</li>
 <li>Call <code>dispose()</code> during teardown for components that attach global listeners or external mounts.</li>

@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
-**Emitted class(es):** `workspace-menu-item`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `LabeledBoxItem`
 
 Workspace menu row: checkbox + icon + label + actions slot.
 
@@ -14,7 +14,7 @@ _Source: `src/components/lists/LabeledBoxItem.js`_
 ## Import
 
 ```js
-import { LabeledBoxItem } from "drawui";
+import { LabeledBoxItem } from "ifcopenshell/gui";
 ```
 
 ## Examples

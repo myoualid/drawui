@@ -3,12 +3,11 @@ import {
   TabView,
   Icon,
   Container,
-  Span,
   Button,
   InputText,
-  StackPanel,
 } from "../primitives/ui.js";
 
+import { Header } from "../components/panels/Header.js";
 import { makeResizable, makeDraggable } from "./drag.js";
 
 // Pin position configurations
@@ -52,7 +51,6 @@ class FloatingWindow extends Rectangle {
     super();
 
     this.panelIcon = null;
-    this.title = { icon: null, text: null };
 
     this.isMaximized = false;
 
@@ -122,20 +120,13 @@ class FloatingWindow extends Rectangle {
   }
 
   setTitle(title) {
-    this.title.text.dom.textContent = title ?? "";
-
+    this.header.setTitle(title ?? "");
     return this;
   }
 
   setIcon(iconName) {
     this.panelIcon = iconName;
-
-    const hasIcon = Boolean(iconName);
-    this.title.icon.setHidden(!hasIcon);
-    if (hasIcon) {
-      this.title.icon.setIcon(iconName);
-    }
-
+    this.header.setIcon(iconName || null);
     return this;
   }
 
@@ -404,54 +395,25 @@ class FloatingWindow extends Rectangle {
   // ==================== Private Build Methods ====================
 
   _buildHeader() {
-    const header = new Container()
-      .addClass("Row")
-      .addClass("FloatingWindow-header")
-      .addClass("Header");
-
-    this.add(header);
-
-    const titleRow = new StackPanel({ isVertical: false }).setStyles({
-      alignItems: "center",
-      flex: "1 1 auto",
-      gap: "0.5rem",
-      minWidth: "0",
-    });
-
-    this.title.icon = new Icon("");
-    this.title.icon.setHidden(true);
-    this.title.icon.setStyle("font-size", ["1.2rem"]);
-
-    this.title.text = new Span();
-    this.title.text.setStyles({
-      fontSize: "0.9rem",
-      fontWeight: "600",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-    });
-
-    titleRow.add(this.title.icon, this.title.text);
-    header.add(titleRow);
-
-    const tools = new StackPanel({ isVertical: false }).setStyles({
-      alignItems: "center",
-      flexShrink: "0",
-      gap: "0.25rem",
-      justifyContent: "flex-end",
-    });
-    tools.addClass("FloatingWindow-tools");
-
-    tools.add(this._createHeaderButton("left_panel_open", () => this._togglePin("left"), "Dock left"));
-    tools.add(this._createHeaderButton("bottom_panel_open", () => this._togglePin("bottom"), "Dock bottom"));
-    tools.add(this._createHeaderButton("right_panel_open", () => this._togglePin("right"), "Dock right"));
-    tools.add(this._createHeaderButton("open_in_full", () => this._toggleMaximize(), "Maximize"));
+    const tools = [
+      this._createHeaderButton("left_panel_open", () => this._togglePin("left"), "Dock left"),
+      this._createHeaderButton("bottom_panel_open", () => this._togglePin("bottom"), "Dock bottom"),
+      this._createHeaderButton("right_panel_open", () => this._togglePin("right"), "Dock right"),
+      this._createHeaderButton("open_in_full", () => this._toggleMaximize(), "Maximize"),
+    ];
 
     if (this.closable) {
-      tools.add(this._createHeaderButton("close", () => this.close(), "Close"));
+      tools.push(this._createHeaderButton("close", () => this.close(), "Close"));
     }
 
-    header.add(tools);
+    const header = new Header({
+      title: "",
+      actions: tools,
+      alwaysActionsColumn: true,
+    });
+    header.actions?.addClass("FloatingWindow-tools");
+
+    this.add(header);
 
     return header;
   }
@@ -467,7 +429,6 @@ class FloatingWindow extends Rectangle {
     button.addClass("Operator");
     button.addClass("FloatingWindow-tool");
     button.dom.title = tooltip;
-    button.setStyle("font-size", ["1rem"]);
     button.dom.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();

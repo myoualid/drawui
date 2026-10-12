@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `AppShell`, `AppShell-sidebar`, `AppShell-main`
 
 SPA host with sidebar navigation and hash routing.
@@ -14,7 +14,7 @@ _Source: `src/components/shell/AppShell.js`_
 ## Import
 
 ```js
-import { AppShell } from "drawui";
+import { AppShell } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -33,8 +33,8 @@ const shell = new AppShell({
     sidebarMaxWidth: "240px",
   },
 });
-shell.setSidebarContent(new TextBlock("Sidebar"));
-shell.setMainContent(new TextBlock("Main page"));
+shell.setSidebarContent(new Text("Sidebar"));
+shell.setMainContent(new Text("Main page"));
 host.add(shell);
 return host;
 ```

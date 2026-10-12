@@ -15,18 +15,13 @@ export function createLayoutResizerElement(kind, resizerSize = 7) {
   const appearanceKind = kind === 'stack' ? 'bottom' : kind;
 
   const resizer = new Container()
-    .setClass(`layout-resizer layout-resizer-${appearanceKind}${kind === 'stack' ? ' layout-resizer-stack' : ''}`)
+    .setClass(`Resizer Resizer-${appearanceKind}${kind === 'stack' ? ' Resizer-stack' : ''}`)
     .setStyles({
       width: isRowResize ? '100%' : `${resizerSize}px`,
       height: isRowResize ? `${resizerSize}px` : '100%',
-      cursor: isRowResize ? 'row-resize' : 'col-resize',
-      background: 'transparent',
-      zIndex: '100',
-      flexShrink: '0',
       touchAction: 'none',
     });
 
-  resizer.dom.style.transition = 'background 0.15s ease';
   return resizer.dom;
 }
 
@@ -52,8 +47,8 @@ export function bindLayoutResizerDrag(resizerElement, options = {}) {
 
   const resolveCursor = () => {
     if (
-      resizerElement.classList.contains('layout-resizer-left')
-      || resizerElement.classList.contains('layout-resizer-right')
+      resizerElement.classList.contains('Resizer-left')
+      || resizerElement.classList.contains('Resizer-right')
     ) {
       return 'col-resize';
     }
@@ -135,7 +130,7 @@ export function bindLayoutResizerDrag(resizerElement, options = {}) {
     resizerElement.classList.add('active');
 
     const overlay = new Container()
-      .addClass('layout-drag-overlay')
+      .addClass('ResizerOverlay')
       .setStyles({
         position: 'fixed',
         top: '0',

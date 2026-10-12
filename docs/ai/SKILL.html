@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI usage guide — DrawUI</title>
-  <link rel="stylesheet" href="../dist/drawui.min.css">
+  <title>AI usage guide — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="../dist/docs.css">
   <link rel="stylesheet" href="../styles/themes/dark.css">
   <link rel="stylesheet" href="../styles/themes/light.css">
   <link rel="stylesheet" href="../examples/examples.css">
@@ -13,31 +13,45 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="../index.html">← drawui docs</a>
+      <a class="doc-nav-home" href="../index.html">← ifcopenshell-gui docs</a>
       <a href="../generated/typedoc/index.html">TypeDoc</a>
       <a href="../ai/component-index.html">Component index</a>
       <a href="../ai/SKILL.html">AI usage guide</a>
     </nav>
-    <main class="doc-content Markdown"><h1 id="drawuijsaiusageguide">DrawUI.js AI Usage Guide</h1>
-<p>This guide is for coding agents working in DrawUI itself or in applications that consume the package.</p>
+    <main class="doc-content Markdown"><h1 id="ifcopenshellguiaiusageguide">IfcOpenShell GUI AI Usage Guide</h1>
+<p>This guide is for coding agents working in IfcOpenShell GUI itself or in applications that consume the package.</p>
 <h2 id="purpose">Purpose</h2>
-<p>DrawUI.js is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
+<p>IfcOpenShell GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
 <h2 id="importrules">Import Rules</h2>
-<p>Use only exported package paths:</p>
-<pre><code class="js language-js">import { DrawUI, FloatingWindow, Control, Container, Button, RadialMenu } from "drawui";
-import "drawui/styles/core.css";
-import "drawui/styles/icons.css";
+<p>Install with <code>npm install ifcopenshell-gui</code>. Map the public specifiers onto that package, then import classes:</p>
+<pre><code class="html language-html">&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
+    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+  }
+}
+&lt;/script&gt;
 </code></pre>
-<p>Do not import from package-internal files unless the path is exported in <code>drawUI/package.json</code>.</p>
+<pre><code class="js language-js">import { Button, FloatingWindow, Chart } from "ifcopenshell/gui";
+import { World, Layout, Panel } from "ifcopenshell/layout";
+import "ifcopenshell-gui/styles/gui.css";
+import "ifcopenshell-gui/styles/layout.css";
+</code></pre>
+<p><code>ifcopenshell/gui</code> is the component library, including <code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code>. Those libraries load on first use. <code>ifcopenshell/layout</code> exports <code>World</code>, <code>Layout</code>, and <code>Panel</code>.</p>
+<p>Construct with <code>new Button("Save")</code>, <code>new World()</code>, and <code>new Layout(config).init(world)</code>. A bundler can drop classes you do not import from the source barrels. <code>dist/gui.js</code> and <code>dist/layout.js</code> are the full browser builds.</p>
+<p>Do not import from package-internal files unless the path is exported in <code>package.json</code>.</p>
 <h2 id="componentselection">Component Selection</h2>
 <ul>
-<li>Use <code>new StackPanel({ isVertical: false })</code> / <code>{ isVertical: true }</code> for simple layouts.</li>
-<li>Use <code>ContentPanel</code> for fixed header, content, and footer regions.</li>
+<li>Use <code>StackPanel</code> and <code>Grid</code> to arrange components inside a panel.</li>
+<li>Use <code>new World()</code>, then <code>new Layout(config).init(world)</code>, when the app docks panels.</li>
+<li>Use <code>new Panel(...)</code> from <code>ifcopenshell/layout</code> for a docked panel.</li>
+<li>Use <code>Panel</code> from <code>ifcopenshell/gui</code> for fixed header, content, and footer regions.</li>
 <li>Use <code>FloatingWindow</code> for draggable or dockable floating windows.</li>
 <li>Use <code>CollapsiblePanel</code> for accordion content inside another surface.</li>
 <li>Use <code>Flyout</code> for standalone expandable tool panels.</li>
 <li>Use <code>new TabView()</code> for local tab strips.</li>
-<li>Use <code>RibbonBar</code> + <code>RibbonButton</code> for the app shell ribbon (borderless icon+label, tab-style selection). Prefer <code>IconButton</code> for bordered tile actions.</li>
+<li>Use <code>RibbonBar</code> with <code>Button</code> for the app shell ribbon. Use <code>Operator</code> for icon-only actions.</li>
 <li>Use <code>SortableList</code> only when order is user-editable.</li>
 <li>Use <code>NavigationList</code> for one-level-at-a-time hierarchical browsing.</li>
 <li>Use <code>TreeView</code> for nested expand/collapse trees (same <code>getChildren</code> / <code>getLabel</code> data shape as drill-down).</li>
@@ -47,7 +61,7 @@ import "drawui/styles/icons.css";
 <ul>
 <li>Package CSS uses <code>--dui-*</code> tokens only.</li>
 <li>New public selectors should use the <code>dui-*</code> namespace.</li>
-<li>Import <code>drawui/styles/icons.css</code> when using icon-emitting components.</li>
+<li>Import <code>ifcopenshell-gui/styles/icons.css</code> when using icon-emitting components.</li>
 <li>Keep application layout selectors, module IDs, and product-specific styles out of the package CSS entrypoints.</li>
 </ul>
 <h2 id="accessibilitychecklist">Accessibility Checklist</h2>
@@ -73,15 +87,16 @@ import "drawui/styles/icons.css";
 </ul>
 <h2 id="donot">Do Not</h2>
 <ul>
-<li>Do not make DrawUI depend on host-application runtime objects.</li>
+<li>Do not make IfcOpenShell GUI depend on host-application runtime objects.</li>
 <li>Do not move app-specific CSS into package core layers.</li>
 <li>Do not add framework dependencies for core components.</li>
+<li>Do not introduce a <code>GUI.Button()</code> facade, a <code>peers</code> import, or <code>Layout.buildWorld()</code>.</li>
 <li>Do not introduce hidden global DOM side effects without a cleanup path.</li>
 </ul>
 <h2 id="knowngotchas">Known Gotchas</h2>
 <ul>
 <li>Some overlays and floating surfaces mount or listen outside their root element and still require careful lifecycle handling.</li>
-<li>Material Symbols are the current icon mechanism, so icon-emitting examples should import <code>drawui/styles/icons.css</code>.</li>
+<li>Material Symbols ship in <code>ifcopenshell-gui/styles/gui.css</code>. Import <code>ifcopenshell-gui/styles/icons.css</code> only when you assemble CSS without that file.</li>
 </ul></main>
   </div>
 </body>

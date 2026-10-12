@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputListItem`
 
 Clickable row for `InputList`.
@@ -12,7 +12,7 @@ Clickable row for `InputList`.
 ## Import
 
 ```js
-import { InputListItem } from "drawui";
+import { InputListItem } from "ifcopenshell/gui";
 ```
 
 [← Back to API index](./index.html)

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Vertical spacer between stacked items.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Spacer } from "drawui";
+import { Spacer } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,9 +23,9 @@ import { Spacer } from "drawui";
 
 ```js
 return new StackPanel({ isVertical: true })
-  .add(new TextBlock("Above"))
+  .add(new Text("Above"))
   .add(new Spacer("1rem"))
-  .add(new TextBlock("Below"));
+  .add(new Text("Below"));
 ```
 
 <div class="doc-live-demo" data-live-demo="Spacer/vertical-spacer" aria-label="Live preview"></div>

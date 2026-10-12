@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Tab`
 
 Tab chrome created by `TabView.addTab()`. Prefer `tabs.addTab(id, label, content)` over constructing directly.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { TabItem } from "drawui";
+import { TabItem } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,8 +23,8 @@ import { TabItem } from "drawui";
 
 ```js
 const tabs = new TabView();
-tabs.addTab("a", "Overview", [new TextBlock("Tab A")]);
-tabs.addTab("b", "Details", [new TextBlock("Tab B")]);
+tabs.addTab("a", "Overview", [new Text("Tab A")]);
+tabs.addTab("b", "Details", [new Text("Tab B")]);
 tabs.select("a");
 return tabs;
 ```

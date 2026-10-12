@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputTextArea`
 
 Multi-line text area.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputTextArea } from "drawui";
+import { InputTextArea } from "ifcopenshell/gui";
 ```
 
 ## Examples

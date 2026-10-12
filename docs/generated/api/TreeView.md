@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
-**Emitted class(es):** `dui-tree`, `dui-tree-item`, `dui-tree-toggle`, `dui-tree-label`, `dui-tree-children`, `is-expanded`, `is-selected`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `TreeView`, `TreeView-item`, `TreeView-toggle`, `TreeView-label`, `TreeView-children`, `is-expanded`, `is-selected`
 
 Expandable nested tree for hierarchical data.
 
@@ -17,7 +17,7 @@ _Source: `src/components/lists/TreeView.js`_
 ## Import
 
 ```js
-import { TreeView } from "drawui";
+import { TreeView } from "ifcopenshell/gui";
 ```
 
 ## Examples

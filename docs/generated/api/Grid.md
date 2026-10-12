@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Grid`
 
 Grid layout primitive with explicit column or auto-fit helpers.
@@ -12,7 +12,7 @@ Grid layout primitive with explicit column or auto-fit helpers.
 ## Import
 
 ```js
-import { Grid } from "drawui";
+import { Grid } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -27,7 +27,7 @@ const grid = new Grid();
   ["A", "B", "C"].forEach((label) => {
     grid.add(
       new Card()
-        .add(new TextBlock(label))
+        .add(new Text(label))
         .setStyle("padding", ["0.5rem"])
         .setStyle("textAlign", ["center"]),
     );

@@ -1,25 +1,22 @@
-import { Container, Icon, Image, TextBlock, RibbonButton } from "../../primitives/ui.js";
+import { Container, Icon, Image, Text, Button } from "../../primitives/ui.js";
 import { RibbonBar } from "../../components/panels/RibbonBar.js";
 
 /**
- * Build the #World shell DOM tree from a declarative UI config tree.
+ * Build the #World shell DOM tree from a declarative config.
  *
- * This mirrors the bonsai-web `WorldComponent` pattern: workspace regions are
- * created with stable ids (`SideWorkspaceLeft`, `Viewport`, …) so
- * {@link WorkspaceLayout} can attach grid tracks, resizers, and workspace stacks.
+ * Region ids stay stable (`WorkspaceLeft`, `Viewport`, …) so
+ * {@link WorkspaceLayout} can attach grid tracks, resizers, and stacks.
+ * A node is `{ id, name?, type?, icon?, url?, style?, disabled?, children? }`.
+ * `type: "Button"` inside a ribbon becomes a button. Everything else is a container.
  *
  * @category Shell
  * @typedef {Object} WorldComponentNode
  * @property {string} id
  * @property {string} [name]
  * @property {string} [type]
- * @property {number} [priority]
  * @property {string} [icon]
- * @property {string} [moduleId]
- * @property {string} [workModeContext]
- * @property {boolean} [disabled]
- * @property {boolean} [needsCount]
  * @property {string} [url]
+ * @property {boolean} [disabled]
  * @property {Object<string, string>} [style]
  * @property {WorldComponentNode[]} [children]
  */
@@ -27,29 +24,14 @@ import { RibbonBar } from "../../components/panels/RibbonBar.js";
 /**
  * @param {WorldComponentNode} component
  * @param {HTMLElement} [container=document.body]
- * @param {Object} [options={}]
- * @param {Set<string>} [options.knownModuleIds]
- * @param {string[]} [options.activeModuleIds]
  * @returns {{ root: Container, mount: (parent?: HTMLElement) => void }}
- *
- * @example <caption>Note</caption>
- * // live
- * return new Disclaimer(
- *   "buildWorldFromConfig builds an app shell into a host — see docs/examples/templates.",
- * );
  *
  * @category Shell
  */
-export function buildWorldFromConfig(component, container = document.body, options = {}) {
-  const knownModuleIds = options.knownModuleIds ?? new Set();
-  const activeModuleIds = options.activeModuleIds ?? [];
+export function buildWorldFromConfig(component, container = document.body) {
   const rootHolder = { root: null };
 
-  walkComponent(component, null, {
-    knownModuleIds,
-    activeModuleIds,
-    rootHolder,
-  });
+  walkComponent(component, null, { rootHolder });
 
   const root = rootHolder.root;
   if (!root) {
@@ -70,10 +52,6 @@ export function buildWorldFromConfig(component, container = document.body, optio
  * @param {Object} ctx
  */
 function walkComponent(component, parent, ctx) {
-  if (shouldHideModule(component, ctx.activeModuleIds, ctx.knownModuleIds)) {
-    return;
-  }
-
   if (isRibbonButtonNode(component, parent)) {
     placeRibbonButton(component, parent);
     return;
@@ -97,16 +75,8 @@ function walkComponent(component, parent, ctx) {
     div.dom.dataset.type = component.type;
   }
 
-  if (component.priority !== undefined) {
-    div.dom.dataset.priority = String(component.priority);
-  }
-
   if (component.style) {
     div.setStyles(component.style);
-  }
-
-  if (component.type === "ContextModules" && component.workModeContext) {
-    div.dom.dataset.workModeContext = component.workModeContext;
   }
 
   decorateNode(div, component);
@@ -114,7 +84,7 @@ function walkComponent(component, parent, ctx) {
   let childParent = div;
 
   if (component.icon && Array.isArray(component.children) && component.children.length > 0) {
-    childParent = new Container().addClass("Modules");
+    childParent = new Container().addClass("Group");
     div.add(childParent);
   }
 
@@ -129,7 +99,7 @@ function walkComponent(component, parent, ctx) {
  */
 function createShellNode(component) {
   if (component.id === "RibbonBar" || component.type === "RibbonBar") {
-    return new RibbonBar([], "flex-start");
+    return new RibbonBar([]);
   }
   return new Container();
 }
@@ -140,11 +110,11 @@ function createShellNode(component) {
  * @returns {boolean}
  */
 function isRibbonButtonNode(component, parent = null) {
-  if (component.type === "RibbonButton") return true;
-  // Legacy alias: leaf ContextModules under the app RibbonBar become RibbonButtons.
-  return component.type === "ContextModules"
-    && !component.children?.length
-    && Boolean(parent?.dom?.classList?.contains("RibbonBar") || parent?.dom?.id === "RibbonBar");
+  const inRibbon = Boolean(
+    parent?.dom?.classList?.contains("RibbonBar") || parent?.dom?.id === "RibbonBar",
+  );
+  if (!inRibbon) return false;
+  return component.type === "Button";
 }
 
 /**
@@ -152,36 +122,20 @@ function isRibbonButtonNode(component, parent = null) {
  * @param {Container|null} parent
  */
 function placeRibbonButton(component, parent) {
-  const button = new RibbonButton(component.name ?? "", {
-    icon: component.icon || "widgets",
-  });
+  const button = new Button(component.name ?? "");
+  if (component.icon) button.setIcon(component.icon);
 
   if (component.id) {
     button.setId(component.id);
     button.addClass(component.id);
   }
 
-  button.dom.dataset.type = "RibbonButton";
-  if (component.moduleId) {
-    button.dom.dataset.moduleId = component.moduleId;
-  }
-  if (component.workModeContext) {
-    button.dom.dataset.workModeContext = component.workModeContext;
-  }
-  if (component.priority !== undefined) {
-    button.dom.dataset.priority = String(component.priority);
-  }
+  button.dom.dataset.type = "Button";
   if (component.disabled) {
     button.setStyle("opacity", "0.5");
   }
   if (component.style) {
     button.setStyles(component.style);
-  }
-
-  if (component.needsCount) {
-    const count = new TextBlock("0").addClass("ModuleCount");
-    count.setId(`${component.id}Count`);
-    button.add(count);
   }
 
   parent?.add(button);
@@ -197,24 +151,13 @@ function decorateNode(div, component) {
     if (component.type === "Image" && component.url) {
       div.add(new Image(component.url));
     } else {
-      div.add(new TextBlock(component.name ?? "App").addClass("LogoText"));
+      div.add(new Text(component.name ?? "App").addClass("LogoText"));
     }
     return;
   }
 
-  if (component.type === "ContextModules") {
-    if (component.icon) {
-      div.add(new Icon(component.icon).addClass("ModuleIcon"));
-    }
-    div.add(new TextBlock(component.name ?? "").addClass("ModuleName"));
-  } else if (component.icon) {
+  if (component.icon) {
     div.add(new Icon(component.icon));
-  }
-
-  if (component.needsCount) {
-    const count = new TextBlock("0").addClass("ModuleCount");
-    count.setId(`${component.id}Count`);
-    div.add(count);
   }
 
   if (component.type === "Image" && component.url && component.id !== "Logo") {
@@ -245,32 +188,9 @@ function decorateNode(div, component) {
 }
 
 /**
- * @param {WorldComponentNode} component
- * @param {string[]} activeIds
- * @param {Set<string>} knownModuleIds
- * @category Shell
- */
-function shouldHideModule(component, activeIds, knownModuleIds) {
-  if (!component.moduleId || activeIds.length === 0) {
-    return false;
-  }
-
-  if (!knownModuleIds.has(component.moduleId)) {
-    return component.type !== "RibbonButton" && component.type !== "ContextModules";
-  }
-
-  return !activeIds.includes(component.moduleId);
-}
-
-/**
- * Default workspace shell matching bonsai-web `WorldComponent` region ids.
- * Apps extend `children` (ribbon modules, footer widgets, viewport overlays).
- *
- * @example <caption>Note</caption>
- * // live
- * return new Disclaimer(
- *   "createDefaultWorldConfig returns a config object, not a Control.",
- * );
+ * Default workspace shell. Region ids are what {@link WorkspaceLayout} looks up.
+ * Pass `children` on `new World(config)` to replace the whole tree, or edit a
+ * copy of this config before constructing `World`.
  *
  * @category Shell
  * @param {Partial<WorldComponentNode>} [overrides={}]
@@ -297,7 +217,7 @@ export function createDefaultWorldConfig(overrides = {}) {
             id: "HeaderBar",
             type: "Workspace",
             children: [
-              { id: "Logo", name: "DrawUI", type: "Row" },
+              { id: "Logo", name: "GUI", type: "Row" },
               {
                 id: "HeaderMenu",
                 type: "Row",
@@ -310,9 +230,9 @@ export function createDefaultWorldConfig(overrides = {}) {
           { id: "RibbonBar", type: "RibbonBar", children: [] },
         ],
       },
-      { id: "BottomWorkspace", type: "Workspace" },
-      { id: "SideWorkspaceLeft", type: "Workspace" },
-      { id: "SideWorkspaceRight", type: "Workspace" },
+      { id: "WorkspaceBottom", type: "Workspace" },
+      { id: "WorkspaceLeft", type: "Workspace" },
+      { id: "WorkspaceRight", type: "Workspace" },
       {
         id: "Viewport",
         type: "Workspace",
@@ -320,7 +240,7 @@ export function createDefaultWorldConfig(overrides = {}) {
           { id: "Windows", type: "WindowManager", children: [] },
         ],
       },
-      { id: "FooterBar", type: "Workspace", children: [] },
+      { id: "Footer", type: "Workspace", children: [] },
     ],
   };
 

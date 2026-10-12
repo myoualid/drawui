@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Scrollable container wrapper.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { ScrollViewer } from "drawui";
+import { ScrollViewer } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -29,11 +29,11 @@ return new Container()
     new ScrollViewer({ fill: true, scrollable: true }).add(
       new StackPanel({ isVertical: true })
         .gap("0.25rem")
-        .add(new TextBlock("Scrollable line 1"))
-        .add(new TextBlock("Scrollable line 2"))
-        .add(new TextBlock("Scrollable line 3"))
-        .add(new TextBlock("Scrollable line 4"))
-        .add(new TextBlock("Scrollable line 5")),
+        .add(new Text("Scrollable line 1"))
+        .add(new Text("Scrollable line 2"))
+        .add(new Text("Scrollable line 3"))
+        .add(new Text("Scrollable line 4"))
+        .add(new Text("Scrollable line 5")),
     ),
   );
 ```

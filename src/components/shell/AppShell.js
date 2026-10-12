@@ -3,7 +3,7 @@ import {
   InputList,
   InputListItem,
   Caption,
-  TextBlock,
+  Text,
   TabView,
   Line,
 } from "../../primitives/ui.js";
@@ -53,8 +53,8 @@ import { NavigationView } from "./NavigationView.js";
  *     sidebarMaxWidth: "240px",
  *   },
  * });
- * shell.setSidebarContent(new TextBlock("Sidebar"));
- * shell.setMainContent(new TextBlock("Main page"));
+ * shell.setSidebarContent(new Text("Sidebar"));
+ * shell.setMainContent(new Text("Main page"));
  * host.add(shell);
  * return host;
  *
@@ -94,7 +94,7 @@ class AppShell extends NavigationView {
     this.pageCache = new Map();
     this.onNavigate = onNavigate;
 
-    this.mainTitle = new TextBlock("");
+    this.mainTitle = new Text("");
     this.mainTitle.setClass("Title");
 
     this.mainSubtitle = new Caption("");
@@ -184,7 +184,7 @@ class AppShell extends NavigationView {
       }
 
       if (child.type === "heading") {
-        const heading = new TextBlock(child.label ?? "");
+        const heading = new Text(child.label ?? "");
         heading.addClass("AppShell-navHeading");
         host.add(heading);
         return;

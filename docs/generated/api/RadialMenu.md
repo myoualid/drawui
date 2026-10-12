@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** overlays  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Radial interaction overlay.
@@ -12,7 +12,7 @@ Radial interaction overlay.
 ## Import
 
 ```js
-import { RadialMenu } from "drawui";
+import { RadialMenu } from "ifcopenshell/gui";
 ```
 
 ## Examples

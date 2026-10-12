@@ -11,11 +11,7 @@ export class SplitContainer extends Container {
    */
   constructor(direction, children = []) {
     super();
-    this.setClass("split-container");
-    this.dom.style.display = "flex";
-    this.dom.style.flexDirection = direction === "horizontal" ? "row" : "column";
-    this.dom.style.flex = "1";
-    this.dom.style.gap = "0";
+    this.setClass(direction === "horizontal" ? "SplitContainer Row" : "SplitContainer Column");
 
     children.forEach((child) => {
       if (child?.dom) this.add(child);

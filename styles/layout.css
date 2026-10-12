@@ -1,0 +1,3 @@
+/* Workspace grid: region tracks, resizers, stacks, and drop targets.
+   Load after styles/gui.css (or styles/core.css) so --dui-* tokens exist. */
+@import "./structure.css";

@@ -1,22 +1,92 @@
 {
-  "generatedAt": "2026-07-20T22:59:59.207Z",
+  "generatedAt": "2026-10-12T12:06:34.363Z",
   "build": "shared",
-  "title": "DrawUI — Component reference",
-  "subtitle": "Live reference organized by class hierarchy: Control leaves (Text, Inputs), Container branches (Layout, Collections, Panels, Overlays, Shell), and Peers. Open full.html for Chart, DataGrid, GanttChart, and NodeGraph.",
+  "title": "IfcOpenShell GUI — Component reference",
+  "subtitle": "Live reference organized by role: Text, Media, Inputs, Feedback, then structure (Layout, Collections, Panels, Overlays, Shell), and Peers. Open full.html for Chart, DataGrid, GanttChart, and NodeGraph.",
   "stats": {
     "categories": 24,
-    "items": 75,
+    "items": 67,
     "peerCategories": 5,
     "peerItems": 10,
-    "drawUiFactories": 0,
-    "namedExports": 3
+    "publicClasses": 73
   },
   "apiIndex": {
-    "drawUi": [],
-    "exports": [
-      "DrawUI",
-      "Markdown",
-      "markdownToHtml"
+    "ifcopenshell/gui": [
+      "new Control()",
+      "new Hyperlink()",
+      "new Image()",
+      "new Canvas()",
+      "new Svg()",
+      "new Heading()",
+      "new Text()",
+      "new Container()",
+      "new StackPanel()",
+      "new ScrollViewer()",
+      "new Grid()",
+      "new Rectangle()",
+      "new Form()",
+      "new Caption()",
+      "new Title()",
+      "new Disclaimer()",
+      "new Code()",
+      "new Kbd()",
+      "new Badge()",
+      "new Card()",
+      "new Spacer()",
+      "new HSpacer()",
+      "new Handle()",
+      "new InputText()",
+      "new InputTextArea()",
+      "new InputSearch()",
+      "new Icon()",
+      "new InputDropdown()",
+      "new Checkbox()",
+      "new InputColor()",
+      "new InputNumber()",
+      "new InputInteger()",
+      "new Slider()",
+      "new LineBreak()",
+      "new Line()",
+      "new Button()",
+      "new ProgressBar()",
+      "new TabView()",
+      "new TabItem()",
+      "new InputList()",
+      "new InputListItem()",
+      "new InputDate()",
+      "new LoadingCube()",
+      "new Tooltip()",
+      "new Panel()",
+      "new FloatingDialog()",
+      "new CollapsiblePanel()",
+      "new RibbonBar()",
+      "new Flyout()",
+      "new Operator()",
+      "new ThemeToggle()",
+      "new LabeledBoxItem()",
+      "new PropertyGrid()",
+      "new PropertyGridRow()",
+      "new SortableList()",
+      "new NavigationList()",
+      "new TreeView()",
+      "new SplitContainer()",
+      "new NavigationView()",
+      "new AppShell()",
+      "new RadialMenu()",
+      "new Toast()",
+      "new StatusBar()",
+      "new FloatingWindow()",
+      "new ICONS()",
+      "new Chart()",
+      "new DataGrid()",
+      "new GanttChart()",
+      "new NodeGraph()",
+      "new Markdown()"
+    ],
+    "ifcopenshell/layout": [
+      "new Layout()",
+      "new World()",
+      "new Panel()"
     ]
   },
   "categories": [
@@ -62,9 +132,9 @@
           "id": "text",
           "title": "Text",
           "apis": [
-            "new TextBlock(text?)"
+            "new Text(text?)"
           ],
-          "summary": "Default body copy.",
+          "summary": "Inline text.",
           "demo": "text"
         },
         {
@@ -75,24 +145,6 @@
           ],
           "summary": "Secondary body copy via Caption (`new Caption()`).",
           "demo": "small-text"
-        },
-        {
-          "id": "paragraph",
-          "title": "Paragraph",
-          "apis": [
-            "new Paragraph(text?)"
-          ],
-          "summary": "Block paragraph wrapper.",
-          "demo": "paragraph"
-        },
-        {
-          "id": "span",
-          "title": "Span",
-          "apis": [
-            "new Span()"
-          ],
-          "summary": "Generic inline wrapper for flowing text.",
-          "demo": "span"
         },
         {
           "id": "disclaimer",
@@ -133,19 +185,10 @@
     },
     {
       "id": "inline-labels",
-      "title": "Inline labels",
+      "title": "Inline marks",
       "group": "text",
-      "description": "Compact status and keyboard hints.",
+      "description": "Keyboard and code chips inside running text.",
       "items": [
-        {
-          "id": "badge",
-          "title": "Badge",
-          "apis": [
-            "new Badge(text?)"
-          ],
-          "summary": "Compact pill label for counts, status, or tags.",
-          "demo": "badge"
-        },
         {
           "id": "kbd",
           "title": "Keyboard hint",
@@ -169,7 +212,7 @@
     {
       "id": "icons",
       "title": "Icons",
-      "group": "text",
+      "group": "media",
       "description": "Material Symbols exported from the ICONS map.",
       "items": [
         {
@@ -187,7 +230,7 @@
     {
       "id": "media",
       "title": "Media",
-      "group": "text",
+      "group": "media",
       "description": "Images, SVG, and canvas drawing surfaces.",
       "items": [
         {
@@ -245,26 +288,6 @@
           ]
         },
         {
-          "id": "square-button",
-          "title": "IconButton",
-          "apis": [
-            "new IconButton(label?, options?)"
-          ],
-          "summary": "Tile-style IconButton with icon, label, and optional meta line.",
-          "options": "{ icon?: string, meta?: string, active?: boolean }",
-          "demo": "square-button"
-        },
-        {
-          "id": "ribbon-button",
-          "title": "RibbonButton",
-          "apis": [
-            "new RibbonButton(label?, options?)"
-          ],
-          "summary": "Borderless icon+label control with tab-style accent when selected.",
-          "options": "{ icon?: string, active?: boolean }",
-          "demo": "ribbon-button"
-        },
-        {
           "id": "operator",
           "title": "Icon button",
           "apis": [
@@ -272,15 +295,6 @@
           ],
           "summary": "Toolbar-style icon button with no label.",
           "demo": "operator"
-        },
-        {
-          "id": "compact-button",
-          "title": "ToolbarButton",
-          "apis": [
-            "new ToolbarButton(text?)"
-          ],
-          "summary": "Compact ToolbarButton for toolbars and fieldControl wrappers.",
-          "demo": "compact-button"
         }
       ]
     },
@@ -288,17 +302,8 @@
       "id": "form-inputs",
       "title": "Form inputs",
       "group": "inputs",
-      "description": "Labels, text fields, pickers, and toolbar-style field wrappers.",
+      "description": "Text fields, pickers, and field wrappers.",
       "items": [
-        {
-          "id": "label",
-          "title": "Label",
-          "apis": [
-            "new Label(text?)"
-          ],
-          "summary": "Field label text.",
-          "demo": "label"
-        },
         {
           "id": "input",
           "title": "InputText",
@@ -403,23 +408,16 @@
           "title": "Form",
           "apis": [
             "new Form()",
-            "new Label(text?)",
             "new InputText()",
             "new InputDropdown()",
             "new InputTextArea()",
             "new Checkbox(checked?).addClass(\"Card-checkbox\")",
             "new Button(text?)"
           ],
-          "summary": "A typical form: labels, fields, checkbox, and actions.",
+          "summary": "A typical form: text, fields, checkbox, and actions.",
           "demo": "form-composed",
           "buildingBlocks": "Composed from Form inputs and Actions. Parts below are the same primitives shown individually under Inputs.",
           "parts": [
-            {
-              "name": "Label",
-              "api": "new Label(text?)",
-              "summary": "Field label text.",
-              "demo": "label"
-            },
             {
               "name": "InputText",
               "api": "new InputText()",
@@ -720,27 +718,17 @@
       "id": "panels-chrome",
       "title": "Panel chrome",
       "group": "panels",
-      "description": "ContentPanel scaffolds and accordion sections (Container specializations).",
+      "description": "Panel scaffolds and accordion sections.",
       "items": [
         {
           "id": "base-panel",
-          "title": "ContentPanel",
+          "title": "Panel",
           "apis": [
-            "new ContentPanel(options?)",
-            "ContentPanel"
+            "new Panel(options?)",
+            "Panel"
           ],
-          "summary": "Resizable panel scaffold with Header and RibbonBar regions.",
+          "summary": "Resizable panel scaffold with header and footer regions.",
           "demo": "base-panel"
-        },
-        {
-          "id": "header",
-          "title": "Header",
-          "apis": [
-            "new Header(options?)"
-          ],
-          "summary": "Shared title/icon/actions row for panel chrome.",
-          "options": "{ title?: string, icon?: string, actions?: Control[], alwaysActionsColumn?: boolean }",
-          "demo": "header"
         },
         {
           "id": "ribbon-bar",
@@ -748,7 +736,7 @@
           "apis": [
             "new RibbonBar(elements?, justify?)"
           ],
-          "summary": "Horizontal ribbon row for panel footers or the app shell. Pair with RibbonButton.",
+          "summary": "Horizontal ribbon row for panel footers or the app shell. Children are Buttons.",
           "options": "elements?: Control[], justify?: string — defaults to \"flex-end\"",
           "demo": "ribbon-bar"
         },
@@ -766,44 +754,20 @@
       ]
     },
     {
-      "id": "data-reference",
-      "title": "Reference",
-      "group": "panels",
-      "description": "Keyboard shortcut and help blocks.",
-      "items": [
-        {
-          "id": "instruction-panel",
-          "title": "Instruction panel",
-          "apis": [
-            "new InstructionPanel(title, icon, rows?)",
-            "new InstructionLine(key, description)"
-          ],
-          "summary": "Keyboard shortcut reference block.",
-          "demo": "instruction-panel",
-          "parts": [
-            {
-              "name": "Instruction panel",
-              "api": "new InstructionPanel(title, icon, rows?)",
-              "summary": "Composed shortcut panel — pass an array of [key, description] pairs.",
-              "options": "rows?: [string, string][]",
-              "demo": "instruction-panel"
-            },
-            {
-              "name": "Instruction line",
-              "api": "new InstructionLine(key, description)",
-              "summary": "Single shortcut row. Usually composed inside instructionPanel.",
-              "note": "Use instructionPanel for the full block; instructionLine builds individual rows."
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "feedback",
       "title": "Feedback",
-      "group": "panels",
-      "description": "Progress, status, toasts, and tooltips.",
+      "group": "feedback",
+      "description": "Status badges, progress, and toasts.",
       "items": [
+        {
+          "id": "badge",
+          "title": "Badge",
+          "apis": [
+            "new Badge(text?)"
+          ],
+          "summary": "Compact pill label for counts, status, or tags.",
+          "demo": "badge"
+        },
         {
           "id": "progress",
           "title": "ProgressBar",
@@ -816,11 +780,11 @@
         },
         {
           "id": "spinner",
-          "title": "ProgressRing",
+          "title": "LoadingCube",
           "apis": [
-            "new ProgressRing(options?)"
+            "new LoadingCube(options?)"
           ],
-          "summary": "Inline loading spinner with optional text (`ProgressRing`).",
+          "summary": "Loading cube with optional text.",
           "options": "{ text?: string }",
           "demo": "spinner"
         },
@@ -852,16 +816,6 @@
           "summary": "Transient notification banner. Progress mode uses the same class with show/update/hide.",
           "options": "type?: \"success\" | \"error\" | \"info\", options?: { duration?: number }",
           "demo": "toast"
-        },
-        {
-          "id": "tooltip",
-          "title": "Tooltip",
-          "apis": [
-            "new Tooltip(text?, options?)"
-          ],
-          "summary": "Hover tooltip attached to a host element via `.attachTo(dom)`.",
-          "options": "{ theme?: \"dark\" | \"light\" }",
-          "demo": "tooltip"
         }
       ]
     },
@@ -878,7 +832,7 @@
             "new FloatingDialog(options?)",
             "FloatingDialog"
           ],
-          "summary": "Lightweight draggable floating dialog built on ContentPanel.",
+          "summary": "Lightweight draggable floating dialog built on Panel.",
           "options": "{ title?: string, icon?: string }",
           "demo": "floating-window"
         },
@@ -909,19 +863,37 @@
       "id": "overlays-WorkspacePanel",
       "title": "Dockable windows",
       "group": "overlays",
-      "description": "WorkspacePanel — dockable workspace panels that can also float.",
+      "description": "Dockable workspace panels. Import Layout from ifcopenshell/layout.",
       "items": [
         {
           "id": "tab-panel",
-          "title": "WorkspacePanel",
+          "title": "Layout.Panel",
           "apis": [
-            "new WorkspacePanel(options)",
-            "WorkspacePanel"
+            "new Layout.Panel(options)",
+            "Layout.Panel"
           ],
           "summary": "Dockable workspace panel. With startFloating it works standalone as a floating window.",
           "options": "{ context, tabId, tabLabel, icon?, title?, position?, startFloating?, floatingStyles? }",
-          "note": "Full build. Docking into left/right/bottom tabs requires a WorkspaceLayout. Open full.html for the live demo.",
+          "note": "Import Layout from ifcopenshell/layout. Docking into left/right/bottom tabs needs a Layout instance. Open full.html for the live demo.",
           "demo": "tab-panel"
+        }
+      ]
+    },
+    {
+      "id": "overlays-hints",
+      "title": "Hints",
+      "group": "overlays",
+      "description": "Hover hints attached to a host element.",
+      "items": [
+        {
+          "id": "tooltip",
+          "title": "Tooltip",
+          "apis": [
+            "new Tooltip(text?, options?)"
+          ],
+          "summary": "Hover tooltip attached to a host element via `.attachTo(dom)`.",
+          "options": "{ theme?: \"dark\" | \"light\" }",
+          "demo": "tooltip"
         }
       ]
     },
@@ -994,7 +966,7 @@
       "id": "shell-workspace",
       "title": "Workspace",
       "group": "shell",
-      "description": "AppShell, WorkspaceLayout, and declarative world config.",
+      "description": "AppShell and the Layout workspace.",
       "items": [
         {
           "id": "app-shell",
@@ -1008,23 +980,23 @@
         },
         {
           "id": "workspace-layout",
-          "title": "WorkspaceLayout",
+          "title": "Layout",
           "apis": [
-            "new WorkspaceLayout(options?)",
-            "WorkspaceLayout"
+            "new Layout(options?)",
+            "Layout"
           ],
-          "summary": "Grid workspace with dockable WorkspacePanel stacks and resizers.",
-          "note": "See examples/templates/ for a full workspace demo with WorldBuilder."
+          "summary": "Grid workspace with dockable Layout.Panel stacks and resizers.",
+          "note": "Import from ifcopenshell/layout. See examples/templates/ for a workspace demo."
         },
         {
           "id": "world-builder",
-          "title": "WorldBuilder",
+          "title": "Layout.buildWorld",
           "apis": [
-            "buildWorldFromConfig(config, container?, options?)",
-            "createDefaultWorldConfig(overrides?)"
+            "Layout.buildWorld(config, container?, options?)",
+            "Layout.createConfig(overrides?)"
           ],
-          "summary": "Build the workspace DOM tree from declarative config before WorkspaceLayout init.",
-          "note": "See examples/templates/ for a full WorldBuilder + WorkspaceLayout demo."
+          "summary": "Build the workspace DOM tree from declarative config before Layout.init.",
+          "note": "See examples/templates/ for a Layout.buildWorld demo."
         }
       ]
     }
@@ -1033,13 +1005,13 @@
     {
       "id": "charts",
       "title": "Charts",
-      "description": "Chart.js visualizations via DrawUI.Chart(). Call .init() after the element is in the DOM. Peer: chart.js@4.4.7",
+      "description": "Chart.js visualizations via GUI.Chart(). Call .init() after the element is in the DOM. Peer: chart.js@4.4.7",
       "items": [
         {
           "id": "chart-bar",
           "title": "Bar",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Vertical, horizontal, and stacked bar charts.",
           "options": "{ chartConfiguration: { type: \"bar\", data, options }, height?, width?, minHeight? }",
@@ -1047,21 +1019,21 @@
           "siblings": [
             {
               "name": "Bar",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Vertical columns — Chart.js type \"bar\".",
               "options": "type: \"bar\"",
               "demo": "chart-bar"
             },
             {
               "name": "Horizontal bar",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Bars along the Y axis via indexAxis: \"y\".",
               "options": "type: \"bar\", options.scales / indexAxis: \"y\"",
               "demo": "chart-bar-horizontal"
             },
             {
               "name": "Stacked bar",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Multiple datasets stacked on a shared category axis.",
               "options": "type: \"bar\", scales.x/y.stacked: true",
               "demo": "chart-bar-stacked"
@@ -1072,7 +1044,7 @@
           "id": "chart-line",
           "title": "Line",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Line and filled area series.",
           "options": "{ chartConfiguration: { type: \"line\", data, options }, height?, width?, minHeight? }",
@@ -1080,21 +1052,21 @@
           "siblings": [
             {
               "name": "Line",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Connected points over categories or time.",
               "options": "type: \"line\"",
               "demo": "chart-line"
             },
             {
               "name": "Multi-series line",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Several line datasets on one chart.",
               "options": "type: \"line\", multiple datasets",
               "demo": "chart-line-multi"
             },
             {
               "name": "Area",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Line chart with filled region under the curve.",
               "options": "type: \"line\", dataset.fill: true",
               "demo": "chart-area"
@@ -1105,7 +1077,7 @@
           "id": "chart-pie",
           "title": "Pie & doughnut",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Part-to-whole circular charts.",
           "options": "{ chartConfiguration: { type: \"pie\" | \"doughnut\", data, options }, height?, width?, minHeight? }",
@@ -1113,14 +1085,14 @@
           "siblings": [
             {
               "name": "Pie",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Full pie slices from categorical data.",
               "options": "type: \"pie\"",
               "demo": "chart-pie"
             },
             {
               "name": "Doughnut",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Pie with a hollow center.",
               "options": "type: \"doughnut\"",
               "demo": "chart-doughnut"
@@ -1131,7 +1103,7 @@
           "id": "chart-polar-radar",
           "title": "Polar area & radar",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Radial charts for categorical magnitudes and multi-axis profiles.",
           "options": "{ chartConfiguration: { type: \"polarArea\" | \"radar\", data, options }, height?, width?, minHeight? }",
@@ -1139,14 +1111,14 @@
           "siblings": [
             {
               "name": "Polar area",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Sectors with equal angles and variable radius.",
               "options": "type: \"polarArea\"",
               "demo": "chart-polar-area"
             },
             {
               "name": "Radar",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Spider/web chart across several axes.",
               "options": "type: \"radar\"",
               "demo": "chart-radar"
@@ -1157,7 +1129,7 @@
           "id": "chart-scatter-bubble",
           "title": "Scatter & bubble",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Point charts in continuous X/Y space; bubbles add a third size dimension.",
           "options": "{ chartConfiguration: { type: \"scatter\" | \"bubble\", data, options }, height?, width?, minHeight? }",
@@ -1165,14 +1137,14 @@
           "siblings": [
             {
               "name": "Scatter",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Individual points plotted by x and y.",
               "options": "type: \"scatter\"",
               "demo": "chart-scatter"
             },
             {
               "name": "Bubble",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Scatter points sized by a third value (r).",
               "options": "type: \"bubble\"",
               "demo": "chart-bubble"
@@ -1183,7 +1155,7 @@
           "id": "chart-mixed",
           "title": "Mixed",
           "apis": [
-            "DrawUI.Chart(options?)"
+            "GUI.Chart(options?)"
           ],
           "summary": "Combine chart types in one panel (e.g. bar + line) via per-dataset type.",
           "options": "{ chartConfiguration: { data: { datasets: [{ type, ... }, ...] }, options }, height?, width?, minHeight? }",
@@ -1191,7 +1163,7 @@
           "siblings": [
             {
               "name": "Bar + line",
-              "api": "DrawUI.Chart(options?)",
+              "api": "GUI.Chart(options?)",
               "summary": "Bars for volume with a line overlay for trend.",
               "options": "datasets with type: \"bar\" and type: \"line\"",
               "demo": "chart-mixed"
@@ -1209,7 +1181,7 @@
           "id": "spreadsheet",
           "title": "DataGrid",
           "apis": [
-            "DrawUI.Spreadsheet(options)",
+            "GUI.Spreadsheet(options)",
             "DataGrid"
           ],
           "summary": "Editable AG Grid spreadsheet — call .init() after attach.",
@@ -1239,7 +1211,7 @@
     {
       "id": "markdown",
       "title": "Markdown (GFM)",
-      "description": "Same `Markdown` component with Showdown + Highlight.js peers loaded. Peers: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1",
+      "description": "Markdown with Showdown and Highlight.js installed. Packages: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1",
       "items": [
         {
           "id": "markdown-full",
@@ -1247,7 +1219,7 @@
           "apis": [
             "new Markdown(text?, options?)"
           ],
-          "summary": "GFM tables, task lists, and highlighted fences when Showdown peers are loaded.",
+          "summary": "GFM tables, task lists, and highlighted fences when Showdown is installed.",
           "demo": "markdown-full",
           "note": "Peers: showdown@2.1.0, @highlightjs/cdn-assets@11.11.1"
         }
@@ -1256,7 +1228,7 @@
     {
       "id": "nodes",
       "title": "NodeGraph",
-      "description": "Node graph editor (full build).",
+      "description": "Node graph editor. Import NodeGraph from ifcopenshell/gui.",
       "items": [
         {
           "id": "nodes",
@@ -1267,7 +1239,7 @@
           "summary": "Node graph editor — pass { nodes, connections } with id/name/status/level/children per node.",
           "demo": "nodes",
           "options": "{ nodes, connections, embedded?, readOnly?, onEdit?, onDelete?, onNodeClick? }",
-          "note": "Full build only. Link styles/components/nodes.css (and hud.css for meta labels)."
+          "note": "Import from ifcopenshell/gui. Chart.js, AG Grid, and jsGantt load on first use."
         }
       ]
     }
@@ -1281,7 +1253,7 @@
         "id": "spreadsheet",
         "title": "DataGrid",
         "apis": [
-          "DrawUI.Spreadsheet(options)",
+          "GUI.Spreadsheet(options)",
           "DataGrid"
         ],
         "summary": "Editable AG Grid spreadsheet — call .init() after attach.",
@@ -1293,28 +1265,36 @@
   },
   "fullBuildOnly": [
     {
-      "api": "DrawUI.Chart()",
+      "api": "new Chart()",
       "peer": "chart.js"
     },
     {
-      "api": "DrawUI.Spreadsheet()",
+      "api": "new DataGrid()",
       "peer": "ag-grid-community"
     },
     {
-      "api": "GanttChart",
+      "api": "new GanttChart()",
       "peer": "jsgantt-improved"
     },
     {
-      "api": "NodeGraph",
-      "peer": "internal node graph editor"
+      "api": "new NodeGraph()",
+      "peer": "ifcopenshell/gui"
     },
     {
-      "api": "DrawUI.WorkspacePanel()",
-      "peer": "requires WorkspaceLayout context"
+      "api": "new Markdown()",
+      "peer": "showdown"
     },
     {
-      "api": "WorkspacePanel",
-      "peer": "workspace layout integration"
+      "api": "new World()",
+      "peer": "ifcopenshell/layout"
+    },
+    {
+      "api": "new Layout()",
+      "peer": "ifcopenshell/layout"
+    },
+    {
+      "api": "new Panel()",
+      "peer": "ifcopenshell/layout"
     }
   ]
 }

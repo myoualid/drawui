@@ -76,7 +76,7 @@ export function markdownToHtml(markdown) {
 }
 
 /**
- * Showdown-backed markdown renderer (full build). Same API as the min-build `Markdown`.
+ * Markdown renderer. Uses Showdown when it is installed, and the built-in converter otherwise. Import from `ifcopenshell/gui`.
  *
  * @example
  * // live
@@ -124,11 +124,20 @@ export class Markdown extends Container {
   }
 
   setMarkdown(text) {
+    this._markdownSource = text;
     const { html } = markdownToHtml(text);
 
     this.setInnerHTML(html);
-
     this.#highlightCodeBlocks();
+
+    if (!converter) {
+      ensureConverter().then((ready) => {
+        if (!ready || this._markdownSource !== text) return;
+        this.setInnerHTML(ready.makeHtml(text));
+        this.#highlightCodeBlocks();
+      });
+    }
+
     return this;
   }
 

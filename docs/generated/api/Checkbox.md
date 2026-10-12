@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Checkbox`
 
 Checkbox input.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Checkbox } from "drawui";
+import { Checkbox } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -24,7 +24,7 @@ import { Checkbox } from "drawui";
 ```js
 return row()
   .add(new Checkbox(true).addClass("Card-checkbox"))
-  .add(new TextBlock("Agree to terms"));
+  .add(new Text("Agree to terms"));
 ```
 
 <div class="doc-live-demo" data-live-demo="Checkbox/checkbox" aria-label="Live preview"></div>

@@ -4,19 +4,21 @@ import {
   Container,
   Card,
   Heading,
-  TextBlock,
+  Text,
   Caption,
   Badge,
   Button,
   ThemeToggle,
   Toast,
-  Chart,
-  DataGrid,
-  GanttChart,
-  Markdown,
   TabView,
   ProgressBar,
-} from "drawui";
+} from "ifcopenshell/gui";
+import {
+  Chart,
+  Markdown,
+  DataGrid,
+  GanttChart,
+} from "ifcopenshell/gui";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {
@@ -53,7 +55,7 @@ function kpi(label, value, hint) {
         .gap("0.35rem")
         .add(new Caption(label))
         .add(new Heading(3, value))
-        .add(new TextBlock(hint)),
+        .add(new Text(hint)),
     );
 }
 
@@ -251,7 +253,7 @@ function pageBookings() {
 
   return page(
     row(
-      new TextBlock("Resource & plant bookings"),
+      new Text("Resource & plant bookings"),
       new Badge("Week 30"),
       new Button("New booking").addClass("primary"),
     ),
@@ -333,7 +335,7 @@ function pageTimesheets() {
   tabs.select("grid");
 
   return page(
-    row(new TextBlock("Weekly timesheets"), new Caption("Cost codes · overtime flagged > 45h")),
+    row(new Text("Weekly timesheets"), new Caption("Cost codes · overtime flagged > 45h")),
     tabs,
   );
 }
@@ -345,7 +347,7 @@ function pageProgramme() {
 
   return page(
     row(
-      new TextBlock("Short-term look-ahead"),
+      new Text("Short-term look-ahead"),
       new Badge("4-week"),
       new Caption("Plant demob milestone linked to MEP first fix"),
     ),

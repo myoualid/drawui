@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `PropertyGrid`, `PropertyGrid-row`
 
 Key/value property editor grid.
@@ -12,7 +12,7 @@ Key/value property editor grid.
 ## Import
 
 ```js
-import { PropertyGrid } from "drawui";
+import { PropertyGrid } from "ifcopenshell/gui";
 ```
 
 ## Examples

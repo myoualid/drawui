@@ -40,6 +40,7 @@ const forbiddenPatterns = [
   /^superceded\//,
   /^ios\.css$/,
   /^styles\/(?:colors|master|minimal|responsive)\.css$/,
+  /^dist\/[^/]+\.docs\.css$/,
 ];
 const forbiddenFiles = packedFiles.filter((file) => forbiddenPatterns.some((pattern) => pattern.test(file)));
 

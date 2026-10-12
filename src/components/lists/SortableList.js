@@ -1,5 +1,5 @@
 import {
-  TextBlock,
+  Text,
   Checkbox,
   Icon,
   Container,
@@ -24,7 +24,7 @@ class SortableList {
     this._fromIndex = -1;
 
     this.container = new InputList();
-    this.container.addClass("reorderable-list");
+    this.container.addClass("SortableList");
     this.container.dom.setAttribute("role", "list");
 
     this.render();
@@ -39,13 +39,13 @@ class SortableList {
       const labelText = typeof item === "string" ? item : item.label || String(item);
       const listItem = new InputListItem(this.container);
 
-      listItem.addClass("reorderable-item");
+      listItem.addClass("SortableList-item");
       listItem.dom.draggable = true;
       listItem.dom.dataset.index = String(index);
       listItem.dom.setAttribute("role", "listitem");
 
       const handle = new Icon("drag_indicator");
-      handle.addClass("drag-handle");
+      handle.addClass("SortableList-handle");
       handle.dom.setAttribute("aria-hidden", "true");
       listItem.add(handle);
 
@@ -61,8 +61,8 @@ class SortableList {
         listItem.add(checkbox);
       }
 
-      const label = new TextBlock(labelText);
-      label.addClass("reorderable-item-label");
+      const label = new Text(labelText);
+      label.addClass("SortableList-label");
       listItem.add(label);
 
       this.container.add(listItem);
@@ -73,7 +73,7 @@ class SortableList {
     const root = this.container.dom;
 
     root.addEventListener("dragstart", (e) => {
-      const item = e.target.closest(".reorderable-item");
+      const item = e.target.closest(".SortableList-item");
       if (!item || !root.contains(item)) return;
 
       // Ignore drag starts from interactive controls
@@ -90,7 +90,7 @@ class SortableList {
       const height = item.offsetHeight;
 
       this.placeholder = new Container()
-        .addClass("reorderable-placeholder")
+        .addClass("SortableList-placeholder")
         .dom;
       this.placeholder.setAttribute("aria-hidden", "true");
       this.placeholder.style.height = `${height}px`;
@@ -114,7 +114,7 @@ class SortableList {
       e.dataTransfer.dropEffect = "move";
       if (!this.placeholder) return;
 
-      const target = e.target.closest(".reorderable-item");
+      const target = e.target.closest(".SortableList-item");
       if (!target || target === this.draggedItem || !root.contains(target)) return;
 
       const rect = target.getBoundingClientRect();

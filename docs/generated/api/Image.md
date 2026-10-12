@@ -3,8 +3,8 @@
 # Image
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** media  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Image`
 
 Image wrapper around `img`.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Image } from "drawui";
+import { Image } from "ifcopenshell/gui";
 ```
 
 ## Examples

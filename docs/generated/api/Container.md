@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Generic block wrapper.
@@ -12,7 +12,7 @@ Generic block wrapper.
 ## Import
 
 ```js
-import { Container } from "drawui";
+import { Container } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -21,7 +21,7 @@ import { Container } from "drawui";
 
 ```js
 return new Container()
-  .add(new TextBlock("container() — generic block container"))
+  .add(new Text("container() — generic block container"))
   .setStyle("padding", ["0.75rem"]);
 ```
 

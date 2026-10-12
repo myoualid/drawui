@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
-**Emitted class(es):** `dui-drill`, `dui-drill-header`, `dui-drill-item`, `NavigableList`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `NavigationList`, `NavigationList-item`, `NavigationList-back`
 
 Hierarchical list that drills into children one level at a time,
 with a back control to return up the stack.
@@ -18,7 +18,7 @@ _Source: `src/components/lists/NavigationList.js`_
 ## Import
 
 ```js
-import { NavigationList } from "drawui";
+import { NavigationList } from "ifcopenshell/gui";
 ```
 
 ## Examples

@@ -1,33 +1,32 @@
-import * as DrawUI from "drawui";
+import * as GUI from "ifcopenshell/gui";
+import { RadialMenu } from "ifcopenshell/gui";
 
 function row() {
-  return new DrawUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("flexWrap", ["wrap"]).setStyle("alignItems", ["center"]);
+  return new GUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("flexWrap", ["wrap"]).setStyle("alignItems", ["center"]);
 }
 
-/** @type {Record<string, () => import("drawui").Control>} */
+/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
 export const DEMO_BUILDERS = {
   "headings": () =>
-    new DrawUI.StackPanel({ isVertical: true })
+    new GUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(new DrawUI.Heading(1, "Heading 1"))
-      .add(new DrawUI.Heading(2, "Heading 2"))
-      .add(new DrawUI.Heading(3, "Heading 3"))
-      .add(new DrawUI.Heading(4, "Heading 4"))
-      .add(new DrawUI.Heading(5, "Heading 5"))
-      .add(new DrawUI.Heading(6, "Heading 6")),
+      .add(new GUI.Heading(1, "Heading 1"))
+      .add(new GUI.Heading(2, "Heading 2"))
+      .add(new GUI.Heading(3, "Heading 3"))
+      .add(new GUI.Heading(4, "Heading 4"))
+      .add(new GUI.Heading(5, "Heading 5"))
+      .add(new GUI.Heading(6, "Heading 6")),
 
-  "title": () => new DrawUI.Title("Panel title style"),
+  "title": () => new GUI.Title("Panel title style"),
 
-  "text": () => new DrawUI.TextBlock("Body text via DrawUI.textBlock()"),
+  "text": () => new GUI.Text("Inline text"),
 
-  "small-text": () => new DrawUI.Caption("Small text via DrawUI.caption()"),
+  "small-text": () => new GUI.Caption("Small text via GUI.caption()"),
 
-  "paragraph": () => new DrawUI.Paragraph("Paragraph with inline content."),
-
-  "disclaimer": () => new DrawUI.Disclaimer("Disclaimer copy for secondary legal or helper text."),
+  "disclaimer": () => new GUI.Disclaimer("Disclaimer copy for secondary legal or helper text."),
 
   "markdown": () =>
-    new DrawUI.Markdown(
+    new GUI.Markdown(
       [
         "## Min-build markdown",
         "",
@@ -46,16 +45,14 @@ export const DEMO_BUILDERS = {
       ].join("\n"),
     ),
 
-  "badge": () => new DrawUI.Badge("Badge"),
+  "badge": () => new GUI.Badge("Badge"),
 
-  "kbd": () => new DrawUI.Kbd("Ctrl"),
+  "kbd": () => new GUI.Kbd("Ctrl"),
 
-  "code": () => new DrawUI.Code("new Button()"),
-
-  "span": () => new DrawUI.Span().setTextContent("Inline span"),
+  "code": () => new GUI.Code("new Button()"),
 
   "image": () =>
-    new DrawUI.Image(
+    new GUI.Image(
       "data:image/svg+xml," +
         encodeURIComponent(
           '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="8" fill="#70ba35"/></svg>',
@@ -63,7 +60,7 @@ export const DEMO_BUILDERS = {
     ).setStyle("width", ["4rem"]),
 
   "svg": () =>
-    new DrawUI.Svg(
+    new GUI.Svg(
       "data:image/svg+xml," +
         encodeURIComponent(
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
@@ -74,7 +71,7 @@ export const DEMO_BUILDERS = {
       .setStyle("color", ["var(--dui-color-accent, #70ba35)"]),
 
   "canvas": () => {
-    const canvas = new DrawUI.Canvas();
+    const canvas = new GUI.Canvas();
     canvas.dom.width = 240;
     canvas.dom.height = 120;
     canvas
@@ -89,66 +86,66 @@ export const DEMO_BUILDERS = {
     return canvas;
   },
 
-  "inline-link": () => new DrawUI.Hyperlink("DrawUI docs", "#", "open_in_new", false),
+  "inline-link": () => new GUI.Hyperlink("GUI docs", "#", "open_in_new", false),
 
   "icons-grid": () => {
-    const grid = new DrawUI.Grid().addClass("Gallery-iconGrid");
+    const grid = new GUI.Grid().addClass("Gallery-iconGrid");
     grid.setStyle("display", ["grid"]);
     grid.setStyle("gridTemplateColumns", ["repeat(auto-fill, minmax(5.5rem, 1fr))"]);
     grid.setStyle("gap", ["0.75rem"]);
 
-    Object.entries(DrawUI.ICONS).forEach(([key, name]) => {
+    Object.entries(GUI.ICONS).forEach(([key, name]) => {
       grid.add(
-        new DrawUI.StackPanel({ isVertical: true })
+        new GUI.StackPanel({ isVertical: true })
           .addClass("Gallery-iconCell")
           .setStyle("alignItems", ["center"])
           .setStyle("gap", ["0.25rem"])
           .setStyle("padding", ["0.5rem"])
-          .add(new DrawUI.Icon(name))
-          .add(new DrawUI.Caption(key)),
+          .add(new GUI.Icon(name))
+          .add(new GUI.Caption(key)),
       );
     });
 
     return grid;
   },
 
-  "operator": () => new DrawUI.Operator("settings"),
+  "operator": () => new GUI.Operator("settings"),
 
   "divider": () =>
-    new DrawUI.StackPanel({ isVertical: true })
+    new GUI.StackPanel({ isVertical: true })
       .gap("0.5rem")
-      .add(new DrawUI.TextBlock("Above the rule"))
-      .add(new DrawUI.Line())
-      .add(new DrawUI.TextBlock("Below the rule")),
+      .add(new GUI.Text("Above the rule"))
+      .add(new GUI.Line())
+      .add(new GUI.Text("Below the rule")),
 
   "line-break": () =>
-    new DrawUI.StackPanel({ isVertical: true })
+    new GUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(new DrawUI.TextBlock("Line one"))
-      .add(new DrawUI.LineBreak())
-      .add(new DrawUI.TextBlock("Line two")),
+      .add(new GUI.Text("Line one"))
+      .add(new GUI.LineBreak())
+      .add(new GUI.Text("Line two")),
 
   "row": () =>
-    new DrawUI.StackPanel({ isVertical: false })
+    new GUI.StackPanel({ isVertical: false })
       .gap("0.5rem")
-      .add(new DrawUI.Badge("Row"))
-      .add(new DrawUI.Badge("Layout")),
+      .add(new GUI.Badge("Row"))
+      .add(new GUI.Badge("Layout")),
 
   "column": () =>
-    new DrawUI.StackPanel({ isVertical: true })
+    new GUI.StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(new DrawUI.TextBlock("Column A"))
-      .add(new DrawUI.TextBlock("Column B")),
+      .add(new GUI.Text("Column A"))
+      .add(new GUI.Text("Column B")),
 
   "grid": () => {
-    const grid = new DrawUI.Grid();
+    const grid = new GUI.Grid();
     grid.setStyle("display", ["grid"]);
     grid.setStyle("gridTemplateColumns", ["repeat(3, 1fr)"]);
     grid.setStyle("gap", ["0.5rem"]);
     ["A", "B", "C"].forEach((label) => {
       grid.add(
-        new DrawUI.Card()
-          .add(new DrawUI.TextBlock(label))
+        new GUI.Card()
+          .add(new GUI.Text(label))
           .setStyle("padding", ["0.5rem"])
           .setStyle("textAlign", ["center"]),
       );
@@ -158,49 +155,39 @@ export const DEMO_BUILDERS = {
 
   "hspacer": () =>
     row()
-      .add(new DrawUI.TextBlock("Start"))
-      .add(new DrawUI.HSpacer("2rem"))
-      .add(new DrawUI.TextBlock("End")),
+      .add(new GUI.Text("Start"))
+      .add(new GUI.HSpacer("2rem"))
+      .add(new GUI.Text("End")),
 
   "spacer": () =>
-    new DrawUI.StackPanel({ isVertical: true })
-      .add(new DrawUI.TextBlock("Above"))
-      .add(new DrawUI.Spacer("1rem"))
-      .add(new DrawUI.TextBlock("Below")),
+    new GUI.StackPanel({ isVertical: true })
+      .add(new GUI.Text("Above"))
+      .add(new GUI.Spacer("1rem"))
+      .add(new GUI.Text("Below")),
 
   "handle": () =>
     row()
       .add(
-        new DrawUI.Card()
+        new GUI.Card()
           .setStyle("padding", ["0.5rem 0.75rem"])
           .setStyle("display", ["flex"])
           .setStyle("alignItems", ["center"])
           .setStyle("gap", ["0.5rem"])
           .add(
-            new DrawUI.Handle("drag")
-              .add(new DrawUI.Icon("drag_indicator"))
+            new GUI.Handle("drag")
+              .add(new GUI.Icon("drag_indicator"))
               .setStyle("cursor", ["grab"])
               .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
           )
-          .add(new DrawUI.TextBlock("Draggable row")),
+          .add(new GUI.Text("Draggable row")),
       ),
 
-  "header": () =>
-    new DrawUI.Header({
-      title: "Inspector",
-      icon: "info",
-      actions: [new DrawUI.Button("…").addClass("secondary")],
-    }),
-
-  "ribbon-button": () =>
-    new DrawUI.RibbonButton("Project", { icon: "folder_open" }),
-
   "ribbon-bar": () =>
-    new DrawUI.RibbonBar(
+    new GUI.RibbonBar(
       [
-        new DrawUI.RibbonButton("Project", { icon: "folder_open" }),
-        new DrawUI.RibbonButton("Properties", { icon: "tune", active: true }),
-        new DrawUI.RibbonButton("Console", { icon: "terminal" }),
+        new GUI.Button("Project").setIcon("folder_open"),
+        new GUI.Button("Properties").setIcon("tune").addClass("selected"),
+        new GUI.Button("Console").setIcon("terminal"),
       ],
       "flex-start",
     ),
@@ -220,127 +207,121 @@ export const DEMO_BUILDERS = {
         ctx.config.ui.theme.current = theme;
       },
     };
-    return new DrawUI.ThemeToggle(context, ops);
+    return new GUI.ThemeToggle(context, ops);
   },
 
   "split-container": () => {
-    const left = new DrawUI.Rectangle()
-      .add(new DrawUI.TextBlock("Left pane"))
+    const left = new GUI.Rectangle()
+      .add(new GUI.Text("Left pane"))
       .setStyle("padding", ["0.75rem"])
       .setStyle("flex", ["1"]);
-    const right = new DrawUI.Rectangle()
-      .add(new DrawUI.TextBlock("Right pane"))
+    const right = new GUI.Rectangle()
+      .add(new GUI.Text("Right pane"))
       .setStyle("padding", ["0.75rem"])
       .setStyle("flex", ["1"]);
-    const split = new DrawUI.SplitContainer("horizontal", [left, right]);
+    const split = new GUI.SplitContainer("horizontal", [left, right]);
     split.setStyle("height", ["7rem"]);
     return split;
   },
 
   "card": () =>
-    new DrawUI.Card()
-      .add(new DrawUI.TextBlock("new Card()"))
+    new GUI.Card()
+      .add(new GUI.Text("new Card()"))
       .setStyle("padding", ["0.75rem"]),
 
   "panel": () =>
-    new DrawUI.Rectangle()
-      .add(new DrawUI.TextBlock("DrawUI.rectangle()"))
+    new GUI.Rectangle()
+      .add(new GUI.Text("GUI.rectangle()"))
       .setStyle("padding", ["0.75rem"]),
 
   "div": () =>
-    new DrawUI.Container()
-      .add(new DrawUI.TextBlock("DrawUI.container() — generic block container"))
+    new GUI.Container()
+      .add(new GUI.Text("GUI.container() — generic block container"))
       .setStyle("padding", ["0.75rem"]),
 
   "center": () => {
-    const host = new DrawUI.Container().setStyle("minHeight", ["4rem"]);
-    host.add(DrawUI.center(new DrawUI.Badge("Centered via center()")));
+    const host = new GUI.Container().setStyle("minHeight", ["4rem"]);
+    host.add(GUI.center(new GUI.Badge("Centered via center()")));
     return host;
   },
 
   "form-composed": () => {
-    const nameInput = new DrawUI.InputText();
+    const nameInput = new GUI.InputText();
     nameInput.dom.placeholder = "Jane Doe";
-    const emailInput = new DrawUI.InputText();
+    const emailInput = new GUI.InputText();
     emailInput.dom.placeholder = "jane@example.com";
     emailInput.dom.type = "email";
-    const notes = new DrawUI.InputTextArea();
+    const notes = new GUI.InputTextArea();
     notes.dom.placeholder = "Optional notes…";
-    const roleSelect = new DrawUI.InputDropdown().setOptions({ user: "User", admin: "Admin", editor: "Editor" });
-    const actions = new DrawUI.StackPanel({ isVertical: false })
+    const roleSelect = new GUI.InputDropdown().setOptions({ user: "User", admin: "Admin", editor: "Editor" });
+    const actions = new GUI.StackPanel({ isVertical: false })
       .gap("0.5rem")
-      .add(new DrawUI.Button("Cancel").addClass("secondary"))
-      .add(new DrawUI.Button("Save").addClass("primary"));
-    return new DrawUI.Form()
+      .add(new GUI.Button("Cancel").addClass("secondary"))
+      .add(new GUI.Button("Save").addClass("primary"));
+    return new GUI.Form()
       .setStyle("display", ["flex"])
       .setStyle("flexDirection", ["column"])
       .gap("0.5rem")
-      .add(new DrawUI.Label("Name"))
+      .add(new GUI.Text("Name"))
       .add(nameInput)
-      .add(new DrawUI.Label("Email"))
+      .add(new GUI.Text("Email"))
       .add(emailInput)
-      .add(new DrawUI.Label("Role"))
+      .add(new GUI.Text("Role"))
       .add(roleSelect)
-      .add(new DrawUI.Label("Notes"))
+      .add(new GUI.Text("Notes"))
       .add(notes)
       .add(
-        new DrawUI.StackPanel({ isVertical: false })
+        new GUI.StackPanel({ isVertical: false })
           .gap("0.5rem")
-          .add(new DrawUI.Checkbox(true).addClass("Card-checkbox"))
-          .add(new DrawUI.TextBlock("Email me updates")),
+          .add(new GUI.Checkbox(true).addClass("Card-checkbox"))
+          .add(new GUI.Text("Email me updates")),
       )
-      .add(new DrawUI.Spacer("0.5rem"))
+      .add(new GUI.Spacer("0.5rem"))
       .add(actions);
   },
 
   "input": () => {
-    const field = new DrawUI.InputText();
+    const field = new GUI.InputText();
     field.dom.placeholder = "Enter value…";
     return field;
   },
 
   "textarea": () => {
-    const field = new DrawUI.InputTextArea();
+    const field = new GUI.InputTextArea();
     field.dom.placeholder = "Multi-line notes…";
     return field;
   },
 
-  "select": () => new DrawUI.InputDropdown().setOptions({ user: "User", admin: "Admin" }),
-
-  "label": () => new DrawUI.Label("Field label"),
+  "select": () => new GUI.InputDropdown().setOptions({ user: "User", admin: "Admin" }),
 
   "checkbox": () =>
     row()
-      .add(new DrawUI.Checkbox(true).addClass("Card-checkbox"))
-      .add(new DrawUI.TextBlock("Agree to terms")),
+      .add(new GUI.Checkbox(true).addClass("Card-checkbox"))
+      .add(new GUI.Text("Agree to terms")),
 
-  "number": () => new DrawUI.InputNumber(2),
+  "number": () => new GUI.InputNumber(2),
 
-  "integer": () => new DrawUI.InputInteger(1),
+  "integer": () => new GUI.InputInteger(1),
 
-  "slider": () => new DrawUI.Slider(42).setRange(0, 100).setStep(1).setPrecision(0),
+  "slider": () => new GUI.Slider(42).setRange(0, 100).setStep(1).setPrecision(0),
 
-  "color": () => new DrawUI.InputColor(),
+  "color": () => new GUI.InputColor(),
 
-  "progress": () => new DrawUI.ProgressBar(0.65),
+  "progress": () => new GUI.ProgressBar(0.65),
 
-  "date": () => new DrawUI.InputDate(new Date()),
+  "date": () => new GUI.InputDate(new Date()),
 
-  "button-primary": () => new DrawUI.Button("Primary").addClass("primary"),
+  "button-primary": () => new GUI.Button("Primary").addClass("primary"),
 
-  "button-secondary": () => new DrawUI.Button("Secondary").addClass("secondary"),
-
-  "square-button": () => new DrawUI.IconButton("Export", { icon: "download", meta: ".ifc" }),
-
-  "compact-button": () => new DrawUI.ToolbarButton("Action"),
+  "button-secondary": () => new GUI.Button("Secondary").addClass("secondary"),
 
   "search-input": () =>
-    new DrawUI.InputSearch("Search layers…", (value) => {
+    new GUI.InputSearch("Search layers…", (value) => {
       console.log("search:", value);
     }),
 
   "list": () => {
-    const list = new DrawUI.InputList();
+    const list = new GUI.InputList();
     list.setItems([
       { id: "layer-01", name: "Layer 01" },
       { id: "layer-02", name: "Layer 02" },
@@ -350,7 +331,7 @@ export const DEMO_BUILDERS = {
   },
 
   "reorderable-list": () =>
-    new DrawUI.SortableList(
+    new GUI.SortableList(
       [{ label: "Wall", checked: true }, { label: "Slab", checked: false }, { label: "Column" }, { label: "Beam" }],
       (items) => console.log("reordered", items),
     ).container,
@@ -369,7 +350,7 @@ export const DEMO_BUILDERS = {
         { name: "Library", children: [{ name: "Materials" }, { name: "Profiles" }] },
       ],
     };
-    const drill = new DrawUI.NavigationList({
+    const drill = new GUI.NavigationList({
       getLabel: (item) => item.name,
       getChildren: (item) => item.children || [],
       onItemClick: (item) => console.log("selected", item),
@@ -393,7 +374,7 @@ export const DEMO_BUILDERS = {
         { name: "Library", children: [{ name: "Materials" }, { name: "Profiles" }] },
       ],
     };
-    const tree = new DrawUI.TreeView({
+    const tree = new GUI.TreeView({
       getLabel: (item) => item.name,
       getChildren: (item) => item.children || [],
       onItemClick: (item) => console.log("selected", item),
@@ -403,15 +384,15 @@ export const DEMO_BUILDERS = {
   },
 
   "labeled-box-item": () => {
-    const menuList = new DrawUI.InputList();
+    const menuList = new GUI.InputList();
     menuList.add(
-      new DrawUI.LabeledBoxItem({ id: "visibility", label: "Visibility", checked: true }, {
+      new GUI.LabeledBoxItem({ id: "visibility", label: "Visibility", checked: true }, {
         visibility: "visibility",
         default: "layers",
       }),
     );
     menuList.add(
-      new DrawUI.LabeledBoxItem({ id: "materials", label: "Materials", checked: false }, {
+      new GUI.LabeledBoxItem({ id: "materials", label: "Materials", checked: false }, {
         materials: "palette",
         default: "layers",
       }),
@@ -420,31 +401,31 @@ export const DEMO_BUILDERS = {
   },
 
   "property-row": () => {
-    const nameField = new DrawUI.InputText().setValue("Custom");
-    return new DrawUI.StackPanel({ isVertical: true })
+    const nameField = new GUI.InputText().setValue("Custom");
+    return new GUI.StackPanel({ isVertical: true })
       .addClass("PropertyGrid")
-      .add(new DrawUI.PropertyGridRow("Label", nameField, "Editable value cell"))
-      .add(new DrawUI.PropertyGridRow("Status", "Ready"));
+      .add(new GUI.PropertyGridRow("Label", nameField, "Editable value cell"))
+      .add(new GUI.PropertyGridRow("Status", "Ready"));
   },
 
   "property-table": () => {
-    const nameField = new DrawUI.InputText().setValue("Beam-12");
-    const typeSelect = new DrawUI.InputDropdown().setOptions({
+    const nameField = new GUI.InputText().setValue("Beam-12");
+    const typeSelect = new GUI.InputDropdown().setOptions({
       IfcBeam: "IfcBeam",
       IfcColumn: "IfcColumn",
       IfcSlab: "IfcSlab",
     }).setValue("IfcBeam");
-    const notes = new DrawUI.InputTextArea().setValue("Primary span member");
+    const notes = new GUI.InputTextArea().setValue("Primary span member");
     notes.dom.rows = 2;
-    const visible = new DrawUI.Checkbox(true).addClass("Card-checkbox");
-    const length = new DrawUI.InputNumber(12.5).setRange(0, 100).setUnit("m");
-    const count = new DrawUI.InputInteger(4).setRange(0, 99);
-    const opacity = new DrawUI.Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2);
-    const color = new DrawUI.InputColor().setValue("#70ba35");
-    const created = new DrawUI.InputDate(new Date());
-    const progress = new DrawUI.ProgressBar(0.45);
+    const visible = new GUI.Checkbox(true).addClass("Card-checkbox");
+    const length = new GUI.InputNumber(12.5).setRange(0, 100).setUnit("m");
+    const count = new GUI.InputInteger(4).setRange(0, 99);
+    const opacity = new GUI.Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2);
+    const color = new GUI.InputColor().setValue("#70ba35");
+    const created = new GUI.InputDate(new Date());
+    const progress = new GUI.ProgressBar(0.45);
 
-    return new DrawUI.PropertyGrid({
+    return new GUI.PropertyGrid({
       compact: true,
       title: "All value types",
       rows: {
@@ -463,44 +444,36 @@ export const DEMO_BUILDERS = {
     });
   },
 
-  "instruction-panel": () =>
-    new DrawUI.InstructionPanel("Viewport", "3d_rotation", [
-      ["MMB", "Orbit around the scene"],
-      ["Shift + MMB", "Pan the view"],
-      ["Scroll", "Zoom in / out"],
-      ["Alt + MMB", "Roll the camera"],
-    ]),
-
   "tabbed-panel": () => {
-    const tabs = new DrawUI.TabView();
-    tabs.addTab("tab-a", "Overview", [new DrawUI.TextBlock("Tab A content")]);
-    tabs.addTab("tab-b", "Details", [new DrawUI.TextBlock("Tab B content")]);
+    const tabs = new GUI.TabView();
+    tabs.addTab("tab-a", "Overview", [new GUI.Text("Tab A content")]);
+    tabs.addTab("tab-b", "Details", [new GUI.Text("Tab B content")]);
     tabs.select("tab-a");
     return tabs;
   },
 
   "collapsible-section": () => {
-    const section = new DrawUI.CollapsiblePanel({ title: "Parameters", icon: "tune" });
-    section.content(new DrawUI.TextBlock("Section body built with DrawUI.textBlock()"));
+    const section = new GUI.CollapsiblePanel({ title: "Parameters", icon: "tune" });
+    section.content(new GUI.Text("Section body"));
     return section;
   },
 
   "collapsible-panel": () => {
-    const host = new DrawUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["5rem"]);
-    const panel = new DrawUI.Flyout({
+    const host = new GUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["5rem"]);
+    const panel = new GUI.Flyout({
       title: "Alerts",
       icon: "notifications",
       badgeCount: 2,
       position: { top: "0.5rem", right: "0.5rem" },
     });
-    panel.content(new DrawUI.StackPanel({ isVertical: true }).add(new DrawUI.TextBlock("Collapsible panel content")));
+    panel.content(new GUI.StackPanel({ isVertical: true }).add(new GUI.Text("Collapsible panel content")));
     host.add(panel);
     return host;
   },
 
   "sidebar-layout": () => {
-    const host = new DrawUI.Container().setStyle("height", ["260px"]).setStyle("overflow", ["hidden"]);
-    const layout = new DrawUI.NavigationView({
+    const host = new GUI.Container().setStyle("height", ["260px"]).setStyle("overflow", ["hidden"]);
+    const layout = new GUI.NavigationView({
       sidebarWidth: "180px",
       sidebarMinWidth: "140px",
       sidebarMaxWidth: "320px",
@@ -508,72 +481,71 @@ export const DEMO_BUILDERS = {
     });
     layout.setSidebarTitle("Explorer");
     layout.setSidebarContent(
-      new DrawUI.StackPanel({ isVertical: true })
+      new GUI.StackPanel({ isVertical: true })
         .gap("0.25rem")
-        .add(new DrawUI.TextBlock("Site"))
-        .add(new DrawUI.TextBlock("Building")),
+        .add(new GUI.Text("Site"))
+        .add(new GUI.Text("Building")),
     );
     layout.setMainContent(
-      new DrawUI.StackPanel({ isVertical: true })
+      new GUI.StackPanel({ isVertical: true })
         .gap("0.5rem")
-        .add(new DrawUI.Heading(3, "Viewport"))
-        .add(new DrawUI.TextBlock("Main content")),
+        .add(new GUI.Heading(3, "Viewport"))
+        .add(new GUI.Text("Main content")),
     );
     host.add(layout);
     return host;
   },
 
   "layout-pane": () => {
-    const host = new DrawUI.Container()
+    const host = new GUI.Container()
       .setStyle("height", ["160px"])
-      .setStyle("overflow", ["hidden"])
-      .addClass("Panel");
+      .setStyle("overflow", ["hidden"]);
 
-    const pane = new DrawUI.ScrollViewer({ fill: true, scrollable: true, className: "PanelContent" });
+    const pane = new GUI.ScrollViewer({ fill: true, scrollable: true, className: "PanelContent" });
     pane.add(
-      new DrawUI.StackPanel({ isVertical: true })
+      new GUI.StackPanel({ isVertical: true })
         .gap("0.25rem")
-        .add(new DrawUI.TextBlock("Scrollable region"))
-        .add(new DrawUI.TextBlock("Line 2"))
-        .add(new DrawUI.TextBlock("Line 3"))
-        .add(new DrawUI.TextBlock("Line 4"))
-        .add(new DrawUI.TextBlock("Line 5")),
+        .add(new GUI.Text("Scrollable region"))
+        .add(new GUI.Text("Line 2"))
+        .add(new GUI.Text("Line 3"))
+        .add(new GUI.Text("Line 4"))
+        .add(new GUI.Text("Line 5")),
     );
     host.add(pane);
     return host;
   },
 
   "base-panel": () => {
-    return new DrawUI.ContentPanel()
+    return new GUI.Panel()
       .header("Inspector", "info")
-      .add(new DrawUI.TextBlock("ContentPanel content area"))
+      .add(new GUI.Text("Panel content area"))
       .add(
-        new DrawUI.StackPanel({ isVertical: false })
+        new GUI.StackPanel({ isVertical: false })
           .gap("0.5rem")
-          .add(new DrawUI.Button("Action").addClass("primary"))
-          .add(new DrawUI.Button("Cancel").addClass("secondary")),
+          .add(new GUI.Button("Action").addClass("primary"))
+          .add(new GUI.Button("Cancel").addClass("secondary")),
       );
   },
 
-  "spinner": () => new DrawUI.ProgressRing({ text: "Loading model…" }),
+  "spinner": () => new GUI.LoadingCube({ text: "Loading model…" }),
 
   "tooltip": () => {
-    const target = new DrawUI.Button("Hover for tooltip").addClass("secondary");
-    new DrawUI.Tooltip("Saved to cloud", { theme: "dark" }).attachTo(target);
+    const target = new GUI.Button("Hover for tooltip").addClass("secondary");
+    new GUI.Tooltip("Saved to cloud", { theme: "dark" }).attachTo(target);
     return target;
   },
 
   "toast": () =>
-    new DrawUI.Button("Show toast").addClass("primary").onClick(() => {
-      new DrawUI.Toast("Changes saved", "success", { duration: 2500 });
+    new GUI.Button("Show toast").addClass("primary").onClick(() => {
+      new GUI.Toast("Changes saved", "success", { duration: 2500 });
     }),
 
   "loading-bar-component": () => {
-    const loadingHost = new DrawUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["2.5rem"]);
-    const loadingBar = new DrawUI.StatusBar({ initialText: "Processing…" });
+    const loadingHost = new GUI.Container().setStyle("position", ["relative"]).setStyle("minHeight", ["2.5rem"]);
+    const loadingBar = new GUI.StatusBar({ initialText: "Processing…" });
     loadingHost.add(loadingBar);
     loadingHost.add(
-      new DrawUI.Button("Run StatusBar").addClass("secondary").onClick(() => {
+      new GUI.Button("Run StatusBar").addClass("secondary").onClick(() => {
         loadingBar.show();
         loadingBar.update(0.35, "Step 1/3");
         setTimeout(() => loadingBar.update(0.7, "Step 2/3"), 600);
@@ -585,15 +557,15 @@ export const DEMO_BUILDERS = {
   },
 
   "progress-helpers": () => {
-    const inlineHost = new DrawUI.Container();
+    const inlineHost = new GUI.Container();
     inlineHost.dom.id = "inline-progress-host";
     inlineHost.setStyle("position", ["relative"]).setStyle("minHeight", ["3rem"]);
-    const toast = new DrawUI.Toast();
+    const toast = new GUI.Toast();
 
-    return new DrawUI.StackPanel({ isVertical: true })
+    return new GUI.StackPanel({ isVertical: true })
       .gap("0.75rem")
       .add(
-        new DrawUI.Button("Run inline progress").addClass("secondary").onClick(() => {
+        new GUI.Button("Run inline progress").addClass("secondary").onClick(() => {
           toast.show("#inline-progress-host", "Exporting…");
           let pct = 0;
           const timer = setInterval(() => {
@@ -610,16 +582,16 @@ export const DEMO_BUILDERS = {
   },
 
   "floating-window": () =>
-    new DrawUI.Button("Open FloatingDialog").addClass("secondary").onClick(() => {
+    new GUI.Button("Open FloatingDialog").addClass("secondary").onClick(() => {
       document.querySelectorAll(".FloatingWindow, .Header").forEach((node) => {
         const shell = node.closest(".FloatingWindow") || node.closest(".Rectangle");
         if (shell?.parentElement === document.body) shell.remove();
       });
-      const win = new DrawUI.FloatingDialog({ title: "Floating window", icon: "info" });
+      const win = new GUI.FloatingDialog({ title: "Floating window", icon: "info" });
       win
-        .content(new DrawUI.TextBlock("DrawUI.floatingDialog() content"))
+        .content(new GUI.Text("GUI.floatingDialog() content"))
         .add(
-          new DrawUI.Button("Close")
+          new GUI.Button("Close")
             .addClass("secondary")
             .onClick(() => win.destroy()),
         )
@@ -627,16 +599,16 @@ export const DEMO_BUILDERS = {
     }),
 
   "floating-panel": () =>
-    new DrawUI.Button("Open FloatingWindow").addClass("secondary").onClick(() => {
+    new GUI.Button("Open FloatingWindow").addClass("secondary").onClick(() => {
       document.querySelectorAll(".FloatingWindow").forEach((node) => {
         if (node.parentElement === document.body) node.remove();
       });
-      const panel = new DrawUI.FloatingWindow({ title: "Overlay", width: "320px" });
+      const panel = new GUI.FloatingWindow({ title: "Overlay", width: "320px" });
       panel.setContent(
-        new DrawUI.StackPanel({ isVertical: true })
+        new GUI.StackPanel({ isVertical: true })
           .gap("0.5rem")
-          .add(new DrawUI.Heading(3, "FloatingWindow"))
-          .add(new DrawUI.TextBlock("Free-floating overlay panel")),
+          .add(new GUI.Heading(3, "FloatingWindow"))
+          .add(new GUI.Text("Free-floating overlay panel")),
       );
       panel.dom.style.height = "auto";
       panel.dom.style.maxHeight = "70vh";
@@ -644,18 +616,18 @@ export const DEMO_BUILDERS = {
     }),
 
   "pie-menu": () => {
-    const wrap = new DrawUI.StackPanel({ isVertical: true }).gap("0.75rem");
+    const wrap = new GUI.StackPanel({ isVertical: true }).gap("0.75rem");
 
-    const status = new DrawUI.Caption("Last action: none");
+    const status = new GUI.Caption("Last action: none");
 
-    const viewport = new DrawUI.Container()
+    const viewport = new GUI.Container()
       .setStyle("position", ["relative"])
       .setStyle("height", ["340px"])
       .setStyle("border", ["1px dashed var(--dui-color-border, #444)"])
       .setStyle("borderRadius", ["8px"])
       .setStyle("overflow", ["hidden"]);
 
-    const hint = new DrawUI.Caption("Hover this area and press P, or use the button below.");
+    const hint = new GUI.Caption("Hover this area and press P, or use the button below.");
     hint.setStyle("position", ["absolute"]);
     hint.setStyle("top", ["0.5rem"]);
     hint.setStyle("left", ["0.75rem"]);
@@ -668,7 +640,7 @@ export const DEMO_BUILDERS = {
       },
     };
 
-    const menu = new DrawUI.RadialMenu({
+    const menu = new RadialMenu({
       viewport: viewport.dom,
       operators,
       items: [
@@ -680,12 +652,12 @@ export const DEMO_BUILDERS = {
       ],
     });
 
-    const toggleButton = new DrawUI.Button("Toggle pie menu")
+    const toggleButton = new GUI.Button("Toggle pie menu")
       .addClass("primary")
       .onClick(() => menu.toggle());
 
     wrap.add(viewport);
-    wrap.add(new DrawUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("alignItems", ["center"]).add(toggleButton).add(status));
+    wrap.add(new GUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("alignItems", ["center"]).add(toggleButton).add(status));
     return wrap;
   },
 };

@@ -30,7 +30,7 @@ body,
   display: flex;
 }
 
-.ops-main > .split-container {
+.ops-main > .SplitContainer {
   flex: 1;
   min-height: 0;
   width: 100%;

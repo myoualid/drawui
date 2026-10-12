@@ -4,11 +4,7 @@ import { TabRegistry } from "./internal/TabRegistry.js";
 import { WorkspaceStack } from "./internal/WorkspaceStack.js";
 import { createLayoutResizerElement, bindLayoutResizerDrag } from "./resizers.js";
 import { WorkspaceTabController } from "./tabController.js";
-import {
-  resolveModuleToggleId,
-  bindToggle,
-  bindToggleForModule,
-} from "./moduleBridge.js";
+import { bindToggle } from "./moduleBridge.js";
 import { installWorkspaceShortcuts } from "./keyboard.js";
 import { Operator } from "../components/controls/Operator.js";
 
@@ -23,9 +19,8 @@ import { Operator } from "../components/controls/Operator.js";
  * @property {boolean} [replace=true] - Whether to replace an existing tab with the same ID.
  * @property {boolean} [floatable=false] - Show undock control on the WorkspacePanel header.
  * @property {Object<string, string>} [panelStyles] - Inline styles for the panel root (unused by stack; kept for callers).
- * @property {string} [moduleId] - Module id used to group panels for region moves.
- * @property {string} [panelGroup='default'] - Optional group key within a module.
- * @property {string} [ownerId] - Explicit owner when moduleId is absent.
+ * @property {string} [group] - Panels that share a group move between regions together.
+ * @property {string} [panelGroup='default'] - Optional subgroup within `group`.
  */
 
 /**
@@ -50,7 +45,7 @@ import { Operator } from "../components/controls/Operator.js";
  * @property {boolean} [bottomOpen=false] - Whether the bottom workspace is open initially.
  * @property {number} [minPanelSize=160] - Minimum workspace width/height in pixels.
  * @property {number} [resizerSize=4] - Size of the resizer handle in pixels.
- * @property {boolean} [enableViewportGrid=false] - Mount optional viewport grid host (app-specific).
+ * @property {boolean} [enableViewportGrid=false] - Mount an empty grid host inside the viewport.
  * @property {import('./keyboard.js').WorkspaceShortcut[]} [shortcuts] - Override keyboard shortcuts.
  */
 
@@ -70,15 +65,55 @@ const DEFAULT_CONFIG = {
 };
 
 /**
- * Workspace grid manager: region open/close/size, stack mount points, and panel
- * registry. Does not create or style panel chrome — docked UI is a
- * {@link WorkspacePanel} ({@link CollapsiblePanel} subclass) owned by the app.
+ * Workspace grid, exported as {@link Layout}.
  *
- * @example <caption>Note</caption>
- * // live
- * return new Disclaimer(
- *   "WorkspaceLayout requires a full #World DOM tree — use the templates example app.",
- * );
+ * `new World()` builds the regions. `new Layout(options).init(world)` attaches
+ * stacks, resizers, and the tab registry. Docked chrome is a {@link WorkspacePanel}.
+ * The layout does not run application commands. Subscribe with `on` and handle
+ * the event in application code.
+ *
+ * ### Methods
+ *
+ * - `init(world)` — bind to a World, an element, or an element id
+ * - `on(event, handler)` / `off(event, handler)` — `tab:added`, `tab:removed`, `tab:selected`, `workspace`
+ * - `addTab(position, id, label, content, options?)`
+ * - `ensureTab`, `removeTab`, `selectTab`, `toggleTab`, `hasTab`
+ * - `getTabIds`, `getSelectedTabId`, `isTabSelected`, `clearTabs`, `setTabLabel`
+ * - `openWorkspace`, `closeWorkspace`, `toggleWorkspace`, `isWorkspaceOpen`
+ * - `setWorkspaceSize`, `getWorkspaceSize`, `resetLayout`
+ * - `moveSegment(from, to, group)` — move every panel in a group
+ * - `bindToggle(element, position, id)` — click handler for a button the app owns
+ * - `prependToggleBarChild(node)` — insert a node into the header toggle row
+ * - `getFloatingWindowMountElement()`
+ * - `destroy()`
+ *
+ * `position` is `"left"`, `"right"`, or `"bottom"`.
+ *
+ * @example App
+ * import { Text } from "ifcopenshell/gui";
+ * import { World, Layout, Panel } from "ifcopenshell/layout";
+ *
+ * const world = new World();
+ * world.mount(document.body);
+ *
+ * const layout = new Layout({ leftOpen: true }).init(world);
+ *
+ * layout.on("workspace", ({ position, open }) => {
+ *   console.log(position, open);
+ * });
+ *
+ * const layers = new Panel({
+ *   layout,
+ *   position: "left",
+ *   id: "layers",
+ *   label: "Layers",
+ *   title: "Layers",
+ *   icon: "layers",
+ *   floatable: true,
+ * });
+ * layers.add(new Text("Layer list"));
+ * layers.show();
+ * layers.bindTo("layers-button");
  *
  * @category Shell
  */
@@ -96,7 +131,8 @@ class WorkspaceLayout {
 
     this.tabRegistry = new TabRegistry();
 
-    this.context = null;
+    /** @type {Map<string, Set<(payload: object) => void>>} */
+    this._listeners = new Map();
 
     this.workspaces = {
       top: null,
@@ -161,30 +197,41 @@ class WorkspaceLayout {
     return Math.max(this.config.minPanelSize, configWidth);
   }
 
-  init(containerId = 'World') {
-    this.container = document.getElementById(containerId);
+  /**
+   * @param {string | HTMLElement | { dom?: HTMLElement }} [target='World']
+   * Element id, element, or a World instance.
+   */
+  init(target = 'World') {
+    if (typeof target === 'string') {
+      this.container = document.getElementById(target);
+    } else if (target instanceof HTMLElement) {
+      this.container = target;
+    } else if (target?.dom instanceof HTMLElement) {
+      this.container = target.dom;
+    } else {
+      this.container = null;
+    }
 
     if (!this.container) return this;
 
-    this.container.classList.add('workspace-layout');
-
     this.workspaces.top = document.getElementById('RibbonMenu') || document.getElementById('HeaderBar');
-    this.workspaces.left = document.getElementById('SideWorkspaceLeft');
-    this.workspaces.right = document.getElementById('SideWorkspaceRight');
-    this.workspaces.bottom = document.getElementById('BottomWorkspace');
-    this.workspaces.footer = document.getElementById('FooterBar');
+    this.workspaces.left = document.getElementById('WorkspaceLeft');
+    this.workspaces.right = document.getElementById('WorkspaceRight');
+    this.workspaces.bottom = document.getElementById('WorkspaceBottom');
+    this.workspaces.footer = document.getElementById('Footer');
     this.workspaces.viewport = document.getElementById('Viewport');
 
     this.state.leftWidth = this._resolveInitialWorkspaceWidth('left');
     this.state.rightWidth = this._resolveInitialWorkspaceWidth('right');
 
-    this._setupLayout();
     this._createViewportGrid();
     this._createWorkspaceStacks();
     this._createResizers();
     this._createToggleBar();
     this._applyState();
     this._flushLayoutResize();
+    this._onWindowResize = () => this._updateGridColumns();
+    window.addEventListener('resize', this._onWindowResize);
 
     this._keyboardCleanup = installWorkspaceShortcuts(this, {
       shortcuts: this.config.shortcuts,
@@ -252,7 +299,7 @@ class WorkspaceLayout {
 
     this.openWorkspace(toPosition);
     this._flushLayoutResize();
-    this._emit('layoutWorkspaceChanged', {
+    this._emit('workspace', {
       position: toPosition,
       open: true,
       movedFrom: fromPosition,
@@ -276,16 +323,26 @@ class WorkspaceLayout {
     }
   }
 
-  setContext(context) {
-    this.context = context || null;
-    if (this.context && typeof this.context.addListeners === 'function') {
-      this.context.addListeners([
-        'layoutTabChanged',
-        'layoutTabAdded',
-        'layoutTabRemoved',
-        'layoutWorkspaceChanged',
-      ]);
-    }
+  /**
+   * Subscribe to a layout event.
+   * @param {'tab:added'|'tab:removed'|'tab:selected'|'workspace'} event
+   * @param {(payload: object) => void} handler
+   * @returns {() => void} Unsubscribe.
+   */
+  on(event, handler) {
+    if (typeof handler !== 'function') return () => {};
+    if (!this._listeners.has(event)) this._listeners.set(event, new Set());
+    this._listeners.get(event).add(handler);
+    return () => this.off(event, handler);
+  }
+
+  /**
+   * @param {'tab:added'|'tab:removed'|'tab:selected'|'workspace'} event
+   * @param {(payload: object) => void} handler
+   * @returns {this}
+   */
+  off(event, handler) {
+    this._listeners.get(event)?.delete(handler);
     return this;
   }
 
@@ -309,15 +366,14 @@ class WorkspaceLayout {
     };
   }
 
-  _emit(signalName, payload) {
-    const ctx = this.context;
-    if (!ctx) return;
-    const signals = ctx.signals;
-    if (!signals) return;
-    const sig = signals[signalName];
-    if (sig && typeof sig.dispatch === 'function') {
-      sig.dispatch(payload);
-    }
+  /**
+   * @param {string} event
+   * @param {object} payload
+   */
+  _emit(event, payload) {
+    const handlers = this._listeners.get(event);
+    if (!handlers) return;
+    for (const handler of handlers) handler(payload);
   }
 
   _flushLayoutResize() {
@@ -368,6 +424,14 @@ class WorkspaceLayout {
   // Tab CRUD facade — delegates to WorkspaceTabController. Public API unchanged.
   // ---------------------------------------------------------------------------
 
+  /**
+   * @param {'left'|'right'|'bottom'} position
+   * @param {string} id
+   * @param {string} label
+   * @param {import('../primitives/ui.js').Control|HTMLElement} content
+   * @param {AddTabOptions} [options]
+   * @returns {boolean}
+   */
   addTab(position, id, label, content, options) {
     return this.tabs.addTab(position, id, label, content, options);
   }
@@ -420,74 +484,21 @@ class WorkspaceLayout {
     return this.tabs.invokeTabFloat(position, tabId);
   }
 
-  // ---------------------------------------------------------------------------
-  // Module/toolbar bridge — thin wrappers around moduleBridge.js.
-  // ---------------------------------------------------------------------------
-
   /**
-   * @param {Object} context
-   * @param {string} moduleId
-   * @returns {string|null}
+   * Click handler for a button the application owns.
+   * The button gets an `Active` class while this tab is the selected tab in an open region.
+   * @param {string|HTMLElement} elementOrId
+   * @param {'left'|'right'|'bottom'} position
+   * @param {string} tabId
+   * @returns {Function|null}
    */
-  resolveModuleToggleId(context, moduleId) {
-    return resolveModuleToggleId(context, moduleId);
-  }
-
   bindToggle(elementOrId, position, tabId) {
     return bindToggle(this, elementOrId, position, tabId);
-  }
-
-  bindToggleForModule(moduleId, position, tabId, options) {
-    return bindToggleForModule(this, moduleId, position, tabId, options);
   }
 
   // ---------------------------------------------------------------------------
   // Layout, grid, resizers, toggle bar
   // ---------------------------------------------------------------------------
-
-  _setupLayout() {
-    this.container.style.display = 'grid';
-    this.container.style.overflow = 'hidden';
-
-    if (this.workspaces.top) {
-      this.workspaces.top.style.overflow = 'hidden';
-      this.workspaces.top.classList.add('layout-panel', 'layout-panel-top');
-    }
-
-    if (this.workspaces.left) {
-      this.workspaces.left.style.overflowX = 'hidden';
-      this.workspaces.left.style.overflowY = 'auto';
-      this.workspaces.left.style.minWidth = '0';
-      this.workspaces.left.style.minHeight = '0';
-      this.workspaces.left.classList.add('layout-panel', 'layout-panel-left');
-    }
-
-    if (this.workspaces.right) {
-      this.workspaces.right.style.overflowX = 'hidden';
-      this.workspaces.right.style.overflowY = 'auto';
-      this.workspaces.right.style.minWidth = '0';
-      this.workspaces.right.style.minHeight = '0';
-      this.workspaces.right.classList.add('layout-panel', 'layout-panel-right');
-    }
-
-    if (this.workspaces.bottom) {
-      this.workspaces.bottom.style.overflowX = 'hidden';
-      this.workspaces.bottom.style.overflowY = 'auto';
-      this.workspaces.bottom.style.minHeight = '0';
-      this.workspaces.bottom.classList.add('layout-panel', 'layout-panel-bottom');
-    }
-
-    if (this.workspaces.footer) {
-      this.workspaces.footer.style.overflow = 'hidden';
-      this.workspaces.footer.classList.add('layout-panel', 'layout-panel-footer');
-    }
-
-    if (this.workspaces.viewport) {
-      this.workspaces.viewport.style.overflow = 'hidden';
-      this.workspaces.viewport.style.position = 'relative';
-      this.workspaces.viewport.classList.add('layout-viewport');
-    }
-  }
 
   _createViewportGrid() {
     if (!this.config.enableViewportGrid || !this.workspaces.viewport) {
@@ -495,7 +506,6 @@ class WorkspaceLayout {
     }
 
     const host = new Container()
-      .addClass("viewport-grid-host")
       .setStyles({
         position: "absolute",
         inset: "0",
@@ -641,16 +651,27 @@ class WorkspaceLayout {
   }
 
   _updateGridColumns() {
-    const leftWidth = this.state.leftOpen ? `${this.state.leftWidth}px` : '0px';
-    const leftResizer = this.state.leftOpen ? `${this.config.resizerSize}px` : '0px';
-    const rightWidth = this.state.rightOpen ? `${this.state.rightWidth}px` : '0px';
-    const rightResizer = this.state.rightOpen ? `${this.config.resizerSize}px` : '0px';
+    const resizer = this.config.resizerSize;
+    const leftOpen = this.state.leftOpen;
+    const rightOpen = this.state.rightOpen;
+    let left = leftOpen ? this.state.leftWidth : 0;
+    let right = rightOpen ? this.state.rightWidth : 0;
+    const width = this.container.clientWidth;
+    const chrome = (leftOpen ? resizer : 0) + (rightOpen ? resizer : 0);
+    const docks = left + right;
+    const viewportFloor = Math.min(280, Math.round(width * 0.34));
+    if (width > 0 && docks > 0 && docks > width - chrome - viewportFloor) {
+      const room = Math.max(0, width - chrome - viewportFloor);
+      const scale = room / docks;
+      left = Math.round(left * scale);
+      right = Math.round(right * scale);
+    }
 
     this.container.style.gridTemplateColumns =
-      `${leftWidth} ${leftResizer} minmax(0, 1fr) ${rightResizer} ${rightWidth}`;
+      `${left}px ${leftOpen ? resizer : 0}px minmax(0, 1fr) ${rightOpen ? resizer : 0}px ${right}px`;
 
-    this.resizers.left.style.display = this.state.leftOpen ? 'block' : 'none';
-    this.resizers.right.style.display = this.state.rightOpen ? 'block' : 'none';
+    this.resizers.left.style.display = leftOpen ? 'block' : 'none';
+    this.resizers.right.style.display = rightOpen ? 'block' : 'none';
   }
 
   _updateGridRows() {
@@ -688,7 +709,7 @@ class WorkspaceLayout {
       this._updateGridForPosition(position);
       this._updateToggleButtons();
       this._flushLayoutResize();
-      this._emit('layoutWorkspaceChanged', { position, open: true });
+      this._emit('workspace', { position, open: true });
     }
     return this;
   }
@@ -701,7 +722,7 @@ class WorkspaceLayout {
       this._updateGridForPosition(position);
       this._updateToggleButtons();
       this._flushLayoutResize();
-      this._emit('layoutWorkspaceChanged', { position, open: false });
+      this._emit('workspace', { position, open: false });
     }
     return this;
   }
@@ -762,6 +783,13 @@ class WorkspaceLayout {
       this._keyboardCleanup();
       this._keyboardCleanup = null;
     }
+
+    if (this._onWindowResize) {
+      window.removeEventListener('resize', this._onWindowResize);
+      this._onWindowResize = null;
+    }
+
+    this._listeners.clear();
 
     Object.values(this.resizers).forEach((resizer) => {
       if (resizer && resizer.parentNode) {

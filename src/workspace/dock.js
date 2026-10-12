@@ -22,15 +22,9 @@ export function resolveFloatingMountElement(lm) {
 }
 
 /**
+ * Dock targets for a floating window. Used by {@link WorkspacePanel} when a panel is undocked.
  * @param {{ layoutManager: object, tabId: string, tabLabel?: string }} opts
  * @returns {{ left?: Function, bottom?: Function, right?: Function }|undefined}
- *
- * @example <caption>Note</caption>
- * // live
- * return new Disclaimer(
- *   "buildWorkspaceDockHandlers({ layoutManager, tabId, tabLabel }) wires WorkspacePanel dock chrome.",
- * );
- *
  * @category Shell
  */
 export function buildWorkspaceDockHandlers({ layoutManager: lm, tabId, tabLabel }) {

@@ -3,8 +3,8 @@
 # Line
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** layout  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Line`
 
 Horizontal rule.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Line } from "drawui";
+import { Line } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -24,9 +24,9 @@ import { Line } from "drawui";
 ```js
 return new StackPanel({ isVertical: true })
   .gap("0.5rem")
-  .add(new TextBlock("Above the rule"))
+  .add(new Text("Above the rule"))
   .add(new Line())
-  .add(new TextBlock("Below the rule"));
+  .add(new Text("Below the rule"));
 ```
 
 <div class="doc-live-demo" data-live-demo="Line/divider" aria-label="Live preview"></div>

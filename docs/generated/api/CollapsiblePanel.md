@@ -4,17 +4,17 @@
 
 **Status:** Stable  
 **Category:** panels  
-**Import:** `drawui`  
-**Emitted class(es):** `CollapsiblePanel`, `CollapsiblePanel-toggle`, `ContentPanel`, `Header`, `PanelContent`, `collapsed`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `CollapsiblePanel`, `CollapsiblePanel-toggle`, `Panel`, `Header`, `PanelContent`, `collapsed`
 
-{@link ContentPanel} with a header collapse toggle.
+{@link Panel} with a header collapse toggle.
 
 _Source: `src/components/panels/CollapsiblePanel.js`_
 
 ## Import
 
 ```js
-import { CollapsiblePanel } from "drawui";
+import { CollapsiblePanel } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,14 +23,14 @@ import { CollapsiblePanel } from "drawui";
 
 ```js
 const section = new CollapsiblePanel({ title: "Parameters", icon: "tune" });
-section.content(new TextBlock("Section body"));
+section.content(new Text("Section body"));
 ```
 
 ### CollapsiblePanel
 
 ```js
 const section = new CollapsiblePanel({ title: "Parameters", icon: "tune" });
-  section.content(new TextBlock("Section body built with textBlock()"));
+  section.content(new Text("Section body"));
   return section;
 ```
 

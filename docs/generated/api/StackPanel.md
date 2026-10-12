@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Row`, `Column`
 
 Flex row or column container.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { StackPanel } from "drawui";
+import { StackPanel } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -35,8 +35,8 @@ return new StackPanel({ isVertical: false })
 ```js
 return new StackPanel({ isVertical: true })
   .gap("0.25rem")
-  .add(new TextBlock("Column A"))
-  .add(new TextBlock("Column B"));
+  .add(new Text("Column A"))
+  .add(new Text("Column B"));
 ```
 
 <div class="doc-live-demo" data-live-demo="StackPanel/stackpanel-column" aria-label="Live preview"></div>

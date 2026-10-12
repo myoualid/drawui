@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Visual handle for a workspace / pane edge.
@@ -14,7 +14,7 @@ _Source: `src/utils/flexResizer.js`_
 ## Import
 
 ```js
-import { createLayoutResizerHandle } from "drawui";
+import { createLayoutResizerHandle } from "ifcopenshell/gui";
 ```
 
 ## Examples

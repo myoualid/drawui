@@ -1,0 +1,3 @@
+/* GUI + workspace layout. Peer widget styles stay in full.css. */
+@import "../../styles/gui.css";
+@import "../../styles/layout.css";

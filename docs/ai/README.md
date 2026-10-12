@@ -1,6 +1,6 @@
 # AI documentation
 
-Agent-oriented DrawUI docs in one place:
+Agent-oriented IfcOpenShell GUI docs in one place:
 
 | File | Purpose |
 | --- | --- |

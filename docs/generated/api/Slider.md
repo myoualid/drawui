@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Slider`
 
 Number slider: range track synced with a numeric field.
@@ -15,7 +15,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Slider } from "drawui";
+import { Slider } from "ifcopenshell/gui";
 ```
 
 ## Examples

@@ -1,94 +1,150 @@
+/* World shell grid. Region classes come from the world config ids. */
+
 .World {
+  display: grid;
   height: 100%;
   left: 0;
+  overflow: hidden;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 1;
-  overflow: hidden;
 }
 
 .World .RibbonMenu {
-  grid-column: 1 / -1;
-  grid-row: 1;
   align-items: stretch;
-  box-sizing: border-box;
+  background-color: var(--dui-color-bg);
   display: flex;
   flex-direction: column;
-  position: relative;
-  left: auto;
-  top: auto;
-  width: 100%;
+  grid-column: 1 / -1;
+  grid-row: 1;
   height: 100%;
-  background-color: var(--dui-color-bg);
-}
-
-/* Workspace grid tracks are set inline by WorkspaceLayout (gridTemplateColumns / gridTemplateRows). */
-.World.workspace-layout .HeaderBar {
+  min-height: 0;
+  overflow: hidden;
   position: relative;
-  left: auto;
-  top: auto;
   width: 100%;
-  height: var(--dui-headerbar-height);
 }
 
-.World.workspace-layout #RibbonBar,
-.World.workspace-layout .RibbonMenu > .RibbonBar {
-  align-items: stretch;
-  border-top: 1px solid var(--dui-color-border);
-  box-sizing: border-box;
+.World .HeaderBar {
+  align-items: center;
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   flex-direction: row;
+  gap: var(--dui-space-3);
+  height: var(--dui-headerbar-height);
+  justify-content: space-between;
+  order: 0;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.World .RibbonMenu > .RibbonBar,
+.World #RibbonBar {
+  border-top: 1px solid var(--dui-color-border);
+  flex: 1 1 auto;
   flex-wrap: nowrap;
-  gap: 2px;
   justify-content: flex-start;
   min-height: 0;
+  order: 1;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0;
-  position: relative;
   scrollbar-width: none;
   width: 100%;
 }
 
-.World.workspace-layout #RibbonBar::-webkit-scrollbar,
-.World.workspace-layout .RibbonMenu > .RibbonBar::-webkit-scrollbar {
+.World .RibbonBar::-webkit-scrollbar,
+.World #RibbonBar::-webkit-scrollbar {
   display: none;
 }
 
-.World.workspace-layout #SideWorkspaceLeft {
+.World .WorkspaceLeft,
+.World .WorkspaceRight,
+.World .WorkspaceBottom {
+  background: var(--dui-color-surface);
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* One hairline between the stage and a dock. Panels inside are sections, not cards. */
+.World .WorkspaceLeft { border-right: 1px solid var(--dui-color-border); }
+.World .WorkspaceRight { border-left: 1px solid var(--dui-color-border); }
+.World .WorkspaceBottom { border-top: 1px solid var(--dui-color-border); }
+
+.World .WorkspaceStack > .Panel {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--dui-color-separator);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.World .WorkspaceStack > .Panel:last-child {
+  border-bottom: 0;
+}
+
+.World .WorkspaceLeft {
   grid-column: 1;
   grid-row: 2 / 5;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
-.World.workspace-layout #SideWorkspaceRight {
+.World .WorkspaceRight {
   grid-column: 5;
   grid-row: 2 / 5;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
-.World.workspace-layout #BottomWorkspace {
+.World .WorkspaceBottom {
   grid-column: 3;
   grid-row: 4;
 }
 
-.World.workspace-layout #Viewport {
+.World .Resizer-left {
+  grid-column: 2;
+  grid-row: 2 / 5;
+}
+
+.World .Resizer-right {
+  grid-column: 4;
+  grid-row: 2 / 5;
+}
+
+.World .Resizer-bottom {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.World .Viewport,
+.World #Viewport {
   grid-column: 3;
   grid-row: 2;
+  height: 100%;
   min-height: 0;
   min-width: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
   z-index: 1;
 }
 
-.World.workspace-layout #FooterBar {
+.World .Viewport {
+  background-color: var(--dui-color-bg);
+}
+
+.World .Viewport canvas,
+.World #Viewport canvas {
+  padding: var(--dui-space-2);
+}
+
+.World .Footer {
   align-items: center;
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   gap: var(--dui-space-2);
@@ -100,231 +156,34 @@
   padding: 0 var(--dui-space-2);
 }
 
-.World.workspace-layout #FooterBar > #NotificationsModule {
-  flex: 0 0 auto;
-  order: 1;
-}
-
-.World.workspace-layout #FooterBar > #ApplicationState {
-  align-items: center;
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  height: 100%;
-  justify-content: flex-start;
-  min-width: 0;
-  order: 2;
-  position: relative;
-}
-
-.World.workspace-layout .layout-resizer-left {
-  grid-column: 2;
-  grid-row: 2 / 5;
-}
-
-.World.workspace-layout .layout-resizer-right {
-  grid-column: 4;
-  grid-row: 2 / 5;
-}
-
-.World.workspace-layout .layout-resizer-bottom {
-  grid-column: 3;
-  grid-row: 3;
-}
-
-
-.World.workspace-layout #RibbonMenu > .HeaderBar {
-  flex: 0 0 auto;
-  order: 0;
-}
-
-.World.workspace-layout #RibbonMenu > .RibbonBar,
-.World.workspace-layout #RibbonMenu > #RibbonBar {
-  order: 1;
-}
-
-.World #SideWorkspaceLeft .panel-header,
-.World #SideWorkspaceRight .panel-header,
-.World #BottomWorkspace .panel-header {
-  align-items: center;
-  border-bottom: 1px solid var(--dui-color-border);
-  display: flex;
-  flex-shrink: 0;
-  gap: var(--dui-space-2);
-  height: 32px;
-  justify-content: space-between;
-  padding: 0 var(--dui-space-2);
-}
-
-.World #SideWorkspaceLeft .panel-content,
-.World #SideWorkspaceRight .panel-content,
-.World #BottomWorkspace .panel-content {
-  flex: 1;
-  overflow: auto;
-  position: relative;
-}
-
-.World #SideWorkspaceLeft .PanelTitle,
-.World #SideWorkspaceRight .PanelTitle,
-.World #BottomWorkspace .PanelTitle {
-  color: var(--dui-color-text);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.World #SideWorkspaceLeft .panel-actions,
-.World #SideWorkspaceRight .panel-actions,
-.World #BottomWorkspace .panel-actions {
-  align-items: center;
-  display: flex;
-  gap: var(--dui-space-1);
-}
-
-.World #SideWorkspaceLeft .panel-action-btn,
-.World #SideWorkspaceRight .panel-action-btn,
-.World #BottomWorkspace .panel-action-btn {
-  align-items: center;
-  background: transparent;
-  border: none;
-  border-radius: var(--dui-radius);
-  color: var(--dui-color-text-muted);
-  cursor: pointer;
-  display: flex;
-  font-size: 16px;
-  height: 24px;
-  justify-content: center;
-  transition: all 0.15s ease;
-  width: 24px;
-}
-
-.World #SideWorkspaceLeft .panel-action-btn:hover,
-.World #SideWorkspaceRight .panel-action-btn:hover,
-.World #BottomWorkspace .panel-action-btn:hover {
-  color: var(--dui-color-text);
-}
-
-.World.workspace-layout .layout-panel-left,
-.World.workspace-layout .layout-panel-right,
-.World.workspace-layout .layout-panel-bottom {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.World.workspace-layout .layout-panel-left,
-.World.workspace-layout .layout-panel-right {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.World.workspace-layout .layout-panel-bottom {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* Stack mount only — panel chrome/styles live on CollapsiblePanel / WorkspacePanel. */
-.World.workspace-layout .layout-panel > .WorkspaceStack {
+.World .WorkspaceStack {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: var(--dui-space-2);
   width: 100%;
 }
 
-.SideWorkspaceLeft .WorkspaceStack {
-  padding-left: var(--dui-space-2);
-}
-
-.SideWorkspaceRight .WorkspaceStack {
-  padding-right: var(--dui-space-2);
-}
-
-.World.workspace-layout .WorkspaceStack > * {
+.World .WorkspaceStack > * {
   flex: 0 0 auto;
   max-width: 100%;
   min-width: 0;
   width: 100%;
 }
 
-.World.workspace-layout .layout-panel.is-panel-drop-target,
-.World.workspace-layout .layout-panel.is-segment-drop-target {
+.World .DropTarget {
   outline: 2px dashed var(--dui-color-accent);
   outline-offset: -2px;
 }
 
-.PanelTitle {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#ApplicationStateBar {
-  position: absolute;
-  z-index: 3;
-  top: var(--dui-space-2);
-  right: auto;
-  left: var(--dui-space-2);
-  max-width: calc(100% - var(--dui-sidebar-width) - var(--dui-space-2));
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  gap: var(--dui-space-2);
-}
-
-#info.Rectangle {
-  width: var(--dui-viewport-info-width);
-}
-
-#JobConfiguration {
-  bottom: 100%;
-}
-
-#JobConfiguration.Modules {
-  background-color: var(--dui-color-info);
-}
-
-
-#SceneInformation {
-  bottom: 100%;
-  position: absolute;
-  right: calc(-1 * var(--dui-state-bar-right) + var(--dui-sidebar-width));
-  text-transform: lowercase;
-}
-
-.World .HeaderBar {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  height: var(--dui-headerbar-height);
-  justify-content: space-between;
-  left: 0;
-  position: relative;
-  top: 0;
-  width: 100%;
-  z-index: 2;
-}
-
 .World .HeaderBar .Logo {
   align-items: center;
-  box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
   height: 100%;
-  justify-content: flex-start;
-  min-height: 0;
   min-width: 0;
   overflow: visible;
   padding-inline: var(--dui-space-2) var(--dui-space-1);
   width: auto;
-}
-
-.World .HeaderBar .Logo.Image {
-  min-height: 0;
-  min-width: 0;
-  object-fit: unset;
 }
 
 .World .HeaderBar .Logo > .Image {
@@ -334,294 +193,50 @@
   height: var(--dui-logo-size);
   max-height: calc(100% - var(--dui-space-2));
   max-width: var(--dui-logo-wordmark-max-width);
-  min-height: 0;
-  min-width: 0;
   object-fit: contain;
   width: auto;
 }
 
-.RibbonSections {
-  scrollbar-width: none;
-}
-
-.RibbonSections::-webkit-scrollbar {
-  display: none;
-}
-
-.World .HeaderBar .RibbonSections .Section {
+.Module {
   align-items: center;
-  border-bottom: 2px solid transparent;
-  box-sizing: border-box;
-  color: var(--dui-color-text-muted);
+  border: 1px solid transparent;
   cursor: pointer;
   display: flex;
-  flex: 0 0 auto;
-  gap: var(--dui-space-2);
-  height: 100%;
-  padding: var(--dui-space-2);
-  transition:
-    background-color 0.16s ease,
-    border-color 0.16s ease,
-    color 0.16s ease;
-}
-
-.World .HeaderBar .RibbonSections .Section:hover,
-.World .HeaderBar .RibbonSections .Section.Active {
-  color: var(--dui-color-text);
-  border-bottom-color: var(--dui-color-accent);
-}
-
-.World .HeaderBar .RibbonSections .Section .Icon {
-  color: var(--dui-color-accent);
-  font-size: 18px;
-}
-
-.World .HeaderBar .RibbonSections .Section .SectionName {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.World .HeaderBar .ContextMenu {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  z-index: 1;
-}
-
-.World .HeaderBar .ContextMenu::-webkit-scrollbar {
-  display: none;
-}
-
-.World .HeaderBar .ContextMenu .ContextModules {
-  border-right: 1px solid var(--dui-color-border);
-  flex: 0 0 auto;
-  font-size: var(--dui-space-2);
-  min-width: 0;
-  overflow: hidden;
-  padding-inline: var(--dui-space-4);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.World .HeaderBar .ContextMenu .ContextModules:last-child {
-  border-right: none;
-}
-
-.World .HeaderBar .ContextMenu .ContextModules.Active .ModuleName {
-  font-size: var(--dui-space-4);
-
-  text-decoration: underline;
-  text-decoration-color: var(--dui-color-info);
-  text-underline-offset: 7px;
-}
-
-.World .HeaderBar .ContextMenu::before,
-.World .HeaderBar .ContextMenu::after {
-  content: "";
-  flex: 0 0 var(--dui-space-2);
-  min-width: var(--dui-space-2);
-}
-
-.World .HeaderBar .Controls {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  height: 100%;
-  order: -1;
-  padding-inline: var(--dui-space-2);
-  position: relative;
-}
-
-.World .HeaderBar .HistoryHeaderControls {
-  align-items: center;
-  display: flex;
-  gap: 0.25rem;
-  height: 100%;
-}
-
-.World .ViewportSnapTools {
-  display: none;
-  position: absolute;
-  bottom: var(--dui-space-4);
-  left: var(--dui-space-4);
-  z-index: 10;
-}
-
-
-.World .Viewport-controls {
-  display: flex;
   flex-direction: column;
-  gap: var(--dui-space-2);
-  position: absolute;
-  right: var(--dui-shell-margin);
-  top: var(--dui-shell-margin);
-  z-index: 10;
-}
-
-.World .Viewport {
-  background-color: #202329;
-}
-
-.World #Viewport canvas {
-  padding: var(--dui-space-2);
-}
-
-
-.ViewportGizmo {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  left: var(--dui-viewport-gizmo-left);
-  bottom: calc(var(--dui-space-2));
-  z-index: 3;
-}
-
-.World .ViewportGizmo {
-  height: var(--dui-viewport-gizmo-size);
-  position: absolute;
-  width: var(--dui-viewport-gizmo-size);
-}
-
-.World .ViewportToolBar {
-  display: grid;
-  gap: var(--dui-space-2);
-  grid-template-columns: 1fr;
-  right: calc(var(--dui-space-4) + var(--dui-sidebar-width));
-  overflow: visible;
-  position: absolute;
-
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 7;
-}
-
-.Module {
-  border: 1px solid transparent;
   height: var(--dui-sidebar-width);
-  padding: var(--dui-space-3);
-  transition: background-color 0.3s ease;
+  justify-content: center;
+  padding: var(--dui-space-2);
+  user-select: none;
   width: var(--dui-sidebar-width);
 }
 
-.ws-zoom-btn:hover {
-  background: var(--dui-color-surface-hover);
-  border-color: var(--dui-color-border-strong);
+.Module:hover {
+  color: var(--dui-color-accent);
 }
 
-.navigation-crosshair {
-  background: transparent;
-  border: 2px solid rgba(0, 255, 200, 0.9);
-  box-shadow: 0 0 12px rgba(0, 255, 200, 0.5);
-  box-sizing: border-box;
-  height: 48px;
-  left: 50%;
-  pointer-events: none;
-  position: fixed;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 48px;
-  z-index: 1;
+.ModuleName {
+  font-size: var(--dui-font-size-xs);
 }
 
-.navigation-crosshair-dot,
-.navigation-crosshair-vline,
-.navigation-crosshair-hline {
-  left: 50%;
+#ApplicationStateBar {
+  gap: var(--dui-space-2);
+  left: var(--dui-space-2);
+  max-width: calc(100% - var(--dui-sidebar-width) - var(--dui-space-2));
+  overflow-y: scroll;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  scrollbar-width: none;
+  top: var(--dui-space-2);
+  z-index: 3;
 }
 
-.navigation-crosshair-dot {
-  background-color: rgba(0, 255, 200, 0.15);
-  border: 1px solid rgba(0, 255, 200, 0.95);
-  height: 8px;
-  width: 8px;
-}
+@media screen and (max-width: 1023px) {
+  :root {
+    --dui-sidebar-width: 44px;
+    --dui-logo-size: calc(44px - var(--dui-space-2));
+  }
 
-.navigation-crosshair-vline {
-  background: rgba(0, 255, 200, 0.8);
-  height: 14px;
-  width: 2px;
-}
-
-.navigation-crosshair-hline {
-  background: rgba(0, 255, 200, 0.8);
-  height: 2px;
-  width: 14px;
-}
-
-#Navigation-viewport-keyboard {
-  align-items: flex-end;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  justify-content: space-between;
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  touch-action: none;
-  width: 100%;
-  z-index: 6;
-}
-
-#Navigation-viewport-left-stack {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  justify-content: flex-end;
-  margin-bottom: var(--dui-nav-bottom-inset);
-  margin-left: var(--dui-nav-horizontal-inset);
-  max-width: var(--dui-nav-left-stack-max-width);
-}
-
-#Navigation-viewport-right-stack {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  justify-content: flex-end;
-  margin-bottom: var(--dui-nav-bottom-inset);
-  margin-right: calc(var(--dui-nav-right-stack-offset) + var(--dui-nav-horizontal-inset));
-}
-
-#Navigation-viewport-left-column {
-  align-items: flex-start;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  gap: 4px;
-  justify-content: flex-end;
-}
-
-#Navigation-viewport-keys-row {
-  max-width: min(88vw, 280px);
-  pointer-events: auto;
-  touch-action: none;
-  width: 100%;
-}
-
-#Navigation-viewport-keys-host {
-  flex: 1 1 auto;
-  min-width: 0;
-  pointer-events: auto;
-  touch-action: none;
-}
-
-#Navigation-viewport-move-stick-host,
-#Navigation-viewport-look-stick-host {
-  pointer-events: auto;
-  touch-action: none;
+  .World .HeaderBar {
+    height: 44px;
+    width: calc(100% - var(--dui-sidebar-width));
+  }
 }

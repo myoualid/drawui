@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputDropdown`
 
 Native `<select>` dropdown.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputDropdown } from "drawui";
+import { InputDropdown } from "ifcopenshell/gui";
 ```
 
 ## Examples

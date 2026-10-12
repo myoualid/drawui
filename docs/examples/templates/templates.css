@@ -1,4 +1,4 @@
-/* Full-viewport workspace template demo (host chrome only). */
+/* Full-viewport workspace template. The stage stays open; the card is a small toolbar. */
 html,
 body {
   height: 100%;
@@ -11,6 +11,31 @@ body {
 
 .templates-panel-body {
   box-sizing: border-box;
-  gap: inherit;
+}
+
+.templates-viewport {
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  overflow: auto;
+  padding: 1.25rem;
+  pointer-events: none;
+  position: absolute;
+}
+
+.templates-viewport-card {
+  box-shadow: none;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  pointer-events: auto;
+  width: min(100%, 22rem);
+}
+
+.templates-viewport-card .Panel {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 

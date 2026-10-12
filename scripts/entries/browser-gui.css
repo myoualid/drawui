@@ -1,0 +1,3 @@
+/* Browser bundle: component styles and peer-widget styles. */
+@import "../../styles/gui.css";
+@import "../../styles/peers.css";

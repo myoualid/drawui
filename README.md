@@ -1,6 +1,6 @@
-# DrawUI.js
+# IfcOpenShell GUI
 
-DrawUI.js is a framework-free ESM UI library for DOM-native tools, panels, overlays, and form controls. Import JavaScript from `drawui` and styles from `drawui/styles/*` (plus optional `drawui/utils/*` helpers).
+IfcOpenShell GUI is a framework-free ESM UI library for DOM-native tools, panels, overlays, and form controls. Install one package, then import the UI library and the workspace manager as separate entry points.
 
 This README is the package guide. Detailed reference material lives in `docs/`:
 
@@ -13,83 +13,109 @@ This README is the package guide. Detailed reference material lives in `docs/`:
 
 ## Install
 
-```json
-{
-	"dependencies": {
-		"drawui": "file:./drawUI"
-	}
-}
+```sh
+npm install ifcopenshell-gui
 ```
 
-DrawUI ships source ESM, so use a bundler or runtime that understands ES modules and CSS imports.
+Imports use `ifcopenshell/gui` and `ifcopenshell/layout`. Map those specifiers onto this package:
+
+```html
+<script type="importmap">
+{
+  "imports": {
+    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
+    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+  }
+}
+</script>
+```
 
 ## Quick Start
 
+UI components and workspace layout are separate entry points of the same package.
+
 ```js
-import { FloatingWindow, StackPanel, Heading, TextBlock } from "drawui";
-import "drawui/styles/core.css";
-import "drawui/styles/icons.css";
-import "drawui/styles/themes/dark.css";
+import { FloatingWindow, StackPanel, Heading, Text } from "ifcopenshell/gui";
+import "ifcopenshell-gui/styles/gui.css";
 
 const panel = new FloatingWindow({
-	title: "Inspector",
-	position: "right",
-	width: "320px"
+  title: "Inspector",
+  position: "right",
+  width: "320px",
 });
 
 panel.content.add(
-	new StackPanel({ isVertical: true })
-		.add(new Heading(3, "Selection"))
-		.add(new TextBlock("No item selected"))
+  new StackPanel({ isVertical: true })
+    .add(new Heading(3, "Selection"))
+    .add(new Text("No item selected")),
 );
 
 document.body.appendChild(panel.dom);
 ```
 
+An app that docks panels imports layout as well. The GUI modules do not include the layout engine.
+
+```js
+import { Text } from "ifcopenshell/gui";
+import { World, Layout, Panel } from "ifcopenshell/layout";
+import "ifcopenshell-gui/styles/gui.css";
+import "ifcopenshell-gui/styles/layout.css";
+
+const world = new World();
+world.mount(document.body);
+
+const layout = new Layout({ leftOpen: true }).init(world);
+const layers = new Panel({ title: "Layers" });
+layers.content.add(new Text("Layer list"));
+```
+
+Import only the components you construct. A bundler drops the rest.
+
+```js
+import { Button, StackPanel, Chart } from "ifcopenshell/gui";
+
+new Button("Save");
+new StackPanel({ isVertical: true });
+new Chart({ chartConfiguration: { type: "bar", data: { labels: ["A"], datasets: [{ data: [1] }] } } });
+```
+
+Chart, DataGrid, GanttChart, NodeGraph, and Markdown are part of `ifcopenshell/gui`. Their libraries load the first time you construct one.
+
 ## Public API
 
 ### JavaScript
 
-- `drawui`: all components, helpers, and the `DrawUI` facade. Unused exports tree-shake when your bundler processes the source ESM.
-- `drawui/utils/markdown`
-- `drawui/utils/flexResizer`
-- `drawui/overlays/drag`
-- `drawui/workspace/dock`
+- `ifcopenshell/gui` — component classes. Browser build: `dist/gui.js`.
+- `ifcopenshell/layout` — `World`, `Layout`, and `Panel`. Browser build: `dist/layout.js`.
 
-```js
-import { DrawUI, Button, FloatingWindow, RadialMenu } from "drawui";
-```
+`ifcopenshell/gui` and `ifcopenshell/layout` are the public specifiers. The package exports `ifcopenshell-gui/gui` and `ifcopenshell-gui/layout` are the tree-shakeable source barrels. `dist/gui.js` and `dist/layout.js` are the full browser builds used by import maps.
 
-### CSS entrypoints
+### CSS
 
-- `drawui/styles/core.css`: imports the package-owned token, reset, primitive, and generic component layers.
-- `drawui/styles/icons.css`: Material Symbols stylesheet used by icon-emitting components.
-- `drawui/styles/tokens.css`: design tokens only.
-- `drawui/styles/reset.css`: scoped reset helpers.
-- `drawui/styles/primitives.css`: primitive classes and compatibility selectors.
-- `drawui/styles/components.css`: generic composed-component styles.
-- `drawui/styles/themes/dark.css`
-- `drawui/styles/themes/light.css`
+- `ifcopenshell-gui/styles/gui.css` — tokens, components, icons, shell, markdown, pie menu, themes, and peer widgets. Browser build: `dist/gui.css`.
+- `ifcopenshell-gui/styles/layout.css` — workspace grid. Load it after `gui.css`. Browser build: `dist/layout.css`.
 
-Only the exported files above are public package API. Workspace compatibility files and app-specific bundles are repository internals.
+`styles/core.css` is the token and component layer inside `gui.css`. `styles/workspace.css` loads the same rules as `styles/layout.css`.
 
-## What DrawUI Includes
+## What IfcOpenShell GUI Includes
 
 - Chainable DOM primitives such as text, rows, columns, buttons, inputs, tooltips, spinners, tabs, and listboxes.
-- Composed components such as `Flyout`, `CollapsiblePanel`, `NavigationList`, `TreeView`, `SortableList`, `Markdown`, and `Chart`.
-- Layout shells such as `ContentPanel`, `CollapsiblePanel`, `FloatingDialog`, and `WorkspacePanel`.
+- Composed components such as `Flyout`, `CollapsiblePanel`, `NavigationList`, `TreeView`, `SortableList`, and `Markdown`.
+- Layout shells such as `Panel`, `CollapsiblePanel`, and `FloatingDialog`.
 - Overlay components such as `FloatingWindow`.
+- Optional peer widgets: `Chart`, `DataGrid`, `GanttChart`, and `NodeGraph` from `ifcopenshell/gui`.
+- `Layout` for the workspace grid: regions, docking, and `Layout.Panel`.
 - A small CSS system built around `--dui-*` tokens and theme overrides.
 
-Use `new Markdown(text)` for markdown rendering (Showdown + Highlight.js when those peers are present; otherwise the built-in converter). The root `DrawUI` facade also exposes peer factories such as `DrawUI.Chart()` for Chart.js-backed data visualizations.
+`new Markdown(text)` uses Showdown when it is installed, and the built-in converter otherwise. Chart.js, AG Grid, jsGantt, and Highlight.js load the first time `Chart`, `DataGrid`, `GanttChart`, or `Markdown` needs them.
 
 See [docs/ai/component-index.md](docs/ai/component-index.md) for the complete export inventory and emitted class names.
 
 ## Styling Model
 
-DrawUI styles are token-driven. Theme, spacing, typography, border, and motion values are exposed through `--dui-*` CSS variables. Public package classes use the `dui-*` namespace, while a set of legacy runtime classes remains available for compatibility.
+IfcOpenShell GUI styles are token-driven. Theme, spacing, typography, border, and motion values are exposed through `--dui-*` CSS variables. Public package classes use the `dui-*` namespace, while a set of legacy runtime classes remains available for compatibility.
 
-If you use components that render Material Symbols, import `drawui/styles/icons.css` in addition to `drawui/styles/core.css`.
+If you use components that render Material Symbols, import `ifcopenshell-gui/styles/icons.css` in addition to `ifcopenshell-gui/styles/core.css`.
 
 ## Property Tables
 

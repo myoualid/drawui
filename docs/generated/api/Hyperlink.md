@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Link`
 
 Anchor with optional icon and external-target behavior.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Hyperlink } from "drawui";
+import { Hyperlink } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -22,7 +22,7 @@ import { Hyperlink } from "drawui";
 ### Hyperlink
 
 ```js
-return new Hyperlink("DrawUI docs", "#", "open_in_new", false);
+return new Hyperlink("GUI docs", "#", "open_in_new", false);
 ```
 
 <div class="doc-live-demo" data-live-demo="Hyperlink/hyperlink" aria-label="Live preview"></div>

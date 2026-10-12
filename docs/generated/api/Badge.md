@@ -3,8 +3,8 @@
 # Badge
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** feedback  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Badge`
 
 Status / label badge.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Badge } from "drawui";
+import { Badge } from "ifcopenshell/gui";
 ```
 
 ## Examples

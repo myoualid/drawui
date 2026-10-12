@@ -3,8 +3,8 @@
 # Tooltip
 
 **Status:** Experimental  
-**Category:** inputs  
-**Import:** `drawui`  
+**Category:** overlays  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Tooltip`, `Tooltip--{theme}`, `visible`
 
 Show the spinner in a target container as an overlay
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Tooltip } from "drawui";
+import { Tooltip } from "ifcopenshell/gui";
 ```
 
 ## Examples

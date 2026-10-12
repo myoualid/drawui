@@ -532,15 +532,15 @@ class DataGrid extends Rectangle {
             return null;
         }
 
-        const selectedNodeGraph = this.gridApi.getSelectedNodeGraph();
+        const selectedNodes = this.gridApi.getSelectedNodes();
 
-        if (selectedNodeGraph.length === 0) {
+        if (selectedNodes.length === 0) {
             return null;
         }
 
         return {
-            nodes: selectedNodeGraph,
-            data: selectedNodeGraph.map((node) => node.data),
+            nodes: selectedNodes,
+            data: selectedNodes.map((node) => node.data),
         };
     }
 
@@ -742,5 +742,23 @@ class DataGrid extends Rectangle {
         this.dom.addEventListener(eventType, (event) => callback(event.detail));
     }
 }
+
+export function createSpreadsheet({
+  data,
+  columnConfig,
+  columnNameMapper,
+  height = "100%",
+  width = "100%",
+} = {}) {
+  return new DataGrid({
+    data,
+    columnConfig,
+    columnNameMapper,
+    height,
+    width,
+  });
+}
+
+export const Spreadsheet = createSpreadsheet;
 
 export { DataGrid };

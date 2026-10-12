@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Publishing — DrawUI</title>
-  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <title>Publishing — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="./dist/docs.css">
   <link rel="stylesheet" href="./styles/themes/dark.css">
   <link rel="stylesheet" href="./styles/themes/light.css">
   <link rel="stylesheet" href="./examples/examples.css">
@@ -13,27 +13,45 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a class="doc-nav-home" href="./index.html">← ifcopenshell-gui docs</a>
       <a href="./generated/typedoc/index.html">TypeDoc</a>
       <a href="./ai/component-index.html">Component index</a>
       <a href="./ai/SKILL.html">AI usage guide</a>
     </nav>
     <main class="doc-content Markdown"><h1 id="publishinganddistribution">Publishing and distribution</h1>
-<p>DrawUI ships as source ESM plus bundled browser builds under <code>docs/dist/</code>. This page covers npm packaging, GitHub Pages, and CDN-style consumption.</p>
+<p>IfcOpenShell GUI ships as source ESM plus bundled browser builds under <code>docs/dist/</code>. This page covers npm packaging, GitHub Pages, and CDN-style consumption.</p>
 <h2 id="packagecontents">Package contents</h2>
-<p>The published npm package includes:</p>
+<p>The npm package name is <code>ifcopenshell-gui</code>. Install it with <code>npm install ifcopenshell-gui</code>. Application code imports <code>ifcopenshell/gui</code> and <code>ifcopenshell/layout</code>. An import map points those specifiers at this package, so they stay off the existing <code>ifcopenshell</code> package.</p>
+<p>The package includes:</p>
 <ul>
 <li><code>src/</code> — ESM source entrypoints</li>
-<li><code>styles/</code> — public CSS entrypoints (<code>core.css</code>, <code>tokens.css</code>, themes, etc.)</li>
+<li><code>dist/</code> — browser bundles: <code>gui.js</code>, <code>layout.js</code>, and matching CSS</li>
+<li><code>styles/</code> — <code>gui.css</code>, <code>layout.css</code>, <code>peers.css</code>, and the layers they import</li>
 <li><code>types/index.d.ts</code> — TypeScript declarations</li>
-<li><code>docs/</code> — examples, generated reference, and GitHub Pages assets</li>
 </ul>
+<p>The docs site stays in the repository. It is not part of the npm tarball.</p>
 <h2 id="entrypoints">Entrypoints</h2>
-<p>Import from the package entry and CSS subpaths:</p>
-<pre><code class="js language-js">import { DrawUI, FloatingWindow, Button, RadialMenu } from "drawui";
-import "drawui/styles/core.css";
-import "drawui/styles/icons.css";
+<p>Map the public specifiers onto the installed package, then import them:</p>
+<pre><code class="html language-html">&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
+    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+  }
+}
+&lt;/script&gt;
 </code></pre>
+<pre><code class="js language-js">import { Button, Chart } from "ifcopenshell/gui";
+import { World, Layout, Panel } from "ifcopenshell/layout";
+import "ifcopenshell-gui/styles/gui.css";
+import "ifcopenshell-gui/styles/layout.css";
+</code></pre>
+<p>A bundler can alias the same specifiers to the package exports <code>ifcopenshell-gui/gui</code> and <code>ifcopenshell-gui/layout</code>, which are the source barrels.</p>
+<p>Or load the built bundles:</p>
+<ul>
+<li>UI: <code>dist/gui.js</code> + <code>dist/gui.css</code> (components and peer widgets)</li>
+<li>Layout: <code>dist/layout.js</code> + <code>dist/layout.css</code></li>
+</ul>
 <p>See the generated <a href="./ai/component-index.html">component index</a> for the full export inventory.</p>
 <h2 id="builds">Builds</h2>
 <table>
@@ -46,7 +64,7 @@ import "drawui/styles/icons.css";
 <tbody>
 <tr>
 <td><code>npm run build</code></td>
-<td><code>docs/dist/drawui.min.js</code>, <code>drawui.full.js</code>, CSS bundles, import map</td>
+<td><code>dist/gui.js</code>, <code>dist/layout.js</code>, matching CSS, import map</td>
 </tr>
 <tr>
 <td><code>npm run build:catalog</code></td>
@@ -59,6 +77,15 @@ import "drawui/styles/icons.css";
 </tbody>
 </table>
 <p>Run <code>npm run build</code> before serving examples or publishing docs assets.</p>
+<h2 id="publishtonpm">Publish to npm</h2>
+<p><code>.github/workflows/publish.yml</code> builds the package and publishes it when you run <strong>Publish to npm</strong> from the Actions tab. It does not run on push.</p>
+<p>Before the first run:</p>
+<ol>
+<li>Create an npm granular access token that can publish <code>ifcopenshell-gui</code> (or an automation token).</li>
+<li>Add that token to the GitHub repository as the secret <code>NPM_TOKEN</code>.</li>
+<li>Bump <code>version</code> in <code>package.json</code>. npm rejects a version that is already on the registry.</li>
+</ol>
+<p>The workflow runs <code>npm ci</code>, <code>npm run build</code>, then <code>npm publish --access public --provenance</code>. Provenance uses GitHub's OIDC token (<code>id-token: write</code>). You can also configure <a href="https://docs.npmjs.com/trusted-publishers">trusted publishing</a> for this repository and workflow on npmjs.com; <code>NPM_TOKEN</code> is still required until that trust is in place.</p>
 <h2 id="githubpages">GitHub Pages</h2>
 <p>Set the site source to the <code>/docs</code> folder. The landing page is <a href="./index.html"><code>index.html</code></a>.</p>
 <p>Local preview:</p>
@@ -66,7 +93,7 @@ import "drawui/styles/icons.css";
 </code></pre>
 <p>Then open http://localhost:5173/</p>
 <h2 id="fullpeerimportmap">Full peer import map</h2>
-<p>The full build (<code>drawui.full.js</code>) externalizes peer dependencies. Browser demos load peers from jsDelivr using <a href="./dist/importmap.full.json"><code>docs/dist/importmap.full.json</code></a>:</p>
+<p>The GUI bundle (<code>gui.js</code>) externalizes peer dependencies. Browser demos load peers from jsDelivr using <a href="./dist/importmap.full.json"><code>docs/dist/importmap.full.json</code></a>:</p>
 <ul>
 <li><code>chart.js</code></li>
 <li><code>ag-grid-community</code></li>
@@ -75,20 +102,14 @@ import "drawui/styles/icons.css";
 <li><code>@highlightjs/cdn-assets</code></li>
 </ul>
 <p>Example (<code>full.html</code> pattern):</p>
-<pre><code class="html language-html">&lt;link rel="stylesheet" href="../../dist/drawui.full.css"&gt;
+<pre><code class="html language-html">&lt;link rel="stylesheet" href="../../dist/gui.css"&gt;
+&lt;link rel="stylesheet" href="../../dist/gui.css"&gt;
 &lt;script type="importmap" src="../../dist/importmap.full.json"&gt;&lt;/script&gt;
-&lt;script type="importmap"&gt;
-{
-  "imports": {
-    "drawui": "../../dist/drawui.full.js"
-  }
-}
-&lt;/script&gt;
 </code></pre>
 <p>After npm publish, swap paths for CDN URLs:</p>
-<pre><code class="html language-html">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/drawui@0.2.0/dist/drawui.min.css"&gt;
+<pre><code class="html language-html">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.css"&gt;
 &lt;script type="module"&gt;
-  import { DrawUI } from "https://cdn.jsdelivr.net/npm/drawui@0.2.0/dist/drawui.min.js";
+  import { Button } from "https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.js";
 &lt;/script&gt;
 </code></pre>
 <h2 id="localvendorsync">Local vendor sync</h2>

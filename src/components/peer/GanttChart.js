@@ -1,12 +1,12 @@
 import {
     Rectangle,
-    TextBlock,
+    Text,
     InputList,
     Button,
     InputDropdown,
     Container,
 } from "../../primitives/ui.js";
-import { FloatingDialog } from "../panels/ContentPanel.js";
+import { FloatingDialog } from "../panels/Panel.js";
 
 let jsganttModulePromise;
 let JSGantt = null;
@@ -467,16 +467,16 @@ class GanttChart {
         };
 
         const content = new Rectangle().addClass("ws-dependency-dialog-content");
-        content.add(new TextBlock(`Manage Dependencies for "${taskData.Name}"`).addClass("Title"));
+        content.add(new Text(`Manage Dependencies for "${taskData.Name}"`).addClass("Title"));
 
         const currentSection = new Rectangle().addClass("ws-dependency-section");
-        currentSection.add(new TextBlock("Current Dependencies").addClass("Title"));
+        currentSection.add(new Text("Current Dependencies").addClass("Title"));
 
         const dependencies = taskData.Dependencies || [];
         const depTypes = taskData.DepType || [];
 
         if (dependencies.length === 0) {
-            const noDependencies = new TextBlock("No dependencies");
+            const noDependencies = new Text("No dependencies");
             noDependencies.dom.style.color = "#999";
             noDependencies.dom.style.fontStyle = "italic";
             currentSection.add(noDependencies);
@@ -488,7 +488,7 @@ class GanttChart {
                 const predecessorTask = this.ganttChart.vTaskList.find((entry) => entry.getID() == dependencies[index]);
                 const predecessorName = predecessorTask ? predecessorTask.getName() : `Task ${dependencies[index]}`;
                 dependencyItem.add(
-                    new TextBlock(`${predecessorName} (ID: ${dependencies[index]}) - ${this.getDependencyTypeLabel(depTypes[index])}`)
+                    new Text(`${predecessorName} (ID: ${dependencies[index]}) - ${this.getDependencyTypeLabel(depTypes[index])}`)
                 );
 
                 const removeButton = new Button("Remove");
@@ -512,10 +512,10 @@ class GanttChart {
         content.add(currentSection);
 
         const addSection = new Rectangle();
-        addSection.add(new TextBlock("Add New Dependency").addClass("Title"));
+        addSection.add(new Text("Add New Dependency").addClass("Title"));
 
         const addForm = new Rectangle();
-        const predecessorLabel = new TextBlock("Predecessor Task:");
+        const predecessorLabel = new Text("Predecessor Task:");
         const predecessorSelect = new InputDropdown();
         const currentId = taskData.id;
         const predecessorOptions = { "": "-- Select Predecessor Task --" };
@@ -536,7 +536,7 @@ class GanttChart {
 
         predecessorSelect.setOptions(predecessorOptions);
 
-        const typeLabel = new TextBlock("Type:");
+        const typeLabel = new Text("Type:");
         const typeSelect = new InputDropdown();
         typeSelect.setOptions({
             FS: "Finish to Start (FS)",

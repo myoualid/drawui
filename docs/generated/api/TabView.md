@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `TabView`, `TabView-tabs`, `TabView-content`, `Tab`, `Tab-float`, `selected`
 
 Self-managed tab container.
@@ -12,7 +12,7 @@ Self-managed tab container.
 ## Import
 
 ```js
-import { TabView } from "drawui";
+import { TabView } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -21,8 +21,8 @@ import { TabView } from "drawui";
 
 ```js
 const tabs = new TabView();
-  tabs.addTab("tab-a", "Overview", [new TextBlock("Tab A content")]);
-  tabs.addTab("tab-b", "Details", [new TextBlock("Tab B content")]);
+  tabs.addTab("tab-a", "Overview", [new Text("Tab A content")]);
+  tabs.addTab("tab-b", "Details", [new Text("Tab B content")]);
   tabs.select("tab-a");
   return tabs;
 ```

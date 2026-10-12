@@ -4,15 +4,18 @@
 
 **Status:** Experimental  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputDate`, `InputDate-input`, `InputDate-calendar`
 
-Composite date and time picker.
+Native date or datetime-local field.
+`getValue()` returns a Date. `setIncludeTime(false)` switches to a date-only input.
+
+_Source: `src/primitives/ui.js`_
 
 ## Import
 
 ```js
-import { InputDate } from "drawui";
+import { InputDate } from "ifcopenshell/gui";
 ```
 
 ## Examples

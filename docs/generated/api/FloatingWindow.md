@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `FloatingWindow`, `FloatingWindow-header`, `FloatingWindow-content`, `circle`, `pos-btn`, `green`, `red`, `Row`, `centered-vertical`, `justify-between`, `fill-width`, `fill-height`
 
 Free-floating window with docking controls.
@@ -14,7 +14,7 @@ _Source: `src/overlays/FloatingWindow.js`_
 ## Import
 
 ```js
-import { FloatingWindow } from "drawui";
+import { FloatingWindow } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -31,7 +31,7 @@ return new Button("Open FloatingWindow").addClass("secondary").onClick(() => {
       new StackPanel({ isVertical: true })
         .gap("0.5rem")
         .add(new Heading(3, "FloatingWindow"))
-        .add(new TextBlock("Free-floating overlay panel")),
+        .add(new Text("Free-floating overlay panel")),
     );
     panel.dom.style.height = "auto";
     panel.dom.style.maxHeight = "70vh";

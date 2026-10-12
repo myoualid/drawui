@@ -1,4 +1,4 @@
-import { StackPanel, Icon, TextBlock, Button, Container } from "../../primitives/ui.js";
+import { StackPanel, Icon, Text, Button, Container } from "../../primitives/ui.js";
 
 const TOAST_ICONS = {
   success: "check_circle",
@@ -23,7 +23,7 @@ const TOAST_ICONS = {
  * toast.hide();
  * ```
  *
- * @category Panels
+ * @category Feedback
  */
 export class Toast extends StackPanel {
   /**
@@ -86,7 +86,7 @@ export class Toast extends StackPanel {
 
     this.add(new Icon(TOAST_ICONS[type] || "info"));
 
-    this._textElement = new TextBlock();
+    this._textElement = new Text();
     this._textElement.dom.textContent = message;
     this.add(this._textElement);
 
@@ -170,7 +170,7 @@ export class Toast extends StackPanel {
         .addClass(`progress-bar${indeterminate ? " indeterminate" : ""}`)
         .setId("progress-bar");
       const fill = new Container().addClass("progress-fill");
-      const textElement = new TextBlock(label || "Loading...");
+      const textElement = new Text(label || "Loading...");
       textElement.addClass("progress-text");
 
       fill.add(textElement);

@@ -10,8 +10,13 @@
     {
       "id": "Hyperlink/hyperlink",
       "caption": "Hyperlink",
-      "code": "return new Hyperlink(\"DrawUI docs\", \"#\", \"open_in_new\", false);",
+      "code": "return new Hyperlink(\"GUI docs\", \"#\", \"open_in_new\", false);",
       "demoId": "inline-link"
+    },
+    {
+      "id": "Hyperlink/basic",
+      "caption": "Basic",
+      "code": "return new Hyperlink(\"Open docs\", \"#\", \"open_in_new\", false);"
     }
   ],
   "Image": [
@@ -30,12 +35,12 @@
       "demoId": "svg"
     }
   ],
-  "Paragraph": [
+  "Text": [
     {
-      "id": "Paragraph/paragraph",
-      "caption": "Paragraph",
-      "code": "return new Paragraph(\"Paragraph with inline content.\");",
-      "demoId": "paragraph"
+      "id": "Text/text",
+      "caption": "Text",
+      "code": "return new Text(\"Inline text\");",
+      "demoId": "text"
     }
   ],
   "Heading": [
@@ -44,21 +49,18 @@
       "caption": "Headings",
       "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new Heading(1, \"Heading 1\"))\n  .add(new Heading(2, \"Heading 2\"))\n  .add(new Heading(3, \"Heading 3\"))\n  .add(new Heading(4, \"Heading 4\"))\n  .add(new Heading(5, \"Heading 5\"))\n  .add(new Heading(6, \"Heading 6\"));",
       "demoId": "headings"
-    }
-  ],
-  "Span": [
+    },
     {
-      "id": "Span/span",
-      "caption": "Span",
-      "code": "return new Span().setTextContent(\"Inline span\");",
-      "demoId": "span"
+      "id": "Heading/levels",
+      "caption": "Levels",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new Heading(2, \"Section title\"))\n  .add(new Heading(3, \"Subsection\"));"
     }
   ],
   "Container": [
     {
       "id": "Container/container",
       "caption": "Container",
-      "code": "return new Container()\n  .add(new TextBlock(\"container() — generic block container\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "code": "return new Container()\n  .add(new Text(\"container() — generic block container\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
       "demoId": "div"
     }
   ],
@@ -72,7 +74,7 @@
     {
       "id": "StackPanel/stackpanel-column",
       "caption": "StackPanel (column)",
-      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new TextBlock(\"Column A\"))\n  .add(new TextBlock(\"Column B\"));",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new Text(\"Column A\"))\n  .add(new Text(\"Column B\"));",
       "demoId": "column"
     }
   ],
@@ -80,14 +82,14 @@
     {
       "id": "ScrollViewer/basic",
       "caption": "Basic",
-      "code": "return new Container()\n  .setStyle(\"height\", [\"6rem\"])\n  .setStyle(\"overflow\", [\"hidden\"])\n  .add(\n    new ScrollViewer({ fill: true, scrollable: true }).add(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.25rem\")\n        .add(new TextBlock(\"Scrollable line 1\"))\n        .add(new TextBlock(\"Scrollable line 2\"))\n        .add(new TextBlock(\"Scrollable line 3\"))\n        .add(new TextBlock(\"Scrollable line 4\"))\n        .add(new TextBlock(\"Scrollable line 5\")),\n    ),\n  );"
+      "code": "return new Container()\n  .setStyle(\"height\", [\"6rem\"])\n  .setStyle(\"overflow\", [\"hidden\"])\n  .add(\n    new ScrollViewer({ fill: true, scrollable: true }).add(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.25rem\")\n        .add(new Text(\"Scrollable line 1\"))\n        .add(new Text(\"Scrollable line 2\"))\n        .add(new Text(\"Scrollable line 3\"))\n        .add(new Text(\"Scrollable line 4\"))\n        .add(new Text(\"Scrollable line 5\")),\n    ),\n  );"
     }
   ],
   "Grid": [
     {
       "id": "Grid/grid",
       "caption": "Grid",
-      "code": "const grid = new Grid();\n  grid.setStyle(\"display\", [\"grid\"]);\n  grid.setStyle(\"gridTemplateColumns\", [\"repeat(3, 1fr)\"]);\n  grid.setStyle(\"gap\", [\"0.5rem\"]);\n  [\"A\", \"B\", \"C\"].forEach((label) => {\n    grid.add(\n      new Card()\n        .add(new TextBlock(label))\n        .setStyle(\"padding\", [\"0.5rem\"])\n        .setStyle(\"textAlign\", [\"center\"]),\n    );\n  });\n  return grid;",
+      "code": "const grid = new Grid();\n  grid.setStyle(\"display\", [\"grid\"]);\n  grid.setStyle(\"gridTemplateColumns\", [\"repeat(3, 1fr)\"]);\n  grid.setStyle(\"gap\", [\"0.5rem\"]);\n  [\"A\", \"B\", \"C\"].forEach((label) => {\n    grid.add(\n      new Card()\n        .add(new Text(label))\n        .setStyle(\"padding\", [\"0.5rem\"])\n        .setStyle(\"textAlign\", [\"center\"]),\n    );\n  });\n  return grid;",
       "demoId": "grid"
     }
   ],
@@ -95,32 +97,16 @@
     {
       "id": "Rectangle/rectangle",
       "caption": "Rectangle",
-      "code": "return new Rectangle()\n  .add(new TextBlock(\"rectangle()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "code": "return new Rectangle()\n  .add(new Text(\"rectangle()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
       "demoId": "panel"
-    }
-  ],
-  "Label": [
-    {
-      "id": "Label/label",
-      "caption": "Label",
-      "code": "return new Label(\"Field label\");",
-      "demoId": "label"
     }
   ],
   "Form": [
     {
       "id": "Form/form",
       "caption": "Form",
-      "code": "const nameInput = new InputText();\n  nameInput.dom.placeholder = \"Jane Doe\";\n  const emailInput = new InputText();\n  emailInput.dom.placeholder = \"jane@example.com\";\n  emailInput.dom.type = \"email\";\n  const notes = new InputTextArea();\n  notes.dom.placeholder = \"Optional notes…\";\n  const roleSelect = new InputDropdown().setOptions({ user: \"User\", admin: \"Admin\", editor: \"Editor\" });\n  const actions = new StackPanel({ isVertical: false })\n    .gap(\"0.5rem\")\n    .add(new Button(\"Cancel\").addClass(\"secondary\"))\n    .add(new Button(\"Save\").addClass(\"primary\"));\n  return new Form()\n    .setStyle(\"display\", [\"flex\"])\n    .setStyle(\"flexDirection\", [\"column\"])\n    .gap(\"0.5rem\")\n    .add(new Label(\"Name\"))\n    .add(nameInput)\n    .add(new Label(\"Email\"))\n    .add(emailInput)\n    .add(new Label(\"Role\"))\n    .add(roleSelect)\n    .add(new Label(\"Notes\"))\n    .add(notes)\n    .add(\n      new StackPanel({ isVertical: false })\n        .gap(\"0.5rem\")\n        .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n        .add(new TextBlock(\"Email me updates\")),\n    )\n    .add(new Spacer(\"0.5rem\"))\n    .add(actions);",
+      "code": "const nameInput = new InputText();\n  nameInput.dom.placeholder = \"Jane Doe\";\n  const emailInput = new InputText();\n  emailInput.dom.placeholder = \"jane@example.com\";\n  emailInput.dom.type = \"email\";\n  const notes = new InputTextArea();\n  notes.dom.placeholder = \"Optional notes…\";\n  const roleSelect = new InputDropdown().setOptions({ user: \"User\", admin: \"Admin\", editor: \"Editor\" });\n  const actions = new StackPanel({ isVertical: false })\n    .gap(\"0.5rem\")\n    .add(new Button(\"Cancel\").addClass(\"secondary\"))\n    .add(new Button(\"Save\").addClass(\"primary\"));\n  return new Form()\n    .setStyle(\"display\", [\"flex\"])\n    .setStyle(\"flexDirection\", [\"column\"])\n    .gap(\"0.5rem\")\n    .add(new Text(\"Name\"))\n    .add(nameInput)\n    .add(new Text(\"Email\"))\n    .add(emailInput)\n    .add(new Text(\"Role\"))\n    .add(roleSelect)\n    .add(new Text(\"Notes\"))\n    .add(notes)\n    .add(\n      new StackPanel({ isVertical: false })\n        .gap(\"0.5rem\")\n        .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n        .add(new Text(\"Email me updates\")),\n    )\n    .add(new Spacer(\"0.5rem\"))\n    .add(actions);",
       "demoId": "form-composed"
-    }
-  ],
-  "TextBlock": [
-    {
-      "id": "TextBlock/text",
-      "caption": "Text",
-      "code": "return new TextBlock(\"Body text via textBlock()\");",
-      "demoId": "text"
     }
   ],
   "Caption": [
@@ -129,6 +115,11 @@
       "caption": "Caption",
       "code": "return new Caption(\"Small text via caption()\");",
       "demoId": "small-text"
+    },
+    {
+      "id": "Caption/basic",
+      "caption": "Basic",
+      "code": "return new Caption(\"Secondary caption\");"
     }
   ],
   "Title": [
@@ -137,6 +128,11 @@
       "caption": "Title",
       "code": "return new Title(\"Panel title style\");",
       "demoId": "title"
+    },
+    {
+      "id": "Title/basic",
+      "caption": "Basic",
+      "code": "return new Title(\"Panel title\");"
     }
   ],
   "Disclaimer": [
@@ -145,6 +141,11 @@
       "caption": "Disclaimer",
       "code": "return new Disclaimer(\"Disclaimer copy for secondary legal or helper text.\");",
       "demoId": "disclaimer"
+    },
+    {
+      "id": "Disclaimer/basic",
+      "caption": "Basic",
+      "code": "return new Disclaimer(\"Helper copy for secondary legal text.\");"
     }
   ],
   "Code": [
@@ -169,6 +170,11 @@
       "caption": "Badge",
       "code": "return new Badge(\"Badge\");",
       "demoId": "badge"
+    },
+    {
+      "id": "Badge/badge-2",
+      "caption": "Badge",
+      "code": "return new Badge(\"New\");"
     }
   ],
   "Canvas": [
@@ -183,15 +189,20 @@
     {
       "id": "Card/card",
       "caption": "Card",
-      "code": "return new Card()\n  .add(new TextBlock(\"new Card()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
+      "code": "return new Card()\n  .add(new Text(\"new Card()\"))\n  .setStyle(\"padding\", [\"0.75rem\"]);",
       "demoId": "card"
+    },
+    {
+      "id": "Card/basic",
+      "caption": "Basic",
+      "code": "return new Card()\n  .padding(\"1rem\")\n  .add(new Title(\"Card\"))\n  .add(new Text(\"Raised surface with border.\"));"
     }
   ],
   "Spacer": [
     {
       "id": "Spacer/vertical-spacer",
       "caption": "Vertical spacer",
-      "code": "return new StackPanel({ isVertical: true })\n  .add(new TextBlock(\"Above\"))\n  .add(new Spacer(\"1rem\"))\n  .add(new TextBlock(\"Below\"));",
+      "code": "return new StackPanel({ isVertical: true })\n  .add(new Text(\"Above\"))\n  .add(new Spacer(\"1rem\"))\n  .add(new Text(\"Below\"));",
       "demoId": "spacer"
     }
   ],
@@ -199,31 +210,33 @@
     {
       "id": "HSpacer/horizontal-spacer",
       "caption": "Horizontal spacer",
-      "code": "return row()\n  .add(new TextBlock(\"Start\"))\n  .add(new HSpacer(\"2rem\"))\n  .add(new TextBlock(\"End\"));",
+      "code": "return row()\n  .add(new Text(\"Start\"))\n  .add(new HSpacer(\"2rem\"))\n  .add(new Text(\"End\"));",
       "demoId": "hspacer"
+    },
+    {
+      "id": "HSpacer/basic",
+      "caption": "Basic",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0\")\n  .setStyle(\"alignItems\", [\"center\"])\n  .add(new Text(\"Start\"))\n  .add(new HSpacer(\"2rem\"))\n  .add(new Text(\"End\"));"
     }
   ],
   "Handle": [
     {
       "id": "Handle/handle",
       "caption": "Handle",
-      "code": "return row()\n  .add(\n    new Card()\n      .setStyle(\"padding\", [\"0.5rem 0.75rem\"])\n      .setStyle(\"display\", [\"flex\"])\n      .setStyle(\"alignItems\", [\"center\"])\n      .setStyle(\"gap\", [\"0.5rem\"])\n      .add(\n        new Handle(\"drag\")\n          .add(new Icon(\"drag_indicator\"))\n          .setStyle(\"cursor\", [\"grab\"])\n          .setStyle(\"color\", [\"var(--dui-color-text-muted, #999)\"]),\n      )\n      .add(new TextBlock(\"Draggable row\")),\n  );",
+      "code": "return row()\n  .add(\n    new Card()\n      .setStyle(\"padding\", [\"0.5rem 0.75rem\"])\n      .setStyle(\"display\", [\"flex\"])\n      .setStyle(\"alignItems\", [\"center\"])\n      .setStyle(\"gap\", [\"0.5rem\"])\n      .add(\n        new Handle(\"drag\")\n          .add(new Icon(\"drag_indicator\"))\n          .setStyle(\"cursor\", [\"grab\"])\n          .setStyle(\"color\", [\"var(--dui-color-text-muted, #999)\"]),\n      )\n      .add(new Text(\"Draggable row\")),\n  );",
       "demoId": "handle"
+    },
+    {
+      "id": "Handle/drag-handle",
+      "caption": "Drag handle",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.5rem\")\n  .setStyle(\"alignItems\", [\"center\"])\n  .setStyle(\"padding\", [\"0.5rem 0.75rem\"])\n  .addClass(\"Card\")\n  .add(\n    new Handle(\"drag\")\n      .add(new Icon(\"drag_indicator\"))\n      .setStyle(\"cursor\", [\"grab\"])\n      .setStyle(\"color\", [\"var(--dui-color-text-muted, #999)\"]),\n  )\n  .add(new Text(\"Draggable row\"));"
     }
   ],
   "TabItem": [
     {
       "id": "TabItem/via-tabview",
       "caption": "Via TabView",
-      "code": "const tabs = new TabView();\ntabs.addTab(\"a\", \"Overview\", [new TextBlock(\"Tab A\")]);\ntabs.addTab(\"b\", \"Details\", [new TextBlock(\"Tab B\")]);\ntabs.select(\"a\");\nreturn tabs;"
-    }
-  ],
-  "ToolbarButton": [
-    {
-      "id": "ToolbarButton/toolbarbutton",
-      "caption": "ToolbarButton",
-      "code": "return new ToolbarButton(\"Action\");",
-      "demoId": "compact-button"
+      "code": "const tabs = new TabView();\ntabs.addTab(\"a\", \"Overview\", [new Text(\"Tab A\")]);\ntabs.addTab(\"b\", \"Details\", [new Text(\"Tab B\")]);\ntabs.select(\"a\");\nreturn tabs;"
     }
   ],
   "center": [
@@ -232,6 +245,11 @@
       "caption": "Center",
       "code": "const host = new Container().setStyle(\"minHeight\", [\"4rem\"]);\n  host.add(center(new Badge(\"Centered via center()\")));\n  return host;",
       "demoId": "center"
+    },
+    {
+      "id": "center/basic",
+      "caption": "Basic",
+      "code": "return new Container()\n  .setStyle(\"minHeight\", [\"4rem\"])\n  .add(center(new Badge(\"Centered\")));"
     }
   ],
   "InputText": [
@@ -240,6 +258,11 @@
       "caption": "InputText",
       "code": "const field = new InputText();\n  field.dom.placeholder = \"Enter value…\";\n  return field;",
       "demoId": "input"
+    },
+    {
+      "id": "InputText/basic",
+      "caption": "Basic",
+      "code": "return new InputText(\"Hello\").setStyle(\"width\", [\"16rem\"]);"
     }
   ],
   "InputSearch": [
@@ -248,6 +271,11 @@
       "caption": "InputSearch",
       "code": "return new InputSearch(\"Search layers…\", (value) => {\n    console.log(\"search:\", value);\n  });",
       "demoId": "search-input"
+    },
+    {
+      "id": "InputSearch/basic",
+      "caption": "Basic",
+      "code": "return new InputSearch(\"Search layers…\").setStyle(\"width\", [\"16rem\"]);"
     }
   ],
   "Icon": [
@@ -256,6 +284,11 @@
       "caption": "Icon library",
       "code": "const grid = new Grid().addClass(\"Gallery-iconGrid\");\n  grid.setStyle(\"display\", [\"grid\"]);\n  grid.setStyle(\"gridTemplateColumns\", [\"repeat(auto-fill, minmax(5.5rem, 1fr))\"]);\n  grid.setStyle(\"gap\", [\"0.75rem\"]);\n\n  Object.entries(ICONS).forEach(([key, name]) => {\n    grid.add(\n      new StackPanel({ isVertical: true })\n        .addClass(\"Gallery-iconCell\")\n        .setStyle(\"alignItems\", [\"center\"])\n        .setStyle(\"gap\", [\"0.25rem\"])\n        .setStyle(\"padding\", [\"0.5rem\"])\n        .add(new Icon(name))\n        .add(new Caption(key)),\n    );\n  });\n\n  return grid;",
       "demoId": "icons-grid"
+    },
+    {
+      "id": "Icon/basic",
+      "caption": "Basic",
+      "code": "return new Icon(\"settings\");"
     }
   ],
   "InputTextArea": [
@@ -264,6 +297,11 @@
       "caption": "InputTextArea",
       "code": "const field = new InputTextArea();\n  field.dom.placeholder = \"Multi-line notes…\";\n  return field;",
       "demoId": "textarea"
+    },
+    {
+      "id": "InputTextArea/basic",
+      "caption": "Basic",
+      "code": "return new InputTextArea().setValue(\"Notes…\").setStyle(\"width\", [\"16rem\"]);"
     }
   ],
   "InputDropdown": [
@@ -272,14 +310,24 @@
       "caption": "InputDropdown",
       "code": "return new InputDropdown().setOptions({ user: \"User\", admin: \"Admin\" });",
       "demoId": "select"
+    },
+    {
+      "id": "InputDropdown/basic",
+      "caption": "Basic",
+      "code": "return new InputDropdown()\n  .setOptions({ a: \"Option A\", b: \"Option B\" })\n  .setValue(\"a\")\n  .setStyle(\"width\", [\"12rem\"]);"
     }
   ],
   "Checkbox": [
     {
       "id": "Checkbox/checkbox",
       "caption": "Checkbox",
-      "code": "return row()\n  .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n  .add(new TextBlock(\"Agree to terms\"));",
+      "code": "return row()\n  .add(new Checkbox(true).addClass(\"Card-checkbox\"))\n  .add(new Text(\"Agree to terms\"));",
       "demoId": "checkbox"
+    },
+    {
+      "id": "Checkbox/checked",
+      "caption": "Checked",
+      "code": "return new Checkbox(true);"
     }
   ],
   "InputColor": [
@@ -312,13 +360,18 @@
       "caption": "Slider",
       "code": "return new Slider(42).setRange(0, 100).setStep(1).setPrecision(0);",
       "demoId": "slider"
+    },
+    {
+      "id": "Slider/basic",
+      "caption": "Basic",
+      "code": "return new Slider(42).setRange(0, 100).setStep(1).setPrecision(0)\n  .setStyle(\"width\", [\"16rem\"]);"
     }
   ],
   "LineBreak": [
     {
       "id": "LineBreak/line-break",
       "caption": "Line break",
-      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new TextBlock(\"Line one\"))\n  .add(new LineBreak())\n  .add(new TextBlock(\"Line two\"));",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.25rem\")\n  .add(new Text(\"Line one\"))\n  .add(new LineBreak())\n  .add(new Text(\"Line two\"));",
       "demoId": "line-break"
     }
   ],
@@ -326,8 +379,13 @@
     {
       "id": "Line/divider",
       "caption": "Divider",
-      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.5rem\")\n  .add(new TextBlock(\"Above the rule\"))\n  .add(new Line())\n  .add(new TextBlock(\"Below the rule\"));",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.5rem\")\n  .add(new Text(\"Above the rule\"))\n  .add(new Line())\n  .add(new Text(\"Below the rule\"));",
       "demoId": "divider"
+    },
+    {
+      "id": "Line/basic",
+      "caption": "Basic",
+      "code": "return new StackPanel({ isVertical: true })\n  .gap(\"0.5rem\")\n  .setStyle(\"width\", [\"16rem\"])\n  .add(new Text(\"Above the rule\"))\n  .add(new Line())\n  .add(new Text(\"Below the rule\"));"
     }
   ],
   "Button": [
@@ -336,22 +394,16 @@
       "caption": "Button",
       "code": "return new Button(\"Primary\").addClass(\"primary\");",
       "demoId": "button-primary"
-    }
-  ],
-  "IconButton": [
+    },
     {
-      "id": "IconButton/iconbutton",
-      "caption": "IconButton",
-      "code": "return new IconButton(\"Export\", { icon: \"download\", meta: \".ifc\" });",
-      "demoId": "square-button"
-    }
-  ],
-  "RibbonButton": [
+      "id": "Button/basic",
+      "caption": "Basic",
+      "code": "return new Button(\"Save\");"
+    },
     {
-      "id": "RibbonButton/ribbonbutton",
-      "caption": "RibbonButton",
-      "code": "return new RibbonButton(\"Project\", { icon: \"folder_open\" });",
-      "demoId": "ribbon-button"
+      "id": "Button/with-icon",
+      "caption": "With icon",
+      "code": "return new Button(\"Save\").setIcon(\"save\");"
     }
   ],
   "ProgressBar": [
@@ -360,13 +412,18 @@
       "caption": "ProgressBar",
       "code": "return new ProgressBar(0.65);",
       "demoId": "progress"
+    },
+    {
+      "id": "ProgressBar/basic",
+      "caption": "Basic",
+      "code": "return new ProgressBar(0.65).setStyle(\"width\", [\"16rem\"]);"
     }
   ],
   "TabView": [
     {
       "id": "TabView/tabview",
       "caption": "TabView",
-      "code": "const tabs = new TabView();\n  tabs.addTab(\"tab-a\", \"Overview\", [new TextBlock(\"Tab A content\")]);\n  tabs.addTab(\"tab-b\", \"Details\", [new TextBlock(\"Tab B content\")]);\n  tabs.select(\"tab-a\");\n  return tabs;",
+      "code": "const tabs = new TabView();\n  tabs.addTab(\"tab-a\", \"Overview\", [new Text(\"Tab A content\")]);\n  tabs.addTab(\"tab-b\", \"Details\", [new Text(\"Tab B content\")]);\n  tabs.select(\"tab-a\");\n  return tabs;",
       "demoId": "tabbed-panel"
     }
   ],
@@ -386,12 +443,17 @@
       "demoId": "date"
     }
   ],
-  "ProgressRing": [
+  "LoadingCube": [
     {
-      "id": "ProgressRing/progressring",
-      "caption": "ProgressRing",
-      "code": "return new ProgressRing({ text: \"Loading model…\" });",
+      "id": "LoadingCube/loadingcube",
+      "caption": "LoadingCube",
+      "code": "return new LoadingCube({ text: \"Loading model…\" });",
       "demoId": "spinner"
+    },
+    {
+      "id": "LoadingCube/with-label",
+      "caption": "With label",
+      "code": "return new LoadingCube({ text: \"Loading\" });"
     }
   ],
   "Tooltip": [
@@ -402,18 +464,11 @@
       "demoId": "tooltip"
     }
   ],
-  "DrawUI": [
+  "Panel": [
     {
-      "id": "DrawUI/basic",
-      "caption": "Basic",
-      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.5rem\")\n  .add(DrawUI.Button(\"Save\"))\n  .add(DrawUI.Badge(\"New\"));"
-    }
-  ],
-  "ContentPanel": [
-    {
-      "id": "ContentPanel/contentpanel",
-      "caption": "ContentPanel",
-      "code": "return new ContentPanel()\n  .header(\"Inspector\", \"info\")\n  .add(new TextBlock(\"ContentPanel content area\"))\n  .add(\n    new StackPanel({ isVertical: false })\n      .gap(\"0.5rem\")\n      .add(new Button(\"Action\").addClass(\"primary\"))\n      .add(new Button(\"Cancel\").addClass(\"secondary\")),\n  );",
+      "id": "Panel/panel",
+      "caption": "Panel",
+      "code": "return new Panel()\n  .header(\"Inspector\", \"info\")\n  .add(new Text(\"Panel content area\"))\n  .add(\n    new StackPanel({ isVertical: false })\n      .gap(\"0.5rem\")\n      .add(new Button(\"Action\").addClass(\"primary\"))\n      .add(new Button(\"Cancel\").addClass(\"secondary\")),\n  );",
       "demoId": "base-panel"
     }
   ],
@@ -421,39 +476,28 @@
     {
       "id": "FloatingDialog/floatingdialog",
       "caption": "FloatingDialog",
-      "code": "return new Button(\"Open FloatingDialog\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow, .Header\").forEach((node) => {\n      const shell = node.closest(\".FloatingWindow\") || node.closest(\".Rectangle\");\n      if (shell?.parentElement === document.body) shell.remove();\n    });\n    const win = new FloatingDialog({ title: \"Floating window\", icon: \"info\" });\n    win\n      .content(new TextBlock(\"floatingDialog() content\"))\n      .add(\n        new Button(\"Close\")\n          .addClass(\"secondary\")\n          .onClick(() => win.destroy()),\n      )\n      .show();\n  });",
+      "code": "return new Button(\"Open FloatingDialog\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow, .Header\").forEach((node) => {\n      const shell = node.closest(\".FloatingWindow\") || node.closest(\".Rectangle\");\n      if (shell?.parentElement === document.body) shell.remove();\n    });\n    const win = new FloatingDialog({ title: \"Floating window\", icon: \"info\" });\n    win\n      .content(new Text(\"floatingDialog() content\"))\n      .add(\n        new Button(\"Close\")\n          .addClass(\"secondary\")\n          .onClick(() => win.destroy()),\n      )\n      .show();\n  });",
       "demoId": "floating-window"
-    }
-  ],
-  "WorkspacePanel": [
-    {
-      "id": "WorkspacePanel/workspacepanel",
-      "caption": "WorkspacePanel",
-      "code": "const wrap = new StackPanel({ isVertical: true }).gap(\"0.75rem\");\n\n  let panel = null;\n\n  const openButton = new Button(\"Open floating tab panel\")\n    .addClass(\"primary\")\n    .onClick(() => {\n      if (!panel) {\n        panel = new WorkspacePanel({\n          context: { ui: { model: {} } },\n          tabId: \"gallery-demo-tab\",\n          tabLabel: \"Demo panel\",\n          icon: \"tab\",\n          title: \"Floating tab panel\",\n          startFloating: true,\n          floatingStyles: { width: \"320px\", height: \"260px\" },\n        });\n        panel.add(\n          new StackPanel({ isVertical: true })\n            .gap(\"0.5rem\")\n            .setStyle(\"padding\", [\"0.75rem\"])\n            .add(new TextBlock(\"WorkspacePanel content — dock buttons appear when a WorkspaceLayout context is provided.\"))\n            .add(new Badge(\"startFloating: true\")),\n        );\n      }\n      panel.show();\n    });\n\n  wrap.add(openButton);\n  wrap.add(\n    new Caption(\n      \"Without a WorkspaceLayout the panel opens as a floating window; inside a workspace it docks as a CollapsiblePanel (undock transfers content into a FloatingWindow).\",\n    ),\n  );\n  return wrap;",
-      "demoId": "tab-panel"
-    }
-  ],
-  "Header": [
-    {
-      "id": "Header/header",
-      "caption": "Header",
-      "code": "return new Header({\n    title: \"Inspector\",\n    icon: \"info\",\n    actions: [new Button(\"…\").addClass(\"secondary\")],\n  });",
-      "demoId": "header"
     }
   ],
   "RibbonBar": [
     {
       "id": "RibbonBar/ribbonbar",
       "caption": "RibbonBar",
-      "code": "return new RibbonBar(\n    [\n      new RibbonButton(\"Project\", { icon: \"folder_open\" }),\n      new RibbonButton(\"Properties\", { icon: \"tune\", active: true }),\n      new RibbonButton(\"Console\", { icon: \"terminal\" }),\n    ],\n    \"flex-start\",\n  );",
+      "code": "return new RibbonBar(\n    [\n      new Button(\"Project\").setIcon(\"folder_open\"),\n      new Button(\"Properties\").setIcon(\"tune\").addClass(\"selected\"),\n      new Button(\"Console\").setIcon(\"terminal\"),\n    ],\n    \"flex-start\",\n  );",
       "demoId": "ribbon-bar"
+    },
+    {
+      "id": "RibbonBar/ribbonbar-2",
+      "caption": "RibbonBar",
+      "code": "return new RibbonBar([\n  new Button(\"Project\").setIcon(\"folder_open\"),\n  new Button(\"Properties\").setIcon(\"tune\").addClass(\"selected\"),\n  new Button(\"Console\").setIcon(\"terminal\"),\n], \"flex-start\");"
     }
   ],
   "Flyout": [
     {
       "id": "Flyout/flyout",
       "caption": "Flyout",
-      "code": "const host = new Container().setStyle(\"position\", [\"relative\"]).setStyle(\"minHeight\", [\"5rem\"]);\n  const panel = new Flyout({\n    title: \"Alerts\",\n    icon: \"notifications\",\n    badgeCount: 2,\n    position: { top: \"0.5rem\", right: \"0.5rem\" },\n  });\n  panel.content(new StackPanel({ isVertical: true }).add(new TextBlock(\"Collapsible panel content\")));\n  host.add(panel);\n  return host;",
+      "code": "const host = new Container().setStyle(\"position\", [\"relative\"]).setStyle(\"minHeight\", [\"5rem\"]);\n  const panel = new Flyout({\n    title: \"Alerts\",\n    icon: \"notifications\",\n    badgeCount: 2,\n    position: { top: \"0.5rem\", right: \"0.5rem\" },\n  });\n  panel.content(new StackPanel({ isVertical: true }).add(new Text(\"Collapsible panel content\")));\n  host.add(panel);\n  return host;",
       "demoId": "collapsible-panel"
     }
   ],
@@ -461,23 +505,15 @@
     {
       "id": "CollapsiblePanel/collapsiblepanel",
       "caption": "CollapsiblePanel",
-      "code": "const section = new CollapsiblePanel({ title: \"Parameters\", icon: \"tune\" });\n  section.content(new TextBlock(\"Section body built with textBlock()\"));\n  return section;",
+      "code": "const section = new CollapsiblePanel({ title: \"Parameters\", icon: \"tune\" });\n  section.content(new Text(\"Section body\"));\n  return section;",
       "demoId": "collapsible-section"
-    }
-  ],
-  "InstructionPanel": [
-    {
-      "id": "InstructionPanel/instruction-panel",
-      "caption": "Instruction panel",
-      "code": "return new InstructionPanel(\"Viewport\", \"3d_rotation\", [\n    [\"MMB\", \"Orbit around the scene\"],\n    [\"Shift + MMB\", \"Pan the view\"],\n    [\"Scroll\", \"Zoom in / out\"],\n    [\"Alt + MMB\", \"Roll the camera\"],\n  ]);",
-      "demoId": "instruction-panel"
     }
   ],
   "SplitContainer": [
     {
       "id": "SplitContainer/split-container",
       "caption": "Split container",
-      "code": "const left = new Rectangle()\n    .add(new TextBlock(\"Left pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const right = new Rectangle()\n    .add(new TextBlock(\"Right pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const split = new SplitContainer(\"horizontal\", [left, right]);\n  split.setStyle(\"height\", [\"7rem\"]);\n  return split;",
+      "code": "const left = new Rectangle()\n    .add(new Text(\"Left pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const right = new Rectangle()\n    .add(new Text(\"Right pane\"))\n    .setStyle(\"padding\", [\"0.75rem\"])\n    .setStyle(\"flex\", [\"1\"]);\n  const split = new SplitContainer(\"horizontal\", [left, right]);\n  split.setStyle(\"height\", [\"7rem\"]);\n  return split;",
       "demoId": "split-container"
     }
   ],
@@ -511,32 +547,19 @@
       "demoId": "labeled-box-item"
     }
   ],
-  "WorkspaceLayout": [
+  "Layout": [
     {
-      "id": "WorkspaceLayout/note",
-      "caption": "Note",
-      "code": "return new Disclaimer(\n  \"WorkspaceLayout requires a full #World DOM tree — use the templates example app.\",\n);"
-    }
-  ],
-  "buildWorldFromConfig": [
-    {
-      "id": "buildWorldFromConfig/note",
-      "caption": "Note",
-      "code": "return new Disclaimer(\n  \"buildWorldFromConfig builds an app shell into a host — see docs/examples/templates.\",\n);"
-    }
-  ],
-  "createDefaultWorldConfig": [
-    {
-      "id": "createDefaultWorldConfig/note",
-      "caption": "Note",
-      "code": "return new Disclaimer(\n  \"createDefaultWorldConfig returns a config object, not a Control.\",\n);"
+      "id": "Layout/layout-panel",
+      "caption": "Layout.Panel",
+      "code": "const wrap = new StackPanel({ isVertical: true }).gap(\"0.75rem\");\n\n  let panel = null;\n\n  const openButton = new Button(\"Open floating tab panel\")\n    .addClass(\"primary\")\n    .onClick(() => {\n      if (!panel) {\n        panel = new Layout.Panel({\n          context: { ui: { model: {} } },\n          tabId: \"gallery-demo-tab\",\n          tabLabel: \"Demo panel\",\n          icon: \"tab\",\n          title: \"Floating tab panel\",\n          startFloating: true,\n          floatingStyles: { width: \"320px\", height: \"260px\" },\n        });\n        panel.add(\n          new StackPanel({ isVertical: true })\n            .gap(\"0.5rem\")\n            .setStyle(\"padding\", [\"0.75rem\"])\n            .add(new Text(\"Layout.Panel content — dock buttons appear when a Layout context is provided.\"))\n            .add(new Badge(\"startFloating: true\")),\n        );\n      }\n      panel.show();\n    });\n\n  wrap.add(openButton);\n  wrap.add(\n    new Caption(\n      \"Without a Layout instance the panel opens as a floating window; inside a workspace it docks (undock transfers content into a FloatingWindow).\",\n    ),\n  );\n  return wrap;",
+      "demoId": "tab-panel"
     }
   ],
   "FloatingWindow": [
     {
       "id": "FloatingWindow/floatingwindow",
       "caption": "FloatingWindow",
-      "code": "return new Button(\"Open FloatingWindow\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow\").forEach((node) => {\n      if (node.parentElement === document.body) node.remove();\n    });\n    const panel = new FloatingWindow({ title: \"Overlay\", width: \"320px\" });\n    panel.setContent(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.5rem\")\n        .add(new Heading(3, \"FloatingWindow\"))\n        .add(new TextBlock(\"Free-floating overlay panel\")),\n    );\n    panel.dom.style.height = \"auto\";\n    panel.dom.style.maxHeight = \"70vh\";\n    panel.show();\n  });",
+      "code": "return new Button(\"Open FloatingWindow\").addClass(\"secondary\").onClick(() => {\n    document.querySelectorAll(\".FloatingWindow\").forEach((node) => {\n      if (node.parentElement === document.body) node.remove();\n    });\n    const panel = new FloatingWindow({ title: \"Overlay\", width: \"320px\" });\n    panel.setContent(\n      new StackPanel({ isVertical: true })\n        .gap(\"0.5rem\")\n        .add(new Heading(3, \"FloatingWindow\"))\n        .add(new Text(\"Free-floating overlay panel\")),\n    );\n    panel.dom.style.height = \"auto\";\n    panel.dom.style.maxHeight = \"70vh\";\n    panel.show();\n  });",
       "demoId": "floating-panel"
     }
   ],
@@ -566,8 +589,13 @@
     {
       "id": "Markdown/markdown-showdown",
       "caption": "Markdown (Showdown)",
-      "code": "return new Markdown(\n    [\n      \"Full build renders GitHub-flavored markdown via **Showdown**, with optional\",\n      \"Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,\",\n      \"and `inline code` all work.\",\n      \"\",\n      \"## Feature matrix\",\n      \"\",\n      \"| Feature | Supported | Notes |\",\n      \"| --- | --- | --- |\",\n      \"| Tables | yes | Pipe tables with header row |\",\n      \"| Task lists | yes | Checkboxes below |\",\n      \"| Fenced code | yes | Highlight.js when available |\",\n      \"| Autolinks | yes | https://github.com/myoualid/drawui |\",\n      \"| Emoji | yes | :sparkles: :rocket: |\",\n      \"\",\n      \"## Lists & tasks\",\n      \"\",\n      \"- Nested lists\",\n      \"  - Second level\",\n      \"  - Another item\",\n      \"- Ordered next\",\n      \"\",\n      \"1. Install peers\",\n      \"2. Call `new Markdown(text)`\",\n      \"3. Attach to the DOM\",\n      \"\",\n      \"- [x] Headings and paragraphs\",\n      \"- [x] Bold / italic / strike\",\n      \"- [x] Tables and task lists\",\n      \"- [x] Highlighted code blocks\",\n      \"\",\n      \"## Quote\",\n      \"\",\n      \"> Prefer the full build when you need GFM tables, task lists, or syntax-highlighted\",\n      \"> fences. The min build keeps a small built-in converter instead.\",\n      \"\",\n      \"## Code\",\n      \"\",\n      \"```js\",\n      \"import { Markdown } from \\\"drawui\\\";\",\n      \"\",\n      \"const md = new Markdown(\",\n      \"  \\\"# Hello\\\\n\\\\n**Showdown** + Highlight.js\\\",\",\n      \"  { isMarkdown: true },\",\n      \");\",\n      \"\",\n      \"document.body.appendChild(md.dom);\",\n      \"```\",\n      \"\",\n      \"```css\",\n      \".Markdown pre {\",\n      \"  overflow-x: auto;\",\n      \"}\",\n      \"```\",\n    ].join(\"\\n\"),\n    { isMarkdown: true },\n  );",
+      "code": "return new Markdown(\n    [\n      \"Markdown renders GitHub-flavored markdown via **Showdown** when it is installed, with optional\",\n      \"Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,\",\n      \"and `inline code` all work.\",\n      \"\",\n      \"## Feature matrix\",\n      \"\",\n      \"| Feature | Supported | Notes |\",\n      \"| --- | --- | --- |\",\n      \"| Tables | yes | Pipe tables with header row |\",\n      \"| Task lists | yes | Checkboxes below |\",\n      \"| Fenced code | yes | Highlight.js when available |\",\n      \"| Autolinks | yes | https://github.com/IfcOpenShell/IfcOpenShell |\",\n      \"| Emoji | yes | :sparkles: :rocket: |\",\n      \"\",\n      \"## Lists & tasks\",\n      \"\",\n      \"- Nested lists\",\n      \"  - Second level\",\n      \"  - Another item\",\n      \"- Ordered next\",\n      \"\",\n      \"1. Import Markdown from ifcopenshell/gui\",\n      \"2. Call `new Markdown(text)`\",\n      \"3. Attach to the DOM\",\n      \"\",\n      \"- [x] Headings and paragraphs\",\n      \"- [x] Bold / italic / strike\",\n      \"- [x] Tables and task lists\",\n      \"- [x] Highlighted code blocks\",\n      \"\",\n      \"## Quote\",\n      \"\",\n      \"> Showdown renders GFM tables, task lists, and fenced code.\",\n      \"> Without it, Markdown uses the built-in converter.\",\n      \"\",\n      \"## Code\",\n      \"\",\n      \"```js\",\n      \"import { Markdown } from \\\"ifcopenshell/gui\\\";\",\n      \"\",\n      \"const md = new Markdown(\",\n      \"  \\\"# Hello\\\\n\\\\n**Showdown** + Highlight.js\\\",\",\n      \"  { isMarkdown: true },\",\n      \");\",\n      \"\",\n      \"document.body.appendChild(md.dom);\",\n      \"```\",\n      \"\",\n      \"```css\",\n      \".Markdown pre {\",\n      \"  overflow-x: auto;\",\n      \"}\",\n      \"```\",\n    ].join(\"\\n\"),\n    { isMarkdown: true },\n  );",
       "demoId": "markdown-full"
+    },
+    {
+      "id": "Markdown/0",
+      "caption": "",
+      "code": "return new Markdown(\"## Hello\\n\\n**Bold** text and `code`.\");"
     }
   ],
   "Chart": [
@@ -686,14 +714,14 @@
     {
       "id": "AppShell/compact-shell",
       "caption": "Compact shell",
-      "code": "const host = new Container()\n  .setStyle(\"height\", [\"260px\"])\n  .setStyle(\"overflow\", [\"hidden\"]);\nconst shell = new AppShell({\n  sidebarTitle: \"Nav\",\n  layout: {\n    sidebarWidth: \"160px\",\n    sidebarMinWidth: \"120px\",\n    sidebarMaxWidth: \"240px\",\n  },\n});\nshell.setSidebarContent(new TextBlock(\"Sidebar\"));\nshell.setMainContent(new TextBlock(\"Main page\"));\nhost.add(shell);\nreturn host;"
+      "code": "const host = new Container()\n  .setStyle(\"height\", [\"260px\"])\n  .setStyle(\"overflow\", [\"hidden\"]);\nconst shell = new AppShell({\n  sidebarTitle: \"Nav\",\n  layout: {\n    sidebarWidth: \"160px\",\n    sidebarMinWidth: \"120px\",\n    sidebarMaxWidth: \"240px\",\n  },\n});\nshell.setSidebarContent(new Text(\"Sidebar\"));\nshell.setMainContent(new Text(\"Main page\"));\nhost.add(shell);\nreturn host;"
     }
   ],
   "NavigationView": [
     {
       "id": "NavigationView/navigationview",
       "caption": "NavigationView",
-      "code": "const host = new Container().setStyle(\"height\", [\"260px\"]).setStyle(\"overflow\", [\"hidden\"]);\n  const layout = new NavigationView({\n    sidebarWidth: \"180px\",\n    sidebarMinWidth: \"140px\",\n    sidebarMaxWidth: \"320px\",\n    sidebarResizable : true,\n  });\n  layout.setSidebarTitle(\"Explorer\");\n  layout.setSidebarContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.25rem\")\n      .add(new TextBlock(\"Site\"))\n      .add(new TextBlock(\"Building\")),\n  );\n  layout.setMainContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.5rem\")\n      .add(new Heading(3, \"Viewport\"))\n      .add(new TextBlock(\"Main content\")),\n  );\n  host.add(layout);\n  return host;",
+      "code": "const host = new Container().setStyle(\"height\", [\"260px\"]).setStyle(\"overflow\", [\"hidden\"]);\n  const layout = new NavigationView({\n    sidebarWidth: \"180px\",\n    sidebarMinWidth: \"140px\",\n    sidebarMaxWidth: \"320px\",\n    sidebarResizable : true,\n  });\n  layout.setSidebarTitle(\"Explorer\");\n  layout.setSidebarContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.25rem\")\n      .add(new Text(\"Site\"))\n      .add(new Text(\"Building\")),\n  );\n  layout.setMainContent(\n    new StackPanel({ isVertical: true })\n      .gap(\"0.5rem\")\n      .add(new Heading(3, \"Viewport\"))\n      .add(new Text(\"Main content\")),\n  );\n  host.add(layout);\n  return host;",
       "demoId": "sidebar-layout"
     }
   ],
@@ -779,11 +807,39 @@
       "code": "return createLayoutResizerHandle(\"right\").setStyle(\"height\", [\"4rem\"]);"
     }
   ],
+  "GUI": [
+    {
+      "id": "GUI/basic",
+      "caption": "Basic",
+      "code": "return new StackPanel({ isVertical: false })\n  .gap(\"0.5rem\")\n  .add(new Button(\"Save\"))\n  .add(new Badge(\"New\"));"
+    }
+  ],
   "buildWorkspaceDockHandlers": [
     {
       "id": "buildWorkspaceDockHandlers/note",
       "caption": "Note",
-      "code": "return new Disclaimer(\n  \"buildWorkspaceDockHandlers({ layoutManager, tabId, tabLabel }) wires WorkspacePanel dock chrome.\",\n);"
+      "code": "return new Disclaimer(\n  \"Layout.dockHandlers wires dock chrome for a Layout.Panel.\",\n);"
+    }
+  ],
+  "buildWorldFromConfig": [
+    {
+      "id": "buildWorldFromConfig/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"new World() builds an app shell into a host — see docs/examples/templates.\",\n);"
+    }
+  ],
+  "createDefaultWorldConfig": [
+    {
+      "id": "createDefaultWorldConfig/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"createDefaultWorldConfig returns a config object, not a Control.\",\n);"
+    }
+  ],
+  "WorkspaceLayout": [
+    {
+      "id": "WorkspaceLayout/note",
+      "caption": "Note",
+      "code": "return new Disclaimer(\n  \"new World() builds the shell. new Layout(config).init(world) attaches the regions.\",\n);"
     }
   ]
 }

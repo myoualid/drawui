@@ -25,6 +25,18 @@
  */
 
 /**
+ * True for a Control from this module or from another bundle of the same library.
+ * GUI and Layout are separate bundles, so `instanceof Control` only matches one copy.
+ * @param {unknown} value
+ */
+function isControl(value) {
+  return value instanceof Control
+    || (!!value
+      && /** @type {{ dom?: unknown }} */ (value).dom instanceof HTMLElement
+      && typeof /** @type {{ add?: unknown }} */ (value).add === "function");
+}
+
+/**
  * Base UI element wrapper for DOM elements with chainable methods.
  * All UI components extend this class.
  *
@@ -62,7 +74,7 @@ class Control {
     for (let i = 0; i < children.length; i++) {
       const argument = children[i];
 
-      if (argument instanceof Control) {
+      if (isControl(argument)) {
         this.dom.appendChild(argument.dom);
       } else {
         console.error(
@@ -89,7 +101,7 @@ class Control {
     for (let i = 0; i < children.length; i++) {
       const argument = children[i];
 
-      if (argument instanceof Control) {
+      if (isControl(argument)) {
         this.dom.removeChild(argument.dom);
       } else {
         console.error(
@@ -215,18 +227,6 @@ class Control {
   }
 
   /**
-   * Set width and height (deprecated, use setSize)
-   * @param {string} width 
-   * @param {string} height 
-   * @returns {this}
-   */
-  setsize(width, height) {
-    this.setStyles({ "width": width, "height": height });
-
-    return this;
-  }
-  
-  /**
    * Set width and height
    * @param {string|null} width - Width value or null to skip
    * @param {string|null} height - Height value or null to skip
@@ -302,6 +302,18 @@ class Control {
     return this;
   }
 
+  getValue() {
+    return this.dom.textContent;
+  }
+
+  setValue(value) {
+    if (value !== undefined) {
+      this.dom.textContent = value;
+    }
+
+    return this;
+  }
+
   /**
    * Set inner HTML
    * @param {string} value
@@ -327,15 +339,6 @@ class Control {
    */
   onBlur(callback) {
     this.dom.addEventListener("blur", callback);
-  }
-
-  /**
-   * Add click event listener
-   * @param {Function} callback
-   * @returns {void}
-   */
-  onClick(callback) {
-    this.dom.addEventListener("click", callback);
   }
 
   /**
@@ -424,7 +427,6 @@ const events = [
   "Click",
   "DblClick",
   "Change",
-  "InputText",
 ];
 
 events.forEach(function (event) {
@@ -438,17 +440,21 @@ events.forEach(function (event) {
 });
 
 /**
- * Generic inline wrapper.
+ * Inline text. Base for captions, titles, badges, and other text chips.
  *
  * @example <caption>Basic</caption>
  * // live
- * return new Span().setTextContent("Inline span");
+ * return new Text("Inline text");
  *
  * @category Text
  */
-class Span extends Control {
-  constructor() {
+class Text extends Control {
+  constructor(text) {
     super(document.createElement("span"));
+
+    this.dom.className = "Text";
+
+    this.setValue(text);
   }
 }
 
@@ -495,14 +501,6 @@ class Hyperlink extends Control {
 
     this.dom.insertBefore( this.icon.dom, this.dom.firstChild );
 
-    this.dom.style.display = "flex";
-
-    this.dom.style.alignItems = "center";
-
-    this.dom.style.gap = "4px";
-
-    this.gap("4px");
-
     return this;
   }
 
@@ -531,7 +529,7 @@ class Hyperlink extends Control {
  *     ),
  * ).setStyle("width", ["4rem"]);
  *
- * @category Text
+ * @category Media
  */
 class Image extends Control {
   constructor(path) {
@@ -579,7 +577,7 @@ class Image extends Control {
  * ctx.fillText("Canvas", 120, 70);
  * return canvas;
  *
- * @category Text
+ * @category Media
  */
 class Canvas extends Control {
   constructor() {
@@ -604,7 +602,7 @@ class Canvas extends Control {
  *   .setStyle("height", ["3rem"])
  *   .setStyle("color", ["var(--dui-color-accent, #70ba35)"]);
  *
- * @category Text
+ * @category Media
  */
 class Svg extends Control {
   constructor(pathOrElement) {
@@ -632,26 +630,7 @@ class Svg extends Control {
 
           this.template = svgNode;
 
-          this.dom.innerHTML = "";
-
-          const appendedNode = svgNode.cloneNode(true);
-
-          // Ensure the SVG scales to the container
-          if (appendedNode.removeAttribute) {
-            appendedNode.removeAttribute('width');
-
-            appendedNode.removeAttribute('height');
-          }
-
-          appendedNode.style.width = '100%';
-
-          appendedNode.style.height = '100%';
-
-          appendedNode.style.display = 'block';
-
-          appendedNode.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-
-          this.dom.appendChild(appendedNode);
+          this._mountScaledSvg(svgNode);
         })
         .catch((err) => {
           console.error("Failed to load SVG:", err);
@@ -659,25 +638,7 @@ class Svg extends Control {
     } else if (pathOrElement instanceof SVGElement) {
       this.template = pathOrElement;
 
-      this.dom.innerHTML = "";
-
-      const appendedNode = pathOrElement.cloneNode(true);
-
-      if (appendedNode.removeAttribute) {
-        appendedNode.removeAttribute('width');
-
-        appendedNode.removeAttribute('height');
-      }
-
-      appendedNode.style.width = '100%';
-
-      appendedNode.style.height = '100%';
-
-      appendedNode.style.display = 'block';
-
-      appendedNode.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-
-      this.dom.appendChild(appendedNode);
+      this._mountScaledSvg(pathOrElement);
 
       this.ready = Promise.resolve();
     } else if (pathOrElement && pathOrElement.dom) {
@@ -686,29 +647,31 @@ class Svg extends Control {
       if (svgEl) {
         this.template = svgEl;
 
-        this.dom.innerHTML = "";
-
-        const appendedNode = svgEl.cloneNode(true);
-
-        if (appendedNode.removeAttribute) {
-          appendedNode.removeAttribute('width');
-
-          appendedNode.removeAttribute('height');
-        }
-
-        appendedNode.style.width = '100%';
-
-        appendedNode.style.height = '100%';
-
-        appendedNode.style.display = 'block';
-
-        appendedNode.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-
-        this.dom.appendChild(appendedNode);
+        this._mountScaledSvg(svgEl);
 
         this.ready = Promise.resolve();
       }
     }
+  }
+
+  _mountScaledSvg(svgSource) {
+    this.dom.innerHTML = "";
+
+    const appendedNode = svgSource.cloneNode(true);
+
+    if (appendedNode.removeAttribute) {
+      appendedNode.removeAttribute("width");
+      appendedNode.removeAttribute("height");
+    }
+
+    appendedNode.style.width = "100%";
+    appendedNode.style.height = "100%";
+    appendedNode.style.display = "block";
+    appendedNode.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+    this.dom.appendChild(appendedNode);
+
+    return appendedNode;
   }
 
   clone() {
@@ -924,35 +887,6 @@ class Svg extends Control {
 }
 
 
-/**
- * Semantic `p` wrapper.
- *
- * @example <caption>Basic</caption>
- * // live
- * return new Paragraph("A short paragraph of body copy.");
- *
- * @category Text
- */
-class Paragraph extends Control {
-  constructor(text) {
-    super(document.createElement("p"));
-
-    this.setValue(text);
-  }
-
-  getValue() {
-    return this.dom.textContent;
-  }
-
-  setValue(value) {
-    if (value !== undefined) {
-      this.dom.textContent = value;
-    }
-
-    return this;
-  }
-}
-
 /** @category Layout */
 class Container extends Control {
   constructor() {
@@ -980,13 +914,6 @@ class StackPanel extends Container {
     this.dom.className = isVertical
       ? "StackPanel Column"
       : "StackPanel Row";
-    this.dom.style.display = "flex";
-    this.dom.style.flexDirection = isVertical ? "column" : "row";
-  }
-
-  gap(size) {
-    this.dom.style.gap = size;
-    return this;
   }
 }
 
@@ -1003,11 +930,11 @@ class StackPanel extends Container {
  *     new ScrollViewer({ fill: true, scrollable: true }).add(
  *       new StackPanel({ isVertical: true })
  *         .gap("0.25rem")
- *         .add(new TextBlock("Scrollable line 1"))
- *         .add(new TextBlock("Scrollable line 2"))
- *         .add(new TextBlock("Scrollable line 3"))
- *         .add(new TextBlock("Scrollable line 4"))
- *         .add(new TextBlock("Scrollable line 5")),
+ *         .add(new Text("Scrollable line 1"))
+ *         .add(new Text("Scrollable line 2"))
+ *         .add(new Text("Scrollable line 3"))
+ *         .add(new Text("Scrollable line 4"))
+ *         .add(new Text("Scrollable line 5")),
  *     ),
  *   );
  *
@@ -1017,21 +944,8 @@ class ScrollViewer extends Container {
   constructor(options = {}) {
     super();
     const { scrollable = true, className = "", fill = false } = options;
-    this.dom.className = ["ScrollViewer", className].filter(Boolean).join(" ");
-    this.dom.style.overflow = scrollable ? "auto" : "hidden";
-    this.dom.style.minHeight = "0";
-    this.dom.style.minWidth = "0";
-    if (fill) {
-      this.dom.style.display = "flex";
-      this.dom.style.flexDirection = "column";
-      this.dom.style.flex = "1 1 auto";
-      this.dom.style.gap = "0";
-    }
-  }
-
-  gap(size) {
-    this.dom.style.gap = size;
-    return this;
+    this.dom.className = ["ScrollViewer", fill ? "ScrollViewer-fill" : "", className].filter(Boolean).join(" ");
+    if (!scrollable) this.dom.style.overflow = "hidden";
   }
 }
 
@@ -1064,43 +978,11 @@ class Rectangle extends Container {
   }
 }
 
-/**
- * Form label (`label` element).
- *
- * @example <caption>Basic</caption>
- * // live
- * return new Label("Display name");
- *
- * @category Inputs
- */
-class Label extends Control {
-  constructor(text = '') {
-    super(document.createElement('label'));
-
-    if (text) this.dom.textContent = text;
-  }
-
-  setFor(id) {
-    this.dom.htmlFor = id;
-
-    return this;
-  }
-
-  getValue() {
-    return this.dom.textContent;
-  }
-
-  setValue(value) {
-    this.dom.textContent = value;
-
-    return this;
-  }
-}
-
 /** @category Inputs */
 class Form extends Control {
   constructor() {
     super(document.createElement('form'));
+    this.dom.className = "Form";
   }
 
   setAction(url) {
@@ -1141,39 +1023,6 @@ class Form extends Control {
 }
 
 /**
- * Inline text block.
- *
- * @example <caption>Basic</caption>
- * // live
- * return new TextBlock("Inline text");
- *
- * @category Text
- */
-class TextBlock extends Span {
-  constructor(text) {
-    super();
-
-    this.dom.className = "TextBlock";
-
-    this.dom.style.display = "inline-block";
-
-    this.setValue(text);
-  }
-
-  getValue() {
-    return this.dom.textContent;
-  }
-
-  setValue(value) {
-    if (value !== undefined) {
-      this.dom.textContent = value;
-    }
-
-    return this;
-  }
-}
-
-/**
  * Secondary caption (`small`).
  *
  * @example <caption>Basic</caption>
@@ -1188,18 +1037,6 @@ class Caption extends Control {
 
     this.setValue(text);
   }
-
-  getValue() {
-    return this.dom.textContent;
-  }
-
-  setValue(value) {
-    if (value !== undefined) {
-      this.dom.textContent = value;
-    }
-
-    return this;
-  }
 }
 
 /**
@@ -1211,7 +1048,7 @@ class Caption extends Control {
  *
  * @category Text
  */
-class Title extends TextBlock {
+class Title extends Text {
   constructor(text = "") {
     super(text);
     this.addClass("Title");
@@ -1227,10 +1064,10 @@ class Title extends TextBlock {
  *
  * @category Text
  */
-class Disclaimer extends TextBlock {
+class Disclaimer extends Text {
   constructor(text = "") {
     super(text);
-    this.setClass("disclaimer");
+    this.setClass("Disclaimer");
   }
 }
 
@@ -1243,7 +1080,7 @@ class Disclaimer extends TextBlock {
  *
  * @category Text
  */
-class Code extends Span {
+class Code extends Text {
   constructor(text = "") {
     super();
     this.setClass("Code");
@@ -1260,10 +1097,10 @@ class Code extends Span {
  *
  * @category Text
  */
-class Kbd extends Span {
+class Kbd extends Text {
   constructor(key = "") {
     super();
-    this.setClass("kbd");
+    this.setClass("Kbd");
     this.setTextContent(key);
   }
 }
@@ -1275,9 +1112,9 @@ class Kbd extends Span {
  * // live
  * return new Badge("New");
  *
- * @category Text
+ * @category Feedback
  */
-class Badge extends TextBlock {
+class Badge extends Text {
   constructor(text = "") {
     super(text);
     this.addClass("Badge");
@@ -1292,7 +1129,7 @@ class Badge extends TextBlock {
  * return new Card()
  *   .padding("1rem")
  *   .add(new Title("Card"))
- *   .add(new TextBlock("Raised surface with border."));
+ *   .add(new Text("Raised surface with border."));
  *
  * @category Layout
  */
@@ -1309,9 +1146,9 @@ class Card extends Rectangle {
  * @example <caption>Basic</caption>
  * // live
  * return new StackPanel({ isVertical: true })
- *   .add(new TextBlock("Above"))
+ *   .add(new Text("Above"))
  *   .add(new Spacer("1rem"))
- *   .add(new TextBlock("Below"));
+ *   .add(new Text("Below"));
  *
  * @category Layout
  */
@@ -1330,13 +1167,13 @@ class Spacer extends Container {
  * return new StackPanel({ isVertical: false })
  *   .gap("0")
  *   .setStyle("alignItems", ["center"])
- *   .add(new TextBlock("Start"))
+ *   .add(new Text("Start"))
  *   .add(new HSpacer("2rem"))
- *   .add(new TextBlock("End"));
+ *   .add(new Text("End"));
  *
  * @category Layout
  */
-class HSpacer extends Span {
+class HSpacer extends Text {
   constructor(size = "8px") {
     super();
     this.setWidth(size);
@@ -1360,14 +1197,15 @@ class HSpacer extends Span {
  *       .setStyle("cursor", ["grab"])
  *       .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
  *   )
- *   .add(new TextBlock("Draggable row"));
+ *   .add(new Text("Draggable row"));
  *
  * @category Layout
  */
-class Handle extends Span {
+class Handle extends Text {
   constructor(type = "drag") {
     super();
-    this.addClass(`${type}-handle`);
+    this.addClass("Handle");
+    this.addClass(type === "resize" ? "Handle-resize" : "Handle-drag");
   }
 }
 
@@ -1634,16 +1472,6 @@ class InputColor extends Control {
 
     this.dom.className = "InputColor";
 
-    this.dom.style.width = "32px";
-
-    this.dom.style.height = "16px";
-
-    this.dom.style.border = "0px";
-
-    this.dom.style.padding = "2px";
-
-    this.dom.style.backgroundColor = "transparent";
-
     this.dom.setAttribute("autocomplete", "off");
 
     try {
@@ -1699,6 +1527,8 @@ class InputNumber extends Control {
 
     this.unit = "";
 
+    this.integer = false;
+
     this.nudge = 0.01;
 
     this.setValue(number);
@@ -1736,29 +1566,31 @@ class InputNumber extends Control {
       document.addEventListener("mouseup", onMouseUp);
     }
 
-    function onMouseMove(event) {
+    function nudgeByPointer(clientX, clientY, shiftKey) {
       const currentValue = scope.value;
 
-      pointer.x = event.clientX;
-
-      pointer.y = event.clientY;
+      pointer.x = clientX;
+      pointer.y = clientY;
 
       distance += pointer.x - prevPointer.x - (pointer.y - prevPointer.y);
 
       let value =
-        onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
+        onMouseDownValue + (distance / (shiftKey ? 5 : 50)) * scope.step;
 
       value = Math.min(scope.max, Math.max(scope.min, value));
+      if (scope.integer) value = Math.trunc(value);
 
       if (currentValue !== value) {
         scope.setValue(value);
-
         scope.dom.dispatchEvent(changeEvent);
       }
 
-      prevPointer.x = event.clientX;
+      prevPointer.x = clientX;
+      prevPointer.y = clientY;
+    }
 
-      prevPointer.y = event.clientY;
+    function onMouseMove(event) {
+      nudgeByPointer(event.clientX, event.clientY, event.shiftKey);
     }
 
     function onMouseUp() {
@@ -1792,28 +1624,11 @@ class InputNumber extends Control {
     function onTouchMove(event) {
       event.preventDefault();
 
-      const currentValue = scope.value;
-
-      pointer.x = event.touches[0].pageX;
-
-      pointer.y = event.touches[0].pageY;
-
-      distance += pointer.x - prevPointer.x - (pointer.y - prevPointer.y);
-
-      let value =
-        onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
-
-      value = Math.min(scope.max, Math.max(scope.min, value));
-
-      if (currentValue !== value) {
-        scope.setValue(value);
-
-        scope.dom.dispatchEvent(changeEvent);
-      }
-
-      prevPointer.x = event.touches[0].pageX;
-
-      prevPointer.y = event.touches[0].pageY;
+      nudgeByPointer(
+        event.touches[0].pageX,
+        event.touches[0].pageY,
+        event.shiftKey,
+      );
     }
 
     function onTouchEnd(event) {
@@ -1890,7 +1705,9 @@ class InputNumber extends Control {
 
   setValue(value) {
     if (value !== undefined) {
-      value = parseFloat(value);
+      value = this.integer ? Math.trunc(Number(value)) : parseFloat(value);
+
+      if (this.integer && Number.isNaN(value)) value = 0;
 
       if (value < this.min) value = this.min;
 
@@ -1898,9 +1715,13 @@ class InputNumber extends Control {
 
       this.value = value;
 
-      this.dom.value = value.toFixed(this.precision);
+      if (this.integer) {
+        this.dom.value = String(value);
+      } else {
+        this.dom.value = value.toFixed(this.precision);
 
-      if (this.unit !== "") this.dom.value += " " + this.unit;
+        if (this.unit !== "") this.dom.value += " " + this.unit;
+      }
     }
 
     return this;
@@ -1913,7 +1734,7 @@ class InputNumber extends Control {
   }
 
   setStep(step) {
-    this.step = step;
+    this.step = this.integer ? Math.trunc(Number(step)) : step;
 
     return this;
   }
@@ -1945,197 +1766,19 @@ class InputNumber extends Control {
   }
 }
 
-/** @category Inputs */
-class InputInteger extends Control {
+/**
+ * Integer field with the same drag-to-scrub behavior as InputNumber.
+ * @category Inputs
+ */
+class InputInteger extends InputNumber {
   constructor(number) {
-    super(document.createElement("input"));
-
-    this.dom.style.cursor = "ns-resize";
-
-    this.dom.className = "InputNumber";
-
-    this.dom.value = "0";
-
-    this.dom.setAttribute("autocomplete", "off");
-
-    this.value = 0;
-
-    this.min = -Infinity;
-
-    this.max = Infinity;
-
-    this.step = 1;
-
+    super(undefined);
+    this.integer = true;
+    this.precision = 0;
     this.nudge = 1;
-
-    this.setValue(number);
-
-    const scope = this;
-
-    const changeEvent = new Event("change", {
-      bubbles: true,
-      cancelable: true,
-    });
-
-    let distance = 0;
-
-    let onMouseDownValue = 0;
-
-    const pointer = { x: 0, y: 0 };
-
-    const prevPointer = { x: 0, y: 0 };
-
-    function onMouseDown(event) {
-      if (document.activeElement === scope.dom) return;
-
-      event.preventDefault();
-
-      distance = 0;
-
-      onMouseDownValue = scope.value;
-
-      prevPointer.x = event.clientX;
-
-      prevPointer.y = event.clientY;
-
-      document.addEventListener("mousemove", onMouseMove);
-
-      document.addEventListener("mouseup", onMouseUp);
-    }
-
-    function onMouseMove(event) {
-      const currentValue = scope.value;
-
-      pointer.x = event.clientX;
-
-      pointer.y = event.clientY;
-
-      distance += pointer.x - prevPointer.x - (pointer.y - prevPointer.y);
-
-      let value =
-        onMouseDownValue + (distance / (event.shiftKey ? 5 : 50)) * scope.step;
-
-      value = Math.min(scope.max, Math.max(scope.min, value)) | 0;
-
-      if (currentValue !== value) {
-        scope.setValue(value);
-
-        scope.dom.dispatchEvent(changeEvent);
-      }
-
-      prevPointer.x = event.clientX;
-
-      prevPointer.y = event.clientY;
-    }
-
-    function onMouseUp() {
-      document.removeEventListener("mousemove", onMouseMove);
-
-      document.removeEventListener("mouseup", onMouseUp);
-
-      if (Math.abs(distance) < 2) {
-        scope.dom.focus();
-
-        scope.dom.select();
-      }
-    }
-
-    function onChange() {
-      scope.setValue(scope.dom.value);
-    }
-
-    function onFocus() {
-      scope.dom.style.backgroundColor = "";
-
-      scope.dom.style.cursor = "";
-    }
-
-    function onBlur() {
-      scope.dom.style.backgroundColor = "transparent";
-
-      scope.dom.style.cursor = "ns-resize";
-    }
-
-    function onKeyDown(event) {
-      event.stopPropagation();
-
-      switch (event.code) {
-        case "Enter":
-          scope.dom.blur();
-
-          break;
-
-        case "ArrowUp":
-          event.preventDefault();
-
-          scope.setValue(scope.getValue() + scope.nudge);
-
-          scope.dom.dispatchEvent(changeEvent);
-
-          break;
-
-        case "ArrowDown":
-          event.preventDefault();
-
-          scope.setValue(scope.getValue() - scope.nudge);
-
-          scope.dom.dispatchEvent(changeEvent);
-
-          break;
-      }
-    }
-
-    onBlur();
-
-    this.dom.addEventListener("keydown", onKeyDown);
-
-    this.dom.addEventListener("mousedown", onMouseDown);
-
-    this.dom.addEventListener("change", onChange);
-
-    this.dom.addEventListener("focus", onFocus);
-
-    this.dom.addEventListener("blur", onBlur);
-  }
-
-  getValue() {
-    return this.value;
-  }
-
-  setValue(value) {
-    if (value !== undefined) {
-      value = parseInt(value);
-
-      this.value = value;
-
-      this.dom.value = value;
-    }
-
-    return this;
-  }
-
-  setStep(step) {
-    this.step = parseInt(step);
-
-    return this;
-  }
-
-  setNudge(nudge) {
-    this.nudge = nudge;
-
-    return this;
-  }
-
-  setRange(min, max) {
-    this.min = min;
-
-    this.max = max;
-
-    return this;
-  }
-
-  onBlur(callback) {
-    this.dom.addEventListener("blur", callback);
+    this.step = 1;
+    this.dom.value = "0";
+    this.setValue(number ?? 0);
   }
 }
 
@@ -2278,7 +1921,7 @@ class Slider extends Control {
   }
 }
 
-/** @category Text */
+/** @category Layout */
 class LineBreak extends Control {
   constructor() {
     super(document.createElement("br"));
@@ -2295,11 +1938,11 @@ class LineBreak extends Control {
  * return new StackPanel({ isVertical: true })
  *   .gap("0.5rem")
  *   .setStyle("width", ["16rem"])
- *   .add(new TextBlock("Above the rule"))
+ *   .add(new Text("Above the rule"))
  *   .add(new Line())
- *   .add(new TextBlock("Below the rule"));
+ *   .add(new Text("Below the rule"));
  *
- * @category Text
+ * @category Layout
  */
 class Line extends Control {
   constructor() {
@@ -2332,16 +1975,9 @@ class Button extends Control {
   }
 
   setIcon(iconClass) {
-    const span = new Span();
+    const icon = new Icon(iconClass);
 
-    span.addClass("material-symbols-outlined");
-
-    span.setTextContent(iconClass);
-
-    // prepend icon span before the button text
-    this.dom.insertBefore(span.dom, this.dom.firstChild);
-
-    this.gap("4px");
+    this.dom.insertBefore(icon.dom, this.dom.firstChild);
 
     return this;
   }
@@ -2354,141 +1990,15 @@ class Button extends Control {
 }
 
 /**
- * Tile-style action button with icon, label, and optional meta.
- *
- * @example <caption>Basic</caption>
- * // live
- * return new IconButton("Export", { icon: "download", meta: ".ifc" });
- *
- * @category Inputs
- */
-class IconButton extends Button {
-  constructor(label = "", options = {}) {
-    super("");
-
-    this.addClass("SquareButton");
-
-    this.iconElement = new Icon(options.icon || "download");
-
-    this.labelElement = new TextBlock(label);
-    this.labelElement.addClass("SquareButton-label");
-
-    this.metaElement = new Caption(options.meta || "");
-    this.metaElement.addClass("SquareButton-meta");
-
-    this.add(this.iconElement, this.labelElement, this.metaElement);
-
-    this.setMeta(options.meta || "");
-    this.setActive(Boolean(options.active));
-  }
-
-  setLabel(label) {
-    this.labelElement.setValue(label);
-
-    return this;
-  }
-
-  setMeta(meta = "") {
-    const hasMeta = meta !== undefined && meta !== null && meta !== "";
-
-    this.metaElement.setHidden(!hasMeta);
-
-    if (hasMeta) {
-      this.metaElement.setValue(meta);
-    }
-
-    return this;
-  }
-
-  setIcon(iconClass) {
-    const hasIcon = iconClass !== undefined && iconClass !== null && iconClass !== "";
-
-    this.iconElement.setHidden(!hasIcon);
-
-    if (hasIcon) {
-      this.iconElement.setIcon(iconClass);
-    }
-
-    return this;
-  }
-
-  setActive(isActive) {
-    const active = Boolean(isActive);
-
-    this.toggleClass("Active", active);
-    this.toggleClass("Button--active", active);
-    this.dom.setAttribute("aria-pressed", String(active));
-
-    return this;
-  }
-}
-
-/**
- * Borderless ribbon control: icon above label, tab-style accent when selected.
- *
- * @example <caption>Basic</caption>
- * // live
- * return new RibbonButton("Project", { icon: "folder_open" });
- *
- * @example <caption>Selected</caption>
- * // live
- * return new RibbonButton("Properties", { icon: "tune", active: true });
- *
- * @category Inputs
- */
-class RibbonButton extends Button {
-  constructor(label = "", options = {}) {
-    super("");
-
-    this.addClass("RibbonButton");
-
-    this.iconElement = new Icon(options.icon || "widgets");
-    this.labelElement = new TextBlock(label);
-    this.labelElement.addClass("RibbonButton-label");
-
-    this.add(this.iconElement, this.labelElement);
-    this.setIcon(options.icon || "widgets");
-    this.setActive(Boolean(options.active));
-  }
-
-  setLabel(label) {
-    this.labelElement.setValue(label);
-    return this;
-  }
-
-  setIcon(iconClass) {
-    const hasIcon = iconClass !== undefined && iconClass !== null && iconClass !== "";
-
-    this.iconElement.setHidden(!hasIcon);
-
-    if (hasIcon) {
-      this.iconElement.setIcon(iconClass);
-    }
-
-    return this;
-  }
-
-  setActive(isActive) {
-    const active = Boolean(isActive);
-
-    this.toggleClass("Active", active);
-    this.toggleClass("selected", active);
-    this.dom.setAttribute("aria-pressed", String(active));
-
-    return this;
-  }
-}
-
-/**
  * Material Symbols icon glyph.
  *
  * @example <caption>Basic</caption>
  * // live
  * return new Icon("settings");
  *
- * @category Text
+ * @category Media
  */
-class Icon extends Span {
+class Icon extends Text {
   constructor(icon) {
     super();
 
@@ -2519,7 +2029,7 @@ class Icon extends Span {
  * // live
  * return new ProgressBar(0.65).setStyle("width", ["16rem"]);
  *
- * @category Inputs
+ * @category Feedback
  */
 class ProgressBar extends Control {
   constructor(value) {
@@ -2652,8 +2162,7 @@ class TabView extends Container {
 
     this.tabsDiv.add(tab);
 
-    const pageRootIsItems =
-      items instanceof Control && !(items instanceof TabView);
+    const pageRootIsItems = isControl(items) && !(items instanceof TabView);
     const panel = pageRootIsItems ? items : new Container();
     panel.setId(id);
     if (styles && typeof styles === "object") {
@@ -2746,8 +2255,8 @@ class TabView extends Container {
  * @example <caption>Via TabView</caption>
  * // live
  * const tabs = new TabView();
- * tabs.addTab("a", "Overview", [new TextBlock("Tab A")]);
- * tabs.addTab("b", "Details", [new TextBlock("Tab B")]);
+ * tabs.addTab("a", "Overview", [new Text("Tab A")]);
+ * tabs.addTab("b", "Details", [new Text("Tab B")]);
  * tabs.select("a");
  * return tabs;
  *
@@ -2766,11 +2275,7 @@ class TabItem extends Container {
 
     this.parent = parent;
 
-    const label = new Span();
-
-    label.dom.className = "Title";
-
-    label.setTextContent(labelText);
+    const label = new Title(labelText);
 
     this.add(label);
 
@@ -2779,9 +2284,7 @@ class TabItem extends Container {
 
       floatIc.dom.classList.add("Operator", "Tab-float");
 
-      floatIc.dom.title = "Undock to floating window";
-
-      floatIc.setStyle("font-size", ["13px"]);
+      floatIc.dom.title = "Undock";
 
       floatIc.onClick((e) => {
         e.preventDefault();
@@ -2919,451 +2422,81 @@ class InputListItem extends Container {
   }
 }
 
-/** @category Inputs */
+/**
+ * Native date or datetime-local field.
+ * `getValue()` returns a Date. `setIncludeTime(false)` switches to a date-only input.
+ * @category Inputs
+ */
 class InputDate extends Control {
   constructor(date) {
     super(document.createElement("div"));
-
     this.dom.className = "InputDate";
-
-    this.dom.style.position = "relative";
-
-    this.dom.style.display = "inline-block";
-
-    this.value = date ? new Date(date) : new Date();
-
-    this.includeTime = true; // Include time selection by default
-
-    // Create input field
+    this.includeTime = true;
     this.input = document.createElement("input");
-
     this.input.className = "InputDate-input";
-
-    this.input.readOnly = true;
-
-    // Create calendar icon
-    this.icon = document.createElement("span");
-
-    this.icon.innerHTML = "📅";
-
-    this.icon.style.marginLeft = "5px";
-
-    this.icon.style.cursor = "pointer";
-
-    this.icon.style.userSelect = "none";
-
-    // Create container for input and icon
-    this.inputContainer = document.createElement("div");
-
-    this.inputContainer.style.display = "flex";
-
-    this.inputContainer.style.alignItems = "center";
-
-    this.inputContainer.appendChild(this.input);
-
-    this.inputContainer.appendChild(this.icon);
-
-    this.dom.appendChild(this.inputContainer);
-
-    // Create calendar popup
-    this.calendarPopup = document.createElement("div");
-
-    this.calendarPopup.className = "InputDate-calendar";
-
-    this.dom.appendChild(this.calendarPopup);
-
-    this.updateDisplay();
-
-    const scope = this;
-
-    // Toggle calendar on input click
-    this.input.addEventListener("click", function () {
-      scope.toggleCalendar();
+    this.input.type = "datetime-local";
+    this.dom.appendChild(this.input);
+    this._value = date ? new Date(date) : new Date();
+    if (Number.isNaN(this._value.getTime())) this._value = new Date();
+    this._writeInput();
+    this.input.addEventListener("change", () => {
+      const parsed = this._parseInput(this.input.value);
+      if (!parsed) return;
+      this._value = parsed;
+      this.dom.dispatchEvent(new CustomEvent("change", {
+        bubbles: true,
+        detail: { value: this._value },
+      }));
     });
-
-    // Toggle calendar on icon click
-    this.icon.addEventListener("click", function () {
-      scope.toggleCalendar();
-    });
-
-    // Close calendar when clicking outside
-    document.addEventListener("click", function (event) {
-      if (!scope.dom.contains(event.target)) {
-        scope.hideCalendar();
-      }
-    });
-
-    this.renderCalendar();
   }
 
-  toggleCalendar() {
-    if (this.calendarPopup.style.display === "none") {
-      this.showCalendar();
-    } else {
-      this.hideCalendar();
+  _pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  _writeInput() {
+    const d = this._value;
+    if (!(d instanceof Date) || Number.isNaN(d.getTime())) {
+      this.input.value = "";
+      return;
     }
+    const day = d.getFullYear() + "-" + this._pad(d.getMonth() + 1) + "-" + this._pad(d.getDate());
+    this.input.value = this.includeTime
+      ? day + "T" + this._pad(d.getHours()) + ":" + this._pad(d.getMinutes())
+      : day;
+  }
+
+  _parseInput(raw) {
+    if (!raw) return null;
+    const parsed = new Date(raw);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
   }
 
   showCalendar() {
-    this.renderCalendar();
-
-    this.calendarPopup.style.display = "block";
+    this.dom.style.display = "block";
+    this.input.focus();
+    if (typeof this.input.showPicker === "function") this.input.showPicker();
   }
 
   hideCalendar() {
-    this.calendarPopup.style.display = "none";
-  }
-
-  renderCalendar() {
-    this.calendarPopup.innerHTML = "";
-
-    const header = document.createElement("div");
-
-    header.style.display = "flex";
-
-    header.style.justifyContent = "space-between";
-
-    header.style.alignItems = "center";
-
-    header.style.marginBottom = "10px";
-
-    // Month/Year navigation
-    const prevButton = document.createElement("button");
-
-    prevButton.innerHTML = "‹";
-
-    prevButton.style.border = "none";
-
-    prevButton.style.background = "none";
-
-    prevButton.style.cursor = "pointer";
-
-    prevButton.style.fontSize = "18px";
-
-    prevButton.style.padding = "0 5px";
-
-    const nextButton = document.createElement("button");
-
-    nextButton.innerHTML = "›";
-
-    nextButton.style.border = "none";
-
-    nextButton.style.background = "none";
-
-    nextButton.style.cursor = "pointer";
-
-    nextButton.style.fontSize = "18px";
-
-    nextButton.style.padding = "0 5px";
-
-    const monthYear = document.createElement("span");
-
-    monthYear.style.fontWeight = "bold";
-
-    monthYear.style.fontSize = "14px";
-
-    header.appendChild(prevButton);
-
-    header.appendChild(monthYear);
-
-    header.appendChild(nextButton);
-
-    this.calendarPopup.appendChild(header);
-
-    // Calendar grid
-    const calendarGrid = document.createElement("div");
-
-    calendarGrid.style.display = "grid";
-
-    calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
-
-    calendarGrid.style.gap = "2px";
-
-    // Day headers
-    const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
-    days.forEach((day) => {
-      const dayHeader = document.createElement("div");
-
-      dayHeader.textContent = day;
-
-      dayHeader.style.textAlign = "center";
-
-      dayHeader.style.fontWeight = "bold";
-
-      dayHeader.style.fontSize = "12px";
-
-      dayHeader.style.padding = "5px";
-
-      calendarGrid.appendChild(dayHeader);
-    });
-
-    this.calendarPopup.appendChild(calendarGrid);
-
-    // Time selection (if enabled)
-    if (this.includeTime) {
-      const timeSection = document.createElement("div");
-
-      timeSection.style.marginTop = "10px";
-
-      timeSection.style.paddingTop = "10px";
-
-      timeSection.style.borderTop = "1px solid #eee";
-
-      const timeLabel = document.createElement("div");
-
-      timeLabel.textContent = "Time:";
-
-      timeLabel.style.fontSize = "12px";
-
-      timeLabel.style.fontWeight = "bold";
-
-      timeLabel.style.marginBottom = "5px";
-
-      timeSection.appendChild(timeLabel);
-
-      const timeInput = document.createElement("input");
-
-      timeInput.type = "time";
-
-      timeInput.value = this.formatTime(this.value);
-
-      timeInput.style.width = "100%";
-
-      timeInput.style.padding = "2px";
-
-      timeInput.style.border = "1px solid #ccc";
-
-      timeInput.style.borderRadius = "var(--dui-radius)";
-
-      const scope = this;
-
-      timeInput.addEventListener("change", function () {
-        const [hours, minutes] = this.value.split(":");
-
-        scope.value.setHours(parseInt(hours), parseInt(minutes));
-
-        scope.updateDisplay();
-
-        // Dispatch change event
-        const changeEvent = new CustomEvent("change", {
-          detail: { value: scope.value },
-        });
-
-        scope.dom.dispatchEvent(changeEvent);
-      });
-
-      timeSection.appendChild(timeInput);
-
-      this.calendarPopup.appendChild(timeSection);
-    }
-
-    // Today button
-    const todayButton = document.createElement("button");
-
-    todayButton.textContent = "Today";
-
-    todayButton.style.marginTop = "10px";
-
-    todayButton.style.padding = "5px 10px";
-
-    todayButton.style.border = "1px solid #ccc";
-
-    todayButton.style.borderRadius = "var(--dui-radius)";
-
-    todayButton.style.backgroundColor = "#f9f9f9";
-
-    todayButton.style.cursor = "pointer";
-
-    todayButton.style.width = "100%";
-
-    todayButton.addEventListener("click", () => {
-      this.setValue(new Date());
-
-      this.hideCalendar();
-    });
-
-    this.calendarPopup.appendChild(todayButton);
-
-    // Set up navigation
-    let currentMonth = this.value.getMonth();
-
-    let currentYear = this.value.getFullYear();
-
-    const updateCalendar = () => {
-      monthYear.textContent = new Date(
-        currentYear,
-        currentMonth
-      ).toLocaleDateString("en-US", { month: "long", year: "numeric" });
-
-      this.renderCalendarDays(calendarGrid, currentMonth, currentYear);
-    };
-
-    prevButton.addEventListener("click", () => {
-      currentMonth--;
-
-      if (currentMonth < 0) {
-        currentMonth = 11;
-
-        currentYear--;
-      }
-
-      updateCalendar();
-    });
-
-    nextButton.addEventListener("click", () => {
-      currentMonth++;
-
-      if (currentMonth > 11) {
-        currentMonth = 0;
-
-        currentYear++;
-      }
-
-      updateCalendar();
-    });
-
-    updateCalendar();
-  }
-
-  renderCalendarDays(grid, month, year) {
-    // Clear existing days (keep headers)
-    while (grid.children.length > 7) {
-      grid.removeChild(grid.lastChild);
-    }
-
-    const firstDay = new Date(year, month, 1);
-
-    const lastDay = new Date(year, month + 1, 0);
-
-    const startDate = new Date(firstDay);
-
-    startDate.setDate(startDate.getDate() - firstDay.getDay());
-
-    const scope = this;
-
-    for (let i = 0; i < 42; i++) {
-      const dayDiv = document.createElement("div");
-
-      dayDiv.style.textAlign = "center";
-
-      dayDiv.style.padding = "5px";
-
-      dayDiv.style.cursor = "pointer";
-
-      dayDiv.style.borderRadius = "var(--dui-radius)";
-
-      dayDiv.style.fontSize = "14px";
-
-      const currentDate = new Date(startDate);
-
-      currentDate.setDate(startDate.getDate() + i);
-
-      dayDiv.textContent = currentDate.getDate();
-
-      // Style for current month vs other months
-      if (currentDate.getMonth() !== month) {
-        dayDiv.style.color = "#ccc";
-      } else {
-        dayDiv.style.color = "#333";
-
-        dayDiv.addEventListener("mouseenter", () => {
-          dayDiv.style.backgroundColor = "#e6f3ff";
-        });
-
-        dayDiv.addEventListener("mouseleave", () => {
-          dayDiv.style.backgroundColor = "";
-        });
-      }
-
-      // Highlight today
-      const today = new Date();
-
-      if (currentDate.toDateString() === today.toDateString()) {
-        dayDiv.style.backgroundColor = "#fff3cd";
-
-        dayDiv.style.fontWeight = "bold";
-      }
-
-      // Highlight selected date
-      if (currentDate.toDateString() === this.value.toDateString()) {
-        dayDiv.style.backgroundColor = "#007bff";
-
-        dayDiv.style.color = "white";
-      }
-
-      dayDiv.addEventListener("click", function () {
-        if (currentDate.getMonth() === month) {
-          scope.value.setFullYear(currentDate.getFullYear());
-
-          scope.value.setMonth(currentDate.getMonth());
-
-          scope.value.setDate(currentDate.getDate());
-
-          scope.updateDisplay();
-
-          scope.hideCalendar();
-
-          // Dispatch change event
-          const changeEvent = new CustomEvent("change", {
-            detail: { value: scope.value },
-          });
-
-          scope.dom.dispatchEvent(changeEvent);
-        }
-      });
-
-      grid.appendChild(dayDiv);
-    }
-  }
-
-  updateDisplay() {
-    if (this.includeTime) {
-      this.input.value = this.formatDateTime(this.value);
-    } else {
-      this.input.value = this.formatDate(this.value);
-    }
-  }
-
-  formatDate(date) {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
-
-  formatDateTime(date) {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-
-  formatTime(date) {
-    return date.toTimeString().substring(0, 5);
+    this.input.blur();
   }
 
   getValue() {
-    return this.value;
+    return this._value;
   }
 
   setValue(date) {
-    this.value = new Date(date);
-
-    this.updateDisplay();
-
+    const next = new Date(date);
+    if (!Number.isNaN(next.getTime())) this._value = next;
+    this._writeInput();
     return this;
   }
 
   setIncludeTime(includeTime) {
-    this.includeTime = includeTime;
-
-    this.updateDisplay();
-
+    this.includeTime = includeTime !== false;
+    this.input.type = this.includeTime ? "datetime-local" : "date";
+    this._writeInput();
     return this;
   }
 }
@@ -3387,11 +2520,6 @@ class Heading extends Control {
     this.level = clamped;
     if (text) this.setValue(text);
   }
-
-  setValue(text) {
-    this.dom.textContent = text;
-    return this;
-  }
 }
 
 /**
@@ -3399,15 +2527,15 @@ class Heading extends Control {
  *
  * @example <caption>With label</caption>
  * // live
- * return new ProgressRing({ text: "Loading" });
+ * return new LoadingCube({ text: "Loading" });
  *
- * @category Inputs
+ * @category Feedback
  */
-class ProgressRing extends Control {
+class LoadingCube extends Control {
   constructor(options = {}) {
     super(document.createElement('div'));
 
-    this.dom.className = 'spinner-container';
+    this.dom.className = 'LoadingCube';
 
     this._options = options;
 
@@ -3430,7 +2558,7 @@ class ProgressRing extends Control {
   /**
    * Show the spinner in a target container as an overlay
    * @param {string|HTMLElement} target - CSS selector or DOM element
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   show(target = 'body') {
 
@@ -3474,7 +2602,7 @@ class ProgressRing extends Control {
 
   /**
    * Hide and remove the spinner from DOM
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   hide() {
     if (this.dom.parentNode) {
@@ -3487,7 +2615,7 @@ class ProgressRing extends Control {
   /**
    * Update the spinner text
    * @param {string} text - New text to display
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   updateText(text) {
     const textElement = this.dom.querySelector('.spinner-text');
@@ -3502,18 +2630,9 @@ class ProgressRing extends Control {
   }
 
   /**
-   * Set the spinner text (alias for updateText)
-   * @param {string} text - Text to display
-   * @returns {ProgressRing} this for chaining
-   */
-  setText(text) {
-    return this.updateText(text);
-  }
-
-  /**
    * Update the percentage display
    * @param {number} percentage - Percentage value (0-100)
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   updatePercentage(percentage) {
     const percentageElement = this.dom.querySelector('.spinner-percentage');
@@ -3529,7 +2648,7 @@ class ProgressRing extends Control {
 
   /**
    * Hide the percentage display
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   hidePercentage() {
     const percentageElement = this.dom.querySelector('.spinner-percentage');
@@ -3544,7 +2663,7 @@ class ProgressRing extends Control {
   /**
    * Set the spinner color
    * @param {string} color - CSS color value
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   setColor(color) {
     this.dom.style.setProperty('--dui-color-accent', color);
@@ -3555,7 +2674,7 @@ class ProgressRing extends Control {
   /**
    * Set the background color of the overlay
    * @param {string} color - CSS color value
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   setBackground(color) {
     this.dom.style.backgroundColor = color;
@@ -3566,7 +2685,7 @@ class ProgressRing extends Control {
   /**
    * Set the size of the spinner cube
    * @param {string} size - CSS size value (e.g., '60px')
-   * @returns {ProgressRing} this for chaining
+   * @returns {LoadingCube} this for chaining
    */
   setSize(size) {
     const spinner = this.dom.querySelector('.spinner');
@@ -3589,7 +2708,7 @@ class ProgressRing extends Control {
   }
 }
 
-/** @category Inputs */
+/** @category Overlays */
 class Tooltip extends Control {
   constructor(text = '', options = {}) {
     super(document.createElement('div'));
@@ -3706,17 +2825,14 @@ export {
   Image,
   Canvas,
   Svg,
-  Paragraph,
   Heading,
-  Span,
+  Text,
   Container,
   StackPanel,
   ScrollViewer,
   Grid,
   Rectangle,
-  Label,
   Form,
-  TextBlock,
   Caption,
   Title,
   Disclaimer,
@@ -3741,14 +2857,12 @@ export {
   LineBreak,
   Line,
   Button,
-  IconButton,
-  RibbonButton,
   ProgressBar,
   TabView,
   TabItem,
   InputList,
   InputListItem,
   InputDate,
-  ProgressRing,
+  LoadingCube,
   Tooltip,
 };

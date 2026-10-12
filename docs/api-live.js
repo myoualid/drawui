@@ -2,13 +2,13 @@
  * Mounts JSDoc `@example` live demos on generated API / TypeDoc pages.
  * Demo builders come from `scripts/generate-docs.mjs` (gallery demos.js + JSDoc `// live` fallbacks).
  *
- * Registry API pages (`docs/generated/api/`) already load DrawUI CSS as the page
+ * Registry API pages (`docs/generated/api/`) already load GUI CSS as the page
  * chrome, so demos mount in the light DOM.
  *
- * TypeDoc pages keep their own theme (CSS @layer). Injecting DrawUI's bare
- * element rules (`button`, `input`, `a`, `label`, `header`, …) into that
+ * TypeDoc pages keep their own theme (CSS @layer). Injecting GUI element rules
+ * (`button`, `input`, `a`, `label`, `header`, …) into that
  * document fights the host chrome. On TypeDoc we therefore mount each demo
- * inside a same-origin iframe that loads DrawUI CSS in isolation.
+ * inside a same-origin iframe that loads GUI CSS in isolation.
  */
 import { LIVE_DEMOS } from "./generated/live-demos.js";
 
@@ -49,39 +49,24 @@ function isTypeDocHost() {
   return document.documentElement.classList.contains("default");
 }
 
-function resolveDrawuiUrls() {
-  // Match the importmap when present; default to full (live-demos imports peers).
-  let cssName = "drawui.full.css";
-  let jsName = "drawui.full.js";
-  for (const script of document.querySelectorAll('script[type="importmap"]')) {
-    try {
-      const map = JSON.parse(script.textContent);
-      const mapped = map?.imports?.drawui;
-      if (typeof mapped === "string" && mapped.includes("drawui.min")) {
-        cssName = "drawui.min.css";
-        jsName = "drawui.min.js";
-        break;
-      }
-      if (typeof mapped === "string" && mapped.includes("drawui.full")) {
-        cssName = "drawui.full.css";
-        jsName = "drawui.full.js";
-        break;
-      }
-    } catch {
-      // ignore malformed import maps
-    }
-  }
+function resolveBundleUrls() {
+  const pkg = "ifcopenshell-gui";
+  const distUrl = new URL("./dist/", import.meta.url).href;
   return {
-    cssUrl: new URL(`./dist/${cssName}`, import.meta.url).href,
-    jsUrl: new URL(`./dist/${jsName}`, import.meta.url).href,
+    pkg,
+    cssUrl: new URL("docs.css", distUrl).href,
+    extraCss: [],
+    jsUrl: new URL("gui.js", distUrl).href,
     liveDemosUrl: new URL("./generated/live-demos.js", import.meta.url).href,
   };
 }
 
-function peerImportMap(jsUrl) {
+function peerImportMap(_jsUrl, pkg = "ifcopenshell-gui") {
+  const distUrl = new URL("./dist/", import.meta.url).href;
   return {
     imports: {
-      drawui: jsUrl,
+      "ifcopenshell/gui": new URL("gui.js", distUrl).href,
+      "ifcopenshell/layout": new URL("layout.js", distUrl).href,
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
       "ag-grid-community":
         "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
@@ -106,7 +91,7 @@ function ensureDocumentFonts() {
 
 function ensureDocumentStyles() {
   ensureDocumentFonts();
-  const { cssUrl } = resolveDrawuiUrls();
+  const { cssUrl, extraCss } = resolveBundleUrls();
 
   let link = document.querySelector("link[data-drawui-live-css]");
   if (!link) {
@@ -116,6 +101,14 @@ function ensureDocumentStyles() {
     document.head.appendChild(link);
   }
   link.href = cssUrl;
+  for (const href of extraCss) {
+    if (document.querySelector(`link[data-drawui-live-css-extra][href="${href}"]`)) continue;
+    const extra = document.createElement("link");
+    extra.rel = "stylesheet";
+    extra.href = href;
+    extra.dataset.drawuiLiveCssExtra = "";
+    document.head.appendChild(extra);
+  }
 }
 
 function ensureFrameHostStyles() {
@@ -152,8 +145,8 @@ function mountDemo(host, child, { error = false } = {}) {
 }
 
 function buildFrameSrcdoc(demoId) {
-  const { cssUrl, jsUrl, liveDemosUrl } = resolveDrawuiUrls();
-  const importMap = JSON.stringify(peerImportMap(jsUrl), null, 2);
+  const { pkg, cssUrl, extraCss, jsUrl, liveDemosUrl } = resolveBundleUrls();
+  const importMap = JSON.stringify(peerImportMap(jsUrl, pkg), null, 2);
   const fontLinks = FONT_HREFS.map(
     (href) => `<link rel="stylesheet" href="${href}">`,
   ).join("\n");
@@ -166,6 +159,7 @@ function buildFrameSrcdoc(demoId) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ${fontLinks}
 <link rel="stylesheet" href="${cssUrl}">
+${extraCss.map((href) => `<link rel="stylesheet" href="${href}">`).join("\n")}
 <style>
   html {
     color-scheme: dark;

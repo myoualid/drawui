@@ -13,7 +13,7 @@
  */
 export function setPanelDropHighlight(layout, position) {
   if (layout._segmentDropHighlight) {
-    layout._segmentDropHighlight.classList.remove("is-panel-drop-target");
+    layout._segmentDropHighlight.classList.remove("DropTarget");
     layout._segmentDropHighlight = null;
   }
 
@@ -21,12 +21,11 @@ export function setPanelDropHighlight(layout, position) {
 
   const workspaceElement = layout.workspaces[position];
   if (workspaceElement instanceof HTMLElement) {
-    workspaceElement.classList.add("is-panel-drop-target");
+    workspaceElement.classList.add("DropTarget");
     layout._segmentDropHighlight = workspaceElement;
   }
 }
 
-/** @deprecated Use {@link setPanelDropHighlight} */
 export const setSegmentDropHighlight = setPanelDropHighlight;
 
 /**
@@ -191,7 +190,6 @@ export function bindPanelRegionDrag(layout, options) {
   };
 }
 
-/** @deprecated Use {@link bindPanelRegionDrag} */
 export function bindSegmentHeaderDrag(layout, fromPosition, entry, headerElement) {
   return bindPanelRegionDrag(layout, {
     getFromPosition: () => fromPosition,

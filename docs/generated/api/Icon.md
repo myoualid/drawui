@@ -3,8 +3,8 @@
 # Icon
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** media  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `material-symbols-outlined`, `Icon`
 
 Material Symbols icon glyph.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Icon } from "drawui";
+import { Icon } from "ifcopenshell/gui";
 ```
 
 ## Examples

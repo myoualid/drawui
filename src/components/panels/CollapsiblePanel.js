@@ -1,17 +1,17 @@
 import { Icon } from "../../primitives/ui.js";
 
-import { ContentPanel } from "./ContentPanel.js";
+import { Panel } from "./Panel.js";
 
 /**
- * {@link ContentPanel} with a header collapse toggle.
+ * {@link Panel} with a header collapse toggle.
  *
  * @example
  * const section = new CollapsiblePanel({ title: "Parameters", icon: "tune" });
- * section.content(new TextBlock("Section body"));
+ * section.content(new Text("Section body"));
  *
  * @category Panels
  */
-export class CollapsiblePanel extends ContentPanel {
+export class CollapsiblePanel extends Panel {
   /**
    * @param {Object} [options]
    * @param {string} [options.title="Section"]

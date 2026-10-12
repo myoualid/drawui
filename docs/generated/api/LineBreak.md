@@ -3,8 +3,8 @@
 # LineBreak
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** layout  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `LineBreak`
 
 Thin `br` wrapper.
@@ -12,7 +12,7 @@ Thin `br` wrapper.
 ## Import
 
 ```js
-import { LineBreak } from "drawui";
+import { LineBreak } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -22,9 +22,9 @@ import { LineBreak } from "drawui";
 ```js
 return new StackPanel({ isVertical: true })
   .gap("0.25rem")
-  .add(new TextBlock("Line one"))
+  .add(new Text("Line one"))
   .add(new LineBreak())
-  .add(new TextBlock("Line two"));
+  .add(new Text("Line two"));
 ```
 
 <div class="doc-live-demo" data-live-demo="LineBreak/line-break" aria-label="Live preview"></div>

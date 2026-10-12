@@ -2,7 +2,7 @@ import {
     Container,
     StackPanel,
     Button,
-    Span,
+    Text,
     Checkbox,
     Icon,
 } from "../../primitives/ui.js";
@@ -631,19 +631,19 @@ class NodeGraph extends Container {
         }
 
         const nodeIcon = new Container().addClass("ws-node-icon");
-        const nodeIconLabel = new Span();
+        const nodeIconLabel = new Text();
         nodeIconLabel.setTextContent("T");
         nodeIcon.add(nodeIconLabel);
         header.add(nodeIcon);
 
         const nodeTitle = new Container().addClass("ws-node-title");
-        const nodeTitleLabel = new Span();
+        const nodeTitleLabel = new Text();
         nodeTitleLabel.setTextContent(node.name);
         nodeTitle.add(nodeTitleLabel);
         header.add(nodeTitle);
 
         const nodeStatus = new Container().addClass("ws-node-status").addClass(node.status.toLowerCase());
-        const nodeStatusLabel = new Span();
+        const nodeStatusLabel = new Text();
         nodeStatusLabel.setTextContent(node.status);
         nodeStatus.add(nodeStatusLabel);
         header.add(nodeStatus);
@@ -657,20 +657,20 @@ class NodeGraph extends Container {
             right: "0",
             margin: "var(--dui-space-2)",
         });
-        const levelLabel = new Span();
+        const levelLabel = new Text();
         levelLabel.setTextContent("Level ");
         levelLabel.addClass("hud-label");
-        const levelValue = new Span();
+        const levelValue = new Text();
         levelValue.setTextContent(String(node.level));
         levelItem.add(levelLabel, levelValue);
         meta.add(levelItem);
 
         const childrenItem = new Container().addClass("ws-node-meta-item");
-        const childrenLabel = new Span();
+        const childrenLabel = new Text();
         childrenLabel.setTextContent("Children ");
         childrenLabel.addClass("hud-label");
         childrenItem.add(childrenLabel);
-        const childrenValue = new Span();
+        const childrenValue = new Text();
         childrenValue.setTextContent(String((node.children || []).length));
         childrenItem.add(childrenValue);
         meta.add(childrenItem);
@@ -1129,7 +1129,7 @@ class NodeGraph extends Container {
         checkbox.dom.addEventListener("change", () => {
             this.moveInPack = checkbox.getValue();
         });
-        const labelText = new Span();
+        const labelText = new Text();
         labelText.setTextContent("Move in Pack")
             .setStyle("font-size", ["12px"])
             .setStyle("color", ["#fff"]);
@@ -1163,7 +1163,7 @@ class NodeGraph extends Container {
                 this._createGroupBackgrounds(this.currentNodeData.nodeData.nodes, this.currentNodeData.canvasInner);
             }
         });
-        const labelText = new Span();
+        const labelText = new Text();
         labelText.setTextContent("Highlight by Group")
             .setStyle("font-size", ["12px"])
             .setStyle("color", ["#fff"]);
@@ -1216,7 +1216,7 @@ class NodeGraph extends Container {
                 this._createGroupBackgrounds(this.currentNodeData.nodeData.nodes, this.currentNodeData.canvasInner);
             }
         });
-        const labelText = new Span();
+        const labelText = new Text();
         labelText.setTextContent("No Overlap Display")
             .setStyle("font-size", ["12px"])
             .setStyle("color", ["#fff"]);

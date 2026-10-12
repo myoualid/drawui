@@ -1,0 +1,226 @@
+/* Markdown output (min simple converter + full Showdown) */
+.Markdown {
+  color: var(--dui-color-text);
+  display: block;
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-md);
+  line-height: 1.65;
+  max-width: 48rem;
+  width: 100%;
+}
+
+.Markdown > :first-child {
+  margin-top: 0;
+}
+
+.Markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.Markdown h1,
+.Markdown h2,
+.Markdown h3,
+.Markdown h4,
+.Markdown h5,
+.Markdown h6 {
+  color: var(--dui-color-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 1.35em 0 0.5em;
+}
+
+.Markdown h1 {
+  border-bottom: 1px solid var(--dui-color-separator);
+  font-size: var(--dui-font-size-h3);
+  padding-bottom: 0.35em;
+}
+
+.Markdown h2 {
+  border-bottom: 1px solid var(--dui-color-separator);
+  font-size: var(--dui-font-size-h4);
+  padding-bottom: 0.3em;
+}
+
+.Markdown h3 {
+  font-size: var(--dui-font-size-h5);
+}
+
+.Markdown h4 {
+  font-size: var(--dui-font-size-h6);
+}
+
+.Markdown h5,
+.Markdown h6 {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-md);
+  font-weight: 650;
+}
+
+.Markdown p {
+  margin: 0 0 0.9em;
+}
+
+.Markdown a {
+  color: var(--dui-color-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--dui-color-accent) 45%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.Markdown a:hover {
+  color: var(--dui-color-accent-hover);
+  text-decoration-color: var(--dui-color-accent-hover);
+}
+
+.Markdown strong {
+  color: var(--dui-color-text);
+  font-weight: 700;
+}
+
+.Markdown em {
+  font-style: italic;
+}
+
+.Markdown del,
+.Markdown s {
+  color: var(--dui-color-text-muted);
+  text-decoration: line-through;
+}
+
+.Markdown u {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.Markdown hr {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--dui-color-separator);
+  margin: 1.5em 0;
+}
+
+.Markdown ul,
+.Markdown ol {
+  margin: 0 0 0.9em;
+  padding-left: 1.35em;
+}
+
+.Markdown li {
+  margin: 0.25em 0;
+}
+
+.Markdown li > ul,
+.Markdown li > ol {
+  margin: 0.35em 0 0.15em;
+}
+
+.Markdown li.task-list-item,
+.Markdown .task-list-item {
+  list-style: none;
+  margin-left: -1.35em;
+  padding-left: 0;
+}
+
+.Markdown .task-list-item input[type="checkbox"] {
+  accent-color: var(--dui-color-accent);
+  margin: 0 0.55em 0 0;
+  vertical-align: middle;
+}
+
+.Markdown blockquote {
+  background: var(--dui-color-accent-soft);
+  border-left: 3px solid var(--dui-color-accent);
+  border-radius: 0 var(--dui-radius) var(--dui-radius) 0;
+  color: var(--dui-color-text-muted);
+  margin: 0 0 0.9em;
+  padding: 0.65em 0.9em;
+}
+
+.Markdown blockquote > :first-child {
+  margin-top: 0;
+}
+
+.Markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.Markdown img {
+  border-radius: var(--dui-radius);
+  display: block;
+  height: auto;
+  margin: 0.75em 0;
+  max-width: 100%;
+}
+
+.Markdown table {
+  border-collapse: collapse;
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  margin: 0 0 1em;
+  max-width: 100%;
+  overflow-x: auto;
+  width: max-content;
+}
+
+.Markdown thead {
+  background: var(--dui-surface-control-bg);
+}
+
+.Markdown th,
+.Markdown td {
+  border: 1px solid var(--dui-color-border);
+  padding: 0.45em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.Markdown th {
+  color: var(--dui-color-text);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.Markdown td {
+  color: var(--dui-color-text-muted);
+}
+
+.Markdown tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--dui-color-surface-raised) 55%, transparent);
+}
+
+.Markdown code {
+  background: var(--dui-color-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--dui-color-accent) 22%, transparent);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-accent);
+  font-family: var(--dui-font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+}
+
+.Markdown pre {
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  margin: 0 0 1em;
+  overflow-x: auto;
+  padding: 0.85em 1em;
+}
+
+.Markdown pre code {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--dui-color-text);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.55;
+  padding: 0;
+  white-space: pre;
+}
+
+.Markdown pre code.hljs {
+  background: transparent;
+  padding: 0;
+}

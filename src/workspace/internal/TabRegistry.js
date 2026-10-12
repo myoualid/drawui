@@ -1,22 +1,19 @@
 /**
- * @param {{ moduleId?: string, ownerId?: string, tabId?: string }} options
+ * Group key for panels that move between regions together.
+ * @param {{ group?: string, tabId?: string }} options
  * @returns {string}
  * @category Shell
  */
-export function resolveOwnerKey({ moduleId, ownerId, tabId }) {
-  if (typeof moduleId === "string" && moduleId.length > 0) {
-    return `module:${moduleId}`;
-  }
-
-  if (typeof ownerId === "string" && ownerId.length > 0) {
-    return `owner:${ownerId}`;
+export function resolveOwnerKey({ group, tabId } = {}) {
+  if (typeof group === "string" && group.length > 0) {
+    return group;
   }
 
   if (typeof tabId === "string" && tabId.length > 0) {
-    return `anon:${tabId}`;
+    return tabId;
   }
 
-  return "anon:unknown";
+  return "unknown";
 }
 
 /**

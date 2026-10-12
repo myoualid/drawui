@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
-**Emitted class(es):** `reorderable-list`, `reorderable-item`, `drag-handle`, `reorderable-placeholder`, `is-dragging`, `InputList`, `InputListItem`, `Checkbox`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `SortableList`, `SortableList-item`, `SortableList-handle`, `SortableList-placeholder`, `is-dragging`, `InputList`, `InputListItem`, `Checkbox`
 
 Drag-and-drop reorderable list with optional per-item checkboxes.
 
@@ -14,7 +14,7 @@ _Source: `src/components/lists/SortableList.js`_
 ## Import
 
 ```js
-import { SortableList } from "drawui";
+import { SortableList } from "ifcopenshell/gui";
 ```
 
 ## Examples

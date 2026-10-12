@@ -3,74 +3,64 @@
 
 :root {
   /*
-   * Color — GNOME green palette (dark default).
+   * Color — neutral charcoal with one sage accent (dark default).
+   * Accent is for primary actions, focus, and the active ribbon mark.
    * Light values live in themes/light.css.
    */
-  --dui-color-bg: #1c1f1c;
-  --dui-color-surface: rgba(46, 52, 54, 0.94);
-  --dui-color-surface-raised: rgba(49, 49, 49, 0.96);
-  --dui-color-surface-hover: rgba(49, 49, 49, 0.9);
-  --dui-color-surface-pressed: rgba(49, 49, 49, 0.98);
-  --dui-color-surface-selected: rgba(112, 186, 53, 0.25);
-  --dui-color-control: rgba(46, 52, 54, 0.88);
-  --dui-color-control-hover: rgba(49, 49, 49, 0.72);
-  --dui-color-overlay: rgba(46, 52, 54, 0.96);
-  --dui-color-text: #eeeeec;
-  --dui-color-text-muted: #babdb6;
-  --dui-color-text-subtle: #888a85;
-  --dui-color-border: rgba(207, 208, 203, 0.28);
-  --dui-color-border-strong: rgba(112, 186, 53, 0.4);
-  --dui-color-separator: rgba(186, 189, 182, 0.22);
-  --dui-color-focus: #70ba35;
-  --dui-color-accent: #70ba35;
-  --dui-color-accent-hover: #7cbf33;
-  --dui-color-accent-soft: rgba(112, 186, 53, 0.18);
-  --dui-color-on-accent: #ffffff;
-  --dui-color-danger: #f0855e;
-  --dui-color-warning: #d98014;
-  --dui-color-success: #40b74c;
-  --dui-color-info: #729fcf;
+  --dui-color-bg: #16181b;
+  --dui-color-surface: #1e2126;
+  --dui-color-surface-raised: #272b31;
+  --dui-color-surface-hover: rgba(255, 255, 255, 0.045);
+  --dui-color-surface-pressed: rgba(255, 255, 255, 0.08);
+  --dui-color-surface-selected: rgba(255, 255, 255, 0.07);
+  --dui-color-control: #2a2e34;
+  --dui-color-control-hover: #32373e;
+  --dui-color-overlay: #23272d;
+  --dui-color-text: #e7e5e1;
+  --dui-color-text-muted: #9c9890;
+  --dui-color-text-subtle: #6f6b64;
+  --dui-color-border: rgba(255, 255, 255, 0.08);
+  --dui-color-border-strong: rgba(255, 255, 255, 0.16);
+  --dui-color-separator: rgba(255, 255, 255, 0.06);
+  --dui-color-focus: #7d9a62;
+  --dui-color-accent: #7d9a62;
+  --dui-color-accent-hover: #8eab73;
+  --dui-color-accent-soft: rgba(125, 154, 98, 0.18);
+  --dui-color-on-accent: #14160f;
+  --dui-color-danger: #d4785a;
+  --dui-color-warning: #c48a3a;
+  --dui-color-success: #7d9a62;
+  --dui-color-info: #7f95b0;
 
   /* ——— Typography (Nunito + Inconsolata, 16px body) ——— */
   --dui-font-ui: "Nunito", sans-serif;
   --dui-font-mono: "Inconsolata", monospace;
-  /* UI scale — 12 / 14 / 16 / 18 / 22 */
-  --dui-font-size-xs: 0.75rem;    /* 12px — helpers, captions */
-  --dui-font-size-sm: 0.875rem;   /* 14px — secondary UI */
-  --dui-font-size-md: 1rem;       /* 16px — body / default */
-  --dui-font-size-lg: 1.125rem;   /* 18px — emphasis */
-  --dui-font-size-xl: 1.375rem;   /* 22px — section up-titles */
-  /* Headings — 42 / 32 / 25 / 22 / 20 / 18 */
-  --dui-font-size-h1: 2.625rem;   /* 42px */
-  --dui-font-size-h2: 2rem;       /* 32px */
-  --dui-font-size-h3: 1.5625rem;  /* 25px */
-  --dui-font-size-h4: 1.375rem;   /* 22px */
-  --dui-font-size-h5: 1.25rem;    /* 20px */
-  --dui-font-size-h6: 1.125rem;   /* 18px */
+  /* UI scale — 10 / 12 / 14 / 16 / 18 / 22 */
+  --dui-font-size-xs: 0.625rem;    /* 10px — helpers, captions */
+  --dui-font-size-sm: 0.75rem;   /* 12px — secondary UI */
+  --dui-font-size-md: 0.875rem;       /* 14px — body / default */
+  --dui-font-size-lg: 1rem;   /* 16px — emphasis */
+  --dui-font-size-xl: 1.125rem;   /* 18px — section up-titles */
+  --dui-font-size-h1: 1.375rem; /* 22px */
+  --dui-font-size-h2: 1.25rem;   /* 20px */
+  --dui-font-size-h3: 1.125rem;  /* 18px */
+  --dui-font-size-h4: 1rem;      /* 16px */
+  --dui-font-size-h5: 0.875rem;  /* 14px */
+  --dui-font-size-h6: 0.75rem;   /* 12px */
   --dui-line-height: 1.5;
   --dui-letter-spacing: 0.02em;
 
-  /* ——— Spacing (common steps: 5 / 10 / 15 / 20 / 30) ——— */
-  --dui-space-1: 5px;
-  --dui-space-2: 10px;
-  --dui-space-3: 15px;
-  --dui-space-4: 20px;
-  --dui-space-5: 30px;
-  --dui-space-6: 40px;
-
-  /* ——— Controls (15px type, padding 10px 15px) ——— */
-  --dui-control-height: 36px;
-  --dui-control-height-sm: 28px;
-  --dui-control-height-lg: 44px;
-  --dui-control-padding-x: 15px;
-  --dui-control-padding-y: 10px;
+  /* ——— Spacing (common steps: 2 / 5 / 10 / 15 / 20 / 25) ——— */
+  --dui-space-1: 1px;
+  --dui-space-2: 2px;
+  --dui-space-3: 5px;
+  --dui-space-4: 10px;
+  --dui-space-5: 15px;
+  --dui-space-6: 20px;
+  --dui-space-7: 25px;
 
   /* ——— Radius ——— */
   --dui-radius: 4px;
-  --dui-radius-sm: var(--dui-radius);
-  --dui-radius-md: var(--dui-radius);
-  --dui-radius-lg: var(--dui-radius);
-  --dui-radius-pill: var(--dui-radius);
 
   /* ——— Elevation / focus ——— */
   --dui-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -95,17 +85,6 @@
   /* ——— App shell layout (World / HeaderBar / viewport chrome) ——— */
   --dui-headerbar-height: 36px;
   --dui-sidebar-width: 44px;
-  --dui-shell-margin: var(--dui-space-5);
   --dui-logo-size: calc(var(--dui-headerbar-height) - var(--dui-space-2));
   --dui-logo-wordmark-max-width: 150px;
-  --dui-logo-area-width: calc(var(--dui-logo-wordmark-max-width) + var(--dui-space-4));
-  --dui-config-width: var(--dui-logo-area-width);
-  --dui-viewport-gizmo-size: 80px;
-  --dui-viewport-gizmo-left: var(--dui-space-2);
-  --dui-viewport-info-width: calc(var(--dui-viewport-gizmo-size) + var(--dui-sidebar-width));
-  --dui-state-bar-right: calc(var(--dui-space-2) + var(--dui-viewport-info-width));
-  --dui-nav-horizontal-inset: var(--dui-space-2);
-  --dui-nav-bottom-inset: var(--dui-space-2);
-  --dui-nav-left-stack-max-width: min(92vw, 320px);
-  --dui-nav-right-stack-offset: var(--dui-sidebar-width);
 }

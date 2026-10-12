@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Rectangle`
 
 Generic panel container.
@@ -12,7 +12,7 @@ Generic panel container.
 ## Import
 
 ```js
-import { Rectangle } from "drawui";
+import { Rectangle } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -21,7 +21,7 @@ import { Rectangle } from "drawui";
 
 ```js
 return new Rectangle()
-  .add(new TextBlock("rectangle()"))
+  .add(new Text("rectangle()"))
   .setStyle("padding", ["0.75rem"]);
 ```
 

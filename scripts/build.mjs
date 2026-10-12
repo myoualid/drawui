@@ -4,11 +4,17 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const rootDir = fileURLToPath(new URL("..", import.meta.url));
-const distDir = path.join(rootDir, "docs/dist");
+const distDir = path.join(rootDir, "dist");
+const docsDistDir = path.join(rootDir, "docs/dist");
 const scriptsDir = path.join(rootDir, "scripts");
 const packageJson = JSON.parse(
   await readFile(path.join(rootDir, "package.json"), "utf8"),
 );
+const guiJsName = "gui.js";
+const guiCssName = "gui.css";
+const layoutJsName = "layout.js";
+const layoutCssName = "layout.css";
+const docsCssName = "docs.css";
 
 const peerPackages = [
   "chart.js",
@@ -38,37 +44,56 @@ const buildOptions = {
   logLevel: "info",
 };
 
+const libraryArtifacts = [
+  guiJsName,
+  guiCssName,
+  layoutJsName,
+  layoutCssName,
+  "importmap.full.json",
+];
+
 async function buildJavaScript() {
   await esbuild.build({
     ...buildOptions,
-    entryPoints: [path.join(rootDir, "src/bundle/min.js")],
-    outfile: path.join(distDir, "drawui.min.js"),
+    entryPoints: [path.join(rootDir, "src/gui/index.js")],
+    outfile: path.join(distDir, guiJsName),
+    external: peerExternals,
   });
 
   await esbuild.build({
     ...buildOptions,
-    entryPoints: [path.join(rootDir, "src/index.js")],
-    outfile: path.join(distDir, "drawui.full.js"),
-    external: peerExternals,
+    entryPoints: [path.join(rootDir, "src/layout/index.js")],
+    outfile: path.join(distDir, layoutJsName),
+  });
+
+}
+
+async function buildStylesheet(entry, outfile) {
+  await esbuild.build({
+    bundle: true,
+    minify: true,
+    logLevel: "info",
+    entryPoints: [entry],
+    outfile,
   });
 }
 
-async function buildStylesheets() {
-  await esbuild.build({
-    bundle: true,
-    minify: true,
-    logLevel: "info",
-    entryPoints: [path.join(scriptsDir, "entries/drawui.min.css")],
-    outfile: path.join(distDir, "drawui.min.css"),
-  });
+async function buildLibraryStylesheets() {
+  await buildStylesheet(
+    path.join(scriptsDir, "entries/browser-gui.css"),
+    path.join(distDir, guiCssName),
+  );
+  await buildStylesheet(
+    path.join(rootDir, "styles/layout.css"),
+    path.join(distDir, layoutCssName),
+  );
+}
 
-  await esbuild.build({
-    bundle: true,
-    minify: true,
-    logLevel: "info",
-    entryPoints: [path.join(scriptsDir, "entries/drawui.full.css")],
-    outfile: path.join(distDir, "drawui.full.css"),
-  });
+async function buildDocsStylesheet() {
+  await buildStylesheet(
+    path.join(scriptsDir, "entries/docs.css"),
+    path.join(docsDistDir, docsCssName),
+  );
 }
 
 function peerVersion(name) {
@@ -82,7 +107,8 @@ async function writeFullImportMap() {
 
   const importMap = {
     imports: {
-      "drawui/full": "./drawui.full.js",
+      "ifcopenshell/gui": `./${guiJsName}`,
+      "ifcopenshell/layout": `./${layoutJsName}`,
       "chart.js/auto": `https://cdn.jsdelivr.net/npm/chart.js@${versions["chart.js"]}/auto/+esm`,
       "ag-grid-community": `https://cdn.jsdelivr.net/npm/ag-grid-community@${versions["ag-grid-community"]}/dist/package/main.esm.mjs`,
       "jsgantt-improved": `https://cdn.jsdelivr.net/npm/jsgantt-improved@${versions["jsgantt-improved"]}/+esm`,
@@ -99,15 +125,64 @@ async function writeFullImportMap() {
 }
 
 async function verifyDist() {
-  const minJs = await readFile(path.join(distDir, "drawui.min.js"), "utf8");
-  const fullJs = await readFile(path.join(distDir, "drawui.full.js"), "utf8");
+  const guiJs = await readFile(path.join(distDir, guiJsName), "utf8");
+  const layoutJs = await readFile(path.join(distDir, layoutJsName), "utf8");
+  const guiCss = await readFile(path.join(distDir, guiCssName), "utf8");
+  const layoutCss = await readFile(path.join(distDir, layoutCssName), "utf8");
   const peerPattern = /chart\.js|ag-grid|jsgantt|showdown|highlightjs/i;
+  const layoutJsMarker = "leftWorkspaceWidth";
+  const layoutCssMarker = ".WorkspaceStack";
+  const peerCssMarkers = [
+    ".hud-label",
+    ".ws-node-view-root",
+    ".sequence-task-view-host",
+    "--ag-background-color",
+  ];
 
-  if (peerPattern.test(minJs)) {
-    throw new Error("dist/drawui.min.js must not reference peer dependencies.");
+  if (guiCss.includes(layoutCssMarker)) {
+    throw new Error(`dist/${guiCssName} unexpectedly includes workspace layout CSS.`);
   }
 
-  const requiredFullImports = [
+  if (!layoutCss.includes(layoutCssMarker)) {
+    throw new Error(`dist/${layoutCssName} is missing workspace layout CSS.`);
+  }
+
+  if (layoutCss.includes(".AppShell") || layoutCss.includes(".Markdown")) {
+    throw new Error(`dist/${layoutCssName} must stay layout-only.`);
+  }
+
+  for (const marker of peerCssMarkers) {
+    if (layoutCss.includes(marker)) {
+      throw new Error(`Layout CSS unexpectedly includes peer CSS: ${marker}`);
+    }
+    if (!guiCss.includes(marker)) {
+      throw new Error(`dist/${guiCssName} is missing peer CSS: ${marker}`);
+    }
+  }
+
+  for (const marker of [".Markdown", ".AppShell", ".RadialMenuOverlay"]) {
+    if (!guiCss.includes(marker)) {
+      throw new Error(`dist/${guiCssName} is missing core CSS: ${marker}`);
+    }
+  }
+
+  if (guiJs.includes(layoutJsMarker)) {
+    throw new Error("The GUI bundle must not include the layout engine.");
+  }
+
+  if (!layoutJs.includes(layoutJsMarker)) {
+    throw new Error(`dist/${layoutJsName} is missing the layout engine.`);
+  }
+
+  if (!guiJs.includes("export{Button") && !guiJs.includes("Button") ) {
+    throw new Error(`dist/${guiJsName} is missing the Button export.`);
+  }
+
+  if (peerPattern.test(layoutJs)) {
+    throw new Error("The layout bundle must not reference peer dependencies.");
+  }
+
+  const requiredPeerImports = [
     "chart.js/auto",
     "ag-grid-community",
     "jsgantt-improved",
@@ -115,36 +190,38 @@ async function verifyDist() {
     "@highlightjs/cdn-assets/es/highlight.min.js",
   ];
 
-  for (const specifier of requiredFullImports) {
-    if (!fullJs.includes(specifier)) {
-      throw new Error(
-        `dist/drawui.full.js is missing external import: ${specifier}`,
-      );
+  for (const specifier of requiredPeerImports) {
+    if (!guiJs.includes(specifier)) {
+      throw new Error(`dist/${guiJsName} is missing external import: ${specifier}`);
     }
   }
 
-  for (const file of [
-    "drawui.min.js",
-    "drawui.full.js",
-    "drawui.min.css",
-    "drawui.full.css",
-    "importmap.full.json",
-  ]) {
+  for (const file of libraryArtifacts) {
     await readFile(path.join(distDir, file), "utf8");
+  }
+
+  try {
+    await access(path.join(distDir, docsCssName));
+    throw new Error(`dist/${docsCssName} is docs-site CSS and must not ship in the library distribution.`);
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  const docsCss = await readFile(path.join(docsDistDir, docsCssName), "utf8");
+  for (const marker of [".Markdown", ".AppShell", layoutCssMarker, ...peerCssMarkers]) {
+    if (!docsCss.includes(marker)) {
+      throw new Error(`docs/dist/${docsCssName} is missing combined docs CSS: ${marker}`);
+    }
   }
 }
 
-const distArtifacts = [
-  "drawui.min.js",
-  "drawui.full.js",
-  "drawui.min.css",
-  "drawui.full.css",
-  "importmap.full.json",
-];
-
 async function resolveLocalVendorDir() {
-  if (process.env.DRAWUI_LOCAL_VENDOR) {
-    return path.resolve(process.env.DRAWUI_LOCAL_VENDOR);
+  const vendorOverride =
+    process.env.IFCOPENSHELL_GUI_LOCAL_VENDOR || process.env.DRAWUI_LOCAL_VENDOR;
+  if (vendorOverride) {
+    return path.resolve(vendorOverride);
   }
 
   const localVendorPath = path.join(scriptsDir, "local-vendor.mjs");
@@ -166,7 +243,7 @@ async function syncLocalVendor() {
 
   await mkdir(vendorDir, { recursive: true });
 
-  for (const file of distArtifacts) {
+  for (const file of libraryArtifacts) {
     await cp(path.join(distDir, file), path.join(vendorDir, file));
   }
 
@@ -174,6 +251,7 @@ async function syncLocalVendor() {
     path.join(rootDir, "types/index.d.ts"),
     path.join(vendorDir, "index.d.ts"),
   );
+  await rm(path.join(vendorDir, docsCssName), { force: true });
 
   console.log(`Synced local vendor: ${vendorDir}`);
 }
@@ -202,16 +280,29 @@ async function syncDocsAssets() {
 
 await rm(distDir, { recursive: true, force: true });
 await mkdir(distDir, { recursive: true });
+await rm(docsDistDir, { recursive: true, force: true });
+await mkdir(docsDistDir, { recursive: true });
 
 await buildJavaScript();
-await buildStylesheets();
+await buildLibraryStylesheets();
+await buildDocsStylesheet();
 await writeFullImportMap();
 await verifyDist();
 await syncDocsAssets();
+
+for (const file of libraryArtifacts) {
+  await cp(path.join(distDir, file), path.join(docsDistDir, file));
+}
+
 await syncLocalVendor();
 
-console.log("Built docs/dist/:");
-console.log("- drawui.min.js / drawui.min.css");
-console.log("- drawui.full.js / drawui.full.css");
-console.log("- importmap.full.json");
+console.log("Built library dist/:");
+for (const file of libraryArtifacts) {
+  console.log(`- ${file}`);
+}
+console.log("Built docs site docs/dist/:");
+console.log(`- ${docsCssName}`);
+for (const file of libraryArtifacts) {
+  console.log(`- ${file} (copy for GitHub Pages)`);
+}
 console.log("Synced docs/styles/ for GitHub Pages.");

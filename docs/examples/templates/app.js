@@ -1,16 +1,14 @@
+import { Layout, World } from "ifcopenshell/layout";
 import {
-  WorkspacePanel,
-  WorkspaceLayout,
-  buildWorldFromConfig,
   StackPanel,
   Container,
   Heading,
-  TextBlock,
+  Text,
   Caption,
   Badge,
   Card,
   Button,
-  IconButton,
+  Operator,
   InputSearch,
   InputText,
   InputTextArea,
@@ -23,7 +21,6 @@ import {
   Checkbox,
   Slider,
   ProgressBar,
-  Label,
   Form,
   Line,
   Spacer,
@@ -33,16 +30,16 @@ import {
   SortableList,
   LabeledBoxItem,
   PropertyGrid,
-  InstructionPanel,
   ThemeToggle,
   Toast,
   FloatingWindow,
+  Panel,
   CollapsiblePanel,
   RibbonBar,
   Code,
   Kbd,
   Hyperlink,
-} from "drawui";
+} from "ifcopenshell/gui";
 import { layoutConfig, worldConfig } from "./world-config.js";
 
 function createSignal(listeners, name) {
@@ -61,7 +58,7 @@ function createSignal(listeners, name) {
   };
 }
 
-/** Minimal app context for WorkspacePanel + WorkspaceLayout + ThemeToggle. */
+/** Minimal app context for Layout and ThemeToggle. */
 function createContext(layoutManager) {
   const listeners = new Set();
   const signals = {
@@ -89,7 +86,7 @@ function createContext(layoutManager) {
 }
 
 function createWorkspacePanel(context, options, body) {
-  const panel = new WorkspacePanel({
+  const panel = new Layout.Panel({
     context,
     position: options.position,
     moduleId: options.moduleId,
@@ -203,20 +200,20 @@ function bodyFilters() {
     .setStyle("display", ["flex"])
     .setStyle("flexDirection", ["column"])
     .gap("0.5rem")
-    .add(new Label("Category"))
+    .add(new Text("Category"))
     .add(category)
-    .add(new Label("Opacity"))
+    .add(new Text("Opacity"))
     .add(opacity)
     .add(
       row(
         new Checkbox(true).addClass("Card-checkbox"),
-        new TextBlock("Hide openings"),
+        new Text("Hide openings"),
       ),
     )
     .add(
       row(
         new Checkbox(false).addClass("Card-checkbox"),
-        new TextBlock("Isolate selection"),
+        new Text("Isolate selection"),
       ),
     )
     .add(new Spacer("0.25rem"))
@@ -246,7 +243,7 @@ function bodySelectionSets() {
     .add(
       row(
         new Button("New set").addClass("secondary"),
-        new IconButton("Export", { icon: "download", meta: ".json" }),
+        new Operator("download").setTooltip("Export"),
       ),
     );
 }
@@ -282,7 +279,6 @@ function bodyProperties() {
 
   const identity = new PropertyGrid({
     compact: true,
-    title: "Identity",
     rows: {
       name: { label: "Name", value: nameField },
       type: { label: "Type", value: typeSelect },
@@ -293,7 +289,6 @@ function bodyProperties() {
 
   const appearance = new PropertyGrid({
     compact: true,
-    title: "Appearance",
     rows: {
       visible: { label: "Visible", value: new Checkbox(true).addClass("Card-checkbox") },
       length: { label: "Length", value: new InputNumber(12.5).setRange(0, 100).setUnit("m") },
@@ -302,7 +297,7 @@ function bodyProperties() {
         label: "Opacity",
         value: new Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2),
       },
-      color: { label: "Color", value: new InputColor().setValue("#70ba35") },
+      color: { label: "Color", value: new InputColor().setValue("#7d9a62") },
       created: { label: "Created", value: new InputDate(new Date()) },
       progress: { label: "LOD", value: new ProgressBar(0.45) },
     },
@@ -319,14 +314,14 @@ function bodyConsole() {
   const logLines = new StackPanel({ isVertical: true })
     .gap("0.35rem")
     .add(new Code("[10:02:11] World mounted"))
-    .add(new Code("[10:02:12] WorkspaceLayout.init(\"World\")"))
-    .add(new Code("[10:02:13] 7 WorkspacePanels registered"))
-    .add(new TextBlock("Ready — open panels from the ribbon or toggle bar."));
+    .add(new Code("[10:02:12] Layout.init(\"World\")"))
+    .add(new Code("[10:02:13] 7 Layout panels registered"))
+    .add(new Text("Ready — open panels from the ribbon or toggle bar."));
 
   const output = new StackPanel({ isVertical: true })
     .gap("0.5rem")
     .add(new Caption("Operator output"))
-    .add(new TextBlock("Last run: theme.change_to → night"))
+    .add(new Text("Last run: theme.change_to → night"))
     .add(new ProgressBar(1));
 
   const tabs = new TabView();
@@ -345,7 +340,7 @@ function bodyConsole() {
         new Button("Clear").addClass("secondary"),
         new Caption("Tip:"),
         new Kbd("Ctrl"),
-        new TextBlock("+ J toggles bottom workspace"),
+        new Text("+ J toggles bottom workspace"),
       ),
     );
 }
@@ -358,7 +353,7 @@ function openSelectionFloat() {
     new StackPanel({ isVertical: true })
       .gap("0.5rem")
       .add(new Heading(4, "Beam-12"))
-      .add(new TextBlock("IfcBeam · Level 01"))
+      .add(new Text("IfcBeam · Level 01"))
       .add(new Badge("selected"))
       .add(new Line())
       .add(new Button("Focus").addClass("primary")),
@@ -391,58 +386,56 @@ function mountViewport(context) {
       .add(
         new RibbonBar(
           [
-            new IconButton("Select", { icon: "near_me" }),
-            new IconButton("Measure", { icon: "straighten" }),
-            new IconButton("Section", { icon: "crop" }),
-            new IconButton("Settings", { icon: "settings" }),
+            new Operator("near_me").setTooltip("Select"),
+            new Operator("straighten").setTooltip("Measure"),
+            new Operator("crop").setTooltip("Section"),
+            new Operator("settings").setTooltip("Settings"),
           ],
           "flex-start",
         ),
       )
       .add(
-        new InstructionPanel("Controls", "3d_rotation", [
-          ["MMB", "Orbit"],
-          ["Shift + MMB", "Pan"],
-          ["Scroll", "Zoom"],
-        ]),
+        new Panel({
+          title: "Controls",
+          icon: "3d_rotation",
+          showFooter: false,
+          resizable: false,
+          resizeHandles: [],
+        }).add(
+          new StackPanel({ isVertical: false })
+            .setStyle("alignItems", ["center"])
+            .gap("0.75rem")
+            .add(new Kbd("MMB"))
+            .add(new Text("Orbit")),
+          new StackPanel({ isVertical: false })
+            .setStyle("alignItems", ["center"])
+            .gap("0.75rem")
+            .add(new Kbd("Shift + MMB"))
+            .add(new Text("Pan")),
+          new StackPanel({ isVertical: false })
+            .setStyle("alignItems", ["center"])
+            .gap("0.75rem")
+            .add(new Kbd("Scroll"))
+            .add(new Text("Zoom")),
+        ),
       ),
   );
 
   const shell = new Card()
     .addClass("templates-viewport-card")
-    .padding("1rem")
     .add(
       new StackPanel({ isVertical: true })
-        .gap("0.75rem")
+        .gap("0.5rem")
         .add(
           row(
-            new Heading(3, "Viewport"),
             new ThemeToggle(context, themeOps),
             new Button("Float panel").addClass("secondary").onClick(openSelectionFloat),
-          ),
-        )
-        .add(
-          new Caption(
-            "Center #Viewport — InstructionPanel, CollapsiblePanel, ThemeToggle, FloatingWindow.",
-          ),
+          ).setStyle("flexWrap", ["nowrap"]),
         )
         .add(tools),
     );
 
-  const host = new Container()
-    .addClass("templates-viewport")
-    .setStyles({
-      position: "absolute",
-      inset: "0",
-      display: "flex",
-      alignItems: "flex-start",
-      justifyContent: "center",
-      padding: "1.25rem",
-      boxSizing: "border-box",
-      pointerEvents: "none",
-      overflow: "auto",
-    });
-  shell.setStyle("pointerEvents", ["auto"]);
+  const host = new Container().addClass("templates-viewport");
   host.add(shell);
   viewport.appendChild(host.dom);
 }
@@ -517,15 +510,15 @@ const demoPanels = [
 
 export function startTemplatesDemo() {
   const knownModuleIds = new Set(["project", "properties", "console"]);
-  const { root, mount } = buildWorldFromConfig(worldConfig, document.body, {
+  const world = new World(worldConfig, {
     knownModuleIds,
     activeModuleIds: [...knownModuleIds],
   });
 
-  root.addClass("World");
-  mount(document.body);
+  world.root.addClass("World");
+  world.mount(document.body);
 
-  const layoutManager = new WorkspaceLayout(layoutConfig).init("World");
+  const layoutManager = new Layout(layoutConfig).init(world);
   const context = createContext(layoutManager);
 
   for (const { body, ...options } of demoPanels) {

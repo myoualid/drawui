@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Horizontal spacer between inline or row items.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { HSpacer } from "drawui";
+import { HSpacer } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,9 +23,9 @@ import { HSpacer } from "drawui";
 
 ```js
 return row()
-  .add(new TextBlock("Start"))
+  .add(new Text("Start"))
   .add(new HSpacer("2rem"))
-  .add(new TextBlock("End"));
+  .add(new Text("End"));
 ```
 
 <div class="doc-live-demo" data-live-demo="HSpacer/horizontal-spacer" aria-label="Live preview"></div>

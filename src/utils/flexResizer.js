@@ -21,7 +21,7 @@ import { Container } from "../primitives/ui.js";
 export function createSplitResizer(splitNode, childIndex) {
   const resizer = new Container();
   resizer.setClass(
-    `layout-resizer layout-resizer-${splitNode.direction === "horizontal" ? "right" : "bottom"}`,
+    `Resizer Resizer-${splitNode.direction === "horizontal" ? "right" : "bottom"}`,
   );
   resizer.dom.dataset.splitId = splitNode.id || "root";
   resizer.dom.dataset.childIndex = String(childIndex);
@@ -42,7 +42,7 @@ export function createSplitResizer(splitNode, childIndex) {
  */
 export function createLayoutResizerHandle(placement = "right") {
   const resizer = new Container();
-  resizer.setClass(`layout-resizer layout-resizer-${placement}`);
+  resizer.setClass(`Resizer Resizer-${placement}`);
   resizer.dom.setAttribute("role", "separator");
   resizer.dom.setAttribute(
     "aria-orientation",
@@ -213,7 +213,7 @@ export function makeFlexResizer(options) {
     document.body.style.cursor = cursor;
     document.body.style.userSelect = "none";
 
-    const overlayElement = new Container().addClass("layout-drag-overlay");
+    const overlayElement = new Container().addClass("ResizerOverlay");
     overlay = overlayElement.dom;
     document.body.appendChild(overlay);
   };

@@ -1,9 +1,9 @@
 import {
   Icon,
   Container,
-  StackPanel,
-  TextBlock,
+  Text,
 } from "../../primitives/ui.js";
+import { Header } from "../panels/Header.js";
 import { createHierarchicalListOptions } from "../../utils/hierarchicalListOptions.js";
 
 /**
@@ -42,23 +42,14 @@ class NavigationList {
     this.autoNavigate = options.autoNavigate !== false;
 
     this.panel = new Container();
-    this.panel.addClass("dui-drill");
-    this.panel.addClass("NavigableList");
+    this.panel.addClass("NavigationList");
     this.panel.dom.setAttribute("role", "navigation");
 
-    this.header = new Container();
-    this.header.addClass("dui-drill-header");
-    this.header.addClass("Header");
-    this.header.addClass("Header");
-
-    this.headerContent = new Container();
-    this.headerContent.addClass("dui-drill-header-content");
-    this.header.add(this.headerContent);
+    this.header = new Header({ title: "" });
     this.panel.add(this.header);
 
     this.content = new Container();
-    this.content.addClass("dui-drill-content");
-    this.content.addClass("NavigableList-content");
+    this.content.addClass("NavigationList-content");
     this.content.dom.setAttribute("role", "list");
     this.panel.add(this.content);
   }
@@ -96,15 +87,11 @@ class NavigationList {
   refresh() {
     if (!this.currentData) return;
 
-    this.headerContent.clear();
-
-    const headerRow = new StackPanel({ isVertical: false });
-    headerRow.addClass("dui-drill-header-row");
+    const leadingActions = [];
 
     if (this.history.length > 0) {
       const backBtn = new Icon("arrow_back");
-      backBtn.addClass("dui-drill-back");
-      backBtn.addClass("NavigableList-back");
+      backBtn.addClass("NavigationList-back");
       backBtn.dom.setAttribute("role", "button");
       backBtn.dom.setAttribute("aria-label", "Go back");
       backBtn.dom.tabIndex = 0;
@@ -115,24 +102,19 @@ class NavigationList {
           this.navigateBack();
         }
       });
-      headerRow.add(backBtn);
+      leadingActions.push(backBtn);
     }
 
-    const title = new TextBlock(this.getTitle(this.currentData));
-    title.addClass("dui-drill-title");
-    title.addClass("NavigableList-title");
-    headerRow.add(title);
-
-    this.headerContent.add(headerRow);
+    this.header.setLeadingActions(leadingActions);
+    this.header.setTitle(this.getTitle(this.currentData));
 
     this.content.clear();
 
     const children = this.getChildren(this.currentData);
 
     if (children.length === 0) {
-      const emptyMsg = new TextBlock(this.emptyMessage);
-      emptyMsg.addClass("dui-drill-empty");
-      emptyMsg.addClass("NavigableList-empty");
+      const emptyMsg = new Text(this.emptyMessage);
+      emptyMsg.addClass("NavigationList-empty");
       this.content.add(emptyMsg);
       return;
     }
@@ -152,20 +134,18 @@ class NavigationList {
     const hasChildren = children.length > 0;
 
     const row = new Container();
-    row.addClass("dui-drill-item");
-    row.addClass("NavigableList-item");
+    row.addClass("NavigationList-item");
     if (hasChildren) row.addClass("has-children");
     row.dom.setAttribute("role", "listitem");
     row.dom.tabIndex = 0;
 
-    const label = new TextBlock(this.getLabel(item));
-    label.addClass("dui-drill-item-label");
-    label.addClass("NavigableList-item-label");
+    const label = new Text(this.getLabel(item));
+    label.addClass("NavigationList-label");
     row.add(label);
 
     if (hasChildren) {
       const arrow = new Icon("chevron_right");
-      arrow.addClass("dui-drill-item-chevron");
+      arrow.addClass("NavigationList-chevron");
       arrow.dom.setAttribute("aria-hidden", "true");
       row.add(arrow);
     }

@@ -3,18 +3,18 @@
 # ICONS
 
 **Status:** Stable  
-**Category:** facade  
-**Import:** `drawui`  
+**Category:** media  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
-Material Symbols icon names used across DrawUI components.
+Material Symbols icon names used across GUI components.
 
 _Source: `src/icons.js`_
 
 ## Import
 
 ```js
-import { ICONS } from "drawui";
+import { ICONS } from "ifcopenshell/gui";
 ```
 
 ## Examples

@@ -2,7 +2,7 @@ import {
   InputListItem,
   Checkbox,
   Icon,
-  TextBlock,
+  Text,
   Container,
 } from "../../primitives/ui.js";
 
@@ -17,18 +17,18 @@ export class LabeledBoxItem extends InputListItem {
    */
   constructor(data, iconMap) {
     super();
-    this.addClass("workspace-menu-item");
+    this.addClass("LabeledBoxItem");
 
     const checkbox = new Checkbox(data.checked);
     const iconName = iconMap[data.id] || iconMap.default;
     const icon = new Icon(iconName);
-    icon.addClass("workspace-menu-item-icon");
+    icon.addClass("LabeledBoxItem-icon");
 
-    const label = new TextBlock(data.label);
-    label.addClass("workspace-menu-item-label");
+    const label = new Text(data.label);
+    label.addClass("LabeledBoxItem-label");
 
     const actions = new Container();
-    actions.addClass("workspace-menu-item-actions");
+    actions.addClass("LabeledBoxItem-actions");
 
     this.add(checkbox);
     this.add(icon);

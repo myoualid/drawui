@@ -3,8 +3,8 @@
 # Toast
 
 **Status:** Stable  
-**Category:** panels  
-**Import:** `drawui`  
+**Category:** feedback  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Toast`, `Toast--{type}`, `Toast--fade-out`, `Toast-close`, `status-bar`, `status-bar-fill`
 
 Transient notification or progress overlay.
@@ -27,7 +27,7 @@ _Source: `src/components/feedback/Toast.js`_
 ## Import
 
 ```js
-import { Toast } from "drawui";
+import { Toast } from "ifcopenshell/gui";
 ```
 
 ## Examples

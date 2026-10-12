@@ -1,5 +1,5 @@
 /**
- * Post-process TypeDoc HTML: inject DrawUI styles + live demo mounts from
+ * Post-process TypeDoc HTML: inject GUI styles + live demo mounts from
  * docs/generated/live-demos.json (produced by generate-docs.mjs).
  *
  * Catalog-only demos (no JSDoc `@example`) are injected as orphan sections.
@@ -13,6 +13,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const typedocDir = path.join(root, "docs/generated/typedoc");
 const liveJsonPath = path.join(root, "docs/generated/live-demos.json");
+const GUI_JS = "gui.js";
+const LAYOUT_JS = "layout.js";
 
 const { loadHighlighter, highlight, getStyles } = await import(
   pathToFileURL(path.join(root, "node_modules/typedoc/dist/lib/utils/highlighter.js")).href
@@ -22,7 +24,7 @@ await loadHighlighter("light-plus", "dark-plus", ["typescript", "javascript"], [
 
 /**
  * Slot styles only — TypeDoc demos mount in iframes (docs/api-live.js) so
- * DrawUI's global element CSS never touches the TypeDoc host document.
+ * GUI element CSS never touches the TypeDoc host document.
  */
 const LIVE_CSS = `
 .doc-live-demo {
@@ -94,11 +96,12 @@ const STORAGE_GUARD = `
 </script>
 `.trim();
 
-// Shared live-demos.js imports peers — always use the full bundle + peer CDNs.
+// Live demos import GUI, layout, and peers.
 function liveImportMap(assetPrefix) {
   return `{
   "imports": {
-    "drawui": "${assetPrefix}dist/drawui.full.js",
+    "ifcopenshell/gui": "${assetPrefix}dist/${GUI_JS}",
+    "ifcopenshell/layout": "${assetPrefix}dist/${LAYOUT_JS}",
     "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
     "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
     "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
@@ -259,48 +262,53 @@ function renderOrphanDemoSection(demos) {
   return `<div class="tsd-comment tsd-typography" data-drawui-live-catalog>${blocks}</div>`;
 }
 
+function normalizeDemoCode(text) {
+  return String(text || "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function stripLiveMounts(html) {
+  return html.replace(
+    /<div class="doc-live-demo" data-live-demo="[^"]*" aria-label="Live preview"><\/div>/g,
+    "",
+  );
+}
+
+function liveMount(demo) {
+  return `<div class="doc-live-demo" data-live-demo="${demo.id}" aria-label="Live preview"></div>`;
+}
+
 function injectDemoMounts(html, demos) {
-  let result = stripInjectedCatalog(stripLiveMarkerFromExamples(html));
+  const hasNativeExamples = html.includes('<div class="tsd-tag-example">');
+  let result = stripLiveMounts(stripInjectedCatalog(stripLiveMarkerFromExamples(html)));
   let injected = 0;
+  const used = new Set();
 
-  for (let i = 0; i < demos.length; i += 1) {
-    const demo = demos[i];
-    const slug = slugify(demo.caption, String(i));
-    const headingId = `example-${slug}`;
-    const mount = `<div class="doc-live-demo" data-live-demo="${demo.id}" aria-label="Live preview"></div>`;
-
-    if (result.includes(`data-live-demo="${demo.id}"`)) continue;
-
-    const byId = new RegExp(
-      `(<div class="tsd-tag-example">\\s*<h4 class="tsd-anchor-link" id="${headingId}"[\\s\\S]*?</pre>)(\\s*</div>)`,
-      "i",
+  result = result.replace(/<div class="tsd-tag-example">[\s\S]*?<\/pre>/g, (block) => {
+    const codeMatch = block.match(/<code[^>]*>([\s\S]*?)<\/code>/);
+    const code = normalizeDemoCode(codeMatch ? codeMatch[1] : "");
+    if (!code) return block;
+    const demo = demos.find(
+      (item) => !used.has(item.id) && item.code && normalizeDemoCode(item.code) === code,
     );
+    if (!demo) return block;
+    used.add(demo.id);
+    injected += 1;
+    return `${block}${liveMount(demo)}`;
+  });
 
-    if (byId.test(result)) {
-      result = result.replace(byId, `$1${mount}$2`);
-      injected += 1;
-    }
-  }
-
-  // Fallback: append mounts after each existing tsd-tag-example in order.
-  if (injected < demos.length) {
-    const remaining = demos.filter((demo) => !result.includes(`data-live-demo="${demo.id}"`));
-    let demoIndex = 0;
-    result = result.replace(
-      /(<div class="tsd-tag-example">[\s\S]*?<\/pre>)(\s*<\/div>)/g,
-      (match, before, after) => {
-        if (demoIndex >= remaining.length) return match;
-        if (match.includes("data-live-demo=")) return match;
-        const demo = remaining[demoIndex];
-        demoIndex += 1;
-        injected += 1;
-        return `${before}<div class="doc-live-demo" data-live-demo="${demo.id}" aria-label="Live preview"></div>${after}`;
-      },
-    );
-  }
-
-  // Catalog-only demos: inject a live section after the class comment when no mount yet.
-  const stillMissing = demos.filter((demo) => !result.includes(`data-live-demo="${demo.id}"`));
+  // Gallery demos that TypeDoc did not print as a class example.
+  const stillMissing = hasNativeExamples
+    ? []
+    : demos.filter((demo) => !used.has(demo.id));
   if (stillMissing.length) {
     const section = renderOrphanDemoSection(stillMissing);
     const commentEnd =
@@ -363,7 +371,7 @@ for (const file of htmlFiles) {
   html = injectStorageGuard(html);
   html = hardenThemeBootstrap(html);
 
-  const base = path.basename(file, ".html");
+  const base = path.basename(file, ".html").replace(/^(gui|layout)\./, "");
   const demos = liveBySymbol[base];
   if (demos?.length) {
     const assetPrefix = assetPrefixFor(file);

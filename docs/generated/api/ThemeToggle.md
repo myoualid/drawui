@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `ThemeToggle`
 
 Light/dark theme toggle control.
@@ -12,7 +12,7 @@ Light/dark theme toggle control.
 ## Import
 
 ```js
-import { ThemeToggle } from "drawui";
+import { ThemeToggle } from "ifcopenshell/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Flyout`, `Flyout-header`, `Flyout-icon`, `Flyout-title`, `Flyout-content`, `Flyout-search`, `expanded`, `Badge`, `centered`
 
 Expandable tool panel with optional search row.
@@ -14,7 +14,7 @@ _Source: `src/components/panels/Flyout.js`_
 ## Import
 
 ```js
-import { Flyout } from "drawui";
+import { Flyout } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -29,7 +29,7 @@ const host = new Container().setStyle("position", ["relative"]).setStyle("minHei
     badgeCount: 2,
     position: { top: "0.5rem", right: "0.5rem" },
   });
-  panel.content(new StackPanel({ isVertical: true }).add(new TextBlock("Collapsible panel content")));
+  panel.content(new StackPanel({ isVertical: true }).add(new Text("Collapsible panel content")));
   host.add(panel);
   return host;
 ```

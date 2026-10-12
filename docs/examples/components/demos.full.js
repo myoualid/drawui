@@ -1,17 +1,17 @@
+import * as GUI from "ifcopenshell/gui";
 import {
-  DrawUI,
-  Markdown,
-  GanttChart,
-  NodeGraph,
-  WorkspacePanel,
-  DataGrid,
   Container,
   StackPanel,
   Button,
-  TextBlock,
+  Text,
   Caption,
   Badge,
-} from "drawui";
+  Markdown,
+  GanttChart,
+  DataGrid,
+  NodeGraph,
+} from "ifcopenshell/gui";
+import { Layout } from "ifcopenshell/layout";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {
@@ -116,7 +116,7 @@ const defaultChartOptions = {
  * @param {string} [height]
  */
 function makeChart(chartConfiguration, height = "260px") {
-  const chart = DrawUI.Chart({
+  const chart = new GUI.Chart({
     height,
     chartConfiguration: {
       ...chartConfiguration,
@@ -133,7 +133,7 @@ function makeChart(chartConfiguration, height = "260px") {
   return afterAttach(chart, () => chart.init());
 }
 
-/** @type {Record<string, () => import("drawui").Control>} */
+/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
 export const FULL_DEMO_BUILDERS = {
   "chart-bar": () =>
     makeChart({
@@ -479,7 +479,7 @@ export const FULL_DEMO_BUILDERS = {
       .addClass("primary")
       .onClick(() => {
         if (!panel) {
-          panel = new WorkspacePanel({
+          panel = new Layout.Panel({
             context: { ui: { model: {} } },
             tabId: "gallery-demo-tab",
             tabLabel: "Demo panel",
@@ -492,7 +492,7 @@ export const FULL_DEMO_BUILDERS = {
             new StackPanel({ isVertical: true })
               .gap("0.5rem")
               .setStyle("padding", ["0.75rem"])
-              .add(new TextBlock("WorkspacePanel content — dock buttons appear when a WorkspaceLayout context is provided."))
+              .add(new Text("Layout.Panel content — dock buttons appear when a Layout context is provided."))
               .add(new Badge("startFloating: true")),
           );
         }
@@ -502,7 +502,7 @@ export const FULL_DEMO_BUILDERS = {
     wrap.add(openButton);
     wrap.add(
       new Caption(
-        "Without a WorkspaceLayout the panel opens as a floating window; inside a workspace it docks as a CollapsiblePanel (undock transfers content into a FloatingWindow).",
+        "Without a Layout instance the panel opens as a floating window; inside a workspace it docks (undock transfers content into a FloatingWindow).",
       ),
     );
     return wrap;
@@ -511,7 +511,7 @@ export const FULL_DEMO_BUILDERS = {
   "markdown-full": () =>
     new Markdown(
       [
-        "Full build renders GitHub-flavored markdown via **Showdown**, with optional",
+        "Markdown renders GitHub-flavored markdown via **Showdown** when it is installed, with optional",
         "Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,",
         "and `inline code` all work.",
         "",
@@ -522,7 +522,7 @@ export const FULL_DEMO_BUILDERS = {
         "| Tables | yes | Pipe tables with header row |",
         "| Task lists | yes | Checkboxes below |",
         "| Fenced code | yes | Highlight.js when available |",
-        "| Autolinks | yes | https://github.com/myoualid/drawui |",
+        "| Autolinks | yes | https://github.com/IfcOpenShell/IfcOpenShell |",
         "| Emoji | yes | :sparkles: :rocket: |",
         "",
         "## Lists & tasks",
@@ -532,7 +532,7 @@ export const FULL_DEMO_BUILDERS = {
         "  - Another item",
         "- Ordered next",
         "",
-        "1. Install peers",
+        "1. Import Markdown from ifcopenshell/gui",
         "2. Call `new Markdown(text)`",
         "3. Attach to the DOM",
         "",
@@ -543,13 +543,13 @@ export const FULL_DEMO_BUILDERS = {
         "",
         "## Quote",
         "",
-        "> Prefer the full build when you need GFM tables, task lists, or syntax-highlighted",
-        "> fences. The min build keeps a small built-in converter instead.",
+        "> Showdown renders GFM tables, task lists, and fenced code.",
+        "> Without it, Markdown uses the built-in converter.",
         "",
         "## Code",
         "",
         "```js",
-        "import { Markdown } from \"drawui\";",
+        "import { Markdown } from \"ifcopenshell/gui\";",
         "",
         "const md = new Markdown(",
         "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",

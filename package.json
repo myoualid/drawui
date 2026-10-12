@@ -1,11 +1,11 @@
 {
-  "name": "drawui",
+  "name": "ifcopenshell-gui",
   "version": "0.2.0",
-  "description": "Framework-free DOM UI primitives and components for ESM applications.",
+  "description": "GUI components and workspace layout. Install ifcopenshell-gui. Import from ifcopenshell/gui and ifcopenshell/layout.",
   "type": "module",
-  "main": "./src/index.js",
-  "module": "./src/index.js",
-  "style": "./styles/core.css",
+  "main": "./src/gui/index.js",
+  "module": "./src/gui/index.js",
+  "style": "./styles/gui.css",
   "engines": {
     "node": ">=18"
   },
@@ -14,56 +14,44 @@
   ],
   "files": [
     "src",
-    "styles/core.css",
-    "styles/icons.css",
-    "styles/tokens.css",
-    "styles/reset.css",
-    "styles/primitives.css",
-    "styles/components.css",
-    "styles/rules.css",
-    "styles/app-host.css",
-    "styles/base-components.css",
-    "styles/structure.css",
-    "styles/components/spinner.css",
-    "styles/components/nodes.css",
-    "styles/components/hud.css",
-    "styles/components/pie-menu.css",
-    "styles/components/scheduling.css",
-    "styles/components/ag-grid-custom.css",
-    "styles/themes",
+    "dist",
+    "styles",
+    "types/index.d.ts",
     "vendor/fonts",
-    "docs",
     "README.md",
-    "CHANGELOG.md",
     "LICENSE",
     "package.json"
   ],
   "types": "./types/index.d.ts",
   "exports": {
-    ".": {
+    "./gui": {
       "types": "./types/index.d.ts",
-      "import": "./src/index.js",
-      "default": "./src/index.js"
+      "import": "./src/gui/index.js",
+      "default": "./src/gui/index.js"
     },
-    "./utils/markdown": "./src/utils/markdown.js",
-    "./utils/flexResizer": "./src/utils/flexResizer.js",
-    "./overlays/drag": "./src/overlays/drag.js",
-    "./workspace/dock": "./src/workspace/dock.js",
+    "./layout": {
+      "types": "./types/index.d.ts",
+      "import": "./src/layout/index.js",
+      "default": "./src/layout/index.js"
+    },
     "./vendor/fonts/material-symbols-outlined.css": "./vendor/fonts/material-symbols-outlined.css",
+    "./styles/gui.css": "./styles/gui.css",
+    "./styles/layout.css": "./styles/layout.css",
+    "./styles/peers.css": "./styles/peers.css",
     "./styles/core.css": "./styles/core.css",
     "./styles/icons.css": "./styles/icons.css",
     "./styles/tokens.css": "./styles/tokens.css",
-    "./styles/reset.css": "./styles/reset.css",
-    "./styles/primitives.css": "./styles/primitives.css",
+    "./styles/rules.css": "./styles/rules.css",
     "./styles/components.css": "./styles/components.css",
     "./styles/structure.css": "./styles/structure.css",
-    "./styles/base-components.css": "./styles/base-components.css",
-    "./styles/rules.css": "./styles/rules.css",
     "./styles/app-host.css": "./styles/app-host.css",
+    "./styles/workspace.css": "./styles/workspace.css",
     "./styles/components/spinner.css": "./styles/components/spinner.css",
     "./styles/components/nodes.css": "./styles/components/nodes.css",
     "./styles/components/hud.css": "./styles/components/hud.css",
     "./styles/components/pie-menu.css": "./styles/components/pie-menu.css",
+    "./styles/components/markdown.css": "./styles/components/markdown.css",
+    "./styles/components/shell.css": "./styles/components/shell.css",
     "./styles/components/scheduling.css": "./styles/components/scheduling.css",
     "./styles/components/ag-grid-custom.css": "./styles/components/ag-grid-custom.css",
     "./styles/themes/dark.css": "./styles/themes/dark.css",
@@ -72,7 +60,7 @@
   },
   "scripts": {
     "build": "node ./scripts/build.mjs",
-    "build:source-check": "node --input-type=module -e \"import './src/index.js'\"",
+    "build:source-check": "node --input-type=module -e \"import './src/gui/index.js'; import './src/layout/index.js'\"",
     "examples": "npm run build && npx --yes serve docs -p 5173",
     "build:catalog": "node ./scripts/generate-min-catalog.mjs",
     "docs:index": "node ./scripts/generate-docs.mjs",
@@ -82,22 +70,39 @@
     "check:entrypoints": "node ./scripts/check-entrypoints.mjs",
     "check:package-contents": "node ./scripts/check-package-contents.mjs"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@highlightjs/cdn-assets": "11.11.1",
     "ag-grid-community": "35.2.1",
     "chart.js": "4.4.7",
     "jsgantt-improved": "2.8.10",
     "showdown": "2.1.0"
   },
+  "peerDependenciesMeta": {
+    "@highlightjs/cdn-assets": { "optional": true },
+    "ag-grid-community": { "optional": true },
+    "chart.js": { "optional": true },
+    "jsgantt-improved": { "optional": true },
+    "showdown": { "optional": true }
+  },
   "keywords": [
     "ui",
     "dom",
     "components",
-    "drawui"
+    "ifc",
+    "ifcopenshell",
+    "ifcopenshell-gui"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "devDependencies": {
+    "@highlightjs/cdn-assets": "11.11.1",
+    "ag-grid-community": "35.2.1",
+    "chart.js": "4.4.7",
     "esbuild": "^0.25.0",
+    "jsgantt-improved": "2.8.10",
+    "showdown": "2.1.0",
     "typedoc": "^0.28.5"
   }
 }

@@ -4,15 +4,17 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputNumber`
 
-Integer-specialized numeric input.
+Integer field with the same drag-to-scrub behavior as InputNumber.
+
+_Source: `src/primitives/ui.js`_
 
 ## Import
 
 ```js
-import { InputInteger } from "drawui";
+import { InputInteger } from "ifcopenshell/gui";
 ```
 
 ## Examples

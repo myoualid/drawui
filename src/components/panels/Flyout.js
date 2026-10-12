@@ -1,11 +1,11 @@
 import {
   Container,
-  Icon,
-  Span,
   Rectangle,
+  Button,
 } from "../../primitives/ui.js";
 
 import { InputSearch } from "../../primitives/ui.js";
+import { Header } from "./Header.js";
 
 import { makeResizable } from "../../overlays/drag.js";
 
@@ -24,6 +24,7 @@ class Flyout extends Rectangle {
       badgeCount: options.badgeCount || null,
       hasSearch: options.hasSearch || false,
       onSearch: options.onSearch || null,
+      showClose: options.showClose !== false,
       ...options
     };
 
@@ -35,6 +36,7 @@ class Flyout extends Rectangle {
 
     this.toggleButton = null;
 
+    /** @type {Header|null} */
     this.header = null;
 
     this.searchInput = null;
@@ -64,26 +66,17 @@ class Flyout extends Rectangle {
       this.setStyle('right', [this.options.position.right]);
     }
 
-    // Header (always visible)
-    this.header = new Container();
+    const headerActions = [];
+    if (this.options.showClose) {
+      headerActions.push(this._createCloseButton());
+    }
 
-    this.header.addClass('Flyout-header');
-
-    this.header.addClass('centered');
-
-    // Icon
-    const icon = new Icon(this.options.icon);
-
-    icon.addClass('Flyout-icon');
-
-    this.header.add(icon);
-
-    // Title
-    const title = new Span(this.options.title);
-
-    title.addClass('Flyout-title');
-
-    this.header.add(title);
+    this.header = new Header({
+      title: this.options.title,
+      icon: this.options.icon,
+      actions: headerActions,
+      alwaysActionsColumn: this.options.showClose,
+    });
 
     this.add(this.header);
 
@@ -118,6 +111,24 @@ class Flyout extends Rectangle {
     }
 
     this.add(this.contentContainer);
+  }
+
+  /**
+   * @returns {Button}
+   * @private
+   */
+  _createCloseButton() {
+    const closeBtn = new Button().setIcon('close');
+    closeBtn
+      .addClass('Panel-close')
+      .setTooltip('Close');
+    closeBtn.dom.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      this.collapse();
+    });
+
+    return closeBtn;
   }
 
   /**
@@ -171,12 +182,7 @@ class Flyout extends Rectangle {
    * @param {string} text - The title text
    */
   setTitle(text) {
-    const titleSpan = this.header.dom.querySelector('.Flyout-title');
-
-    if (titleSpan) {
-      titleSpan.textContent = text;
-    }
-
+    this.header?.setTitle(text);
     return this;
   }
 
@@ -185,12 +191,7 @@ class Flyout extends Rectangle {
    * @param {string} iconName - Material icon name
    */
   setIcon(iconName) {
-    const iconEl = this.header.dom.querySelector('.Flyout-icon');
-
-    if (iconEl) {
-      iconEl.textContent = iconName;
-    }
-
+    this.header?.setIcon(iconName);
     return this;
   }
 
@@ -199,6 +200,8 @@ class Flyout extends Rectangle {
    * @param {number|null} count - Badge count or null to hide
    */
   setBadgeCount(count) {
+    if (!this.header) return this;
+
     this.header.dom.setAttribute('data-count', count !== null ? count.toString() : '');
 
     if (count !== null && count > 0) {

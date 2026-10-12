@@ -4,15 +4,15 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Rectangle`, `chart-ui-component`
 
-Chart.js-backed visualization panel used by `DrawUI.Chart()`.
+Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use.
 
 ## Import
 
 ```js
-import { Chart } from "drawui";
+import { Chart } from "ifcopenshell/gui";
 ```
 
 ## Examples

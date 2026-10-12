@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `centered`
 
 Add the shared `centered` class to a control.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { center } from "drawui";
+import { center } from "ifcopenshell/gui";
 ```
 
 ## Examples

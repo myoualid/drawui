@@ -1,4 +1,4 @@
-import { InputListItem, Container, TextBlock } from "../../primitives/ui.js";
+import { InputListItem, Container, Text } from "../../primitives/ui.js";
 
 /** @category Collections */
 function isControl(value) {
@@ -21,25 +21,11 @@ function formatPropertyValue(value) {
 
 /** @category Collections */
 function createPropertyCell(text, className) {
-  const cell = new TextBlock(text);
+  const cell = new Text(text);
   cell.addClass("Property");
 
   if (className) {
     cell.addClass(className);
-  }
-
-  return cell;
-}
-
-/** @category Collections */
-function createPropertyValueCell(value) {
-  const cell = new Container();
-  cell.addClass("PropertyValue");
-
-  if (isControl(value)) {
-    cell.add(value);
-  } else {
-    cell.setTextContent(formatPropertyValue(value));
   }
 
   return cell;

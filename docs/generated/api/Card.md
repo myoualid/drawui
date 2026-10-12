@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Card`
 
 Card shell (`Rectangle` + `Card` class).
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Card } from "drawui";
+import { Card } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,7 +23,7 @@ import { Card } from "drawui";
 
 ```js
 return new Card()
-  .add(new TextBlock("new Card()"))
+  .add(new Text("new Card()"))
   .setStyle("padding", ["0.75rem"]);
 ```
 

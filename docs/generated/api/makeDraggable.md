@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Attach header-drag behavior to a positioned panel.
@@ -14,7 +14,7 @@ _Source: `src/overlays/drag.js`_
 ## Import
 
 ```js
-import { makeDraggable } from "drawui";
+import { makeDraggable } from "ifcopenshell/gui";
 ```
 
 ## Examples

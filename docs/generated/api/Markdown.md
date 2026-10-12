@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Markdown`
 
 Renders markdown (or sanitized HTML) into a `.Markdown` container.
@@ -16,7 +16,7 @@ _Source: `src/components/Markdown.js`_
 ## Import
 
 ```js
-import { Markdown } from "drawui";
+import { Markdown } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -51,7 +51,7 @@ return new Markdown(
 ```js
 return new Markdown(
     [
-      "Full build renders GitHub-flavored markdown via **Showdown**, with optional",
+      "Markdown renders GitHub-flavored markdown via **Showdown** when it is installed, with optional",
       "Highlight.js for fenced code. Inline *italic*, **bold**, ~~strikethrough~~,",
       "and `inline code` all work.",
       "",
@@ -62,7 +62,7 @@ return new Markdown(
       "| Tables | yes | Pipe tables with header row |",
       "| Task lists | yes | Checkboxes below |",
       "| Fenced code | yes | Highlight.js when available |",
-      "| Autolinks | yes | https://github.com/myoualid/drawui |",
+      "| Autolinks | yes | https://github.com/IfcOpenShell/IfcOpenShell |",
       "| Emoji | yes | :sparkles: :rocket: |",
       "",
       "## Lists & tasks",
@@ -72,7 +72,7 @@ return new Markdown(
       "  - Another item",
       "- Ordered next",
       "",
-      "1. Install peers",
+      "1. Import Markdown from ifcopenshell/gui",
       "2. Call `new Markdown(text)`",
       "3. Attach to the DOM",
       "",
@@ -83,13 +83,13 @@ return new Markdown(
       "",
       "## Quote",
       "",
-      "> Prefer the full build when you need GFM tables, task lists, or syntax-highlighted",
-      "> fences. The min build keeps a small built-in converter instead.",
+      "> Showdown renders GFM tables, task lists, and fenced code.",
+      "> Without it, Markdown uses the built-in converter.",
       "",
       "## Code",
       "",
       "```js",
-      "import { Markdown } from \"drawui\";",
+      "import { Markdown } from \"ifcopenshell/gui\";",
       "",
       "const md = new Markdown(",
       "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",

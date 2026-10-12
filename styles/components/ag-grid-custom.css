@@ -75,10 +75,6 @@
   border-color: #2196f3;
 }
 
-.ag-theme-quartz .calculated-column-header .ag-header-cell-text {
-  color: #2196f3 !important;
-}
-
 /* Beat [class*=ag-theme-] (0,1,0) via dual class + html[data-theme]. */
 .ag-theme-quartz-dark.ag-grid-container,
 .ag-theme-quartz-dark.spreadsheet-component,
@@ -223,17 +219,4 @@ html[data-theme="dark"] .ag-theme-quartz-dark .ag-list-item.ag-active-item {
 html[data-theme="dark"] .ag-theme-quartz-dark .ag-text-field-input:focus,
 html[data-theme="dark"] .ag-theme-quartz-dark .ag-select .ag-picker-field-wrapper:focus {
   border-color: var(--dui-color-accent, #70ba35);
-}
-
-.ag-theme-quartz-dark.ag-grid-container .calculated-column-header .ag-header-cell-text,
-html[data-theme="dark"] .ag-theme-quartz-dark .calculated-column-header .ag-header-cell-text {
-  color: var(--dui-color-accent, #70ba35) !important;
-}
-
-.sequence-spreadsheet-shell .ag-theme-quartz-dark.ag-grid-container,
-.sequence-spreadsheet-shell .spreadsheet-component,
-.HardHatLiftingDashboard-card .ag-theme-quartz-dark {
-  border: 1px solid var(--dui-color-border, rgba(48, 54, 61, 0.55));
-  border-radius: var(--dui-radius);
-  overflow: hidden;
 }

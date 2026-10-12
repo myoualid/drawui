@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `drawui`  
-**Emitted class(es):** `disclaimer`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `Disclaimer`
 
 Secondary legal / helper copy.
 
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Disclaimer } from "drawui";
+import { Disclaimer } from "ifcopenshell/gui";
 ```
 
 ## Examples

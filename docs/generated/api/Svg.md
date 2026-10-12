@@ -3,8 +3,8 @@
 # Svg
 
 **Status:** Experimental  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** media  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `SVG`
 
 SVG host with fetch, clone, and ID retargeting for reusable SVGs.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Svg } from "drawui";
+import { Svg } from "ifcopenshell/gui";
 ```
 
 ## Examples

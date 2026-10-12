@@ -1,4 +1,4 @@
-import { Container, StackPanel, Icon, Span, TextBlock } from "../../primitives/ui.js";
+import { Container, StackPanel, Icon, Text } from "../../primitives/ui.js";
 
 /** @category Overlays */
 function normalizeShortcutKeys(shortcutOrKeys) {
@@ -368,7 +368,7 @@ export class RadialMenu {
 
 		const hubIcon = new Icon("touch_app");
 
-		const hubLabel = new TextBlock(this.getHubLabel());
+		const hubLabel = new Text(this.getHubLabel());
 
 		hub.add(hubIcon, hubLabel);
 

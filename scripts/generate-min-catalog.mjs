@@ -5,26 +5,34 @@ import path from "node:path";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const examplesDir = path.join(root, "docs/examples/components");
 const manifestPath = path.join(examplesDir, "catalog.manifest.json");
-const minEntryPath = path.join(root, "src/bundle/min.js");
-const drawUiSourcePath = path.join(root, "src/DrawUI/DrawUI.js");
+const guiEntryPath = path.join(root, "src/gui/index.js");
+const layoutEntryPath = path.join(root, "src/layout/index.js");
 const demosPath = path.join(examplesDir, "demos.js");
 const demosFullPath = path.join(examplesDir, "demos.full.js");
 const outputPath = path.join(examplesDir, "catalog.json");
 
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-const minSource = await readFile(minEntryPath, "utf8");
-const drawUiSource = await readFile(drawUiSourcePath, "utf8");
+const guiSource = await readFile(guiEntryPath, "utf8");
+const layoutSource = await readFile(layoutEntryPath, "utf8");
 const demosSource = await readFile(demosPath, "utf8");
 const demosFullSource = await readFile(demosFullPath, "utf8");
 
-const drawUiMethods = [...drawUiSource.matchAll(/static\s+(\w+)\s*\(/g)].map((match) => match[1]);
-const namedExports = [...minSource.matchAll(/^export\s+\{\s*([^}]+)\s*\}/gm)]
-  .flatMap((match) =>
-    match[1]
-      .split(",")
-      .map((part) => part.trim().split(/\s+as\s+/).pop().trim())
-      .filter(Boolean),
-  );
+function namedExportsFrom(source) {
+  return [...source.matchAll(/^export\s+\{\s*([^}]+)\s*\}/gm)]
+    .flatMap((match) =>
+      match[1]
+        .split(",")
+        .map((part) => part.trim().split(/\s+as\s+/).pop().trim())
+        .filter(Boolean),
+    );
+}
+
+function constructorIndex(names) {
+  return names.filter((name) => name[0] === name[0].toUpperCase()).map((name) => `new ${name}()`);
+}
+
+const guiExports = namedExportsFrom(guiSource);
+const layoutExports = namedExportsFrom(layoutSource);
 
 const demoIds = [...demosSource.matchAll(/^\s+["']([\w-]+)["']\s*:\s*\(/gm)].map((match) => match[1]);
 const fullDemoIds = [...demosFullSource.matchAll(/^\s+["']([\w-]+)["']\s*:\s*\(/gm)].map((match) => match[1]);
@@ -113,12 +121,11 @@ const catalog = {
     items: manifest.categories.reduce((total, category) => total + category.items.length, 0),
     peerCategories: peerCategories.length,
     peerItems,
-    drawUiFactories: drawUiMethods.length,
-    namedExports: namedExports.length,
+    publicClasses: constructorIndex(guiExports).length + constructorIndex(layoutExports).length,
   },
   apiIndex: {
-    drawUi: drawUiMethods.map((name) => `DrawUI.${name}()`),
-    exports: namedExports,
+    "ifcopenshell/gui": constructorIndex(guiExports),
+    "ifcopenshell/layout": constructorIndex(layoutExports),
   },
   categories: manifest.categories,
   peerCategories,
@@ -135,8 +142,8 @@ console.log(
 );
 console.log(`  ${peerItems} peer-only items`);
 console.log(
-  `  ${catalog.stats.drawUiFactories} DrawUI factories, ${catalog.stats.namedExports} named exports`,
+  `  ${catalog.stats.publicClasses} public classes`,
 );
 if (fullOnlyCategoryDemos.length) {
-  console.log(`  ${fullOnlyCategoryDemos.length} full-build-only category demos`);
+  console.log(`  ${fullOnlyCategoryDemos.length} demos that need optional libraries`);
 }

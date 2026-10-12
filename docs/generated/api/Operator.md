@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Operator`
 
 Icon-only operator control (icon inside an Operator shell).
@@ -14,7 +14,7 @@ _Source: `src/components/controls/Operator.js`_
 ## Import
 
 ```js
-import { Operator } from "drawui";
+import { Operator } from "ifcopenshell/gui";
 ```
 
 ## Examples

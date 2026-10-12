@@ -3,8 +3,8 @@
 # ProgressBar
 
 **Status:** Stable  
-**Category:** inputs  
-**Import:** `drawui`  
+**Category:** feedback  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Native progress bar.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { ProgressBar } from "drawui";
+import { ProgressBar } from "ifcopenshell/gui";
 ```
 
 ## Examples

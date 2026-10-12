@@ -1,4 +1,4 @@
-import { Container, Icon, Caption, StackPanel, TextBlock } from "../../primitives/ui.js";
+import { Container, Icon, Caption, StackPanel, Text } from "../../primitives/ui.js";
 import { ScrollViewer } from "../../primitives/ui.js";
 import { makeFlexResizer } from "../../utils/flexResizer.js";
 
@@ -73,7 +73,7 @@ class NavigationView extends Container {
     this.sidebarTitleRow = new StackPanel({ isVertical: false });
     this.sidebarTitleRow.addClass("SideBar-titleRow");
 
-    this.sidebarTitle = new TextBlock("");
+    this.sidebarTitle = new Text("");
     this.sidebarTitle.setClass("Title");
 
     this.mainHeader = new StackPanel({ isVertical: false });
@@ -252,7 +252,7 @@ class NavigationView extends Container {
     }
 
     this.sidebarResizer = new Container();
-    this.sidebarResizer.setClass("layout-resizer layout-resizer-right");
+    this.sidebarResizer.setClass("Resizer Resizer-right");
     this.sidebarResizer.dom.setAttribute("role", "separator");
     this.sidebarResizer.dom.setAttribute("aria-orientation", "vertical");
     this.sidebarResizer.dom.setAttribute("aria-label", "Resize sidebar");

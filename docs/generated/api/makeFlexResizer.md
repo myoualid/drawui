@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Attach drag-to-resize behavior between two flex siblings.
@@ -14,7 +14,7 @@ _Source: `src/utils/flexResizer.js`_
 ## Import
 
 ```js
-import { makeFlexResizer } from "drawui";
+import { makeFlexResizer } from "ifcopenshell/gui";
 ```
 
 ## Examples

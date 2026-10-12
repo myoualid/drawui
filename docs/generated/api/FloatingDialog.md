@@ -4,15 +4,15 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `drawui`  
-**Emitted class(es):** `ContentPanel`, `Header`, `PanelContent`, `RibbonBar`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `Panel`, `Header`, `PanelContent`, `RibbonBar`
 
-Lightweight floating panel built on `ContentPanel`.
+Lightweight floating panel built on `Panel`.
 
 ## Import
 
 ```js
-import { FloatingDialog } from "drawui";
+import { FloatingDialog } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -27,7 +27,7 @@ return new Button("Open FloatingDialog").addClass("secondary").onClick(() => {
     });
     const win = new FloatingDialog({ title: "Floating window", icon: "info" });
     win
-      .content(new TextBlock("floatingDialog() content"))
+      .content(new Text("floatingDialog() content"))
       .add(
         new Button("Close")
           .addClass("secondary")

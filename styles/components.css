@@ -1,3 +1,1732 @@
-@import "./base-components.css";
-@import "./structure.css";
 @import "./components/spinner.css";
+
+.Grid { display: grid; }
+.Text { display: inline-block; }
+.ScrollViewer { min-height: 0; min-width: 0; overflow: auto; }
+.ScrollViewer-fill { display: flex; flex: 1 1 auto; flex-direction: column; }
+.SplitContainer { display: flex; flex: 1; gap: 0; min-height: 0; min-width: 0; }
+
+.InputNumber {
+  font-family: var(--dui-font-mono);
+  font-weight: 500;
+  min-width: 60px;
+  text-align: center;
+}
+
+.InputColor {
+  background: transparent;
+  border: 0;
+  height: 16px;
+  padding: var(--dui-space-1);
+  width: 32px;
+}
+
+.InputColor::-webkit-color-swatch {
+  border: none;
+  border-radius: var(--dui-radius);
+}
+
+.InputColor::-webkit-color-swatch-wrapper {
+  padding: var(--dui-space-1);
+}
+
+.Disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  pointer-events: auto;
+}
+
+.Active,
+.Active:hover {
+  background: var(--dui-color-surface-selected);
+  border-color: var(--dui-color-border);
+  color: var(--dui-color-text);
+}
+
+.Property {
+  display: inline-block;
+  font-size: var(--dui-font-size-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.PropertyValue {
+  font-family: var(--dui-font-mono);
+  text-align: right;
+  min-width: 96px;
+  white-space: nowrap;
+}
+
+.PropertyGrid {
+  container-name: property-grid;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.PropertyGrid-title,
+.PropertyGrid-header,
+.PropertyGrid-body,
+.PropertyGrid-row {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+}
+
+.PropertyGrid-title {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 600;
+  margin: var(--dui-space-3) 0 var(--dui-space-1);
+}
+
+.PropertyGrid-header {
+  border-bottom: 1px solid var(--dui-color-separator);
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 600;
+  padding: 0.4rem 0;
+}
+
+/* Shared label | value tracks so every row aligns; values take the leftover space. */
+.PropertyGrid-body,
+.PropertyGrid-body.Column {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+}
+
+/* Neutralize InputListItem chrome — PropertyGrid rows are form layout, not list picks. */
+.PropertyGrid-row.InputListItem,
+.PropertyGrid-row {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--dui-color-separator);
+  border-radius: 0;
+  cursor: default;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  overflow: visible;
+  padding: var(--dui-space-2) 0;
+  position: relative;
+}
+
+.PropertyGrid-body > .PropertyGrid-row {
+  column-gap: 0.5rem;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+/* Multi-cell rows (label + 2+ values) fall back to flex across the full width. */
+.PropertyGrid-body > .PropertyGrid-row:has(> :nth-child(3)) {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.PropertyGrid-row.InputListItem:hover,
+.PropertyGrid-row:hover {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: var(--dui-color-separator);
+  color: inherit;
+}
+
+.PropertyGrid-row:last-child {
+  border-bottom-color: transparent;
+}
+
+.PropertyGrid-cell {
+  min-width: 0;
+}
+
+.PropertyGrid-label {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.PropertyGrid-value {
+  color: var(--dui-color-text);
+  display: flex;
+  flex: 1 1 0%;
+  font-size: var(--dui-font-size-sm);
+  justify-content: flex-end;
+  min-width: 0;
+  text-align: right;
+}
+
+.PropertyGrid-value:not(:has(*)) {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.PropertyGrid-value > .InputText,
+.PropertyGrid-value > .InputSearch,
+.PropertyGrid-value > .InputTextArea,
+.PropertyGrid-value > .InputDropdown,
+.PropertyGrid-value > .InputNumber,
+.PropertyGrid-value > .InputDate,
+.PropertyGrid-value > .InputColor,
+.PropertyGrid-value > .Slider,
+.PropertyGrid-value > progress {
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+.PropertyGrid-row:has(.InputTextArea),
+.PropertyGrid-row:has(.Slider) {
+  align-items: start;
+}
+
+.PropertyGrid-row:has(.InputTextArea) .PropertyGrid-label {
+  padding-top: var(--dui-space-2);
+}
+
+@container property-grid (max-width: 11rem) {
+  .PropertyGrid-body,
+  .PropertyGrid-body.Column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .PropertyGrid-body > .PropertyGrid-row {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    grid-column: auto;
+    grid-template-columns: none;
+    padding-block: 0.4rem;
+  }
+
+  .PropertyGrid-label {
+    max-width: none;
+    white-space: normal;
+  }
+
+  .PropertyGrid-value {
+    justify-content: stretch;
+    text-align: left;
+  }
+}
+
+.WorkspacePanel {
+  background: var(--dui-surface-bg);
+  border-radius: var(--dui-radius);
+}
+
+.WorkspacePanel > .Header.is-panel-drag-handle {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.WorkspacePanel.is-panel-dragging {
+  opacity: 0.55;
+}
+
+.WorkspacePanel-float {
+  color: var(--dui-color-text-subtle);
+  cursor: pointer;
+}
+
+.WorkspacePanel-float:hover {
+  color: var(--dui-color-accent);
+}
+
+/*
+ * Shared panel chrome:
+ * Panel → CollapsiblePanel / WorkspacePanel
+ */
+.Panel {
+  background: var(--dui-surface-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+.Panel > .RibbonBar {
+  justify-content: flex-end;
+  padding: var(--dui-space-2);
+}
+
+.Panel > .RibbonBar:empty {
+  display: none;
+}
+
+.Panel > .Header .Icon:not(.CollapsiblePanel-toggle) {
+  color: var(--dui-color-text-muted);
+}
+
+.Header .Panel-close {
+  background: transparent;
+  border: 0;
+  color: var(--dui-color-text-subtle);
+  cursor: pointer;
+  min-height: 0;
+  padding: 2px;
+}
+
+.Header .Panel-close:hover,
+.Header .Panel-close:active {
+  background: transparent;
+  border-color: transparent;
+  color: var(--dui-color-text);
+}
+
+
+.Panel > .PanelContent {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: var(--dui-space-3);
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0.15rem 0.7rem 0.55rem;
+  user-select: text;
+  width: 100%;
+}
+
+.Panel > .PanelContent > .TabView {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.Panel > .PanelContent > .TabView .TabView-tabs {
+  flex-shrink: 0;
+}
+
+.Panel > .PanelContent > .TabView .TabView-content {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+.ContextModules .ModuleCount {
+  backdrop-filter: var(--dui-surface-blur);
+  background: var(--dui-color-danger);
+  border-radius: var(--dui-radius);
+  padding: 1px 3px;
+  position: absolute;
+  right: 0;
+  top: 80%;
+}
+
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz),
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz-dark) {
+  display: flex;
+  flex-direction: column;
+}
+
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz) .ag-theme-quartz,
+.CollapsiblePanel > .PanelContent:has(.ag-theme-quartz-dark) .ag-theme-quartz-dark {
+  flex: 0 0 auto;
+}
+
+
+.InputListItem .Link {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 400;
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.InputListItem:hover .Link {
+  color: var(--dui-color-text);
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+}
+
+.FloatingWindow .TabView-content .Rectangle {
+  padding: var(--dui-space-2);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+
+.SideBar .Row .Label {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  font-size: var(--dui-font-size-sm);
+  font-weight: 500;
+  width: 100px;
+}
+
+.InputListItem,
+.NavigationList-item,
+.TreeView-item {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  cursor: pointer;
+  display: flex;
+  gap: var(--dui-space-3);
+  margin: 1px 0;
+  overflow: hidden;
+  padding: var(--dui-space-2) var(--dui-space-3);
+  position: relative;
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.InputListItem:hover,
+.NavigationList-item:hover,
+.TreeView-item:hover {
+  background: var(--dui-color-surface-hover);
+}
+
+.InputListItem:hover {
+  border-color: transparent;
+  color: var(--dui-color-text);
+}
+
+.InputListItem.Active {
+  background: var(--dui-color-surface-selected);
+  border-color: transparent;
+  color: var(--dui-color-text);
+}
+
+.NavigationList-item {
+  justify-content: space-between;
+}
+
+.NavigationList-item:focus-visible,
+.TreeView-item:focus-visible {
+  border-color: color-mix(in srgb, var(--dui-color-accent) 40%, transparent);
+  outline: none;
+}
+
+.TreeView-item {
+  gap: var(--dui-space-2);
+  padding: var(--dui-space-2) var(--dui-space-3) var(--dui-space-2) calc(var(--dui-space-3) + (var(--depth, 0) * var(--dui-space-6)));
+}
+
+.TreeView-item.is-selected {
+  background: var(--dui-color-surface-selected);
+  border-color: color-mix(in srgb, var(--dui-color-accent) 28%, transparent);
+  color: var(--dui-color-text);
+}
+
+.InputListItem.LabeledBoxItem {
+  gap: var(--dui-space-3);
+  padding: var(--dui-space-2) var(--dui-space-3);
+  width: 100%;
+}
+
+.LabeledBoxItem .Checkbox {
+  flex-shrink: 0;
+}
+
+.LabeledBoxItem-icon,
+.LabeledBoxItem .material-symbols-outlined {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.InputListItem.LabeledBoxItem:hover .LabeledBoxItem-icon,
+.InputListItem.LabeledBoxItem:hover .material-symbols-outlined {
+  color: var(--dui-color-text);
+  opacity: 1;
+}
+
+.LabeledBoxItem-label {
+  flex: 1 1 auto;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.LabeledBoxItem-actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--dui-space-1);
+  margin-left: auto;
+}
+
+
+.Rectangle {
+  background: var(--dui-surface-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-width: min(fit-content, 240px);
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 7;
+}
+
+.Kbd {
+  align-items: center;
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-bottom-width: 2px;
+  border-radius: var(--dui-radius);
+  box-shadow: inset 0 -1px 0 var(--dui-color-separator);
+  color: var(--dui-color-text-muted);
+  display: inline-flex;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 500;
+  justify-content: center;
+  padding: var(--dui-space-1) var(--dui-space-2);
+  width: fit-content;
+}
+
+.Code {
+  background: var(--dui-color-surface-raised);
+  border: 0;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  display: inline-block;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.45;
+  padding: 1px 6px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.Disclaimer {
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.5;
+  padding: var(--dui-space-2) var(--dui-space-3);
+}
+
+.InputList {
+  border-radius: var(--dui-radius);
+  cursor: default;
+  font-size: var(--dui-font-size-sm);
+  min-height: fit-content;
+  overflow: hidden;
+  padding: 4px;
+  width: 100%;
+}
+
+/*
+ * CollapsiblePanel is content-sized (height: fit-content). Override Panel's
+ * fill-remaining flex so expand/collapse sizes to the body — same for WorkspacePanel.
+ */
+.CollapsiblePanel > .PanelContent {
+  flex: 0 0 auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.CollapsiblePanel > .PanelContent > .TabView {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: auto;
+}
+
+.CollapsiblePanel > .PanelContent > .TabView .TabView-content {
+  flex: 0 0 auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.CollapsiblePanel > .PanelContent > .InputList {
+  padding: 2px 4px 8px;
+}
+
+.CollapsiblePanel-toggle {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity var(--dui-transition-fast);
+}
+
+.CollapsiblePanel:hover .CollapsiblePanel-toggle {
+  opacity: 1;
+}
+
+.CollapsiblePanel.collapsed > .PanelContent {
+  display: none;
+}
+
+.CollapsiblePanel.collapsed .CollapsiblePanel-toggle {
+  transform: rotate(-90deg);
+}
+
+.Badge {
+  background: var(--dui-color-surface-raised, color-mix(in srgb, var(--dui-color-text) 6%, transparent));
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  display: inline-block;
+  font-family: var(--dui-font-mono);
+  font-size: var(--dui-font-size-xs);
+  line-height: 1.4;
+  margin: 0;
+  padding: var(--dui-space-1) var(--dui-space-2);
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.Button.primary {
+  background: var(--dui-color-accent);
+  border-color: transparent;
+  color: var(--dui-color-on-accent);
+  font-weight: 550;
+}
+
+.Button.primary:hover {
+  background: var(--dui-color-accent-hover);
+  border-color: transparent;
+  color: var(--dui-color-on-accent);
+}
+
+.Button.secondary {
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  color: var(--dui-color-text);
+}
+
+.FloatingWindow {
+  background: var(--dui-surface-overlay-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-overlay);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  max-width: min(100vw - 2rem, 100%);
+  max-height: min(100vh - 2rem, 100%);
+  min-height: 0;
+  min-width: min(20vw, 280px);
+  overflow: hidden;
+  position: absolute;
+  transition: box-shadow var(--dui-transition-medium), border-color var(--dui-transition-medium);
+  z-index: 12;
+}
+
+@keyframes floating-panel-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.FloatingWindow.is-entering {
+  animation: floating-panel-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.FloatingWindow > .Header {
+  cursor: move;
+}
+
+.FloatingWindow-tools {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+}
+
+.FloatingWindow-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+}
+
+
+.FloatingWindow.maximized {
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+}
+
+.Image,
+.SVG {
+  min-height: 1rem;
+  min-width: 1rem;
+  object-fit: contain;
+}
+
+.InputListItem .Image,
+.InputListItem .SVG {
+  filter: grayscale(100%) brightness(1.2);
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+  width: 20px;
+}
+
+.InputListItem:hover .Image,
+.InputListItem:hover .SVG {
+  filter: grayscale(0%);
+  opacity: 0.85;
+}
+
+.InputListItem:hover .material-symbols-outlined {
+  color: var(--dui-color-text);
+  opacity: 0.9;
+}
+
+
+.RibbonBar {
+  align-items: stretch;
+  flex-shrink: 0;
+  gap: var(--dui-space-2);
+}
+
+.RibbonBar .Button {
+  align-items: center;
+  backdrop-filter: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 600;
+  gap: var(--dui-space-2);
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1.2;
+  max-width: 104px;
+  min-height: 0;
+  min-width: 64px;
+  padding: 6px 10px 4px;
+  position: relative;
+  transition:
+    background-color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast),
+    color var(--dui-transition-fast);
+}
+
+.RibbonBar .Button:hover {
+  background: color-mix(in srgb, var(--dui-color-accent) 6%, transparent 94%);
+  border-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+  color: var(--dui-color-text);
+}
+
+.RibbonBar .Button:active {
+  background: transparent;
+}
+
+.RibbonBar .Button.Active,
+.RibbonBar .Button.selected,
+.RibbonBar .Button.Active:hover,
+.RibbonBar .Button.selected:hover {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: var(--dui-color-accent);
+  color: var(--dui-color-text);
+}
+
+.RibbonBar .Button:focus-visible {
+  outline: 2px solid var(--dui-color-accent);
+  outline-offset: -2px;
+}
+
+.RibbonBar .Button .Icon,
+.RibbonBar .Button .material-symbols-outlined {
+  color: inherit;
+  display: block;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+.RibbonBar .Button.Active .Icon,
+.RibbonBar .Button.Active .material-symbols-outlined,
+.RibbonBar .Button.selected .Icon,
+.RibbonBar .Button.selected .material-symbols-outlined {
+  color: var(--dui-color-accent);
+}
+
+
+
+.NodeGraphControls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: var(--dui-space-2);
+  left: var(--dui-space-2);
+  position: absolute;
+  top: var(--dui-space-2);
+  z-index: 2;
+
+}
+
+
+.Column {
+  display: flex;
+  flex-direction: column;
+}
+
+#LayoutToggleBar {
+  margin-right: var(--dui-space-4);
+}
+
+
+
+.HeaderBar .Row {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.ModuleCount{
+  font-size: var(--dui-font-size-xs);
+  position: absolute;
+  bottom: 50%;
+  right: 0;
+}
+
+
+
+
+
+
+.Tab .Image {
+  flex-shrink: 0;
+  height: 14px;
+  width: 14px;
+}
+
+.Title {
+  color: var(--dui-color-text);
+  font-size: var(--dui-font-size-lg);
+  font-weight: 600;
+  letter-spacing: var(--dui-letter-spacing);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MainPanel-header {
+  border-bottom: 1px solid var(--dui-color-border);
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+}
+
+
+.TabView {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - var(--dui-sidebar-width) - var(--dui-space-4));
+  overflow: hidden;
+  transition:
+    0.3s ease,
+    left 0.3s ease;
+}
+
+.TabView .TabView-content {
+  display: block;
+  min-height: 3.5rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Editor sidebar rows use InputListItem layout but are not list navigation */
+.TabView .TabView-content .InputListItem {
+  cursor: default;
+}
+
+.TabView-tabs,
+.TabView .TabView-tabs {
+  align-items: stretch;
+  background: transparent;
+  border-bottom: 1px solid var(--dui-color-separator);
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.TabView-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.TabView-tabs .Tab {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 600;
+  gap: 6px;
+  margin-bottom: -1px;
+  max-width: 200px;
+  padding: 0.4rem 0.7rem;
+  transition:
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+  white-space: nowrap;
+}
+
+.TabView-tabs .Tab .Title {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: 1.2;
+}
+
+.TabView-tabs .Tab:hover {
+  background: transparent;
+  color: var(--dui-color-text);
+}
+
+.TabView-tabs .Tab.active,
+.TabView-tabs .Tab.selected {
+  background: transparent;
+  border-bottom-color: var(--dui-color-accent);
+  color: var(--dui-color-text);
+}
+
+.Tooltip {
+  background: var(--dui-surface-overlay-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-md);
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 500;
+  left: 100%;
+  margin-left: 8px;
+  opacity: 0;
+  padding: 5px 8px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity var(--dui-transition-fast);
+  white-space: nowrap;
+  z-index: 10000;
+}
+
+.Tooltip--portal {
+  left: auto;
+  margin-left: 0;
+  top: auto;
+}
+
+.Tooltip--light {
+  background: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: var(--dui-shadow-md);
+  color: #1d1d1f;
+}
+
+.Tooltip--above {
+  left: 50%;
+  margin-left: 0;
+  margin-bottom: 8px;
+  top: auto;
+  bottom: 100%;
+  transform: translateX(-50%);
+}
+
+.Tooltip.visible {
+  opacity: 1;
+}
+
+
+
+
+
+.Resizer {
+  background: transparent;
+  flex-shrink: 0;
+  position: relative;
+  touch-action: none;
+  transition: background var(--dui-transition-fast);
+  z-index: 100;
+}
+
+.Resizer::before {
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+  position: absolute;
+}
+
+.Resizer:hover,
+.Resizer.active {
+  background: var(--dui-color-surface-hover);
+}
+
+.Resizer-left,
+.Resizer-right {
+  cursor: col-resize;
+  width: 4px;
+}
+
+.Resizer-left::before,
+.Resizer-right::before {
+  background: var(--dui-color-border-strong);
+  border-radius: 1px;
+  height: 24px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+}
+
+.Resizer-bottom {
+  cursor: row-resize;
+  height: 4px;
+}
+
+.Resizer-bottom::before {
+  background: var(--dui-color-border-strong);
+  border-radius: 1px;
+  height: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+}
+
+
+.ResizerOverlay {
+  background: transparent;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+
+.NavigationView {
+  --dui-sidebar-width: 240px;
+  --dui-sidebar-min-width: 180px;
+  --dui-sidebar-max-width: 280px;
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.NavigationView > .SideBar {
+  border-right: 1px solid var(--dui-color-border);
+  display: flex;
+  flex: 0 0 var(--dui-sidebar-width);
+  flex-direction: column;
+  max-width: var(--dui-sidebar-max-width);
+  min-height: 0;
+  min-width: var(--dui-sidebar-min-width);
+  overflow: hidden;
+  width: var(--dui-sidebar-width);
+}
+
+.NavigationView.is-sidebar-hidden > .SideBar {
+  display: none;
+}
+
+.NavigationView > .Resizer-right {
+  flex: 0 0 4px;
+}
+
+.NavigationView.is-sidebar-hidden > .Resizer-right {
+  display: none;
+}
+
+.SideBar.SideBar-borderless {
+  border-right: none;
+}
+
+.SideBar-header,
+.SideBar-footer {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.SideBar-header {
+  background: var(--dui-surface-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border-bottom: 1px solid var(--dui-color-border);
+  padding: 0.75rem 1rem;
+}
+
+.SideBar-header:empty,
+.SideBar-footer:empty {
+  display: none;
+}
+
+.SideBar-titleRow {
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.SideBar-titleRow > .Title,
+.SideBar-header .Title {
+  flex: 1 1 auto;
+  font-size: var(--dui-font-size-xl);
+  line-height: 1.3;
+  min-width: 0;
+  white-space: normal;
+}
+
+.SideBar-toggle {
+  flex: 0 0 auto;
+}
+
+
+
+.NavigationView > .MainPanel {
+  background: var(--dui-color-bg);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ——— Compact macOS refinements (min build) ——— */
+
+.Card {
+  background: var(--dui-surface-raised-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-sm);
+  color: var(--dui-color-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dui-space-2);
+  padding: var(--dui-space-3);
+}
+
+.Link {
+  color: var(--dui-color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dui-space-2);
+  font-size: var(--dui-font-size-md);
+  font-weight: 500;
+  margin-top: 0;
+  text-decoration: none;
+}
+
+.Link:hover {
+  color: var(--dui-color-accent-hover);
+}
+
+.Line,
+hr {
+  background: var(--dui-color-separator);
+  border: 0;
+  height: 1px;
+  margin: var(--dui-space-3) 0;
+  width: 100%;
+}
+
+.InputText,
+.InputSearch,
+.InputTextArea,
+.InputDropdown,
+.InputNumber,
+.InputDate-input,
+input.InputText,
+input.InputSearch,
+input.InputNumber,
+textarea.InputTextArea,
+select.InputDropdown {
+  box-sizing: border-box;
+  line-height: 1.3;
+  width: 100%;
+}
+
+.InputTextArea,
+textarea.InputTextArea {
+  display: block;
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.InputText::placeholder,
+.InputSearch::placeholder,
+.InputTextArea::placeholder,
+.InputDate-input::placeholder {
+  color: var(--dui-color-text-subtle);
+}
+
+.Checkbox,
+input.Checkbox,
+input[type="checkbox"].Checkbox,
+.Card-checkbox {
+  accent-color: var(--dui-color-accent);
+  cursor: pointer;
+  height: 14px;
+  margin: 0;
+  min-height: 14px;
+  padding: 0;
+  width: 14px;
+}
+
+.ThemeToggle {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  margin: 0;
+}
+
+.ThemeToggle-input {
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.ThemeToggle-icon {
+  background: var(--dui-color-control);
+  border: 1px solid var(--dui-color-border);
+  border-radius: 999px;
+  display: inline-block;
+  height: 18px;
+  position: relative;
+  width: 32px;
+}
+
+.ThemeToggle-icon::after {
+  background: var(--dui-color-text-muted);
+  border-radius: 50%;
+  content: "";
+  height: 12px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  transition: transform var(--dui-transition-fast), background var(--dui-transition-fast);
+}
+
+.ThemeToggle-input:checked + .ThemeToggle-icon::after {
+  background: var(--dui-color-accent);
+  transform: translateX(14px);
+}
+
+.ThemeToggle-input:focus-visible + .ThemeToggle-icon {
+  box-shadow: var(--dui-focus-ring);
+}
+
+.ThemeToggle-part {
+  display: none;
+}
+
+label,
+.Label {
+  color: var(--dui-color-text-muted);
+  display: block;
+  font-size: var(--dui-font-size-sm);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dui-space-3);
+  width: 100%;
+}
+
+.Slider {
+  align-items: center;
+  display: flex;
+  gap: var(--dui-space-2);
+  min-width: 0;
+  width: 100%;
+}
+
+.Slider-range,
+input.Slider-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  flex: 1 1 auto;
+  height: var(--dui-space-6);
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.Slider-range::-webkit-slider-runnable-track {
+  background: var(--dui-color-control);
+  border-radius: 999px;
+  height: 6px;
+}
+
+.Slider-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--dui-color-accent);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 14px;
+  margin-top: -4px;
+  width: 14px;
+}
+
+.Slider-range:hover::-webkit-slider-thumb {
+  background: var(--dui-color-accent-hover);
+}
+
+.Slider-range:focus-visible {
+  outline: none;
+}
+
+.Slider-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--dui-focus-ring);
+}
+
+.Slider-range::-moz-range-track {
+  background: var(--dui-color-control);
+  border: none;
+  border-radius: 999px;
+  height: 6px;
+}
+
+.Slider-range::-moz-range-thumb {
+  background: var(--dui-color-accent);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+}
+
+.Slider-range:hover::-moz-range-thumb {
+  background: var(--dui-color-accent-hover);
+}
+
+.Slider-range:focus-visible::-moz-range-thumb {
+  box-shadow: var(--dui-focus-ring);
+}
+
+.Slider-value,
+.Slider .InputNumber,
+.Slider input.InputNumber {
+  flex: 0 0 4.25rem;
+  min-width: 4.25rem;
+  text-align: right;
+  width: 4.25rem;
+}
+
+progress {
+  appearance: none;
+  background: var(--dui-color-control);
+  border: none;
+  border-radius: var(--dui-radius);
+  height: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--dui-color-control);
+  border-radius: var(--dui-radius);
+}
+
+progress::-webkit-progress-value {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+}
+
+progress::-moz-progress-bar {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+}
+
+.InputDate {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--dui-space-2);
+  position: relative;
+}
+
+.Flyout {
+  background: var(--dui-surface-overlay-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-md);
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+}
+
+/* Generic header layout; panel chrome overrides live in the shared panel header block above */
+.Header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  gap: 0.4rem;
+  justify-content: space-between;
+  padding: 0.4rem 0.65rem;
+}
+
+.Toast {
+  align-items: center;
+  background: var(--dui-surface-overlay-bg);
+  backdrop-filter: var(--dui-surface-blur);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  box-shadow: var(--dui-shadow-overlay);
+  color: var(--dui-color-text);
+  display: flex;
+  font-size: var(--dui-font-size-md);
+  gap: var(--dui-space-3);
+  margin: var(--dui-space-3);
+  max-width: 360px;
+  padding: 10px 12px;
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  z-index: 10050;
+}
+
+.Toast--success {
+  border-color: color-mix(in srgb, var(--dui-color-success) 40%, transparent);
+}
+
+.Toast--error {
+  border-color: color-mix(in srgb, var(--dui-color-danger) 40%, transparent);
+}
+
+.Toast--warning {
+  border-color: color-mix(in srgb, var(--dui-color-warning) 40%, transparent);
+}
+
+.Toast--info {
+  border-color: color-mix(in srgb, var(--dui-color-info) 40%, transparent);
+}
+
+.Toast-close {
+  background: transparent;
+  border: none;
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  margin-left: auto;
+  min-height: auto;
+  padding: 2px;
+}
+
+.Toast--fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.StatusBar {
+  align-items: center;
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.StatusBar-track,
+.StatusBar .track,
+.StatusBar--simple {
+  background: var(--dui-color-control);
+  border-radius: var(--dui-radius);
+  height: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.StatusBar-fill,
+.StatusBar .fill {
+  background: var(--dui-color-accent);
+  border-radius: var(--dui-radius);
+  height: 100%;
+  transition: width var(--dui-transition-medium);
+  width: 0%;
+}
+
+.StatusBar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.StatusBar-meta {
+  align-items: center;
+  color: var(--dui-color-text-muted);
+  display: flex;
+  font-size: var(--dui-font-size-sm);
+  justify-content: space-between;
+  padding: 4px 2px;
+}
+
+.SideBar {
+  background: var(--dui-surface-bg);
+  backdrop-filter: var(--dui-surface-blur);
+}
+
+.Icon,
+.Operator,
+.material-symbols-outlined {
+  font-size: var(--dui-font-size-xl);
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
+  line-height: 1;
+}
+
+/* ── Reorderable list ─────────────────────────────────────────────── */
+
+.SortableList {
+  user-select: none;
+}
+
+.SortableList-item {
+  cursor: grab;
+}
+
+.SortableList-item:active {
+  cursor: grabbing;
+}
+
+.SortableList-item .SortableList-handle {
+  color: var(--dui-color-text-muted);
+  cursor: grab;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity var(--dui-transition-fast), color var(--dui-transition-fast);
+}
+
+.SortableList-item:hover .SortableList-handle {
+  opacity: 0.9;
+}
+
+.SortableList-item.is-dragging {
+  height: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 !important;
+  pointer-events: none;
+  border: none !important;
+}
+
+.SortableList-placeholder {
+  background: color-mix(in srgb, var(--dui-color-accent) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--dui-color-accent) 55%, transparent);
+  border-radius: var(--dui-radius);
+  box-sizing: border-box;
+  margin: 1px 0;
+  pointer-events: none;
+  transition: background var(--dui-transition-fast);
+}
+
+.SortableList-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Drill-down list / tree view ──────────────────────────────────── */
+
+.NavigationList,
+.TreeView {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.NavigationList-back {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  line-height: 1;
+  padding: var(--dui-space-1);
+  transition:
+    background var(--dui-transition-fast),
+    color var(--dui-transition-fast),
+    border-color var(--dui-transition-fast);
+}
+
+.NavigationList-back:hover {
+  background: var(--dui-color-surface-hover);
+  color: var(--dui-color-text);
+}
+
+.NavigationList-back:focus-visible {
+  border-color: var(--dui-color-accent);
+  outline: none;
+}
+
+.NavigationList-content,
+.TreeView-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dui-space-1);
+  min-width: 0;
+  padding: var(--dui-space-2);
+}
+
+.NavigationList-empty,
+.TreeView-empty {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.3;
+  padding: var(--dui-space-3);
+  text-align: center;
+}
+
+.NavigationList-label,
+.TreeView-label {
+  flex: 1;
+  font-size: var(--dui-font-size-sm);
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.NavigationList-chevron {
+  color: var(--dui-color-text-muted);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.NavigationList-item.has-children:hover .NavigationList-chevron {
+  color: var(--dui-color-text);
+  opacity: 1;
+}
+
+.TreeView-toggle {
+  align-items: center;
+  color: var(--dui-color-text-muted);
+  display: inline-flex;
+  flex-shrink: 0;
+  height: var(--dui-font-size-xl);
+  justify-content: center;
+  width: var(--dui-font-size-xl);
+}
+
+.TreeView-toggle.is-leaf {
+  cursor: default;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.TreeView-item.has-children .TreeView-toggle {
+  border-radius: var(--dui-radius);
+  cursor: pointer;
+}
+
+.TreeView-item.has-children .TreeView-toggle:hover {
+  background: var(--dui-color-control-hover);
+  color: var(--dui-color-text);
+}
+
+.TreeView-children {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+

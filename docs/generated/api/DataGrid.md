@@ -4,15 +4,15 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Rectangle`, `ag-grid-custom`
 
-AG Grid-backed spreadsheet panel used by `DrawUI.Spreadsheet()`.
+AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use.
 
 ## Import
 
 ```js
-import { DataGrid } from "drawui";
+import { DataGrid } from "ifcopenshell/gui";
 ```
 
 ## Examples

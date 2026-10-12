@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `drawui`  
-**Emitted class(es):** `kbd`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `Kbd`
 
 Keyboard key chip.
 
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Kbd } from "drawui";
+import { Kbd } from "ifcopenshell/gui";
 ```
 
 ## Examples

@@ -126,4 +126,13 @@ class Chart extends Rectangle {
     }
 }
 
+export function createChart({
+  chartConfiguration,
+  height = "240px",
+  width = "100%",
+  minHeight,
+} = {}) {
+  return new Chart({ chartConfiguration, height, width, minHeight });
+}
+
 export { Chart };

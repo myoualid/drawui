@@ -3,10 +3,6 @@
     {
       "api": "new Grid()",
       "notes": "Package-owned CSS grid layout primitive."
-    },
-    {
-      "api": "new IconButton(label, options)",
-      "notes": "Tile-style action button without module-local styling."
     }
   ],
   "symbols": [
@@ -15,7 +11,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Base chainable wrapper around a DOM node."
@@ -25,7 +21,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Link"
@@ -34,10 +30,10 @@
     },
     {
       "name": "Image",
-      "category": "text",
+      "category": "media",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Image"
@@ -46,10 +42,10 @@
     },
     {
       "name": "Svg",
-      "category": "text",
+      "category": "media",
       "status": "experimental",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "SVG"
@@ -57,41 +53,33 @@
       "notes": "Supports fetch, clone, and ID retargeting for reusable SVGs."
     },
     {
-      "name": "Paragraph",
+      "name": "Text",
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
-      "emits": [],
-      "notes": "Semantic `p` wrapper."
+      "emits": [
+        "Text"
+      ],
+      "notes": "Inline text. Base for titles, captions, badges, and other text chips."
     },
     {
       "name": "Heading",
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Semantic heading wrapper (`h1`–`h6` via level option)."
-    },
-    {
-      "name": "Span",
-      "category": "text",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "Generic inline wrapper."
     },
     {
       "name": "Container",
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Generic block wrapper."
@@ -101,7 +89,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Row",
@@ -114,7 +102,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Scrollable container wrapper."
@@ -124,7 +112,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Grid"
@@ -136,7 +124,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Rectangle"
@@ -144,43 +132,21 @@
       "notes": "Generic panel container."
     },
     {
-      "name": "Label",
-      "category": "inputs",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "Label wrapper for form controls."
-    },
-    {
       "name": "Form",
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Form wrapper with submit helpers."
-    },
-    {
-      "name": "TextBlock",
-      "category": "text",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "TextBlock"
-      ],
-      "notes": "Inline text primitive."
     },
     {
       "name": "Caption",
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Thin `small` wrapper."
@@ -190,7 +156,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Title"
@@ -202,10 +168,10 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "disclaimer"
+        "Disclaimer"
       ],
       "notes": "Muted helper or legal copy."
     },
@@ -214,7 +180,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Code"
@@ -226,19 +192,19 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "kbd"
+        "Kbd"
       ],
       "notes": "Keyboard shortcut chip."
     },
     {
       "name": "Badge",
-      "category": "text",
+      "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Badge"
@@ -247,10 +213,10 @@
     },
     {
       "name": "Canvas",
-      "category": "text",
+      "category": "media",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Canvas"
@@ -262,7 +228,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Card"
@@ -274,7 +240,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Vertical spacer between stacked items."
@@ -284,7 +250,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Horizontal spacer between inline or row items."
@@ -294,7 +260,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "drag-handle",
@@ -307,7 +273,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Tab"
@@ -315,23 +281,11 @@
       "notes": "Tab chrome created by `TabView.addTab()` — not usually constructed directly."
     },
     {
-      "name": "ToolbarButton",
-      "category": "inputs",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "Button"
-      ],
-      "notes": "Compact button for toolbars and field-control wrappers."
-    },
-    {
       "name": "center",
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "centered"
@@ -343,7 +297,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputText"
@@ -355,7 +309,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputSearch"
@@ -364,10 +318,10 @@
     },
     {
       "name": "Icon",
-      "category": "text",
+      "category": "media",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "material-symbols-outlined",
@@ -380,7 +334,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputTextArea"
@@ -392,7 +346,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputDropdown"
@@ -404,7 +358,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Checkbox"
@@ -416,7 +370,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputColor"
@@ -428,7 +382,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputNumber"
@@ -440,7 +394,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputNumber"
@@ -452,7 +406,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Slider"
@@ -461,10 +415,10 @@
     },
     {
       "name": "LineBreak",
-      "category": "text",
+      "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "LineBreak"
@@ -473,10 +427,10 @@
     },
     {
       "name": "Line",
-      "category": "text",
+      "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Line"
@@ -488,7 +442,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Button"
@@ -496,44 +450,11 @@
       "notes": "Button primitive with optional prepended icon."
     },
     {
-      "name": "IconButton",
-      "category": "inputs",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "Button",
-        "SquareButton",
-        "SquareButton-label",
-        "SquareButton-meta",
-        "Active",
-        "Button--active"
-      ],
-      "notes": "Tile-style button for icon + label + meta content."
-    },
-    {
-      "name": "RibbonButton",
-      "category": "inputs",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "Button",
-        "RibbonButton",
-        "RibbonButton-label",
-        "Active",
-        "selected"
-      ],
-      "notes": "Borderless icon+label control with tab-style accent when selected. Use in RibbonBar."
-    },
-    {
       "name": "ProgressBar",
-      "category": "inputs",
+      "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Native progress wrapper."
@@ -543,7 +464,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "TabView",
@@ -560,7 +481,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputList",
@@ -573,7 +494,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputListItem"
@@ -585,7 +506,7 @@
       "category": "inputs",
       "status": "experimental",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "InputDate",
@@ -595,27 +516,27 @@
       "notes": "Composite date and time picker."
     },
     {
-      "name": "ProgressRing",
-      "category": "inputs",
+      "name": "LoadingCube",
+      "category": "feedback",
       "status": "experimental",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "spinner-container",
+        "LoadingCube",
         "spinner-wrapper",
         "spinner",
         "spinner-text",
         "spinner-percentage"
       ],
-      "notes": "Overlay spinner with text and percentage states."
+      "notes": "Overlay loading cube with text and percentage states."
     },
     {
       "name": "Tooltip",
-      "category": "inputs",
+      "category": "overlays",
       "status": "experimental",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Tooltip",
@@ -625,93 +546,66 @@
       "notes": "Hover tooltip with theme variants."
     },
     {
-      "name": "DrawUI",
-      "category": "facade",
+      "name": "World",
+      "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/layout"
       ],
-      "emits": [],
-      "notes": "Main facade for primitives and composed helpers. Emitted classes vary by factory method."
+      "emits": [
+        "World"
+      ],
+      "notes": "Application shell. `new World()` builds the default ribbon, regions, and viewport. `world.mount(document.body)` attaches it."
     },
     {
-      "name": "ContentPanel",
+      "name": "Panel",
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "ContentPanel",
+        "Panel",
         "Rectangle",
         "Header",
         "PanelContent",
         "RibbonBar"
       ],
-      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content."
+      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `ifcopenshell/gui`. The docked workspace panel is also named Panel and imports from `ifcopenshell/layout`."
     },
     {
       "name": "FloatingDialog",
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "ContentPanel",
+        "Panel",
         "Header",
         "PanelContent",
         "RibbonBar"
       ],
-      "notes": "Lightweight floating panel built on `ContentPanel`."
-    },
-    {
-      "name": "WorkspacePanel",
-      "category": "panels",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "WorkspacePanel",
-        "CollapsiblePanel",
-        "ContentPanel",
-        "Header",
-        "PanelContent",
-        "RibbonBar"
-      ],
-      "notes": "Collapsible ContentPanel mounted as a tab in a WorkspaceRegion (left/right/bottom)."
-    },
-    {
-      "name": "Header",
-      "category": "panels",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [
-        "Header"
-      ],
-      "notes": "Shared title/icon/actions row for panel chrome (`ContentPanel`, `CollapsiblePanel`, `WorkspacePanel`)."
+      "notes": "Lightweight floating panel built on `Panel`."
     },
     {
       "name": "RibbonBar",
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "RibbonBar"
       ],
-      "notes": "Horizontal ribbon / action row for panel footers or the app shell. Pair with RibbonButton."
+      "notes": "Horizontal ribbon / action row for panel footers or the app shell. Children are Buttons."
     },
     {
       "name": "Flyout",
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Flyout",
@@ -731,56 +625,36 @@
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "CollapsiblePanel",
         "CollapsiblePanel-toggle",
-        "ContentPanel",
+        "Panel",
         "Header",
         "PanelContent",
         "collapsed"
       ],
-      "notes": "ContentPanel with a header collapse toggle."
-    },
-    {
-      "name": "InstructionPanel",
-      "category": "panels",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "Titled panel of keyboard / pointer instruction rows."
-    },
-    {
-      "name": "InstructionLine",
-      "category": "panels",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "One keyboard shortcut row: key chip + description."
+      "notes": "Panel with a header collapse toggle."
     },
     {
       "name": "SplitContainer",
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "split-container"
+        "SplitContainer"
       ],
       "notes": "Flex host for horizontal/vertical split panes."
     },
     {
       "name": "Toast",
-      "category": "panels",
+      "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Toast",
@@ -797,7 +671,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Operator"
@@ -809,55 +683,45 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "workspace-menu-item"
+        "LabeledBoxItem"
       ],
       "notes": "Checkbox + icon + label menu row for workspace menus."
     },
     {
-      "name": "WorkspaceLayout",
+      "name": "Layout",
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/layout"
       ],
       "emits": [
         "World",
-        "workspace-layout",
-        "WorkspaceStack"
+        "WorkspaceStack",
+        "Resizer"
       ],
-      "notes": "Applies workspace grid, resizers, and stacked CollapsiblePanel / WorkspacePanel roots. Undock transfers content into a FloatingWindow."
+      "notes": "Workspace shell, layout manager, and docked panel. `new World()`, `new Layout(config).init(world)`, `new Panel(...)`. Import from `ifcopenshell/layout`."
     },
     {
-      "name": "buildWorldFromConfig",
+      "name": "Panel",
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/layout"
       ],
       "emits": [
-        "World"
+        "CollapsiblePanel"
       ],
-      "notes": "Build the `#World` DOM tree from declarative config before `WorkspaceLayout.init()`."
-    },
-    {
-      "name": "createDefaultWorldConfig",
-      "category": "shell",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "Default workspace shell config with stable region ids for `WorkspaceLayout`."
+      "notes": "Docked workspace panel. `new Panel({ title, position, tabId, tabLabel })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`."
     },
     {
       "name": "FloatingWindow",
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "FloatingWindow",
@@ -880,13 +744,12 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "dui-drill",
-        "dui-drill-header",
-        "dui-drill-item",
-        "NavigableList"
+        "NavigationList",
+        "NavigationList-item",
+        "NavigationList-back"
       ],
       "notes": "One-level-at-a-time hierarchical navigation with back control."
     },
@@ -895,14 +758,14 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "dui-tree",
-        "dui-tree-item",
-        "dui-tree-toggle",
-        "dui-tree-label",
-        "dui-tree-children",
+        "TreeView",
+        "TreeView-item",
+        "TreeView-toggle",
+        "TreeView-label",
+        "TreeView-children",
         "is-expanded",
         "is-selected"
       ],
@@ -913,45 +776,45 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Markdown"
       ],
-      "notes": "Markdown (or sanitized HTML) renderer. Min build uses the built-in converter; full build uses Showdown + Highlight.js when those peers are present."
+      "notes": "Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `ifcopenshell/gui`."
     },
     {
       "name": "Chart",
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Rectangle",
         "chart-ui-component"
       ],
-      "notes": "Chart.js-backed visualization panel used by `DrawUI.Chart()`."
+      "notes": "Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use."
     },
     {
       "name": "DataGrid",
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Rectangle",
         "ag-grid-custom"
       ],
-      "notes": "AG Grid-backed spreadsheet panel used by `DrawUI.Spreadsheet()`."
+      "notes": "AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use."
     },
     {
       "name": "GanttChart",
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "Rectangle",
@@ -964,13 +827,13 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
-        "reorderable-list",
-        "reorderable-item",
-        "drag-handle",
-        "reorderable-placeholder",
+        "SortableList",
+        "SortableList-item",
+        "SortableList-handle",
+        "SortableList-placeholder",
         "is-dragging",
         "InputList",
         "InputListItem",
@@ -983,7 +846,7 @@
       "category": "overlays",
       "status": "experimental",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Radial interaction overlay."
@@ -993,7 +856,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "AppShell",
@@ -1007,7 +870,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "NavigationView",
@@ -1021,7 +884,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "PropertyGrid",
@@ -1034,7 +897,7 @@
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "dui-node-graph",
@@ -1045,10 +908,10 @@
     },
     {
       "name": "StatusBar",
-      "category": "panels",
+      "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "StatusBar"
@@ -1060,7 +923,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "ThemeToggle"
@@ -1072,7 +935,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [
         "PropertyGrid-row"
@@ -1081,10 +944,10 @@
     },
     {
       "name": "ICONS",
-      "category": "facade",
+      "category": "media",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Material Symbols icon name constants."
@@ -1094,7 +957,7 @@
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Attaches drag behavior to a panel via a header handle element."
@@ -1104,7 +967,7 @@
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Attaches edge resize behavior to a floating panel."
@@ -1114,7 +977,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Creates a pointer-driven flex size resizer between siblings."
@@ -1124,7 +987,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Builds a resizer control for a split-pane child index."
@@ -1134,23 +997,28 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "drawui"
+        "ifcopenshell/gui"
       ],
       "emits": [],
       "notes": "Creates a left/right/bottom workspace layout resizer handle."
-    },
-    {
-      "name": "buildWorkspaceDockHandlers",
-      "category": "shell",
-      "status": "stable",
-      "entrypoints": [
-        "drawui"
-      ],
-      "emits": [],
-      "notes": "Returns dock/undock handlers for WorkspacePanel chrome wired to a WorkspaceLayout."
     }
   ],
   "cssEntryPoints": [
+    {
+      "path": "styles/peers.css",
+      "status": "stable",
+      "purpose": "Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Included in the browser bundle dist/gui.css."
+    },
+    {
+      "path": "styles/gui.css",
+      "status": "stable",
+      "purpose": "UI library: tokens, components, icons, shell, pie menu, markdown, and themes. The browser bundle dist/gui.css also includes optional widget styles. No workspace grid."
+    },
+    {
+      "path": "styles/layout.css",
+      "status": "stable",
+      "purpose": "Workspace grid, region tracks, resizers, and drop targets. Load after gui.css."
+    },
     {
       "path": "styles/core.css",
       "status": "stable",
@@ -1162,14 +1030,9 @@
       "purpose": "Package-owned `--dui-*` design tokens."
     },
     {
-      "path": "styles/reset.css",
+      "path": "styles/rules.css",
       "status": "stable",
-      "purpose": "Scoped reset helpers."
-    },
-    {
-      "path": "styles/primitives.css",
-      "status": "stable",
-      "purpose": "Base primitive classes."
+      "purpose": "Scoped rules helpers."
     },
     {
       "path": "styles/components.css",
@@ -1190,6 +1053,11 @@
       "path": "styles/themes/light.css",
       "status": "stable",
       "purpose": "Light theme token values."
+    },
+    {
+      "path": "styles/components/shell.css",
+      "status": "stable",
+      "purpose": "App shell sidebar and navigation layout."
     }
   ]
 }

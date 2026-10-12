@@ -3,8 +3,8 @@
 # StatusBar
 
 **Status:** Stable  
-**Category:** panels  
-**Import:** `drawui`  
+**Category:** feedback  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `StatusBar`
 
 Application status bar with message regions.
@@ -12,7 +12,7 @@ Application status bar with message regions.
 ## Import
 
 ```js
-import { StatusBar } from "drawui";
+import { StatusBar } from "ifcopenshell/gui";
 ```
 
 ## Examples

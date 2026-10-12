@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** None by default
 
 Form wrapper with submit helpers.
@@ -12,7 +12,7 @@ Form wrapper with submit helpers.
 ## Import
 
 ```js
-import { Form } from "drawui";
+import { Form } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -36,19 +36,19 @@ const nameInput = new InputText();
     .setStyle("display", ["flex"])
     .setStyle("flexDirection", ["column"])
     .gap("0.5rem")
-    .add(new Label("Name"))
+    .add(new Text("Name"))
     .add(nameInput)
-    .add(new Label("Email"))
+    .add(new Text("Email"))
     .add(emailInput)
-    .add(new Label("Role"))
+    .add(new Text("Role"))
     .add(roleSelect)
-    .add(new Label("Notes"))
+    .add(new Text("Notes"))
     .add(notes)
     .add(
       new StackPanel({ isVertical: false })
         .gap("0.5rem")
         .add(new Checkbox(true).addClass("Card-checkbox"))
-        .add(new TextBlock("Email me updates")),
+        .add(new Text("Email me updates")),
     )
     .add(new Spacer("0.5rem"))
     .add(actions);

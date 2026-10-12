@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `drag-handle`, `resize-handle`
 
 Drag / resize handle element. Pass `"drag"` or `"resize"` to set the handle class.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Handle } from "drawui";
+import { Handle } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -35,7 +35,7 @@ return row()
           .setStyle("cursor", ["grab"])
           .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
       )
-      .add(new TextBlock("Draggable row")),
+      .add(new Text("Draggable row")),
   );
 ```
 

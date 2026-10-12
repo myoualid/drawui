@@ -1,6 +1,6 @@
-import { StackPanel, TextBlock, Container } from "../../primitives/ui.js";
+import { StackPanel, Text, Container } from "../../primitives/ui.js";
 
-/** @category Panels */
+/** @category Feedback */
 class StatusBar extends StackPanel {
     constructor(options = {}) {
         super({ isVertical: false });
@@ -20,66 +20,12 @@ class StatusBar extends StackPanel {
         this.progress = 0;
         this.visible = false;
         this.parentContainer = null;
-        this.boundSignalHandlers = [];
 
         this.setClass("StatusBar");
         this.dom.style.zIndex = String(this.options.zIndex);
         this.dom.style.transition = `opacity ${this.options.fadeTime}ms ease`;
         this.dom.style.display = "none";
         this.createDom();
-
-        if (options.context) {
-            this.bindContextSignals(options.context);
-        }
-    }
-
-    bindContextSignals(context) {
-        if (!context?.signals) {
-            return this;
-        }
-
-        const bind = (signalName, handler) => {
-            const signal = context.signals[signalName];
-
-            if (!signal || typeof signal.add !== "function") {
-                return;
-            }
-
-            signal.add(handler);
-            this.boundSignalHandlers.push({ signal, handler });
-        };
-
-        bind("startLoading", (text) => {
-            this.show();
-            this.update(0, text || this.options.initialText);
-        });
-
-        bind("progressLoading", (progress, text) => {
-            this.update(progress, text);
-        });
-
-        bind("endLoading", () => {
-            this.update(1);
-            this.hide();
-        });
-
-        bind("fakeProgress", (durationSeconds = 1) => {
-            this.show();
-            const startTime = Date.now();
-            const intervalId = window.setInterval(() => {
-                const elapsedSeconds = (Date.now() - startTime) / 1000;
-                const progress = Math.min(elapsedSeconds / durationSeconds, 1);
-
-                this.update(progress);
-
-                if (progress >= 1) {
-                    window.clearInterval(intervalId);
-                    this.hide();
-                }
-            }, 100);
-        });
-
-        return this;
     }
 
     createDom() {
@@ -89,13 +35,13 @@ class StatusBar extends StackPanel {
             const textContainer = new Container().addClass("StatusBar-meta");
 
             if (this.options.showText) {
-                this.textElement = new TextBlock(this.options.initialText);
+                this.textElement = new Text(this.options.initialText);
                 this.textElement.setClass("StatusBar-text");
                 textContainer.add(this.textElement);
             }
 
             if (this.options.showPercentage) {
-                this.percentageElement = new TextBlock("0%").addClass("StatusBar-percentage").dom;
+                this.percentageElement = new Text("0%").addClass("StatusBar-percentage").dom;
                 textContainer.dom.appendChild(this.percentageElement);
             }
 
@@ -166,13 +112,6 @@ class StatusBar extends StackPanel {
     }
 
     destroy() {
-        this.boundSignalHandlers.forEach(({ signal, handler }) => {
-            if (typeof signal.remove === "function") {
-                signal.remove(handler);
-            }
-        });
-
-        this.boundSignalHandlers = [];
         this.hide();
     }
 }

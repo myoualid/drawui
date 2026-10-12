@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DrawUI — min example</title>
+  <title>IfcOpenShell GUI</title>
 
-  <link rel="stylesheet" href="../../dist/drawui.min.css">
+  <link rel="stylesheet" href="../../dist/gui.css">
   <link rel="stylesheet" href="../../styles/themes/dark.css">
   <link rel="stylesheet" href="../../styles/themes/light.css">
   <link rel="stylesheet" href="../examples.css">
@@ -36,7 +36,7 @@
   <script type="importmap">
   {
     "imports": {
-      "drawui": "../../dist/drawui.min.js"
+      "ifcopenshell/gui": "../../dist/gui.js"
     }
   }
   </script>
@@ -44,7 +44,7 @@
 <body>
   <div id="app">
     <p class="demo-note">
-      Min DrawUI demo — loads from <code>dist/</code>. Run <code>npm run build</code> first, then serve the <code>docs/</code> folder:
+      GUI demo — loads <code>ifcopenshell/gui</code> from <code>dist/</code>. Run <code>npm run build</code> first, then serve the <code>docs/</code> folder:
       <code>npx serve docs -p 5173</code>
     </p>
   </div>
@@ -55,20 +55,20 @@
       FloatingWindow,
       StackPanel,
       Heading,
-      TextBlock,
+      Text,
       Button,
-    } from "drawui";
+    } from "ifcopenshell/gui";
 
     const panel = new FloatingWindow({
-      title: "DrawUI Min",
+      title: "IfcOpenShell GUI",
       position: "right",
       width: "320px",
     });
 
     const content = new StackPanel({ isVertical: true })
       .gap("0.75rem")
-      .add(new Heading(3, "Hello DrawUI"))
-      .add(new TextBlock("Panels, primitives, and basic markdown — zero peer packages."))
+      .add(new Heading(3, "Hello IfcOpenShell GUI"))
+      .add(new Text("Panels, primitives, and basic markdown — zero peer packages."))
       .add(
         new Markdown(
           "## Markdown works\n\nBuilt-in converter: **bold**, *italic*, and `code`.\n\n- No Showdown\n- No Highlight.js",
@@ -79,7 +79,7 @@
           .gap("0.5rem")
           .add(
             new Button("Primary").addClass("primary").onClick(() => {
-              alert("DrawUI min build");
+              alert("IfcOpenShell GUI min build");
             }),
           )
           .add(new Button("Secondary").addClass("secondary")),

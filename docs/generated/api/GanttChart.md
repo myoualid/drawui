@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Rectangle`, `gantt-container`
 
 jsGantt-improved-backed scheduling chart.
@@ -12,7 +12,7 @@ jsGantt-improved-backed scheduling chart.
 ## Import
 
 ```js
-import { GanttChart } from "drawui";
+import { GanttChart } from "ifcopenshell/gui";
 ```
 
 ## Examples

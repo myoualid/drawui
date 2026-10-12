@@ -4,22 +4,24 @@ import {
   Container,
   Card,
   Heading,
-  TextBlock,
+  Text,
   Caption,
   Badge,
   Button,
-  IconButton,
+  Operator,
   ThemeToggle,
   Toast,
   StatusBar,
   TabView,
-  Chart,
-  DataGrid,
-  NodeGraph,
   InputSearch,
   Line,
   RibbonBar,
-} from "drawui";
+} from "ifcopenshell/gui";
+import {
+  Chart,
+  DataGrid,
+  NodeGraph,
+} from "ifcopenshell/gui";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {
@@ -105,10 +107,10 @@ function buildHeader(context, themeOps, statusBar) {
       row(
         new RibbonBar(
           [
-            new IconButton("Ack", { icon: "check" }),
-            new IconButton("Mute", { icon: "notifications_off" }),
-            new IconButton("Rollback", { icon: "undo" }),
-            new IconButton("War room", { icon: "groups" }),
+            new Operator("check").setTooltip("Ack"),
+            new Operator("notifications_off").setTooltip("Mute"),
+            new Operator("undo").setTooltip("Rollback"),
+            new Operator("groups").setTooltip("War room"),
           ],
           "flex-start",
         ),
@@ -139,7 +141,7 @@ function buildAlertRail(onSelect) {
         new StackPanel({ isVertical: true })
           .gap("0.25rem")
           .add(
-            row(new TextBlock(alert.title), new Badge(alert.tone)),
+            row(new Text(alert.title), new Badge(alert.tone)),
             new Caption(alert.detail),
           ),
       );
@@ -242,7 +244,7 @@ function buildIncidentsTab() {
     .gap("0.75rem")
     .add(
       row(
-        new TextBlock("Incident register"),
+        new Text("Incident register"),
         new Button("Open INC-1842").addClass("secondary").onClick(() =>
           new Toast("Focus INC-1842", "info", { duration: 1600 }),
         ),

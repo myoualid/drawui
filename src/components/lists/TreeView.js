@@ -1,7 +1,7 @@
 import {
   Icon,
   Container,
-  TextBlock,
+  Text,
 } from "../../primitives/ui.js";
 import { createHierarchicalListOptions } from "../../utils/hierarchicalListOptions.js";
 
@@ -44,11 +44,11 @@ class TreeView {
     this.emptyMessage = defaults.emptyMessage;
 
     this.panel = new Container();
-    this.panel.addClass("dui-tree");
+    this.panel.addClass("TreeView");
     this.panel.dom.setAttribute("role", "tree");
 
     this.content = new Container();
-    this.content.addClass("dui-tree-content");
+    this.content.addClass("TreeView-content");
     this.panel.add(this.content);
   }
 
@@ -105,8 +105,8 @@ class TreeView {
 
     const roots = this._roots();
     if (roots.length === 0) {
-      const empty = new TextBlock(this.emptyMessage);
-      empty.addClass("dui-tree-empty");
+      const empty = new Text(this.emptyMessage);
+      empty.addClass("TreeView-empty");
       this.content.add(empty);
       return this;
     }
@@ -133,7 +133,7 @@ class TreeView {
     if (children.length === 0 || !this.expandedIds.has(id)) return;
 
     const group = new Container();
-    group.addClass("dui-tree-children");
+    group.addClass("TreeView-children");
     group.dom.setAttribute("role", "group");
     children.forEach((child) => this._renderNode(child, depth + 1, group));
     parent.add(group);
@@ -153,18 +153,18 @@ class TreeView {
     const selected = this.selectedId != null && this.selectedId === id;
 
     const row = new Container();
-    row.addClass("dui-tree-item");
+    row.addClass("TreeView-item");
     if (hasChildren) row.addClass("has-children");
     if (expanded) row.addClass("is-expanded");
     if (selected) row.addClass("is-selected");
-    row.dom.style.setProperty("--dui-tree-depth", String(depth));
+    row.dom.style.setProperty("--depth", String(depth));
     row.dom.setAttribute("role", "treeitem");
     if (hasChildren) row.dom.setAttribute("aria-expanded", String(expanded));
     row.dom.setAttribute("aria-selected", String(selected));
     row.dom.tabIndex = 0;
 
     const toggle = new Container();
-    toggle.addClass("dui-tree-toggle");
+    toggle.addClass("TreeView-toggle");
     if (hasChildren) {
       const icon = new Icon(expanded ? "expand_more" : "chevron_right");
       icon.dom.setAttribute("aria-hidden", "true");
@@ -181,8 +181,8 @@ class TreeView {
     }
     row.add(toggle);
 
-    const label = new TextBlock(this.getLabel(item));
-    label.addClass("dui-tree-label");
+    const label = new Text(this.getLabel(item));
+    label.addClass("TreeView-label");
     row.add(label);
 
     const select = () => {
@@ -191,7 +191,7 @@ class TreeView {
     };
 
     row.onClick((event) => {
-      if (event.target.closest(".dui-tree-toggle")) return;
+      if (event.target.closest(".TreeView-toggle")) return;
       select();
     });
 

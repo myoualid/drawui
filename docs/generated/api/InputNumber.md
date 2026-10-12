@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputNumber`
 
 Numeric input with drag and keyboard adjustments.
@@ -12,7 +12,7 @@ Numeric input with drag and keyboard adjustments.
 ## Import
 
 ```js
-import { InputNumber } from "drawui";
+import { InputNumber } from "ifcopenshell/gui";
 ```
 
 ## Examples

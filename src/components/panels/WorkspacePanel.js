@@ -1,7 +1,6 @@
 import { Icon } from "../../primitives/ui.js";
 import { FloatingWindow } from "../../overlays/FloatingWindow.js";
 import { buildWorkspaceDockHandlers, resolveFloatingMountElement } from "../../workspace/dock.js";
-import { resolveModuleToggleId } from "../../workspace/moduleBridge.js";
 import { resolveOwnerKey } from "../../workspace/internal/TabRegistry.js";
 import { bindPanelRegionDrag } from "../../workspace/panelDrag.js";
 import { CollapsiblePanel } from "./CollapsiblePanel.js";
@@ -13,35 +12,50 @@ import { CollapsiblePanel } from "./CollapsiblePanel.js";
 const WORKSPACE_REGIONS = new Set(["left", "right", "bottom"]);
 
 /**
- * {@link CollapsiblePanel} for {@link WorkspaceLayout} regions.
+ * Docked panel for a {@link Layout} region. Exported as `Panel` from `ifcopenshell/layout`.
  *
- * Owns docked chrome (collapse + optional undock). The layout system only mounts,
- * moves, and tracks panels — it does not create or style this component.
+ * Pass the `layout` instance directly. Content goes in with `add`. A button in
+ * the application calls `bindTo` or `layout.bindToggle` — the panel does not
+ * look up commands or a host context.
+ *
+ * ### Methods
+ *
+ * - `show()` / `hide()` / `toggle()` / `select()`
+ * - `add(...)` — append content (inherited)
+ * - `bindTo(element)` / `unbind()` — wire a button the app owns
+ * - `setLabel(label)`
+ * - `detachToFloatingWindow()` / `isFloating()` / `getFloatingWindow()`
+ * - `isVisible()` / `isSelected()`
+ * - `destroy()`
  *
  * @example
- * const panel = new WorkspacePanel({
- *   context, position: 'right', tabId: 'settings', tabLabel: 'Settings',
+ * const layers = new Panel({
+ *   layout,
+ *   position: "left",
+ *   id: "layers",
+ *   label: "Layers",
+ *   title: "Layers",
+ *   floatable: true,
  * });
- * panel.add(new TextBlock('Settings'));
- * panel.show();
+ * layers.add(new Text("Layer list"));
+ * layers.show();
  *
  * @category Panels
  */
 export class WorkspacePanel extends CollapsiblePanel {
   /**
    * @param {Object} options
-   * @param {Object} options.context
+   * @param {import('../../workspace/WorkspaceLayout.js').WorkspaceLayout} [options.layout]
    * @param {WorkspaceRegion} [options.position='right']
-   * @param {string} options.tabId
-   * @param {string} options.tabLabel
+   * @param {string} options.id Tab id. `tabId` is accepted as an alias.
+   * @param {string} options.label Tab label. `tabLabel` is accepted as an alias.
    * @param {string} [options.icon]
    * @param {string} [options.title]
    * @param {Object} [options.panelStyles]
    * @param {boolean} [options.showHeader=true]
    * @param {boolean} [options.autoShow=false]
-   * @param {string} [options.moduleId]
-   * @param {string} [options.ownerId]
-   * @param {string} [options.toggleElementId]
+   * @param {string} [options.group] Panels that share a group move together.
+   * @param {string} [options.toggle] Element or element id that shows and hides the panel.
    * @param {string} [options.panelGroup='default']
    * @param {boolean} [options.floatable=false]
    * @param {boolean} [options.startFloating=false]
@@ -50,19 +64,13 @@ export class WorkspacePanel extends CollapsiblePanel {
    */
   constructor(options = {}) {
     const {
-      context,
-      operators,
+      layout = null,
       position = "right",
-      tabId,
-      tabLabel,
       icon,
       title,
       panelStyles = {},
       showHeader = true,
       autoShow = false,
-      moduleId,
-      ownerId,
-      toggleElementId,
       panelGroup = "default",
       floatable = false,
       startFloating = false,
@@ -71,16 +79,18 @@ export class WorkspacePanel extends CollapsiblePanel {
       collapsed = false,
     } = options;
 
-    if (!tabId) throw new Error("WorkspacePanel requires a tabId");
-    if (!tabLabel) throw new Error("WorkspacePanel requires a tabLabel");
+    const tabId = options.id || options.tabId;
+    const tabLabel = options.label || options.tabLabel;
+    const group = options.group || null;
+    const toggleElementId = options.toggle || options.toggleElementId || null;
+
+    if (!tabId) throw new Error("Panel requires an id");
+    if (!tabLabel) throw new Error("Panel requires a label");
     if (!WORKSPACE_REGIONS.has(position)) {
       throw new Error(`WorkspacePanel requires a WorkspaceRegion (left|right|bottom), got: ${position}`);
     }
 
     super({
-      context,
-      operators,
-      moduleId,
       icon,
       title: title || tabLabel,
       showHeader,
@@ -90,20 +100,19 @@ export class WorkspacePanel extends CollapsiblePanel {
       resizable: false,
       draggable: false,
       resizeHandles: [],
-      // Inherit CollapsiblePanel sizing (fit-content). Do not force fill-height
-      // layout — that fights expand/collapse and hides PanelContent.
       panelStyles,
     });
 
     this.addClass("WorkspacePanel");
+    this.layout = layout;
     this.position = position;
     this.tabId = tabId;
     this.tabLabel = tabLabel;
     this.icon = icon;
     this.title = title || tabLabel;
-    this.ownerId = ownerId || null;
+    this.group = group;
     this.panelGroup = panelGroup || "default";
-    this.toggleElementId = toggleElementId || resolveModuleToggleId(context, moduleId);
+    this.toggleElementId = toggleElementId;
     this.panelStyles = panelStyles;
     this.floatingStyles = floatingStyles || {};
 
@@ -120,7 +129,7 @@ export class WorkspacePanel extends CollapsiblePanel {
     this._startFloating = startFloating;
     this._floatingClosable = floatingClosable;
 
-    this._subscribeToSignals();
+    this._subscribeToLayout();
 
     const lm = this.layoutManager;
     if (floatable && !startFloating && lm) {
@@ -139,8 +148,7 @@ export class WorkspacePanel extends CollapsiblePanel {
   /** @returns {string} */
   get ownerKey() {
     return resolveOwnerKey({
-      moduleId: this.moduleId,
-      ownerId: this.ownerId,
+      group: this.group,
       tabId: this.tabId,
     });
   }
@@ -151,8 +159,7 @@ export class WorkspacePanel extends CollapsiblePanel {
 
     const floatIcon = new Icon("open_in_new");
     floatIcon.addClass("WorkspacePanel-float");
-    floatIcon.dom.title = "Undock to floating window";
-    floatIcon.setStyle("font-size", ["16px"]);
+    floatIcon.dom.title = "Undock";
     floatIcon.onClick((event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -164,15 +171,14 @@ export class WorkspacePanel extends CollapsiblePanel {
   }
 
   get layoutManager() {
-    return this.context?.ui?.model?.layoutManager || null;
+    return this.layout || null;
   }
 
   _tabOptions(extra = {}) {
     return {
       floatable: this._floatable,
       panelStyles: this.panelStyles,
-      moduleId: this.moduleId,
-      ownerId: this.ownerId,
+      group: this.group,
       panelGroup: this.panelGroup,
       ...extra,
     };
@@ -221,32 +227,25 @@ export class WorkspacePanel extends CollapsiblePanel {
     this._regionDragCleanup = null;
   }
 
-  _subscribeToSignals() {
-    const signals = this.context?.signals;
-    if (!signals) return;
+  _subscribeToLayout() {
+    const layout = this.layout;
+    if (!layout?.on) return;
 
-    const unsubs = [];
-    const sub = (name, handler) => {
-      const sig = signals[name];
-      if (!sig || typeof sig.add !== "function") return;
-      sig.add(handler);
-      unsubs.push(() => sig.remove?.(handler));
-    };
-
-    sub("layoutTabChanged", (payload) => {
-      if (payload.position === this.position && payload.id === this.tabId) this.onTabSelected();
-      else if (payload.position === this.position && this._isShown) this.onTabDeselected();
-    });
-
-    sub("layoutTabRemoved", (payload) => {
-      if (payload.position === this.position && payload.id === this.tabId) {
-        this._isShown = false;
-        this.onHide();
-      }
-    });
+    const unsubs = [
+      layout.on("tab:selected", (payload) => {
+        if (payload.position === this.position && payload.id === this.tabId) this.onTabSelected();
+        else if (payload.position === this.position && this._isShown) this.onTabDeselected();
+      }),
+      layout.on("tab:removed", (payload) => {
+        if (payload.position === this.position && payload.id === this.tabId) {
+          this._isShown = false;
+          this.onHide();
+        }
+      }),
+    ];
 
     this._signalCleanup = () => {
-      for (const u of unsubs) u();
+      for (const unsub of unsubs) unsub();
     };
   }
 

@@ -1,16 +1,4 @@
-declare module "drawui/primitives" {
-  export class Control {
-    constructor(dom?: HTMLElement);
-    dom: HTMLElement;
-    add(...children: Control[]): this;
-    addClass(name: string): this;
-    setClass(name: string): this;
-    setStyle(style: string, values: string[]): this;
-    setStyles(styles: Record<string, string>): this;
-  }
-}
-
-declare module "drawui" {
+declare module "ifcopenshell/gui" {
   export class Control {
     constructor(dom?: HTMLElement);
     dom: HTMLElement;
@@ -37,8 +25,9 @@ declare module "drawui" {
     gap(size: string): this;
   }
 
-  export class Span extends Control {
-    constructor();
+  export class Text extends Control {
+    constructor(text?: string);
+    setValue(value: string): this;
   }
 
   export class Rectangle extends Container {
@@ -65,19 +54,6 @@ declare module "drawui" {
     setIcon(iconClass: string): this;
   }
 
-  export class IconButton extends Button {
-    constructor(label?: string, options?: { icon?: string; meta?: string; active?: boolean });
-    setLabel(label: string): this;
-    setMeta(meta?: string): this;
-    setActive(isActive: boolean): this;
-  }
-
-  export class RibbonButton extends Button {
-    constructor(label?: string, options?: { icon?: string; active?: boolean });
-    setLabel(label: string): this;
-    setActive(isActive: boolean): this;
-  }
-
   export class InputText extends Control {
     dom: HTMLInputElement;
     constructor(text?: string);
@@ -102,34 +78,24 @@ declare module "drawui" {
     onChange(callback: (event?: Event) => void): this;
   }
 
-  export class Label extends Control {
-    constructor(text?: string);
-    setFor(id: string): this;
-  }
-
-  export class TextBlock extends Control {
-    constructor(text?: string);
-    setValue(value: string): this;
-  }
-
   export class Caption extends Control {
     constructor(text?: string);
     setValue(value: string): this;
   }
 
-  export class Title extends TextBlock {
+  export class Title extends Text {
     constructor(text?: string);
   }
-  export class Disclaimer extends TextBlock {
+  export class Disclaimer extends Text {
     constructor(text?: string);
   }
-  export class Code extends Span {
+  export class Code extends Text {
     constructor(text?: string);
   }
-  export class Kbd extends Span {
+  export class Kbd extends Text {
     constructor(key?: string);
   }
-  export class Badge extends TextBlock {
+  export class Badge extends Text {
     constructor(text?: string);
   }
   export class Card extends Rectangle {
@@ -138,10 +104,10 @@ declare module "drawui" {
   export class Spacer extends Container {
     constructor(size?: string);
   }
-  export class HSpacer extends Span {
+  export class HSpacer extends Text {
     constructor(size?: string);
   }
-  export class Handle extends Span {
+  export class Handle extends Text {
     constructor(type?: string);
   }
   export class Canvas extends Control {
@@ -177,10 +143,6 @@ declare module "drawui" {
   }
   export function center<T extends Control>(component: T): T;
 
-  export class Paragraph extends Control {
-    constructor(text?: string);
-  }
-
   export class Heading extends Control {
     constructor(level?: number, text?: string);
     level: number;
@@ -211,11 +173,8 @@ declare module "drawui" {
     setSidebarResizable(enabled: boolean): this;
   }
 
-  export class ContentPanel extends Control {}
-  export class CollapsiblePanel extends ContentPanel {}
-  export class WorkspacePanel extends CollapsiblePanel {}
-  export class WorkspaceLayout extends Control {}
-  export class Header extends Control {}
+  export class Panel extends Control {}
+  export class CollapsiblePanel extends Panel {}
   export class RibbonBar extends StackPanel {
     constructor(elements?: Control[], justify?: string);
     setJustify(justify: string): this;
@@ -226,15 +185,10 @@ declare module "drawui" {
   export class SortableList extends Control {}
   export class NavigationList extends Control {}
   export class TreeView extends Control {}
-  export class AppShell extends Control {}
   export class FloatingWindow extends Control {}
   export class FloatingDialog extends Control {}
   export class StatusBar extends Control {}
   export class ThemeToggle extends Control {}
-  export class NodeGraph extends Control {}
-  export class Chart extends Control {}
-  export class GanttChart extends Control {}
-  export class DataGrid extends Control {}
   export class Toast extends StackPanel {
     constructor(
       messageOrOptions?: string | { initialText?: string; indeterminate?: boolean },
@@ -246,12 +200,6 @@ declare module "drawui" {
     hide(): this;
     showIn(container: Control | HTMLElement): this;
   }
-  export class InstructionLine extends StackPanel {
-    constructor(keyText: string, description: string);
-  }
-  export class InstructionPanel extends Container {
-    constructor(title: string, iconName: string, instructions?: unknown[]);
-  }
   export class LabeledBoxItem extends InputListItem {
     constructor(data: { id: string; label: string; checked?: boolean }, iconMap: Record<string, string>);
   }
@@ -262,23 +210,11 @@ declare module "drawui" {
     constructor(name?: string);
     setIcon(iconName: string): this;
   }
-  export class ToolbarButton extends Button {
-    constructor(text?: string, extraStyles?: Record<string, string>);
-  }
   export function createSplitResizer(splitNode: { direction?: string; id?: string }, childIndex: number): Container;
   export function createLayoutResizerHandle(placement?: "left" | "right" | "bottom"): Container;
   export function makeFlexResizer(options: object): () => void;
   export function makeDraggable(panel: Control | HTMLElement, header: Control | HTMLElement): void;
   export function makeResizable(panel: Control | HTMLElement, directions?: string[]): void;
-  export function buildWorkspaceDockHandlers(options: {
-    layoutManager: unknown;
-    tabId: string;
-    tabLabel: string;
-  }): object;
-  export function buildWorldFromConfig(config: object, container?: HTMLElement | null, options?: object): object;
-  export function createDefaultWorldConfig(overrides?: object): object;
-  /** Spreadsheet factory alias (full build; returns DataGrid). */
-  export function Spreadsheet(options?: object): DataGrid;
 
   export class Markdown extends Container {
     constructor(text?: string, options?: object);
@@ -287,91 +223,68 @@ declare module "drawui" {
   }
   export function markdownToHtml(markdown: string): { html: string; codes: any[] };
 
-  /**
-   * Generated factories (`DrawUI.Button()` → `new Button()`) + peer Chart/Spreadsheet on full.
-   * Component factories are PascalCase; utilities like `center` stay camelCase.
-   */
-  export class DrawUI {
-    static Markdown(...args: any[]): Markdown;
-    static Chart(options?: object): Chart;
-    static Spreadsheet(options?: object): DataGrid;
-    static Row(): StackPanel;
-    static Column(): StackPanel;
-    static center<T extends Control>(component: T): T;
-    static H1(text?: string): Heading;
-    static H2(text?: string): Heading;
-    static H3(text?: string): Heading;
-    static H4(text?: string): Heading;
-    static H5(text?: string): Heading;
-    static H6(text?: string): Heading;
-    static Button(...args: any[]): Button;
-    static IconButton(...args: any[]): IconButton;
-    static RibbonButton(...args: any[]): RibbonButton;
-    static Icon(...args: any[]): Icon;
-    static TextBlock(...args: any[]): TextBlock;
-    static Caption(...args: any[]): Caption;
-    static Title(...args: any[]): Title;
-    static Disclaimer(...args: any[]): Disclaimer;
-    static Paragraph(...args: any[]): Paragraph;
-    static Heading(...args: any[]): Heading;
-    static Span(...args: any[]): Span;
-    static Code(...args: any[]): Code;
-    static Kbd(...args: any[]): Kbd;
-    static Badge(...args: any[]): Badge;
-    static Label(...args: any[]): Label;
-    static Form(...args: any[]): Form;
-    static Hyperlink(...args: any[]): Hyperlink;
-    static Image(...args: any[]): Image;
-    static Svg(...args: any[]): Svg;
-    static Canvas(...args: any[]): Canvas;
-    static Container(...args: any[]): Container;
-    static StackPanel(...args: any[]): StackPanel;
-    static ScrollViewer(...args: any[]): ScrollViewer;
-    static Grid(...args: any[]): Grid;
-    static Rectangle(...args: any[]): Rectangle;
-    static Card(...args: any[]): Card;
-    static Spacer(...args: any[]): Spacer;
-    static HSpacer(...args: any[]): HSpacer;
-    static Handle(...args: any[]): Handle;
-    static Line(...args: any[]): Line;
-    static LineBreak(...args: any[]): LineBreak;
-    static InputText(...args: any[]): InputText;
-    static InputTextArea(...args: any[]): InputTextArea;
-    static InputSearch(...args: any[]): InputSearch;
-    static InputDropdown(...args: any[]): InputDropdown;
-    static Checkbox(...args: any[]): Checkbox;
-    static InputColor(...args: any[]): InputColor;
-    static InputNumber(...args: any[]): InputNumber;
-    static InputInteger(...args: any[]): InputInteger;
-    static Slider(...args: any[]): Slider;
-    static InputDate(...args: any[]): InputDate;
-    static List(...args: any[]): InputList;
-    static ListItem(...args: any[]): InputListItem;
-    static ProgressBar(...args: any[]): ProgressBar;
-    static ProgressRing(...args: any[]): ProgressRing;
-    static Tooltip(...args: any[]): Tooltip;
-    static TabView(...args: any[]): TabView;
-    static Toast(...args: any[]): Toast;
-    static Operator(...args: any[]): Operator;
-    static InstructionLine(...args: any[]): InstructionLine;
-    static InstructionPanel(...args: any[]): InstructionPanel;
-    static LabeledBoxItem(...args: any[]): LabeledBoxItem;
-    static SplitContainer(...args: any[]): SplitContainer;
-    static ContentPanel(...args: any[]): ContentPanel;
-    static FloatingDialog(...args: any[]): FloatingDialog;
-    static CollapsiblePanel(...args: any[]): CollapsiblePanel;
-    static WorkspacePanel(...args: any[]): WorkspacePanel;
-    static Header(...args: any[]): Header;
-    static RibbonBar(...args: any[]): RibbonBar;
-    static Flyout(...args: any[]): Flyout;
-    static NavigationView(...args: any[]): NavigationView;
-    static NavigationList(...args: any[]): NavigationList;
-    static TreeView(...args: any[]): TreeView;
-    static AppShell(...args: any[]): AppShell;
-    static PropertyGrid(...args: any[]): PropertyGrid;
-    static PropertyGridRow(...args: any[]): PropertyGridRow;
-    static SortableList(...args: any[]): SortableList;
-    static ToolbarButton(...args: any[]): ToolbarButton;
-    static WorkspaceLayout(...args: any[]): WorkspaceLayout;
+  export class Chart extends Rectangle {
+    constructor(options?: object);
+    init(): this;
   }
+  export class DataGrid extends Rectangle {
+    constructor(options?: object);
+  }
+  export class GanttChart extends Rectangle {
+    constructor(options?: object);
+  }
+  export class NodeGraph extends Container {
+    constructor(options?: object);
+  }
+
+  export class AppShell extends NavigationView {
+    constructor(options?: object);
+  }
+
+  export class RadialMenu {
+    constructor(options?: object);
+    toggle(): void;
+    open(): void;
+    close(): void;
+  }
+}
+
+declare module "ifcopenshell/layout" {
+  import type { Container } from "ifcopenshell/gui";
+
+  /** Application shell. `new World()` builds the default regions. */
+  export class World {
+    constructor(config?: object, options?: object);
+    root: Container;
+    readonly dom: HTMLElement | null;
+    mount(parent?: HTMLElement): this;
+  }
+
+  /**
+   * Workspace layout manager.
+   * `new Layout(config).init(world)` attaches region stacks to a World.
+   */
+  export class Layout {
+    constructor(options?: object);
+    init(target?: string | HTMLElement | World): this;
+    static World: typeof World;
+    static Panel: typeof Panel;
+    static dockHandlers(options: { layoutManager: unknown; tabId: string; tabLabel?: string }): object;
+    static resolveFloatingMount(layout: unknown): HTMLElement | null;
+    static bindPanelRegionDrag(layout: unknown, options: object): () => void;
+    static setPanelDropHighlight(layout: unknown, position: string | null): void;
+    static resolveOwnerKey(owner: unknown): string;
+    static createResizerHandle(placement?: "left" | "right" | "bottom"): Container;
+  }
+
+  export class Panel extends import("ifcopenshell/gui").CollapsiblePanel {
+    constructor(options?: object);
+  }
+
+  export function dockHandlers(options: { layoutManager: unknown; tabId: string; tabLabel?: string }): object;
+  export function resolveFloatingMount(layout: unknown): HTMLElement | null;
+  export function bindPanelRegionDrag(layout: unknown, options: object): () => void;
+  export function setPanelDropHighlight(layout: unknown, position: string | null): void;
+  export function resolveOwnerKey(owner: unknown): string;
+  export function createResizerHandle(placement?: "left" | "right" | "bottom"): Container;
 }

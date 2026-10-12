@@ -104,7 +104,7 @@ export function sanitizeHtml(html) {
     const tag = node.tagName.toLowerCase();
     if (!allowedTags.has(tag)) {
       const frag = document.createDocumentFragment();
-      for (const child of node.childNodeGraph) {
+      for (const child of node.childNodes) {
         const c = sanitizeNode(child);
         if (c) frag.appendChild(c);
       }
@@ -120,7 +120,7 @@ export function sanitizeHtml(html) {
       }
       if (allowedAttrs.has(name)) out.setAttribute(name, a.value);
     }
-    for (const child of node.childNodeGraph) {
+    for (const child of node.childNodes) {
       const c = sanitizeNode(child);
       if (c) out.appendChild(c);
     }
@@ -128,7 +128,7 @@ export function sanitizeHtml(html) {
   }
 
   const fragment = document.createDocumentFragment();
-  for (const child of tmp.childNodeGraph) {
+  for (const child of tmp.childNodes) {
     const c = sanitizeNode(child);
     if (c) fragment.appendChild(c);
   }

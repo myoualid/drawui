@@ -3,8 +3,8 @@
 # Canvas
 
 **Status:** Stable  
-**Category:** text  
-**Import:** `drawui`  
+**Category:** media  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `Canvas`
 
 HTML canvas wrapper for custom drawing.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Canvas } from "drawui";
+import { Canvas } from "ifcopenshell/gui";
 ```
 
 ## Examples

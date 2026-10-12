@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `NavigationView`, `NavigationView-sidebar`, `NavigationView-content`
 
 Sidebar + content navigation scaffold.
@@ -12,7 +12,7 @@ Sidebar + content navigation scaffold.
 ## Import
 
 ```js
-import { NavigationView } from "drawui";
+import { NavigationView } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -31,14 +31,14 @@ const host = new Container().setStyle("height", ["260px"]).setStyle("overflow", 
   layout.setSidebarContent(
     new StackPanel({ isVertical: true })
       .gap("0.25rem")
-      .add(new TextBlock("Site"))
-      .add(new TextBlock("Building")),
+      .add(new Text("Site"))
+      .add(new Text("Building")),
   );
   layout.setMainContent(
     new StackPanel({ isVertical: true })
       .gap("0.5rem")
       .add(new Heading(3, "Viewport"))
-      .add(new TextBlock("Main content")),
+      .add(new Text("Main content")),
   );
   host.add(layout);
   return host;

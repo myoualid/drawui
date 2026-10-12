@@ -6,6 +6,14 @@ import showdown from "showdown";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const registryPath = path.join(root, "src/api/registry.json");
 const packagePath = path.join(root, "package.json");
+const packageJson = JSON.parse(await readFile(packagePath, "utf8"));
+const PKG = packageJson.name;
+const PKG_GUI = "ifcopenshell/gui";
+const PKG_LAYOUT = "ifcopenshell/layout";
+const GUI_JS = "gui.js";
+const LAYOUT_JS = "layout.js";
+const DOCS_CSS = "docs.css";
+const LIB = "IfcOpenShell GUI";
 const generatedDir = path.join(root, "docs/generated");
 const apiDir = path.join(generatedDir, "api");
 const manifestPath = path.join(root, "docs/examples/components/catalog.manifest.json");
@@ -21,10 +29,10 @@ const docsDir = path.join(root, "docs");
 const aiDir = path.join(docsDir, "ai");
 
 const MANUAL_GUIDES = [
-  { file: "getting-started.md", title: "Getting started — DrawUI", assetPrefix: "./" },
-  { file: "styling.md", title: "Styling — DrawUI", assetPrefix: "./" },
-  { file: "publishing.md", title: "Publishing — DrawUI", assetPrefix: "./" },
-  { file: "ai/SKILL.md", title: "AI usage guide — DrawUI", assetPrefix: "../" },
+  { file: "getting-started.md", title: `Getting started — ${LIB}`, assetPrefix: "./" },
+  { file: "styling.md", title: `Styling — ${LIB}`, assetPrefix: "./" },
+  { file: "publishing.md", title: `Publishing — ${LIB}`, assetPrefix: "./" },
+  { file: "ai/SKILL.md", title: `AI usage guide — ${LIB}`, assetPrefix: "../" },
 ];
 
 /** Shared doc-nav links relative to a page's assetPrefix (docs root = "./"). */
@@ -63,20 +71,21 @@ function renderHtmlDocPage({
   liveBundle = null,
 }) {
   const nav = [
-    `<a class="doc-nav-home" href="${assetPrefix}index.html">← drawui docs</a>`,
+    `<a class="doc-nav-home" href="${assetPrefix}index.html">← ${PKG} docs</a>`,
     ...navLinks.map(
       (link) =>
         `<a href="${link.href}"${link.active ? ' class="is-active"' : ""}>${link.label}</a>`,
     ),
   ].join("\n      ");
 
-  const liveCss = liveBundle ? "drawui.full.css" : "drawui.min.css";
+  const liveCss = DOCS_CSS;
   const liveHead = liveBundle
     ? `
   <script type="importmap">
   {
     "imports": {
-      "drawui": "${assetPrefix}dist/${liveBundle}",
+      "${PKG_GUI}": "${assetPrefix}dist/${GUI_JS}",
+      "${PKG_LAYOUT}": "${assetPrefix}dist/${LAYOUT_JS}",
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
       "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
       "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
@@ -149,7 +158,8 @@ async function writeGuideHtml(guide) {
 }
 
 const ENTRYPOINT_FILES = {
-  drawui: "src/index.js",
+  [PKG_GUI]: "src/gui/index.js",
+  [PKG_LAYOUT]: "src/layout/index.js",
 };
 
 const STATUS_LABEL = {
@@ -170,7 +180,7 @@ function formatEntrypoints(entrypoints) {
 }
 
 function primaryImport(entrypoints) {
-  return "drawui";
+  return entrypoints.find((name) => name !== PKG) || entrypoints[0] || PKG;
 }
 
 function extractNamedExports(source) {
@@ -221,17 +231,6 @@ async function loadExportSurface(entrypoint, visited = new Set()) {
     reExported.forEach((name) => names.add(name));
   }
 
-  if (entrypoint === "drawui") {
-    names.add("DrawUI");
-    for (const barrel of ["src/exports/shared.js", "src/components/peer/index.js"]) {
-      const barrelNames = await loadExportSurfaceFromFile(
-        path.join(root, barrel),
-        new Set([...visited]),
-      );
-      barrelNames.forEach((name) => names.add(name));
-    }
-  }
-
   return names;
 }
 
@@ -259,14 +258,20 @@ async function loadExportSurfaceFromFile(absolutePath, visited) {
 
 function validateRegistry(registry, exportSurfaces, packageJson) {
   const errors = [];
-  const seen = new Set();
+  const seen = new Map();
 
   for (const symbol of registry.symbols) {
-    if (seen.has(symbol.name)) {
-      errors.push(`Duplicate registry symbol: ${symbol.name}`);
-      continue;
+    const prior = seen.get(symbol.name);
+    if (prior) {
+      const overlap = symbol.entrypoints.some((entry) => prior.has(entry));
+      if (overlap) {
+        errors.push(`Duplicate registry symbol: ${symbol.name}`);
+        continue;
+      }
+      for (const entry of symbol.entrypoints) prior.add(entry);
+    } else {
+      seen.set(symbol.name, new Set(symbol.entrypoints));
     }
-    seen.add(symbol.name);
 
     let found = false;
     for (const entrypoint of symbol.entrypoints) {
@@ -295,6 +300,40 @@ function validateRegistry(registry, exportSurfaces, packageJson) {
   }
 
   return errors;
+}
+
+function nameCounts(symbols) {
+  const counts = new Map();
+  for (const symbol of symbols) {
+    counts.set(symbol.name, (counts.get(symbol.name) || 0) + 1);
+  }
+  return counts;
+}
+
+/** Same class name from gui and layout gets a distinct page (`Panel.gui`, `Panel.layout`). */
+function pageSlug(symbol, counts) {
+  if ((counts.get(symbol.name) || 0) < 2) return symbol.name;
+  const leaf = (symbol.entrypoints[0] || symbol.category || "symbol").split("/").pop();
+  return `${symbol.name}.${leaf}`;
+}
+
+/**
+ * `Panel` is both the gui scaffold and the layout dock panel.
+ * Class JSDoc and gallery demos belong to the scaffold.
+ */
+function docsForSymbol(symbol, allSymbolDocs) {
+  const docs = allSymbolDocs.get(symbol.name) ?? null;
+  if (!docs) return null;
+  const layoutPanel = symbol.name === "Panel"
+    && symbol.entrypoints.every((entry) => entry.endsWith("/layout"));
+  if (layoutPanel) return null;
+  return docs;
+}
+
+function galleryForSymbol(symbol, galleryCatalog) {
+  const layoutPanel = symbol.name === "Panel"
+    && symbol.entrypoints.every((entry) => entry.endsWith("/layout"));
+  return layoutPanel ? {} : galleryCatalog;
 }
 
 function collectManifestApis(manifest) {
@@ -327,13 +366,13 @@ function collectManifestApis(manifest) {
 }
 
 function manifestApiSymbol(api) {
-  if (/^DrawUI\.\w+/.test(api)) {
+  if (/^(?:DrawUI|GUI)\.\w+/.test(api)) {
     return null;
   }
 
-  const ctor = api.match(/^new\s+(\w+)\s*\(/);
+  const ctor = api.match(/^new\s+([\w.]+)\s*\(/);
   if (ctor) {
-    return ctor[1];
+    return ctor[1].split(".")[0];
   }
 
   return api.replace(/\(\.\.\.\)$/, "").replace(/\([^)]*\)$/, "").trim().split(/[\s.(]/)[0];
@@ -357,18 +396,18 @@ function validateManifestApis(manifest, registry) {
   return { warnings };
 }
 
-/** Section order mirrors src/ layout (primitives, components/*, overlays, workspace). */
-/** Hierarchy-aligned sections: Control leaves → Container branches → peers/facade. */
+/** Section order: written content and media, then controls, then structure. */
 const INDEX_SECTIONS = [
   ["Text", "text"],
+  ["Media", "media"],
   ["Inputs", "inputs"],
+  ["Feedback", "feedback"],
   ["Layout", "layout"],
   ["Collections", "collections"],
   ["Panels", "panels"],
   ["Overlays", "overlays"],
   ["Shell", "shell"],
   ["Peers", "peers"],
-  ["Facade", "facade"],
 ];
 
 function renderComponentIndex(registry) {
@@ -381,18 +420,21 @@ function renderComponentIndex(registry) {
     sections[symbol.category].push(symbol);
   }
 
-  let markdown = `${GENERATED_BANNER}# DrawUI.js Component Index
+  let markdown = `${GENERATED_BANNER}# ${LIB} Component Index
 
-This index documents the maintained public surface of the DrawUI package.
-Sections follow the class hierarchy: **Text** and **Inputs** are \`Control\` leaves; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are \`Container\` branches; **Peers** need external packages; **Facade** is the package entry surface.
+This index documents the maintained public surface of the ${LIB} package.
+Install the package with \`npm install ${PKG}\`. Application code imports \`${PKG_GUI}\` and \`${PKG_LAYOUT}\`; an import map or bundler alias points those specifiers at this package.
+Sections follow role: **Text** is written content; **Media** is icons, images, SVG, and canvas; **Inputs** are form controls and buttons; **Feedback** is status, progress, and toasts; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are structure; **Peers** are optional widgets exported from \`${PKG_GUI}\`. Their libraries load on first use.
 
 ## Import Surfaces
 
-Use package exports for all public DrawUI consumption:
+Use package exports for all public ${LIB} consumption:
 
 \`\`\`js
-import { DrawUI, FloatingWindow, Button, RadialMenu } from "drawui";
-import "drawui/styles/core.css";
+import { Button, StackPanel } from "${PKG_GUI}";
+import { World, Layout, Panel } from "${PKG_LAYOUT}";
+import "${PKG}/styles/gui.css";
+import "${PKG}/styles/layout.css";
 \`\`\`
 
 ## Status Legend
@@ -421,7 +463,7 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
   }
 
   if (registry.factoryNotes?.length) {
-    markdown += "### DrawUI Factory Additions\n\n";
+    markdown += "### Notes\n\n";
     for (const note of registry.factoryNotes) {
       markdown += `- \`${note.api}\` — ${note.notes}\n`;
     }
@@ -441,7 +483,7 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
 }
 
 function renderApiIndex(registry) {
-  let markdown = `${GENERATED_BANNER}# DrawUI API Reference
+  let markdown = `${GENERATED_BANNER}# ${LIB} API Reference
 
 Generated from \`src/api/registry.json\` and JSDoc in \`src/\`. Manual guides:
 
@@ -450,7 +492,7 @@ Generated from \`src/api/registry.json\` and JSDoc in \`src/\`. Manual guides:
 - [Publishing](../../publishing.html)
 - [Component index](../../ai/component-index.html)
 - [AI usage guide](../../ai/SKILL.html)
-- [TypeDoc HTML reference](../typedoc/index.html) (DrawUI factories and documented classes)
+- [TypeDoc HTML reference](../typedoc/index.html) (${LIB} factories and documented classes)
 
 Per-symbol pages include JSDoc descriptions, \`@example\` snippets, and live previews for examples marked \`// live\`.
 
@@ -460,8 +502,9 @@ Per-symbol pages include JSDoc descriptions, \`@example\` snippets, and live pre
 | --- | --- | --- | --- |
 `;
 
+  const counts = nameCounts(registry.symbols);
   for (const symbol of registry.symbols) {
-    markdown += `| [${symbol.name}](./${symbol.name}.html) | ${STATUS_LABEL[symbol.status]} | ${symbol.category} | ${formatEntrypoints(symbol.entrypoints)} |\n`;
+    markdown += `| [${symbol.name}](./${pageSlug(symbol, counts)}.html) | ${STATUS_LABEL[symbol.status]} | ${symbol.category} | ${formatEntrypoints(symbol.entrypoints)} |\n`;
   }
 
   markdown += "\n";
@@ -738,19 +781,19 @@ function extractDemoBuilders(source, exportName) {
 /** Rewrite gallery namespace style (`DrawUI.X`) to named-import style for API pages. */
 function rewriteGalleryCode(code) {
   return code
-    .replace(/\bDrawUI\.center\b/g, "center")
-    .replace(/\bDrawUI\.ICONS\b/g, "ICONS")
-    .replace(/\bDrawUI\.Chart\s*\(/g, "new Chart(")
-    .replace(/\bDrawUI\.Spreadsheet\s*\(/g, "new DataGrid(")
-    .replace(/\bnew\s+DrawUI\./g, "new ")
-    .replace(/\bDrawUI\.(\w+)/g, "$1");
+    .replace(/\b(?:DrawUI|GUI)\.center\b/g, "center")
+    .replace(/\b(?:DrawUI|GUI)\.ICONS\b/g, "ICONS")
+    .replace(/\b(?:DrawUI|GUI)\.Chart\s*\(/g, "new Chart(")
+    .replace(/\b(?:DrawUI|GUI)\.Spreadsheet\s*\(/g, "new DataGrid(")
+    .replace(/\bnew\s+(?:DrawUI|GUI)\./g, "new ")
+    .replace(/\b(?:DrawUI|GUI)\.(\w+)/g, "$1");
 }
 
 function symbolFromApi(api) {
   if (!api) return null;
   let match = api.match(/\bnew\s+(\w+)/);
   if (match) return match[1];
-  match = api.match(/\bDrawUI\.(\w+)/);
+  match = api.match(/\b(?:DrawUI|GUI)\.(\w+)/);
   if (match) {
     return match[1] === "Spreadsheet" ? "DataGrid" : match[1];
   }
@@ -868,13 +911,25 @@ function formatExampleCode(body) {
   ].join("\n");
 }
 
-function renderLiveDemosModule(liveEntries, knownSymbols) {
+function entrypointForSymbol(name, symbols) {
+  const symbol = symbols.find((item) => item.name === name);
+  const entrypoints = symbol?.entrypoints ?? [];
+  return entrypoints.find((item) => item !== PKG) || entrypoints[0] || PKG_GUI;
+}
+
+function renderLiveDemosModule(liveEntries, knownSymbols, symbols) {
   const fromGallery = liveEntries.filter((entry) => entry.demoId);
   const fromCode = liveEntries.filter((entry) => !entry.demoId);
   const imports = collectLiveImports(
     fromCode.map((entry) => entry.example),
     knownSymbols,
   );
+  const grouped = new Map();
+  for (const name of imports) {
+    const entry = entrypointForSymbol(name, symbols);
+    if (!grouped.has(entry)) grouped.set(entry, []);
+    grouped.get(entry).push(name);
+  }
 
   let source =
     "/* Generated by scripts/generate-docs.mjs from docs/examples/components/demos*.js (+ JSDoc // live fallbacks). Do not edit. */\n";
@@ -884,8 +939,11 @@ function renderLiveDemosModule(liveEntries, knownSymbols) {
     source += `import { FULL_DEMO_BUILDERS } from "../examples/components/demos.full.js";\n`;
   }
 
-  if (imports.length) {
-    source += `import {\n  ${imports.join(",\n  ")},\n} from "drawui";\n`;
+  const entryOrder = [PKG, ...[...grouped.keys()].filter((key) => key !== PKG).sort()];
+  for (const entry of entryOrder) {
+    const names = grouped.get(entry);
+    if (!names?.length) continue;
+    source += `import {\n  ${names.join(",\n  ")},\n} from "${entry}";\n`;
   }
 
   source += `\n`;
@@ -950,8 +1008,8 @@ function mergeLiveCatalog(symbolName, jsdocExamples = [], galleryCatalog = {}) {
 function renderSymbolPage(symbol, docs) {
   const importPath = primaryImport(symbol.entrypoints);
   const importStatement =
-    importPath === "drawui"
-      ? `import { ${symbol.name} } from "drawui";`
+    importPath === PKG
+      ? `import { ${symbol.name} } from "${PKG}";`
       : `import { ${symbol.name} } from "${importPath}";`;
 
   const description = docs?.description || symbol.notes;
@@ -996,11 +1054,8 @@ ${importStatement}
 }
 
 const registry = JSON.parse(await readFile(registryPath, "utf8"));
-const packageJson = JSON.parse(await readFile(packagePath, "utf8"));
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-// Live demos share one module that imports peers (Chart, DataGrid, …),
-// so every page with previews must use the full bundle.
-const LIVE_BUNDLE = "drawui.full.js";
+const LIVE_BUNDLE = true;
 
 const exportSurfaces = new Map();
 for (const entrypoint of Object.keys(ENTRYPOINT_FILES)) {
@@ -1022,11 +1077,11 @@ const allSymbolDocs = await loadAllSymbolDocs();
 const knownSymbols = new Set([
   ...symbolNames,
   ...allSymbolDocs.keys(),
-  "DrawUI",
+  "Layout",
+  "World",
+  "Panel",
   "ICONS",
   "center",
-  "buildWorldFromConfig",
-  "createDefaultWorldConfig",
 ]);
 
 const demoBodies = new Map([
@@ -1046,7 +1101,7 @@ await writeMarkdownPage(
   path.join(aiDir, "component-index.md"),
   path.join(aiDir, "component-index.html"),
   {
-    title: "Component index — DrawUI",
+    title: `Component index — ${LIB}`,
     assetPrefix: "../",
     navLinks: [
       { href: "../generated/typedoc/index.html", label: "TypeDoc" },
@@ -1062,7 +1117,7 @@ await writeMarkdownPage(
   path.join(apiDir, "index.md"),
   path.join(apiDir, "index.html"),
   {
-    title: "API reference — DrawUI",
+    title: `API reference — ${LIB}`,
     assetPrefix: "../../",
     navLinks: [
       { href: "../typedoc/index.html", label: "TypeDoc" },
@@ -1078,28 +1133,61 @@ let liveCount = 0;
 let exampleCount = 0;
 const mergedExamplesBySymbol = new Map();
 
+function normalizeLiveCode(text) {
+  return String(text || "").replace(/\s+/g, " ").trim();
+}
+
+function pushLiveExample(name, example) {
+  liveEntries.push({ id: example.id, demoId: example.demoId, example });
+  liveCount += 1;
+  if (!liveBySymbol[name]) liveBySymbol[name] = [];
+  liveBySymbol[name].push({
+    id: example.id,
+    caption: example.caption,
+    code: example.code,
+    demoId: example.demoId || undefined,
+  });
+}
+
 function recordLiveExamples(name, examples) {
   mergedExamplesBySymbol.set(name, examples);
   exampleCount += examples.length;
   for (const example of examples) {
     if (!example.live) continue;
-    liveEntries.push({ id: example.id, demoId: example.demoId, example });
-    liveCount += 1;
-    if (!liveBySymbol[name]) liveBySymbol[name] = [];
-    liveBySymbol[name].push({
-      id: example.id,
-      caption: example.caption,
-      code: example.code,
-      demoId: example.demoId || undefined,
-    });
+    pushLiveExample(name, example);
   }
 }
 
+/** TypeDoc renders JSDoc examples even when the API page prefers a gallery demo. */
+function recordSupplementalJsdocLives(name, jsdocExamples = []) {
+  const lives = jsdocExamples.filter((example) => example.live && example.code);
+  if (!lives.length) return;
+  const assigned = assignExampleIds(name, lives);
+  const existingCodes = new Set((liveBySymbol[name] || []).map((entry) => normalizeLiveCode(entry.code)));
+  const existingIds = new Set((liveBySymbol[name] || []).map((entry) => entry.id));
+
+  for (const example of assigned) {
+    if (existingCodes.has(normalizeLiveCode(example.code))) continue;
+    let id = example.id;
+    let n = 2;
+    while (existingIds.has(id)) {
+      id = `${example.id}-${n}`;
+      n += 1;
+    }
+    existingCodes.add(normalizeLiveCode(example.code));
+    existingIds.add(id);
+    pushLiveExample(name, { ...example, id });
+  }
+}
+
+const pageCounts = nameCounts(registry.symbols);
+
 for (const symbol of registry.symbols) {
-  const docs = allSymbolDocs.get(symbol.name) ?? null;
-  const merged = mergeLiveCatalog(symbol.name, docs?.examples ?? [], galleryCatalog);
+  const docs = docsForSymbol(symbol, allSymbolDocs);
+  const merged = mergeLiveCatalog(symbol.name, docs?.examples ?? [], galleryForSymbol(symbol, galleryCatalog));
   const examples = assignExampleIds(symbol.name, merged);
   recordLiveExamples(symbol.name, examples);
+  recordSupplementalJsdocLives(symbol.name, docs?.examples ?? []);
 
   const { markdown } = renderSymbolPage(symbol, {
     description: docs?.description || "",
@@ -1109,13 +1197,14 @@ for (const symbol of registry.symbols) {
 
   const needsLive = examples.some((example) => example.live);
   const liveBundle = needsLive ? LIVE_BUNDLE : null;
+  const slug = pageSlug(symbol, pageCounts);
 
   await writeMarkdownPage(
     markdown,
-    path.join(apiDir, `${symbol.name}.md`),
-    path.join(apiDir, `${symbol.name}.html`),
+    path.join(apiDir, `${slug}.md`),
+    path.join(apiDir, `${slug}.html`),
     {
-      title: `${symbol.name} — DrawUI API`,
+      title: `${symbol.name} — ${LIB}`,
       assetPrefix: "../../",
       liveBundle,
       navLinks: [
@@ -1134,11 +1223,12 @@ for (const name of new Set([...allSymbolDocs.keys(), ...Object.keys(galleryCatal
   const merged = mergeLiveCatalog(name, docs?.examples ?? [], galleryCatalog);
   if (!merged.length) continue;
   recordLiveExamples(name, assignExampleIds(name, merged));
+  recordSupplementalJsdocLives(name, docs?.examples ?? []);
 }
 
 await writeFile(
   path.join(generatedDir, "live-demos.js"),
-  renderLiveDemosModule(liveEntries, knownSymbols),
+  renderLiveDemosModule(liveEntries, knownSymbols, registry.symbols),
   "utf8",
 );
 

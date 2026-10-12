@@ -1,15 +1,16 @@
 import {
   StackPanel,
   Container,
-  TextBlock,
+  Text,
   Caption,
   Button,
   Code,
   Disclaimer,
-} from "drawui";
+} from "ifcopenshell/gui";
+import { AppShell } from "ifcopenshell/gui";
 import { DEMO_BUILDERS } from "./demos.js";
 
-/** @type {Record<string, () => import("drawui").Control>} */
+/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
 let demoBuilders = { ...DEMO_BUILDERS };
 
 const CATEGORY_ICONS = {
@@ -29,11 +30,13 @@ const CATEGORY_ICONS = {
   "shell-views": "view_sidebar",
   "shell-workspace": "workspaces",
   "overlays-toolwindow": "tab",
+  "overlays-hints": "help",
   "text-headings": "title",
   "text-body": "notes",
   "text-rich": "article",
   "inline-labels": "label",
   icons: "apps",
+  media: "image",
   actions: "touch_app",
   "form-inputs": "edit_note",
   feedback: "notifications",
@@ -52,10 +55,12 @@ const CATEGORY_ICONS = {
   "full-build": "extension",
 };
 
-/** Top-level gallery tabs — mirrors Control → Container hierarchy. */
+/** Top-level gallery tabs. Text and media first, then controls, then structure. */
 const GALLERY_TABS = [
   { id: "text", label: "Text" },
+  { id: "media", label: "Media" },
   { id: "inputs", label: "Inputs" },
+  { id: "feedback", label: "Feedback" },
   { id: "layout", label: "Layout" },
   { id: "collections", label: "Collections" },
   { id: "panels", label: "Panels" },
@@ -129,7 +134,7 @@ function sectionLabel(text) {
 
 /**
  * Table-like row: name + summary above preview | API on the right.
- * @param {{ name?: string, summary?: string, demo?: import("drawui").Control | null, apis?: string[] }} parts
+ * @param {{ name?: string, summary?: string, demo?: import("ifcopenshell/gui").Control | null, apis?: string[] }} parts
  */
 function buildComponentRow({ name, summary, demo, apis }) {
   const row = new Container().addClass("Gallery-componentRow");
@@ -138,7 +143,7 @@ function buildComponentRow({ name, summary, demo, apis }) {
 
   const meta = new Container().addClass("Gallery-componentMeta");
   if (name) {
-    const title = new TextBlock(name);
+    const title = new Text(name);
     title.addClass("Gallery-siblingTitle");
     meta.add(title);
   }
@@ -282,7 +287,7 @@ function buildComparePage(item, siblings, { labeled = false, label = "Alternativ
     card.dom.setAttribute("role", "button");
     card.dom.tabIndex = 0;
 
-    const title = new TextBlock(sibling.name);
+    const title = new Text(sibling.name);
     title.addClass("Gallery-compareCardTitle");
     card.add(title);
 
@@ -326,7 +331,7 @@ function buildOverviewBlock(item) {
   }
 
   if (item.buildingBlocks) {
-    const note = new TextBlock(item.buildingBlocks);
+    const note = new Text(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     overview.add(note);
   }
@@ -360,7 +365,7 @@ function buildSingleItemPage(item) {
   if (item.options) page.add(optionsRow(item.options));
   if (item.note) page.add(new Disclaimer(item.note));
   if (item.buildingBlocks) {
-    const note = new TextBlock(item.buildingBlocks);
+    const note = new Text(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     page.add(note);
   }
@@ -400,7 +405,7 @@ function wrapWithOverview(item, body) {
       page.add(buildOverviewBlock(item));
     }
   } else if (item.buildingBlocks) {
-    const note = new TextBlock(item.buildingBlocks);
+    const note = new Text(item.buildingBlocks);
     note.addClass("Gallery-buildingBlocks");
     page.add(note);
   }
@@ -480,7 +485,7 @@ function buildFullBuildPage(entries) {
 
   page.add(
     new Disclaimer(
-      "These APIs ship only in the full DrawUI entry. Open full.html to try live demos with peer packages under the Peers tab.",
+      "Charts, grids, gantt, and the node graph import from ifcopenshell/gui. Open full.html for those live demos.",
     ),
   );
 
@@ -543,14 +548,14 @@ function buildGroups(catalog, { build }) {
   } else {
     peerLeaves.push({
       id: "full-build",
-      label: "Full build only",
+      label: "Optional libraries",
       icon: CATEGORY_ICONS["full-build"],
       collapsed: false,
       items: [
         {
           id: "full-build-overview",
           label: "Vendor dependencies",
-          subtitle: "Requires drawui/full and external packages.",
+          subtitle: "Requires ifcopenshell/gui and external packages.",
           render: () => buildFullBuildPage(catalog.fullBuildOnly),
         },
       ],

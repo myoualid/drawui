@@ -22,9 +22,8 @@ class WorkspaceTabController {
     const {
       open = true,
       replace = true,
-      moduleId,
+      group,
       panelGroup = "default",
-      ownerId,
     } = options;
 
     const layout = this.layout;
@@ -41,7 +40,7 @@ class WorkspaceTabController {
       }
     }
 
-    const ownerKey = resolveOwnerKey({ moduleId, ownerId, tabId: id });
+    const ownerKey = resolveOwnerKey({ group, tabId: id });
     const resolvedPanelGroup = panelGroup || "default";
     const entry = stack.addPanel(id, label, content, {
       ownerKey,
@@ -57,7 +56,7 @@ class WorkspaceTabController {
       panelElement: entry.panelElement,
       control: entry.control,
     });
-    layout._emit("layoutTabAdded", {
+    layout._emit("tab:added", {
       position,
       id,
       ownerKey,
@@ -74,9 +73,8 @@ class WorkspaceTabController {
       replace = false,
       floatable = false,
       panelStyles,
-      moduleId,
+      group,
       panelGroup,
-      ownerId,
     } = options;
     if (this.hasTab(position, id)) return true;
     return this.addTab(position, id, label, content, {
@@ -84,9 +82,8 @@ class WorkspaceTabController {
       replace,
       floatable,
       panelStyles,
-      moduleId,
+      group,
       panelGroup,
-      ownerId,
     });
   }
 
@@ -99,7 +96,7 @@ class WorkspaceTabController {
 
     stack.removePanel(id);
     layout.tabRegistry.unregister(id);
-    layout._emit("layoutTabRemoved", {
+    layout._emit("tab:removed", {
       position,
       id,
       ownerKey: record?.ownerKey || null,
@@ -119,7 +116,7 @@ class WorkspaceTabController {
     if (!stack?.selectPanel(id)) return false;
 
     const record = layout.tabRegistry.get(id);
-    layout._emit("layoutTabChanged", {
+    layout._emit("tab:selected", {
       position,
       id,
       ownerKey: record?.ownerKey || null,

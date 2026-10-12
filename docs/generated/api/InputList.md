@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `InputList`, `Active`
 
 Selectable list container.
@@ -12,7 +12,7 @@ Selectable list container.
 ## Import
 
 ```js
-import { InputList } from "drawui";
+import { InputList } from "ifcopenshell/gui";
 ```
 
 ## Examples

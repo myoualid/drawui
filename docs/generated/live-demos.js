@@ -6,24 +6,45 @@ import {
   Badge,
   Button,
   Caption,
+  Card,
+  Checkbox,
   Container,
   Control,
   Disclaimer,
-  DrawUI,
   FloatingDialog,
+  HSpacer,
+  Handle,
+  Heading,
+  Hyperlink,
   ICONS,
   Icon,
+  InputDropdown,
+  InputSearch,
+  InputText,
+  InputTextArea,
+  Line,
+  LoadingCube,
+  Markdown,
+  Panel,
+  ProgressBar,
+  RibbonBar,
   ScrollViewer,
+  Slider,
   StackPanel,
   TabView,
-  TextBlock,
-  buildWorkspaceDockHandlers,
+  Text,
+  Title,
+  center,
   createLayoutResizerHandle,
   createSplitResizer,
   makeDraggable,
   makeFlexResizer,
   makeResizable,
-} from "drawui";
+} from "ifcopenshell/gui";
+import {
+  Layout,
+  World,
+} from "ifcopenshell/layout";
 
 const BUILDERS = { ...DEMO_BUILDERS, ...FULL_DEMO_BUILDERS };
 
@@ -34,11 +55,19 @@ export const LIVE_DEMOS = {
     return new Control(el);
   },
   "Hyperlink/hyperlink": () => BUILDERS["inline-link"](),
+  "Hyperlink/basic": () => {
+    return new Hyperlink("Open docs", "#", "open_in_new", false);
+  },
   "Image/image": () => BUILDERS["image"](),
   "Svg/svg": () => BUILDERS["svg"](),
-  "Paragraph/paragraph": () => BUILDERS["paragraph"](),
+  "Text/text": () => BUILDERS["text"](),
   "Heading/headings": () => BUILDERS["headings"](),
-  "Span/span": () => BUILDERS["span"](),
+  "Heading/levels": () => {
+    return new StackPanel({ isVertical: true })
+      .gap("0.25rem")
+      .add(new Heading(2, "Section title"))
+      .add(new Heading(3, "Subsection"));
+  },
   "Container/container": () => BUILDERS["div"](),
   "StackPanel/stackpanel-row": () => BUILDERS["row"](),
   "StackPanel/stackpanel-column": () => BUILDERS["column"](),
@@ -50,99 +79,171 @@ export const LIVE_DEMOS = {
         new ScrollViewer({ fill: true, scrollable: true }).add(
           new StackPanel({ isVertical: true })
             .gap("0.25rem")
-            .add(new TextBlock("Scrollable line 1"))
-            .add(new TextBlock("Scrollable line 2"))
-            .add(new TextBlock("Scrollable line 3"))
-            .add(new TextBlock("Scrollable line 4"))
-            .add(new TextBlock("Scrollable line 5")),
+            .add(new Text("Scrollable line 1"))
+            .add(new Text("Scrollable line 2"))
+            .add(new Text("Scrollable line 3"))
+            .add(new Text("Scrollable line 4"))
+            .add(new Text("Scrollable line 5")),
         ),
       );
   },
   "Grid/grid": () => BUILDERS["grid"](),
   "Rectangle/rectangle": () => BUILDERS["panel"](),
-  "Label/label": () => BUILDERS["label"](),
   "Form/form": () => BUILDERS["form-composed"](),
-  "TextBlock/text": () => BUILDERS["text"](),
   "Caption/caption": () => BUILDERS["small-text"](),
+  "Caption/basic": () => {
+    return new Caption("Secondary caption");
+  },
   "Title/title": () => BUILDERS["title"](),
+  "Title/basic": () => {
+    return new Title("Panel title");
+  },
   "Disclaimer/disclaimer": () => BUILDERS["disclaimer"](),
+  "Disclaimer/basic": () => {
+    return new Disclaimer("Helper copy for secondary legal text.");
+  },
   "Code/code": () => BUILDERS["code"](),
   "Kbd/keyboard-hint": () => BUILDERS["kbd"](),
   "Badge/badge": () => BUILDERS["badge"](),
+  "Badge/badge-2": () => {
+    return new Badge("New");
+  },
   "Canvas/canvas": () => BUILDERS["canvas"](),
   "Card/card": () => BUILDERS["card"](),
+  "Card/basic": () => {
+    return new Card()
+      .padding("1rem")
+      .add(new Title("Card"))
+      .add(new Text("Raised surface with border."));
+  },
   "Spacer/vertical-spacer": () => BUILDERS["spacer"](),
   "HSpacer/horizontal-spacer": () => BUILDERS["hspacer"](),
+  "HSpacer/basic": () => {
+    return new StackPanel({ isVertical: false })
+      .gap("0")
+      .setStyle("alignItems", ["center"])
+      .add(new Text("Start"))
+      .add(new HSpacer("2rem"))
+      .add(new Text("End"));
+  },
   "Handle/handle": () => BUILDERS["handle"](),
+  "Handle/drag-handle": () => {
+    return new StackPanel({ isVertical: false })
+      .gap("0.5rem")
+      .setStyle("alignItems", ["center"])
+      .setStyle("padding", ["0.5rem 0.75rem"])
+      .addClass("Card")
+      .add(
+        new Handle("drag")
+          .add(new Icon("drag_indicator"))
+          .setStyle("cursor", ["grab"])
+          .setStyle("color", ["var(--dui-color-text-muted, #999)"]),
+      )
+      .add(new Text("Draggable row"));
+  },
   "TabItem/via-tabview": () => {
     const tabs = new TabView();
-    tabs.addTab("a", "Overview", [new TextBlock("Tab A")]);
-    tabs.addTab("b", "Details", [new TextBlock("Tab B")]);
+    tabs.addTab("a", "Overview", [new Text("Tab A")]);
+    tabs.addTab("b", "Details", [new Text("Tab B")]);
     tabs.select("a");
     return tabs;
   },
-  "ToolbarButton/toolbarbutton": () => BUILDERS["compact-button"](),
   "center/center": () => BUILDERS["center"](),
+  "center/basic": () => {
+    return new Container()
+      .setStyle("minHeight", ["4rem"])
+      .add(center(new Badge("Centered")));
+  },
   "InputText/inputtext": () => BUILDERS["input"](),
+  "InputText/basic": () => {
+    return new InputText("Hello").setStyle("width", ["16rem"]);
+  },
   "InputSearch/inputsearch": () => BUILDERS["search-input"](),
+  "InputSearch/basic": () => {
+    return new InputSearch("Search layers…").setStyle("width", ["16rem"]);
+  },
   "Icon/icon-library": () => BUILDERS["icons-grid"](),
+  "Icon/basic": () => {
+    return new Icon("settings");
+  },
   "InputTextArea/inputtextarea": () => BUILDERS["textarea"](),
+  "InputTextArea/basic": () => {
+    return new InputTextArea().setValue("Notes…").setStyle("width", ["16rem"]);
+  },
   "InputDropdown/inputdropdown": () => BUILDERS["select"](),
+  "InputDropdown/basic": () => {
+    return new InputDropdown()
+      .setOptions({ a: "Option A", b: "Option B" })
+      .setValue("a")
+      .setStyle("width", ["12rem"]);
+  },
   "Checkbox/checkbox": () => BUILDERS["checkbox"](),
+  "Checkbox/checked": () => {
+    return new Checkbox(true);
+  },
   "InputColor/inputcolor": () => BUILDERS["color"](),
   "InputNumber/inputnumber": () => BUILDERS["number"](),
   "InputInteger/inputinteger": () => BUILDERS["integer"](),
   "Slider/slider": () => BUILDERS["slider"](),
+  "Slider/basic": () => {
+    return new Slider(42).setRange(0, 100).setStep(1).setPrecision(0)
+      .setStyle("width", ["16rem"]);
+  },
   "LineBreak/line-break": () => BUILDERS["line-break"](),
   "Line/divider": () => BUILDERS["divider"](),
+  "Line/basic": () => {
+    return new StackPanel({ isVertical: true })
+      .gap("0.5rem")
+      .setStyle("width", ["16rem"])
+      .add(new Text("Above the rule"))
+      .add(new Line())
+      .add(new Text("Below the rule"));
+  },
   "Button/button": () => BUILDERS["button-primary"](),
-  "IconButton/iconbutton": () => BUILDERS["square-button"](),
-  "RibbonButton/ribbonbutton": () => BUILDERS["ribbon-button"](),
+  "Button/basic": () => {
+    return new Button("Save");
+  },
+  "Button/with-icon": () => {
+    return new Button("Save").setIcon("save");
+  },
   "ProgressBar/progressbar": () => BUILDERS["progress"](),
+  "ProgressBar/basic": () => {
+    return new ProgressBar(0.65).setStyle("width", ["16rem"]);
+  },
   "TabView/tabview": () => BUILDERS["tabbed-panel"](),
   "InputList/inputlist": () => BUILDERS["list"](),
   "InputDate/inputdate": () => BUILDERS["date"](),
-  "ProgressRing/progressring": () => BUILDERS["spinner"](),
-  "Tooltip/tooltip": () => BUILDERS["tooltip"](),
-  "DrawUI/basic": () => {
-    return new StackPanel({ isVertical: false })
-      .gap("0.5rem")
-      .add(DrawUI.Button("Save"))
-      .add(DrawUI.Badge("New"));
+  "LoadingCube/loadingcube": () => BUILDERS["spinner"](),
+  "LoadingCube/with-label": () => {
+    return new LoadingCube({ text: "Loading" });
   },
-  "ContentPanel/contentpanel": () => BUILDERS["base-panel"](),
+  "Tooltip/tooltip": () => BUILDERS["tooltip"](),
+  "Panel/panel": () => BUILDERS["base-panel"](),
   "FloatingDialog/floatingdialog": () => BUILDERS["floating-window"](),
-  "WorkspacePanel/workspacepanel": () => BUILDERS["tab-panel"](),
-  "Header/header": () => BUILDERS["header"](),
   "RibbonBar/ribbonbar": () => BUILDERS["ribbon-bar"](),
+  "RibbonBar/ribbonbar-2": () => {
+    return new RibbonBar([
+      new Button("Project").setIcon("folder_open"),
+      new Button("Properties").setIcon("tune").addClass("selected"),
+      new Button("Console").setIcon("terminal"),
+    ], "flex-start");
+  },
   "Flyout/flyout": () => BUILDERS["collapsible-panel"](),
   "CollapsiblePanel/collapsiblepanel": () => BUILDERS["collapsible-section"](),
-  "InstructionPanel/instruction-panel": () => BUILDERS["instruction-panel"](),
   "SplitContainer/split-container": () => BUILDERS["split-container"](),
   "Toast/progress-toast": () => BUILDERS["progress-helpers"](),
   "Toast/toast": () => BUILDERS["toast"](),
   "Operator/icon-button": () => BUILDERS["operator"](),
   "LabeledBoxItem/labeled-box-item": () => BUILDERS["labeled-box-item"](),
-  "WorkspaceLayout/note": () => {
-    return new Disclaimer(
-      "WorkspaceLayout requires a full #World DOM tree — use the templates example app.",
-    );
-  },
-  "buildWorldFromConfig/note": () => {
-    return new Disclaimer(
-      "buildWorldFromConfig builds an app shell into a host — see docs/examples/templates.",
-    );
-  },
-  "createDefaultWorldConfig/note": () => {
-    return new Disclaimer(
-      "createDefaultWorldConfig returns a config object, not a Control.",
-    );
-  },
+  "Layout/layout-panel": () => BUILDERS["tab-panel"](),
   "FloatingWindow/floatingwindow": () => BUILDERS["floating-panel"](),
   "NavigationList/navigationlist": () => BUILDERS["drill-down"](),
   "TreeView/treeview": () => BUILDERS["tree-view"](),
   "Markdown/markdown": () => BUILDERS["markdown"](),
   "Markdown/markdown-showdown": () => BUILDERS["markdown-full"](),
+  "Markdown/0": () => {
+    return new Markdown("## Hello\n\n**Bold** text and `code`.");
+  },
   "Chart/bar": () => BUILDERS["chart-bar"](),
   "Chart/horizontal-bar": () => BUILDERS["chart-bar-horizontal"](),
   "Chart/stacked-bar": () => BUILDERS["chart-bar-stacked"](),
@@ -172,8 +273,8 @@ export const LIVE_DEMOS = {
         sidebarMaxWidth: "240px",
       },
     });
-    shell.setSidebarContent(new TextBlock("Sidebar"));
-    shell.setMainContent(new TextBlock("Main page"));
+    shell.setSidebarContent(new Text("Sidebar"));
+    shell.setMainContent(new Text("Main page"));
     host.add(shell);
     return host;
   },
@@ -215,9 +316,30 @@ export const LIVE_DEMOS = {
   "createLayoutResizerHandle/right-handle": () => {
     return createLayoutResizerHandle("right").setStyle("height", ["4rem"]);
   },
+  "GUI/basic": () => {
+    return new StackPanel({ isVertical: false })
+      .gap("0.5rem")
+      .add(new Button("Save"))
+      .add(new Badge("New"));
+  },
   "buildWorkspaceDockHandlers/note": () => {
     return new Disclaimer(
-      "buildWorkspaceDockHandlers({ layoutManager, tabId, tabLabel }) wires WorkspacePanel dock chrome.",
+      "Layout.dockHandlers wires dock chrome for a Layout.Panel.",
+    );
+  },
+  "buildWorldFromConfig/note": () => {
+    return new Disclaimer(
+      "new World() builds an app shell into a host — see docs/examples/templates.",
+    );
+  },
+  "createDefaultWorldConfig/note": () => {
+    return new Disclaimer(
+      "createDefaultWorldConfig returns a config object, not a Control.",
+    );
+  },
+  "WorkspaceLayout/note": () => {
+    return new Disclaimer(
+      "new World() builds the shell. new Layout(config).init(world) attaches the regions.",
     );
   },
 };

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="../../dist/docs.css">
+  <link rel="stylesheet" href="../../styles/themes/dark.css">
+  <link rel="stylesheet" href="../../styles/themes/light.css">
+  <link rel="stylesheet" href="../../examples/examples.css">
+  <link rel="stylesheet" href="../../doc-page.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "ifcopenshell/gui": "../../dist/gui.js",
+      "ifcopenshell/layout": "../../dist/layout.js",
+      "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
+      "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
+      "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
+      "showdown": "https://cdn.jsdelivr.net/npm/showdown@2.1.0/+esm",
+      "@highlightjs/cdn-assets/es/highlight.min.js": "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/es/highlight.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="doc-shell">
+    <nav class="doc-nav" aria-label="Documentation">
+      <a class="doc-nav-home" href="../../index.html">← ifcopenshell-gui docs</a>
+      <a href="./index.html" class="is-active">API index</a>
+      <a href="../typedoc/index.html">TypeDoc</a>
+      <a href="../../ai/component-index.html">Component index</a>
+    </nav>
+    <main class="doc-content Markdown"><h1 id="layout">Layout</h1>
+<p><strong>Status:</strong> Stable<br />
+<strong>Category:</strong> shell<br />
+<strong>Import:</strong> <code>ifcopenshell/layout</code><br />
+<strong>Emitted class(es):</strong> <code>World</code>, <code>WorkspaceStack</code>, <code>Resizer</code></p>
+<p>Workspace shell, layout manager, and docked panel. <code>new World()</code>, <code>new Layout(config).init(world)</code>, <code>new Panel(...)</code>. Import from <code>ifcopenshell/layout</code>.</p>
+<h2 id="import">Import</h2>
+<pre><code class="js language-js">import { Layout } from "ifcopenshell/layout";
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="layoutpanel">Layout.Panel</h3>
+<pre><code class="js language-js">const wrap = new StackPanel({ isVertical: true }).gap("0.75rem");
+
+  let panel = null;
+
+  const openButton = new Button("Open floating tab panel")
+    .addClass("primary")
+    .onClick(() =&gt; {
+      if (!panel) {
+        panel = new Layout.Panel({
+          context: { ui: { model: {} } },
+          tabId: "gallery-demo-tab",
+          tabLabel: "Demo panel",
+          icon: "tab",
+          title: "Floating tab panel",
+          startFloating: true,
+          floatingStyles: { width: "320px", height: "260px" },
+        });
+        panel.add(
+          new StackPanel({ isVertical: true })
+            .gap("0.5rem")
+            .setStyle("padding", ["0.75rem"])
+            .add(new Text("Layout.Panel content — dock buttons appear when a Layout context is provided."))
+            .add(new Badge("startFloating: true")),
+        );
+      }
+      panel.show();
+    });
+
+  wrap.add(openButton);
+  wrap.add(
+    new Caption(
+      "Without a Layout instance the panel opens as a floating window; inside a workspace it docks (undock transfers content into a FloatingWindow).",
+    ),
+  );
+  return wrap;
+</code></pre>
+<div class="doc-live-demo" data-live-demo="Layout/layout-panel" aria-label="Live preview"></div>
+<p><a href="./index.html">← Back to API index</a></p></main>
+  </div>
+  <script type="module" src="../../api-live.js"></script>
+</body>
+</html>

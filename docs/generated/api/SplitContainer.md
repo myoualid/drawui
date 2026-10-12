@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `drawui`  
-**Emitted class(es):** `split-container`
+**Import:** `ifcopenshell/gui`  
+**Emitted class(es):** `SplitContainer`
 
 Flex split host for resizable pane layouts.
 
@@ -14,7 +14,7 @@ _Source: `src/components/shell/SplitContainer.js`_
 ## Import
 
 ```js
-import { SplitContainer } from "drawui";
+import { SplitContainer } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -23,11 +23,11 @@ import { SplitContainer } from "drawui";
 
 ```js
 const left = new Rectangle()
-    .add(new TextBlock("Left pane"))
+    .add(new Text("Left pane"))
     .setStyle("padding", ["0.75rem"])
     .setStyle("flex", ["1"]);
   const right = new Rectangle()
-    .add(new TextBlock("Right pane"))
+    .add(new Text("Right pane"))
     .setStyle("padding", ["0.75rem"])
     .setStyle("flex", ["1"]);
   const split = new SplitContainer("horizontal", [left, right]);

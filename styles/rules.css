@@ -1,4 +1,4 @@
-/* Base element styles. Design tokens live in tokens.css. */
+/* Native elements only. Component classes live in components.css. */
 
 *,
 *::before,
@@ -6,113 +6,72 @@
   box-sizing: border-box;
 }
 
-input {
+button,
+input,
+select,
+textarea {
+  backdrop-filter: var(--dui-surface-blur);
+  background: var(--dui-surface-control-bg);
+  border: 1px solid var(--dui-color-border);
+  border-radius: var(--dui-radius);
+  color: var(--dui-color-text);
+  font-family: inherit;
+  font-size: var(--dui-font-size-md);
+  outline: none;
+  padding: var(--dui-space-2) var(--dui-space-4);
+}
+
+button {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 500;
+  gap: var(--dui-space-2);
+  justify-content: center;
+  letter-spacing: var(--dui-letter-spacing);
+}
+
+input,
+select {
   vertical-align: middle;
 }
 
-input:focus,
-textarea:focus,
-select:focus,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  background: var(--dui-surface-control-bg);
-  border-color: var(--dui-color-focus) !important;
-  box-shadow: var(--dui-focus-ring);
-  outline: none;
+textarea {
+  display: block;
+  tab-size: 4;
+  white-space: pre;
 }
 
-input.InputNumber {
-  color: var(--dui-color-accent) !important;
-  font-family: var(--dui-font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  min-width: 60px;
-  text-align: center;
-}
-
-input.InputNumber:focus {
-  color: var(--dui-color-accent-hover) !important;
-}
-
-input[type="color"]::-webkit-color-swatch {
-  border: none;
-  border-radius: var(--dui-radius);
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
+button:hover,
 input:hover,
 textarea:hover,
 select:hover {
   background: var(--dui-color-control-hover);
-  border-color: var(--dui-color-border-strong) !important;
+  border-color: var(--dui-color-border-strong);
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  background: var(--dui-surface-control-bg);
+  border-color: var(--dui-color-focus);
+  box-shadow: var(--dui-focus-ring);
+}
+
+button:active {
+  background: var(--dui-color-surface-pressed);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 ::-webkit-scrollbar {
   height: 6px;
   width: 6px;
-}
-
-select,
-input,
-option {
-  background: var(--dui-surface-control-bg);
-  border: 1px solid var(--dui-color-border);
-  border-radius: var(--dui-radius);
-  color: var(--dui-color-text);
-  display: inline-flex;
-  font-family: inherit;
-  font-size: var(--dui-font-size-md);
-  min-height: var(--dui-control-height);
-  outline: none;
-  padding: var(--dui-control-padding-y) var(--dui-control-padding-x);
-  transition:
-    background var(--dui-transition-fast),
-    border-color var(--dui-transition-fast),
-    box-shadow var(--dui-transition-fast);
-}
-
-textarea {
-  background: var(--dui-surface-control-bg);
-  border: 1px solid var(--dui-color-border);
-  border-radius: var(--dui-radius);
-  color: var(--dui-color-text);
-  display: block;
-  font-family: inherit;
-  font-size: var(--dui-font-size-md);
-  min-height: var(--dui-control-height);
-  outline: none;
-  padding: var(--dui-control-padding-y) var(--dui-control-padding-x);
-  transition:
-    background var(--dui-transition-fast),
-    border-color var(--dui-transition-fast),
-    box-shadow var(--dui-transition-fast);
-}
-
-select:focus,
-input:focus,
-textarea:focus,
-select:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  border-color: var(--dui-color-focus) !important;
-  box-shadow: var(--dui-focus-ring);
-}
-
-small {
-  font-size: var(--dui-font-size-sm);
-  font-weight: 400;
-}
-
-p,
-span,
-.TextBlock {
-  font-size: var(--dui-font-size-md);
-  font-weight: 400;
-  line-height: var(--dui-line-height);
 }
 
 a {
@@ -124,6 +83,19 @@ a {
 
 a:hover {
   color: var(--dui-color-accent-hover);
+}
+
+p,
+span {
+  font-size: var(--dui-font-size-md);
+  font-weight: 400;
+  line-height: var(--dui-line-height);
+}
+
+small {
+  color: var(--dui-color-text-muted);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 400;
 }
 
 h1,
@@ -138,39 +110,12 @@ h6 {
   margin: 0;
 }
 
-h1 {
-  font-size: var(--dui-font-size-h1);
-  font-weight: 700;
-}
-
-h2 {
-  font-size: var(--dui-font-size-h2);
-  font-weight: 600;
-}
-
-h3 {
-  font-size: var(--dui-font-size-h3);
-  font-weight: 500;
-}
-
-h4 {
-  font-size: var(--dui-font-size-h4);
-  font-weight: 400;
-}
-
-h5 {
-  font-size: var(--dui-font-size-h5);
-  font-weight: 300;
-  color: var(--dui-color-text);
-}
-
-h6 {
-  font-size: var(--dui-font-size-h6);
-  font-weight: 200;
-  color: var(--dui-color-text);
-  letter-spacing: var(--dui-letter-spacing);
-  text-transform: none;
-}
+h1 { font-size: var(--dui-font-size-h1); font-weight: 650; }
+h2 { font-size: var(--dui-font-size-h2); font-weight: 600; }
+h3 { font-size: var(--dui-font-size-h3); font-weight: 600; }
+h4 { font-size: var(--dui-font-size-h4); font-weight: 600; }
+h5 { font-size: var(--dui-font-size-h5); font-weight: 600; }
+h6 { font-size: var(--dui-font-size-h6); font-weight: 600; }
 
 .centered {
   align-items: center;
@@ -181,57 +126,6 @@ h6 {
   height: 100%;
 }
 
-.fill-parent {
-  height: 100%;
-  width: 100%;
-}
-
 .justify-between {
   justify-content: space-between;
-  text-align: justify;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch {
-  border: none;
-}
-
-textarea {
-  tab-size: 4;
-  white-space: pre;
-  word-wrap: normal;
-}
-
-textarea.success {
-  border-color: var(--dui-color-success) !important;
-  box-shadow: 0 0 0 4px rgba(48, 209, 88, 0.15);
-}
-
-textarea.fail {
-  border-color: var(--dui-color-danger) !important;
-  background-color: rgba(248, 81, 73, 0.08);
-  box-shadow: 0 0 0 4px rgba(255, 69, 58, 0.15);
-}
-
-textarea,
-input {
-  outline: none;
-}
-
-#world-container,
-#world-container canvas {
-  height: 100%;
-  width: 100%;
-}
-
-header {
-  align-items: center;
-}
-
-.Grid {
-  display: grid;
-  box-sizing: border-box;
 }

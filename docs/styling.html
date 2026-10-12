@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Styling — DrawUI</title>
-  <link rel="stylesheet" href="./dist/drawui.min.css">
+  <title>Styling — IfcOpenShell GUI</title>
+  <link rel="stylesheet" href="./dist/docs.css">
   <link rel="stylesheet" href="./styles/themes/dark.css">
   <link rel="stylesheet" href="./styles/themes/light.css">
   <link rel="stylesheet" href="./examples/examples.css">
@@ -13,32 +13,38 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="./index.html">← drawui docs</a>
+      <a class="doc-nav-home" href="./index.html">← ifcopenshell-gui docs</a>
       <a href="./generated/typedoc/index.html">TypeDoc</a>
       <a href="./ai/component-index.html">Component index</a>
       <a href="./ai/SKILL.html">AI usage guide</a>
     </nav>
-    <main class="doc-content Markdown"><h1 id="drawuijsstylingguide">DrawUI.js Styling Guide</h1>
+    <main class="doc-content Markdown"><h1 id="ifcopenshellguistylingguide">IfcOpenShell GUI Styling Guide</h1>
 <h2 id="cssentrypoints">CSS Entry Points</h2>
-<p>DrawUI publishes the following CSS files as package API:</p>
+<p>Two stylesheets match the two JavaScript entry points:</p>
 <ul>
-<li><code>drawui/styles/core.css</code></li>
-<li><code>drawui/styles/icons.css</code></li>
-<li><code>drawui/styles/tokens.css</code></li>
-<li><code>drawui/styles/reset.css</code></li>
-<li><code>drawui/styles/primitives.css</code></li>
-<li><code>drawui/styles/components.css</code></li>
-<li><code>drawui/styles/themes/dark.css</code></li>
-<li><code>drawui/styles/themes/light.css</code></li>
+<li><code>ifcopenshell-gui/styles/gui.css</code> — UI components, icons, shell, and themes</li>
+<li><code>ifcopenshell-gui/styles/layout.css</code> — workspace grid (load after <code>gui.css</code>)</li>
 </ul>
-<p><code>drawui/styles/core.css</code> is the normal starting point. It imports the token, reset, primitive, and component layers in the supported package order.</p>
-<p>DrawUI core does <strong>not</strong> style <code>html</code> / <code>body</code> or zero page margins. Full-viewport app shells should import the optional host layer (or set equivalent rules themselves):</p>
-<pre><code class="js language-js">import "drawui/styles/core.css";
-import "drawui/styles/app-host.css";
-import "drawui/styles/themes/dark.css";
+<p>The browser bundle <code>dist/gui.css</code> is <code>gui.css</code> plus optional widget styles (<code>styles/peers.css</code>: node graph, HUD, scheduling, and AG Grid). Import <code>styles/peers.css</code> directly only when you assemble CSS without that bundle.</p>
+<p>The layers below are what those files pull in. Import a layer directly when you want a smaller set:</p>
+<ul>
+<li><code>ifcopenshell-gui/styles/core.css</code></li>
+<li><code>ifcopenshell-gui/styles/icons.css</code></li>
+<li><code>ifcopenshell-gui/styles/tokens.css</code></li>
+<li><code>ifcopenshell-gui/styles/rules.css</code></li>
+<li><code>ifcopenshell-gui/styles/components.css</code></li>
+<li><code>ifcopenshell-gui/styles/themes/dark.css</code></li>
+<li><code>ifcopenshell-gui/styles/themes/light.css</code></li>
+</ul>
+<p><code>ifcopenshell-gui/styles/gui.css</code> is the UI stylesheet. It imports tokens, components, icons, and themes. Use <code>styles/core.css</code> when you want that layer without icons and themes.</p>
+<p>Add <code>ifcopenshell-gui/styles/layout.css</code> for the workspace grid. It expects the GUI tokens to already be loaded.</p>
+<p>IfcOpenShell GUI core does <strong>not</strong> style <code>html</code> / <code>body</code> or zero page margins. Full-viewport app shells should import the optional host layer (or set equivalent rules themselves):</p>
+<pre><code class="js language-js">import "ifcopenshell-gui/styles/core.css";
+import "ifcopenshell-gui/styles/app-host.css";
+import "ifcopenshell-gui/styles/themes/dark.css";
 </code></pre>
 <h2 id="tokens">Tokens</h2>
-<p>All package styles use the <code>--dui-*</code> namespace. Tokens are defined in <code>drawui/styles/tokens.css</code> and overridden by theme files.</p>
+<p>All package styles use the <code>--dui-*</code> namespace. Tokens are defined in <code>ifcopenshell-gui/styles/tokens.css</code> and overridden by theme files.</p>
 <table>
 <thead>
 <tr>
@@ -73,36 +79,35 @@ import "drawui/styles/themes/dark.css";
 </tr>
 <tr>
 <td>App shell layout</td>
-<td><code>--dui-headerbar-height</code>, <code>--dui-sidebar-width</code>, <code>--dui-shell-margin</code>, <code>--dui-config-width</code></td>
+<td><code>--dui-headerbar-height</code>, <code>--dui-sidebar-width</code>, <code>--dui-logo-size</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="publicselectorrules">Public Selector Rules</h2>
 <ul>
-<li>Use <code>dui-*</code> names for new public package selectors.</li>
+<li>Name a component class after the component, in PascalCase (<code>.Button</code>, <code>.RibbonMenu</code>, <code>.NavigationList</code>).</li>
 <li>Prefer token references over hard-coded colors, spacing, and radius values.</li>
 <li>Keep package CSS scoped to generic library surfaces rather than host-page layout.</li>
 </ul>
 <h2 id="themes">Themes</h2>
-<p>Import one theme stylesheet after <code>drawui/styles/core.css</code>:</p>
-<pre><code class="js language-js">import "drawui/styles/core.css";
-import "drawui/styles/themes/dark.css";
+<p>Import one theme stylesheet after <code>ifcopenshell-gui/styles/core.css</code>:</p>
+<pre><code class="js language-js">import "ifcopenshell-gui/styles/core.css";
+import "ifcopenshell-gui/styles/themes/dark.css";
 </code></pre>
 <p>Theme files should override token values, not redefine component structure.</p>
 <h2 id="icons">Icons</h2>
-<p>Components that emit Material Symbols markup require <code>drawui/styles/icons.css</code>.</p>
-<pre><code class="js language-js">import "drawui/styles/icons.css";
+<p>Components that emit Material Symbols markup require <code>ifcopenshell-gui/styles/icons.css</code>.</p>
+<pre><code class="js language-js">import "ifcopenshell-gui/styles/icons.css";
 </code></pre>
-<h2 id="optionalcomponentstyles">Optional component styles</h2>
-<p>Full-build demos may link additional styles for peer-dependent components:</p>
+<h2 id="optionalwidgetstyles">Optional widget styles</h2>
+<p><code>ifcopenshell-gui/styles/peers.css</code> is included in <code>dist/gui.css</code>. It pulls in:</p>
 <ul>
-<li><code>drawui/styles/components/nodes.css</code> — node graph editor</li>
-<li><code>drawui/styles/components/hud.css</code> — HUD labels in node meta</li>
-<li><code>drawui/styles/components/pie-menu.css</code> — radial menu overlay</li>
-<li><code>drawui/styles/components/scheduling.css</code> — gantt/scheduling views</li>
-<li><code>drawui/styles/components/ag-grid-custom.css</code> — spreadsheet grid theming</li>
+<li><code>ifcopenshell-gui/styles/components/nodes.css</code> — node graph editor</li>
+<li><code>ifcopenshell-gui/styles/components/hud.css</code> — HUD labels in node meta</li>
+<li><code>ifcopenshell-gui/styles/components/scheduling.css</code> — gantt/scheduling views</li>
+<li><code>ifcopenshell-gui/styles/components/ag-grid-custom.css</code> — spreadsheet grid theming</li>
 </ul>
-<p>Spinner styles ship via <code>drawui/styles/core.css</code> (imported through <code>components.css</code>).</p></main>
+<p>Spinner styles ship via <code>ifcopenshell-gui/styles/core.css</code> (imported through <code>components.css</code>).</p></main>
   </div>
 </body>
 </html>

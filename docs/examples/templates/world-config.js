@@ -1,30 +1,30 @@
 /**
  * Workspace template derived from bonsai-web `configuration/config.ui.js`.
  *
- * Region ids must stay stable — WorkspaceLayout and structure.css target them:
- * RibbonMenu, HeaderBar, RibbonBar, SideWorkspaceLeft/Right, BottomWorkspace,
- * Viewport, FooterBar, LayoutToggleBar.
+ * Region ids must stay stable — Layout and structure.css target them:
+ * RibbonMenu, HeaderBar, RibbonBar, WorkspaceLeft/Right, WorkspaceBottom,
+ * Viewport, Footer, LayoutToggleBar.
  */
 
 const demoRibbon = [
   {
     id: "RB_ProjectPanel",
     name: "Project",
-    type: "RibbonButton",
+    type: "Button",
     icon: "folder_open",
     moduleId: "project",
   },
   {
     id: "RB_PropertiesPanel",
     name: "Properties",
-    type: "RibbonButton",
+    type: "Button",
     icon: "tune",
     moduleId: "properties",
   },
   {
     id: "RB_ConsolePanel",
     name: "Console",
-    type: "RibbonButton",
+    type: "Button",
     icon: "terminal",
     moduleId: "console",
   },
@@ -53,7 +53,7 @@ export const worldConfig = {
           name: "Header Bar",
           type: "Workspace",
           children: [
-            { id: "Logo", name: "DrawUI", type: "Row" },
+            { id: "Logo", name: "IfcOpenShell", type: "Row" },
             {
               id: "HeaderMenu",
               name: "Header Menu",
@@ -72,9 +72,9 @@ export const worldConfig = {
         },
       ],
     },
-    { id: "BottomWorkspace", name: "Bottom Workspace", type: "Workspace" },
-    { id: "SideWorkspaceLeft", name: "Side Workspace Left", type: "Workspace" },
-    { id: "SideWorkspaceRight", name: "Side Workspace Right", type: "Workspace" },
+    { id: "WorkspaceBottom", name: "Bottom Workspace", type: "Workspace" },
+    { id: "WorkspaceLeft", name: "Side Workspace Left", type: "Workspace" },
+    { id: "WorkspaceRight", name: "Side Workspace Right", type: "Workspace" },
     {
       id: "Viewport",
       name: "Viewport",
@@ -84,7 +84,7 @@ export const worldConfig = {
       ],
     },
     {
-      id: "FooterBar",
+      id: "Footer",
       name: "Footer Bar",
       type: "Workspace",
       children: [

@@ -4,20 +4,18 @@
 
 **Status:** Stable  
 **Category:** panels  
-**Import:** `drawui`  
+**Import:** `ifcopenshell/gui`  
 **Emitted class(es):** `RibbonBar`
 
 Horizontal ribbon / action row for panel footers or the app shell ribbon.
-
-Pair with {@link RibbonButton} for tab-style module toggles, or
-{@link IconButton} for bordered tile actions.
+Children are {@link Button}s. Buttons inside a ribbon are styled by `.RibbonBar .Button`.
 
 _Source: `src/components/panels/RibbonBar.js`_
 
 ## Import
 
 ```js
-import { RibbonBar } from "drawui";
+import { RibbonBar } from "ifcopenshell/gui";
 ```
 
 ## Examples
@@ -27,9 +25,9 @@ import { RibbonBar } from "drawui";
 ```js
 return new RibbonBar(
     [
-      new RibbonButton("Project", { icon: "folder_open" }),
-      new RibbonButton("Properties", { icon: "tune", active: true }),
-      new RibbonButton("Console", { icon: "terminal" }),
+      new Button("Project").setIcon("folder_open"),
+      new Button("Properties").setIcon("tune").addClass("selected"),
+      new Button("Console").setIcon("terminal"),
     ],
     "flex-start",
   );
