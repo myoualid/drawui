@@ -65,10 +65,10 @@ const DEFAULT_CONFIG = {
 };
 
 /**
- * Workspace grid, exported as {@link Layout}.
+ * Workspace grid, exported as Layout.
  *
  * `new World()` builds the regions. `new Layout(options).init(world)` attaches
- * stacks, resizers, and the tab registry. Docked chrome is a {@link WorkspacePanel}.
+ * stacks, resizers, and the tab registry. Docked chrome is a Panel.
  * The layout does not run application commands. Subscribe with `on` and handle
  * the event in application code.
  *

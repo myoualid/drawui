@@ -245,50 +245,121 @@ declare module "ifcopenshell/gui" {
     constructor(options?: object);
   }
 
+  export interface RadialMenuItem {
+    id?: string;
+    name?: string;
+    icon: string;
+    enabled?: boolean | ((item: RadialMenuItem) => boolean);
+    active?: boolean | ((item: RadialMenuItem) => boolean);
+    onSelect?: (item: RadialMenuItem) => void | Promise<void>;
+  }
+
   export class RadialMenu {
-    constructor(options?: object);
+    constructor(options?: {
+      viewport: HTMLElement;
+      items?: RadialMenuItem[];
+      shortcut?: string | string[];
+    });
+    setItems(items?: RadialMenuItem[]): this;
+    setSelectionCount(count: number): this;
+    show(): void;
+    hide(): void;
     toggle(): void;
-    open(): void;
-    close(): void;
   }
 }
 
 declare module "ifcopenshell/layout" {
-  import type { Container } from "ifcopenshell/gui";
+  import type { CollapsiblePanel, Container } from "ifcopenshell/gui";
 
-  /** Application shell. `new World()` builds the default regions. */
+  /** Shell with ribbon, side regions, viewport, and footer. `world.mount(parent)`. */
   export class World {
-    constructor(config?: object, options?: object);
+    constructor(config?: object, options?: { container?: HTMLElement });
     root: Container;
     readonly dom: HTMLElement | null;
     mount(parent?: HTMLElement): this;
   }
 
+  export type LayoutPosition = "left" | "right" | "bottom";
+  export type LayoutEventName = "tab:added" | "tab:removed" | "tab:selected" | "workspace";
+
+  export interface LayoutOptions {
+    leftWorkspaceWidth?: number;
+    rightWorkspaceWidth?: number;
+    bottomWorkspaceHeight?: number;
+    topWorkspaceHeight?: number;
+    footerBarHeight?: number;
+    leftOpen?: boolean;
+    rightOpen?: boolean;
+    bottomOpen?: boolean;
+    minPanelSize?: number;
+    resizerSize?: number;
+  }
+
   /**
-   * Workspace layout manager.
-   * `new Layout(config).init(world)` attaches region stacks to a World.
+   * Region grid. `new Layout(options).init(world)`.
+   * Events: `tab:added`, `tab:removed`, `tab:selected`, `workspace`.
    */
   export class Layout {
-    constructor(options?: object);
+    constructor(options?: LayoutOptions);
     init(target?: string | HTMLElement | World): this;
+    on(event: LayoutEventName, handler: (payload: object) => void): () => void;
+    off(event: LayoutEventName, handler: (payload: object) => void): this;
+    addTab(position: LayoutPosition, id: string, label: string, content: unknown, options?: object): boolean;
+    ensureTab(position: LayoutPosition, id: string, label: string, content: unknown, options?: object): boolean;
+    removeTab(position: LayoutPosition, id: string, options?: { closeIfEmpty?: boolean }): boolean;
+    selectTab(position: LayoutPosition, id: string, options?: { open?: boolean }): boolean;
+    toggleTab(position: LayoutPosition, id: string): boolean;
+    hasTab(position: LayoutPosition, id: string): boolean;
+    getTabIds(position: LayoutPosition, filter?: object): string[];
+    getSelectedTabId(position: LayoutPosition): string | null;
+    isTabSelected(position: LayoutPosition, id: string): boolean;
+    clearTabs(position: LayoutPosition, closeWorkspace?: boolean): boolean;
+    setTabLabel(position: LayoutPosition, id: string, label: string): boolean;
+    openWorkspace(position: LayoutPosition): this;
+    closeWorkspace(position: LayoutPosition): this;
+    toggleWorkspace(position: LayoutPosition): this;
+    isWorkspaceOpen(position: LayoutPosition): boolean;
+    setWorkspaceSize(position: LayoutPosition, size: number): this;
+    getWorkspaceSize(position: LayoutPosition): number;
+    resetLayout(): this;
+    moveSegment(from: LayoutPosition, to: LayoutPosition, group: string): boolean;
+    bindToggle(elementOrId: string | HTMLElement, position: LayoutPosition, id: string): (() => void) | null;
+    prependToggleBarChild(node: Node): () => void;
+    getFloatingWindowMountElement(): HTMLElement | null;
+    destroy(): void;
     static World: typeof World;
     static Panel: typeof Panel;
-    static dockHandlers(options: { layoutManager: unknown; tabId: string; tabLabel?: string }): object;
-    static resolveFloatingMount(layout: unknown): HTMLElement | null;
-    static bindPanelRegionDrag(layout: unknown, options: object): () => void;
-    static setPanelDropHighlight(layout: unknown, position: string | null): void;
-    static resolveOwnerKey(owner: unknown): string;
-    static createResizerHandle(placement?: "left" | "right" | "bottom"): Container;
   }
 
-  export class Panel extends import("ifcopenshell/gui").CollapsiblePanel {
-    constructor(options?: object);
+  export interface LayoutPanelOptions {
+    layout?: Layout;
+    position?: LayoutPosition;
+    id: string;
+    label: string;
+    title?: string;
+    icon?: string;
+    group?: string;
+    floatable?: boolean;
+    startFloating?: boolean;
+    autoShow?: boolean;
+    toggle?: string | HTMLElement;
+    showHeader?: boolean;
+    floatingStyles?: Record<string, string>;
   }
 
-  export function dockHandlers(options: { layoutManager: unknown; tabId: string; tabLabel?: string }): object;
-  export function resolveFloatingMount(layout: unknown): HTMLElement | null;
-  export function bindPanelRegionDrag(layout: unknown, options: object): () => void;
-  export function setPanelDropHighlight(layout: unknown, position: string | null): void;
-  export function resolveOwnerKey(owner: unknown): string;
-  export function createResizerHandle(placement?: "left" | "right" | "bottom"): Container;
+  /** Docked panel. Pass `layout` from `new Layout(options).init(world)`. */
+  export class Panel extends CollapsiblePanel {
+    constructor(options: LayoutPanelOptions);
+    show(options?: { select?: boolean; open?: boolean }): this;
+    hide(options?: { closeIfEmpty?: boolean }): this;
+    toggle(): this;
+    select(): this;
+    bindTo(elementOrId: string | HTMLElement): this;
+    unbind(): this;
+    setLabel(label: string): this;
+    isVisible(): boolean;
+    isSelected(): boolean;
+    isFloating(): boolean;
+    destroy(): void;
+  }
 }

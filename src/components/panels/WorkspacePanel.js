@@ -12,11 +12,10 @@ import { CollapsiblePanel } from "./CollapsiblePanel.js";
 const WORKSPACE_REGIONS = new Set(["left", "right", "bottom"]);
 
 /**
- * Docked panel for a {@link Layout} region. Exported as `Panel` from `ifcopenshell/layout`.
+ * Docked panel for a Layout region. Exported as `Panel` from `ifcopenshell/layout`.
  *
- * Pass the `layout` instance directly. Content goes in with `add`. A button in
- * the application calls `bindTo` or `layout.bindToggle` — the panel does not
- * look up commands or a host context.
+ * Pass the `layout` instance directly. Content goes in with `add`.
+ * Call `bindTo` or `layout.bindToggle` with a button the application owns.
  *
  * ### Methods
  *
