@@ -188,7 +188,11 @@ declare module "ifcopenshell/gui" {
   export class FloatingWindow extends Control {}
   export class FloatingDialog extends Control {}
   export class StatusBar extends Control {}
-  export class ThemeToggle extends Control {}
+  export class ThemeToggle extends Control {
+    constructor(options?: { theme?: "light" | "dark"; onChange?: (theme: "light" | "dark") => void });
+    setTheme(theme: "light" | "dark", notify?: boolean): this;
+    getTheme(): "light" | "dark";
+  }
   export class Toast extends StackPanel {
     constructor(
       messageOrOptions?: string | { initialText?: string; indeterminate?: boolean },
