@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Builds a resizer control for a split-pane child index.
@@ -14,7 +14,7 @@ _Source: `src/utils/flexResizer.js`_
 ## Import
 
 ```js
-import { createSplitResizer } from "ifcopenshell/gui";
+import { createSplitResizer } from "@aeco-dev/gui";
 ```
 
 ## Examples

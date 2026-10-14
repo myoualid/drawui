@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `NavigationView`, `NavigationView-sidebar`, `NavigationView-content`
 
 Sidebar + content navigation scaffold.
@@ -12,7 +12,7 @@ Sidebar + content navigation scaffold.
 ## Import
 
 ```js
-import { NavigationView } from "ifcopenshell/gui";
+import { NavigationView } from "@aeco-dev/gui";
 ```
 
 ## Examples

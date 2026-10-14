@@ -4,10 +4,11 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Slider`
 
 Number slider: range track synced with a numeric field.
+The field keeps drag-to-scrub and adds step buttons.
 Dispatches bubbling `input` / `change` on the root element.
 
 _Source: `src/primitives/ui.js`_
@@ -15,7 +16,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Slider } from "ifcopenshell/gui";
+import { Slider } from "@aeco-dev/gui";
 ```
 
 ## Examples

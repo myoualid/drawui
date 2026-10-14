@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputNumber`
 
 Integer field with the same drag-to-scrub behavior as InputNumber.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputInteger } from "ifcopenshell/gui";
+import { InputInteger } from "@aeco-dev/gui";
 ```
 
 ## Examples

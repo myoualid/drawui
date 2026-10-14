@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** media  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Canvas`
 
 HTML canvas wrapper for custom drawing.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Canvas } from "ifcopenshell/gui";
+import { Canvas } from "@aeco-dev/gui";
 ```
 
 ## Examples

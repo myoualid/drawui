@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Grid`
 
 Grid layout primitive with explicit column or auto-fit helpers.
@@ -12,7 +12,7 @@ Grid layout primitive with explicit column or auto-fit helpers.
 ## Import
 
 ```js
-import { Grid } from "ifcopenshell/gui";
+import { Grid } from "@aeco-dev/gui";
 ```
 
 ## Examples

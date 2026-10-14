@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `SplitContainer`
 
 Flex split host for resizable pane layouts.
@@ -14,7 +14,7 @@ _Source: `src/components/shell/SplitContainer.js`_
 ## Import
 
 ```js
-import { SplitContainer } from "ifcopenshell/gui";
+import { SplitContainer } from "@aeco-dev/gui";
 ```
 
 ## Examples

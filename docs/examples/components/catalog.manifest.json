@@ -776,7 +776,7 @@
       "id": "overlays-WorkspacePanel",
       "title": "Dockable windows",
       "group": "overlays",
-      "description": "Dockable workspace panels. Import Layout from ifcopenshell/layout.",
+      "description": "Dockable workspace panels. Import Layout from @aeco-dev/layout.",
       "items": [
         {
           "id": "tab-panel",
@@ -787,7 +787,7 @@
           ],
           "summary": "Dockable workspace panel. startFloating opens it without a layout.",
           "options": "{ layout, position?, id, label, title?, icon?, group?, floatable?, startFloating? }",
-          "note": "Import Panel from ifcopenshell/layout. Pass the Layout instance to dock into left, right, or bottom.",
+          "note": "Import Panel from @aeco-dev/layout. Pass the Layout instance to dock into left, right, or bottom.",
           "demo": "tab-panel"
         }
       ]
@@ -899,7 +899,7 @@
             "Layout"
           ],
           "summary": "Region grid: open, resize, and dock panels. See the method list on the Layout API page.",
-          "note": "Import from ifcopenshell/layout. new Layout(options).init(world)."
+          "note": "Import from @aeco-dev/layout. new Layout(options).init(world)."
         },
         {
           "id": "world-builder",
@@ -1141,7 +1141,7 @@
     {
       "id": "nodes",
       "title": "NodeGraph",
-      "description": "Node graph editor. Import NodeGraph from ifcopenshell/gui.",
+      "description": "Node graph editor. Import NodeGraph from @aeco-dev/gui.",
       "items": [
         {
           "id": "nodes",
@@ -1152,7 +1152,7 @@
           "summary": "Node graph editor — pass { nodes, connections } with id/name/status/level/children per node.",
           "demo": "nodes",
           "options": "{ nodes, connections, embedded?, readOnly?, onEdit?, onDelete?, onNodeClick? }",
-          "note": "Import from ifcopenshell/gui. Chart.js, AG Grid, and jsGantt load on first use."
+          "note": "Import from @aeco-dev/gui. Chart.js, AG Grid, and jsGantt load on first use."
         }
       ]
     }
@@ -1172,7 +1172,7 @@
     },
     {
       "api": "new NodeGraph()",
-      "peer": "ifcopenshell/gui"
+      "peer": "@aeco-dev/gui"
     },
     {
       "api": "new Markdown()",
@@ -1180,15 +1180,15 @@
     },
     {
       "api": "new World()",
-      "peer": "ifcopenshell/layout"
+      "peer": "@aeco-dev/layout"
     },
     {
       "api": "new Layout()",
-      "peer": "ifcopenshell/layout"
+      "peer": "@aeco-dev/layout"
     },
     {
       "api": "new Panel()",
-      "peer": "ifcopenshell/layout"
+      "peer": "@aeco-dev/layout"
     }
   ]
 }

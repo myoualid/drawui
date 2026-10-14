@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Flyout`, `Flyout-header`, `Flyout-icon`, `Flyout-title`, `Flyout-content`, `Flyout-search`, `expanded`, `Badge`, `centered`
 
 Expandable tool panel with optional search row.
@@ -14,7 +14,7 @@ _Source: `src/components/panels/Flyout.js`_
 ## Import
 
 ```js
-import { Flyout } from "ifcopenshell/gui";
+import { Flyout } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Semantic heading (`h1`–`h6`).
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Heading } from "ifcopenshell/gui";
+import { Heading } from "@aeco-dev/gui";
 ```
 
 ## Examples

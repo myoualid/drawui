@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `PropertyGrid-row`
 
 A property-table row (label/value or multi-cell).
@@ -26,7 +26,7 @@ _Source: `src/components/lists/PropertyGrid.js`_
 ## Import
 
 ```js
-import { PropertyGridRow } from "ifcopenshell/gui";
+import { PropertyGridRow } from "@aeco-dev/gui";
 ```
 
 ## Examples

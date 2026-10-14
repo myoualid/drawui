@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** panels  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Panel`, `Rectangle`, `Header`, `PanelContent`, `RibbonBar`
 
 Panel scaffold with uniform region APIs:
@@ -18,7 +18,7 @@ _Source: `src/components/panels/Panel.js`_
 ## Import
 
 ```js
-import { Panel } from "ifcopenshell/gui";
+import { Panel } from "@aeco-dev/gui";
 ```
 
 ## Examples

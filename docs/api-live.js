@@ -65,8 +65,8 @@ function peerImportMap(_jsUrl, pkg = "ifcopenshell-gui") {
   const distUrl = new URL("./dist/", import.meta.url).href;
   return {
     imports: {
-      "ifcopenshell/gui": new URL("gui.js", distUrl).href,
-      "ifcopenshell/layout": new URL("layout.js", distUrl).href,
+      "@aeco-dev/gui": new URL("gui.js", distUrl).href,
+      "@aeco-dev/layout": new URL("layout.js", distUrl).href,
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
       "ag-grid-community":
         "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",

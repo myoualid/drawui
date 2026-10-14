@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Panel`, `Header`, `PanelContent`, `RibbonBar`
 
 Lightweight floating panel built on `Panel`.
@@ -12,7 +12,7 @@ Lightweight floating panel built on `Panel`.
 ## Import
 
 ```js
-import { FloatingDialog } from "ifcopenshell/gui";
+import { FloatingDialog } from "@aeco-dev/gui";
 ```
 
 ## Examples

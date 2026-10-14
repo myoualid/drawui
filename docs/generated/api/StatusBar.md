@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** feedback  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `StatusBar`
 
 Application status bar with message regions.
@@ -12,7 +12,7 @@ Application status bar with message regions.
 ## Import
 
 ```js
-import { StatusBar } from "ifcopenshell/gui";
+import { StatusBar } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** panels  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `RibbonBar`
 
 Horizontal ribbon / action row for panel footers or the app shell ribbon.
@@ -15,7 +15,7 @@ _Source: `src/components/panels/RibbonBar.js`_
 ## Import
 
 ```js
-import { RibbonBar } from "ifcopenshell/gui";
+import { RibbonBar } from "@aeco-dev/gui";
 ```
 
 ## Examples

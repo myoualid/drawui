@@ -23,30 +23,30 @@
 <h2 id="purpose">Purpose</h2>
 <p>IfcOpenShell GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
 <h2 id="importrules">Import Rules</h2>
-<p>Install with <code>npm install ifcopenshell-gui</code>. Map the public specifiers onto that package, then import classes:</p>
+<p>Install with <code>npm install @aeco-dev/gui @aeco-dev/layout</code>. A bundler resolves the package names. A page without a bundler maps them onto the installed files:</p>
 <pre><code class="html language-html">&lt;script type="importmap"&gt;
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 &lt;/script&gt;
 </code></pre>
-<pre><code class="js language-js">import { Button, FloatingWindow, Chart } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+<pre><code class="js language-js">import { Button, FloatingWindow, Chart } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 </code></pre>
-<p><code>ifcopenshell/gui</code> is the component library, including <code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code>. Those libraries load on first use. <code>ifcopenshell/layout</code> exports <code>World</code>, <code>Layout</code>, and <code>Panel</code>.</p>
-<p>Construct with <code>new Button("Save")</code>, <code>new World()</code>, and <code>new Layout(config).init(world)</code>. A bundler can drop classes you do not import from the source barrels. <code>dist/gui.js</code> and <code>dist/layout.js</code> are the full browser builds.</p>
+<p><code>@aeco-dev/gui</code> is the component library, including <code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code>. Those libraries load on first use. <code>@aeco-dev/layout</code> exports <code>World</code>, <code>Layout</code>, and <code>Panel</code>.</p>
+<p>Construct with <code>new Button("Save")</code>, <code>new World()</code>, and <code>new Layout(config).init(world)</code>. <code>@aeco-dev/gui</code> and <code>@aeco-dev/layout</code> are the browser builds.</p>
 <p>Do not import from package-internal files unless the path is exported in <code>package.json</code>.</p>
 <h2 id="componentselection">Component Selection</h2>
 <ul>
 <li>Use <code>StackPanel</code> and <code>Grid</code> to arrange components inside a panel.</li>
 <li>Use <code>new World()</code>, then <code>new Layout(config).init(world)</code>, when the app docks panels. Listen with <code>layout.on("workspace", handler)</code> and <code>layout.on("tab:selected", handler)</code>.</li>
-<li>Use <code>new Panel({ layout, position, id, label })</code> from <code>ifcopenshell/layout</code> for a docked panel. Call <code>panel.bindTo(button)</code> for a control the app owns.</li>
-<li>Use <code>Panel</code> from <code>ifcopenshell/gui</code> for fixed header, content, and footer regions.</li>
+<li>Use <code>new Panel({ layout, position, id, label })</code> from <code>@aeco-dev/layout</code> for a docked panel. Call <code>panel.bindTo(button)</code> for a control the app owns.</li>
+<li>Use <code>Panel</code> from <code>@aeco-dev/gui</code> for fixed header, content, and footer regions.</li>
 <li>Use <code>FloatingWindow</code> for draggable or dockable floating windows.</li>
 <li>Use <code>CollapsiblePanel</code> for accordion content inside another surface.</li>
 <li>Use <code>Flyout</code> for standalone expandable tool panels.</li>
@@ -61,7 +61,7 @@ import "ifcopenshell-gui/styles/layout.css";
 <ul>
 <li>Package CSS uses <code>--dui-*</code> tokens only.</li>
 <li>New public selectors should use the <code>dui-*</code> namespace.</li>
-<li>Import <code>ifcopenshell-gui/styles/icons.css</code> when using icon-emitting components.</li>
+<li>Import <code>@aeco-dev/gui/gui.css</code> once. It includes icons, themes, and optional widget styles.</li>
 <li>Keep application layout selectors, module IDs, and product-specific styles out of the package CSS entrypoints.</li>
 </ul>
 <h2 id="accessibilitychecklist">Accessibility Checklist</h2>
@@ -96,7 +96,7 @@ import "ifcopenshell-gui/styles/layout.css";
 <h2 id="knowngotchas">Known Gotchas</h2>
 <ul>
 <li>Some overlays and floating surfaces mount or listen outside their root element and still require careful lifecycle handling.</li>
-<li>Material Symbols ship in <code>ifcopenshell-gui/styles/gui.css</code>. Import <code>ifcopenshell-gui/styles/icons.css</code> only when you assemble CSS without that file.</li>
+<li>Material Symbols ship in <code>@aeco-dev/gui/gui.css</code>. Theme layers are in that file; switch them with <code>data-theme</code> on <code>&lt;html&gt;</code>.</li>
 </ul></main>
   </div>
 </body>

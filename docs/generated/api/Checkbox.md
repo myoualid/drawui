@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Checkbox`
 
 Checkbox input.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Checkbox } from "ifcopenshell/gui";
+import { Checkbox } from "@aeco-dev/gui";
 ```
 
 ## Examples

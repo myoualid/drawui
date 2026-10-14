@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Line`
 
 Horizontal rule.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Line } from "ifcopenshell/gui";
+import { Line } from "@aeco-dev/gui";
 ```
 
 ## Examples

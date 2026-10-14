@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Visual handle for a workspace / pane edge.
@@ -14,7 +14,7 @@ _Source: `src/utils/flexResizer.js`_
 ## Import
 
 ```js
-import { createLayoutResizerHandle } from "ifcopenshell/gui";
+import { createLayoutResizerHandle } from "@aeco-dev/gui";
 ```
 
 ## Examples

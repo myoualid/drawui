@@ -3,17 +3,17 @@
 ## Install
 
 ```sh
-npm install ifcopenshell-gui
+npm install @aeco-dev/gui @aeco-dev/layout
 ```
 
-Point `ifcopenshell/gui` and `ifcopenshell/layout` at the installed package:
+Point `@aeco-dev/gui` and `@aeco-dev/layout` at the installed packages when the page has no bundler:
 
 ```html
 <script type="importmap">
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 </script>
@@ -21,24 +21,24 @@ Point `ifcopenshell/gui` and `ifcopenshell/layout` at the installed package:
 
 ## Two entry points
 
-`ifcopenshell/gui` is the component library. `ifcopenshell/layout` is the workspace manager: `World`, `Layout`, and `Panel`. Import `ifcopenshell-gui/styles/gui.css` for components. Import `ifcopenshell-gui/styles/layout.css` as well when the app docks panels.
+`@aeco-dev/gui` is the component library. `@aeco-dev/layout` is the workspace manager: `World`, `Layout`, and `Panel`. Import `@aeco-dev/gui/gui.css` for components. Import `@aeco-dev/layout/layout.css` as well when the app docks panels.
 
-`Chart`, `DataGrid`, `GanttChart`, `NodeGraph`, and `Markdown` are named exports of `ifcopenshell/gui`. Their libraries load on first use.
+`Chart`, `DataGrid`, `GanttChart`, `NodeGraph`, and `Markdown` are named exports of `@aeco-dev/gui`. Their libraries load on first use.
 
 ## Base Imports
 
 ```js
-import { StackPanel, Heading, Text } from "ifcopenshell/gui";
-import "ifcopenshell-gui/styles/gui.css";
+import { StackPanel, Heading, Text } from "@aeco-dev/gui";
+import "@aeco-dev/gui/gui.css";
 ```
 
-`styles/gui.css` already includes icons and both themes. `styles/core.css` is the token and component layer inside it, if you want to assemble CSS yourself.
+`styles/gui.css` already includes icons, both themes, and the optional widget styles. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
 
 ## First Panel
 
 ```js
-import { FloatingWindow, StackPanel, Heading, Text } from "ifcopenshell/gui";
-import "ifcopenshell-gui/styles/gui.css";
+import { FloatingWindow, StackPanel, Heading, Text } from "@aeco-dev/gui";
+import "@aeco-dev/gui/gui.css";
 
 const panel = new FloatingWindow({
   title: "Layers",
@@ -56,13 +56,13 @@ document.body.appendChild(panel.dom);
 
 ## Workspace
 
-`ifcopenshell/layout` exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.
+`@aeco-dev/layout` exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.
 
 ```js
-import { Text, Button } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+import { Text, Button } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 
 const world = new World();
 world.mount(document.body);
@@ -135,8 +135,8 @@ A docked collapsible panel. Pass the `layout` created above.
 
 ## Typical Pattern
 
-1. Import `ifcopenshell-gui/styles/gui.css` once at application startup.
-2. Import `ifcopenshell-gui/styles/layout.css` only if you use `Layout`.
+1. Import `@aeco-dev/gui/gui.css` once at application startup.
+2. Import `@aeco-dev/layout/layout.css` only if you use `Layout`.
 3. Build layouts with `new StackPanel({ isVertical: false|true })` (or other primitives).
 4. Mount the component `.dom` into your host application.
 5. Call `dispose()` during teardown for components that attach global listeners or external mounts.

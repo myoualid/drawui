@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Generic block wrapper.
@@ -12,7 +12,7 @@ Generic block wrapper.
 ## Import
 
 ```js
-import { Container } from "ifcopenshell/gui";
+import { Container } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Horizontal spacer between inline or row items.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { HSpacer } from "ifcopenshell/gui";
+import { HSpacer } from "@aeco-dev/gui";
 ```
 
 ## Examples

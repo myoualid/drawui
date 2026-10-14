@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/layout`  
+**Import:** `@aeco-dev/layout`  
 **Emitted class(es):** `Layout`, `Panel`
 
 Workspace grid, exported as Layout.
@@ -36,7 +36,7 @@ _Source: `src/workspace/WorkspaceLayout.js`_
 ## Import
 
 ```js
-import { Layout } from "ifcopenshell/layout";
+import { Layout } from "@aeco-dev/layout";
 ```
 
 ## Examples
@@ -44,8 +44,8 @@ import { Layout } from "ifcopenshell/layout";
 ### App
 
 ```js
-import { Text } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
+import { Text } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
 
 const world = new World();
 world.mount(document.body);

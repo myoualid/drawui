@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Link`
 
 Anchor with optional icon and external-target behavior.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Hyperlink } from "ifcopenshell/gui";
+import { Hyperlink } from "@aeco-dev/gui";
 ```
 
 ## Examples

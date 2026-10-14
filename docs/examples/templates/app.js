@@ -1,4 +1,4 @@
-import { Layout, World } from "ifcopenshell/layout";
+import { Layout, World } from "@aeco-dev/layout";
 import {
   StackPanel,
   Container,
@@ -39,7 +39,7 @@ import {
   Code,
   Kbd,
   Hyperlink,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 import { layoutConfig, worldConfig } from "./world-config.js";
 
 function createWorkspacePanel(layout, options, body) {

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputText`
 
 Single-line text input.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputText } from "ifcopenshell/gui";
+import { InputText } from "@aeco-dev/gui";
 ```
 
 ## Examples

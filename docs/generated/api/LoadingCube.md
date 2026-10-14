@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** feedback  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `LoadingCube`, `spinner-wrapper`, `spinner`, `spinner-text`, `spinner-percentage`
 
 Indeterminate progress spinner.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { LoadingCube } from "ifcopenshell/gui";
+import { LoadingCube } from "@aeco-dev/gui";
 ```
 
 ## Examples

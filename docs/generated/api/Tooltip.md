@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Tooltip`, `Tooltip--{theme}`, `visible`
 
 Show the spinner in a target container as an overlay
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Tooltip } from "ifcopenshell/gui";
+import { Tooltip } from "@aeco-dev/gui";
 ```
 
 ## Examples

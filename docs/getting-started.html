@@ -20,29 +20,29 @@
     </nav>
     <main class="doc-content Markdown"><h1 id="ifcopenshellguigettingstarted">IfcOpenShell GUI Getting Started</h1>
 <h2 id="install">Install</h2>
-<pre><code class="sh language-sh">npm install ifcopenshell-gui
+<pre><code class="sh language-sh">npm install @aeco-dev/gui @aeco-dev/layout
 </code></pre>
-<p>Point <code>ifcopenshell/gui</code> and <code>ifcopenshell/layout</code> at the installed package:</p>
+<p>Point <code>@aeco-dev/gui</code> and <code>@aeco-dev/layout</code> at the installed packages when the page has no bundler:</p>
 <pre><code class="html language-html">&lt;script type="importmap"&gt;
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 &lt;/script&gt;
 </code></pre>
 <h2 id="twoentrypoints">Two entry points</h2>
-<p><code>ifcopenshell/gui</code> is the component library. <code>ifcopenshell/layout</code> is the workspace manager: <code>World</code>, <code>Layout</code>, and <code>Panel</code>. Import <code>ifcopenshell-gui/styles/gui.css</code> for components. Import <code>ifcopenshell-gui/styles/layout.css</code> as well when the app docks panels.</p>
-<p><code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code> are named exports of <code>ifcopenshell/gui</code>. Their libraries load on first use.</p>
+<p><code>@aeco-dev/gui</code> is the component library. <code>@aeco-dev/layout</code> is the workspace manager: <code>World</code>, <code>Layout</code>, and <code>Panel</code>. Import <code>@aeco-dev/gui/gui.css</code> for components. Import <code>@aeco-dev/layout/layout.css</code> as well when the app docks panels.</p>
+<p><code>Chart</code>, <code>DataGrid</code>, <code>GanttChart</code>, <code>NodeGraph</code>, and <code>Markdown</code> are named exports of <code>@aeco-dev/gui</code>. Their libraries load on first use.</p>
 <h2 id="baseimports">Base Imports</h2>
-<pre><code class="js language-js">import { StackPanel, Heading, Text } from "ifcopenshell/gui";
-import "ifcopenshell-gui/styles/gui.css";
+<pre><code class="js language-js">import { StackPanel, Heading, Text } from "@aeco-dev/gui";
+import "@aeco-dev/gui/gui.css";
 </code></pre>
-<p><code>styles/gui.css</code> already includes icons and both themes. <code>styles/core.css</code> is the token and component layer inside it, if you want to assemble CSS yourself.</p>
+<p><code>styles/gui.css</code> already includes icons, both themes, and the optional widget styles. Set <code>data-theme="light"</code> or <code>data-theme="dark"</code> on <code>&lt;html&gt;</code> to switch themes.</p>
 <h2 id="firstpanel">First Panel</h2>
-<pre><code class="js language-js">import { FloatingWindow, StackPanel, Heading, Text } from "ifcopenshell/gui";
-import "ifcopenshell-gui/styles/gui.css";
+<pre><code class="js language-js">import { FloatingWindow, StackPanel, Heading, Text } from "@aeco-dev/gui";
+import "@aeco-dev/gui/gui.css";
 
 const panel = new FloatingWindow({
   title: "Layers",
@@ -58,11 +58,11 @@ panel.content.add(content);
 document.body.appendChild(panel.dom);
 </code></pre>
 <h2 id="workspace">Workspace</h2>
-<p><code>ifcopenshell/layout</code> exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.</p>
-<pre><code class="js language-js">import { Text, Button } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+<p><code>@aeco-dev/layout</code> exports three classes. The shell docks panels. Application code owns commands, selection, and data, and listens for layout events.</p>
+<pre><code class="js language-js">import { Text, Button } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 
 const world = new World();
 world.mount(document.body);
@@ -128,8 +128,8 @@ layout.on("workspace", ({ position, open }) =&gt; {
 <p><code>startFloating: true</code> opens the panel as a floating window when it is not docked. Panels that share <code>group</code> move between regions together.</p>
 <h2 id="typicalpattern">Typical Pattern</h2>
 <ol>
-<li>Import <code>ifcopenshell-gui/styles/gui.css</code> once at application startup.</li>
-<li>Import <code>ifcopenshell-gui/styles/layout.css</code> only if you use <code>Layout</code>.</li>
+<li>Import <code>@aeco-dev/gui/gui.css</code> once at application startup.</li>
+<li>Import <code>@aeco-dev/layout/layout.css</code> only if you use <code>Layout</code>.</li>
 <li>Build layouts with <code>new StackPanel({ isVertical: false|true })</code> (or other primitives).</li>
 <li>Mount the component <code>.dom</code> into your host application.</li>
 <li>Call <code>dispose()</code> during teardown for components that attach global listeners or external mounts.</li>

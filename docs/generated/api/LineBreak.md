@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `LineBreak`
 
 Thin `br` wrapper.
@@ -12,7 +12,7 @@ Thin `br` wrapper.
 ## Import
 
 ```js
-import { LineBreak } from "ifcopenshell/gui";
+import { LineBreak } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -39,7 +39,7 @@ import {
   makeDraggable,
   makeFlexResizer,
   makeResizable,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 
 const BUILDERS = { ...DEMO_BUILDERS, ...FULL_DEMO_BUILDERS };
 

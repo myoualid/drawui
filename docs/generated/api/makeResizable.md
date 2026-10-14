@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Attach edge/corner resize handles to a positioned panel.
@@ -14,7 +14,7 @@ _Source: `src/overlays/drag.js`_
 ## Import
 
 ```js
-import { makeResizable } from "ifcopenshell/gui";
+import { makeResizable } from "@aeco-dev/gui";
 ```
 
 ## Examples

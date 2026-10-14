@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Button`
 
 Button primitive with optional prepended icon.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Button } from "ifcopenshell/gui";
+import { Button } from "@aeco-dev/gui";
 ```
 
 ## Examples

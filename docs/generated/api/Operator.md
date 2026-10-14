@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Operator`
 
 Icon-only button.
@@ -14,7 +14,7 @@ _Source: `src/components/controls/Operator.js`_
 ## Import
 
 ```js
-import { Operator } from "ifcopenshell/gui";
+import { Operator } from "@aeco-dev/gui";
 ```
 
 ## Examples

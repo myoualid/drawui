@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Text`
 
 Inline text. Base for titles, captions, badges, and other text chips.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Text } from "ifcopenshell/gui";
+import { Text } from "@aeco-dev/gui";
 ```
 
 ## Examples

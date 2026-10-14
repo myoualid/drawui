@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** feedback  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Badge`
 
 Status / label badge.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Badge } from "ifcopenshell/gui";
+import { Badge } from "@aeco-dev/gui";
 ```
 
 ## Examples

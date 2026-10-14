@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputNumber`
 
 Numeric input with drag and keyboard adjustments.
@@ -12,7 +12,7 @@ Numeric input with drag and keyboard adjustments.
 ## Import
 
 ```js
-import { InputNumber } from "ifcopenshell/gui";
+import { InputNumber } from "@aeco-dev/gui";
 ```
 
 ## Examples

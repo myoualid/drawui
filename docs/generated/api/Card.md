@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Card`
 
 Card shell (`Rectangle` + `Card` class).
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Card } from "ifcopenshell/gui";
+import { Card } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `AppShell`, `AppShell-sidebar`, `AppShell-main`
 
 SPA host with sidebar navigation and hash routing.
@@ -14,7 +14,7 @@ _Source: `src/components/shell/AppShell.js`_
 ## Import
 
 ```js
-import { AppShell } from "ifcopenshell/gui";
+import { AppShell } from "@aeco-dev/gui";
 ```
 
 ## Examples

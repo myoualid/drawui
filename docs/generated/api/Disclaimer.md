@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Disclaimer`
 
 Secondary legal / helper copy.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Disclaimer } from "ifcopenshell/gui";
+import { Disclaimer } from "@aeco-dev/gui";
 ```
 
 ## Examples

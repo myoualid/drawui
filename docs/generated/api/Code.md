@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Code`
 
 Inline code / API signature chip.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Code } from "ifcopenshell/gui";
+import { Code } from "@aeco-dev/gui";
 ```
 
 ## Examples

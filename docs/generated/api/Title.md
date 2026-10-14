@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Title`
 
 Panel title text (`Title` class).
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Title } from "ifcopenshell/gui";
+import { Title } from "@aeco-dev/gui";
 ```
 
 ## Examples

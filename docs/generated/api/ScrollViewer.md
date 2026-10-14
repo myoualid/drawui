@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Scrollable container wrapper.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { ScrollViewer } from "ifcopenshell/gui";
+import { ScrollViewer } from "@aeco-dev/gui";
 ```
 
 ## Examples

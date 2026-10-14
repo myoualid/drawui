@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Rectangle`
 
 Generic panel container.
@@ -12,7 +12,7 @@ Generic panel container.
 ## Import
 
 ```js
-import { Rectangle } from "ifcopenshell/gui";
+import { Rectangle } from "@aeco-dev/gui";
 ```
 
 ## Examples

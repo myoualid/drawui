@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `TreeView`, `TreeView-item`, `TreeView-toggle`, `TreeView-label`, `TreeView-children`, `is-expanded`, `is-selected`
 
 Expandable nested tree for hierarchical data.
@@ -17,7 +17,7 @@ _Source: `src/components/lists/TreeView.js`_
 ## Import
 
 ```js
-import { TreeView } from "ifcopenshell/gui";
+import { TreeView } from "@aeco-dev/gui";
 ```
 
 ## Examples

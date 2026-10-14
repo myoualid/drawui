@@ -1,11 +1,11 @@
-import * as GUI from "ifcopenshell/gui";
-import { RadialMenu } from "ifcopenshell/gui";
+import * as GUI from "@aeco-dev/gui";
+import { RadialMenu } from "@aeco-dev/gui";
 
 function row() {
   return new GUI.StackPanel({ isVertical: false }).gap("0.75rem").setStyle("flexWrap", ["wrap"]).setStyle("alignItems", ["center"]);
 }
 
-/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
+/** @type {Record<string, () => import("@aeco-dev/gui").Control>} */
 export const DEMO_BUILDERS = {
   "headings": () =>
     new GUI.StackPanel({ isVertical: true })

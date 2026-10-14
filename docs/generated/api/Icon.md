@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** media  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `material-symbols-outlined`, `Icon`
 
 Material Symbols icon glyph.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Icon } from "ifcopenshell/gui";
+import { Icon } from "@aeco-dev/gui";
 ```
 
 ## Examples

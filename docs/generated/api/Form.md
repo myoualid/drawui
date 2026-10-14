@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Form wrapper with submit helpers.
@@ -12,7 +12,7 @@ Form wrapper with submit helpers.
 ## Import
 
 ```js
-import { Form } from "ifcopenshell/gui";
+import { Form } from "@aeco-dev/gui";
 ```
 
 ## Examples

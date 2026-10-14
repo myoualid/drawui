@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `LabeledBoxItem`
 
 Workspace menu row: checkbox + icon + label + actions slot.
@@ -14,7 +14,7 @@ _Source: `src/components/lists/LabeledBoxItem.js`_
 ## Import
 
 ```js
-import { LabeledBoxItem } from "ifcopenshell/gui";
+import { LabeledBoxItem } from "@aeco-dev/gui";
 ```
 
 ## Examples

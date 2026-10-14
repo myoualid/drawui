@@ -1,4 +1,4 @@
-import * as GUI from "ifcopenshell/gui";
+import * as GUI from "@aeco-dev/gui";
 import {
   Container,
   StackPanel,
@@ -10,8 +10,8 @@ import {
   GanttChart,
   DataGrid,
   NodeGraph,
-} from "ifcopenshell/gui";
-import { Layout } from "ifcopenshell/layout";
+} from "@aeco-dev/gui";
+import { Layout } from "@aeco-dev/layout";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {
@@ -133,7 +133,7 @@ function makeChart(chartConfiguration, height = "260px") {
   return afterAttach(chart, () => chart.init());
 }
 
-/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
+/** @type {Record<string, () => import("@aeco-dev/gui").Control>} */
 export const FULL_DEMO_BUILDERS = {
   "chart-bar": () =>
     makeChart({
@@ -531,7 +531,7 @@ export const FULL_DEMO_BUILDERS = {
         "  - Another item",
         "- Ordered next",
         "",
-        "1. Import Markdown from ifcopenshell/gui",
+        "1. Import Markdown from @aeco-dev/gui",
         "2. Call `new Markdown(text)`",
         "3. Attach to the DOM",
         "",
@@ -548,7 +548,7 @@ export const FULL_DEMO_BUILDERS = {
         "## Code",
         "",
         "```js",
-        "import { Markdown } from \"ifcopenshell/gui\";",
+        "import { Markdown } from \"@aeco-dev/gui\";",
         "",
         "const md = new Markdown(",
         "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",

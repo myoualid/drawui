@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** feedback  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Toast`, `Toast--{type}`, `Toast--fade-out`, `Toast-close`, `status-bar`, `status-bar-fill`
 
 Transient notification or progress overlay.
@@ -27,7 +27,7 @@ _Source: `src/components/feedback/Toast.js`_
 ## Import
 
 ```js
-import { Toast } from "ifcopenshell/gui";
+import { Toast } from "@aeco-dev/gui";
 ```
 
 ## Examples

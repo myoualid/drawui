@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** feedback  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Native progress bar.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { ProgressBar } from "ifcopenshell/gui";
+import { ProgressBar } from "@aeco-dev/gui";
 ```
 
 ## Examples

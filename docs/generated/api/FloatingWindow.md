@@ -4,8 +4,8 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
-**Emitted class(es):** `FloatingWindow`, `FloatingWindow-header`, `FloatingWindow-content`, `circle`, `pos-btn`, `green`, `red`, `Row`, `centered-vertical`, `justify-between`, `fill-width`, `fill-height`
+**Import:** `@aeco-dev/gui`  
+**Emitted class(es):** `FloatingWindow`, `FloatingWindow-header`, `FloatingWindow-dots`, `FloatingWindow-dot`, `FloatingWindow-title`, `FloatingWindow-tools`, `FloatingWindow-content`
 
 Free-floating window with docking controls.
 
@@ -14,7 +14,7 @@ _Source: `src/overlays/FloatingWindow.js`_
 ## Import
 
 ```js
-import { FloatingWindow } from "ifcopenshell/gui";
+import { FloatingWindow } from "@aeco-dev/gui";
 ```
 
 ## Examples

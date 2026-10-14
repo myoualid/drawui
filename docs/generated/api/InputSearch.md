@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputSearch`
 
 Search field (`type="search"`).
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputSearch } from "ifcopenshell/gui";
+import { InputSearch } from "@aeco-dev/gui";
 ```
 
 ## Examples

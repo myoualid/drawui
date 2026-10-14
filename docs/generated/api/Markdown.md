@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Markdown`
 
 Renders markdown (or sanitized HTML) into a `.Markdown` container.
@@ -16,7 +16,7 @@ _Source: `src/components/Markdown.js`_
 ## Import
 
 ```js
-import { Markdown } from "ifcopenshell/gui";
+import { Markdown } from "@aeco-dev/gui";
 ```
 
 ## Examples
@@ -72,7 +72,7 @@ return new Markdown(
       "  - Another item",
       "- Ordered next",
       "",
-      "1. Import Markdown from ifcopenshell/gui",
+      "1. Import Markdown from @aeco-dev/gui",
       "2. Call `new Markdown(text)`",
       "3. Attach to the DOM",
       "",
@@ -89,7 +89,7 @@ return new Markdown(
       "## Code",
       "",
       "```js",
-      "import { Markdown } from \"ifcopenshell/gui\";",
+      "import { Markdown } from \"@aeco-dev/gui\";",
       "",
       "const md = new Markdown(",
       "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",

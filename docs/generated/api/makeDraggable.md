@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Attach header-drag behavior to a positioned panel.
@@ -14,7 +14,7 @@ _Source: `src/overlays/drag.js`_
 ## Import
 
 ```js
-import { makeDraggable } from "ifcopenshell/gui";
+import { makeDraggable } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,10 +4,10 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/layout`  
+**Import:** `@aeco-dev/layout`  
 **Emitted class(es):** `CollapsiblePanel`
 
-Docked panel for a Layout region. Exported as `Panel` from `ifcopenshell/layout`.
+Docked panel for a Layout region. Exported as `Panel` from `@aeco-dev/layout`.
 
 Pass the `layout` instance directly. Content goes in with `add`.
 Call `bindTo` or `layout.bindToggle` with a button the application owns.
@@ -27,7 +27,7 @@ _Source: `src/components/panels/WorkspacePanel.js`_
 ## Import
 
 ```js
-import { Panel } from "ifcopenshell/layout";
+import { Panel } from "@aeco-dev/layout";
 ```
 
 ## Examples

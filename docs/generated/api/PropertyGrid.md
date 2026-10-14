@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `PropertyGrid`, `PropertyGrid-row`
 
 Key/value property editor grid.
@@ -12,7 +12,7 @@ Key/value property editor grid.
 ## Import
 
 ```js
-import { PropertyGrid } from "ifcopenshell/gui";
+import { PropertyGrid } from "@aeco-dev/gui";
 ```
 
 ## Examples

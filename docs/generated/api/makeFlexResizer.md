@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Attach drag-to-resize behavior between two flex siblings.
@@ -14,7 +14,7 @@ _Source: `src/utils/flexResizer.js`_
 ## Import
 
 ```js
-import { makeFlexResizer } from "ifcopenshell/gui";
+import { makeFlexResizer } from "@aeco-dev/gui";
 ```
 
 ## Examples

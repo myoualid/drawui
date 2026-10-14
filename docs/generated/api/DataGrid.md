@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Rectangle`, `ag-grid-custom`
 
 AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use.
@@ -12,7 +12,7 @@ AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on fir
 ## Import
 
 ```js
-import { DataGrid } from "ifcopenshell/gui";
+import { DataGrid } from "@aeco-dev/gui";
 ```
 
 ## Examples

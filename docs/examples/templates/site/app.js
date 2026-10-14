@@ -12,13 +12,13 @@ import {
   Toast,
   TabView,
   ProgressBar,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 import {
   Chart,
   Markdown,
   DataGrid,
   GanttChart,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputList`, `Active`
 
 Selectable list container.
@@ -12,7 +12,7 @@ Selectable list container.
 ## Import
 
 ```js
-import { InputList } from "ifcopenshell/gui";
+import { InputList } from "@aeco-dev/gui";
 ```
 
 ## Examples

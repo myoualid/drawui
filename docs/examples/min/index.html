@@ -36,7 +36,7 @@
   <script type="importmap">
   {
     "imports": {
-      "ifcopenshell/gui": "../../dist/gui.js"
+      "@aeco-dev/gui": "../../dist/gui.js"
     }
   }
   </script>
@@ -44,7 +44,7 @@
 <body>
   <div id="app">
     <p class="demo-note">
-      GUI demo — loads <code>ifcopenshell/gui</code> from <code>dist/</code>. Run <code>npm run build</code> first, then serve the <code>docs/</code> folder:
+      GUI demo — loads <code>@aeco-dev/gui</code> from <code>dist/</code>. Run <code>npm run build</code> first, then serve the <code>docs/</code> folder:
       <code>npx serve docs -p 5173</code>
     </p>
   </div>
@@ -57,7 +57,7 @@
       Heading,
       Text,
       Button,
-    } from "ifcopenshell/gui";
+    } from "@aeco-dev/gui";
 
     const panel = new FloatingWindow({
       title: "IfcOpenShell GUI",

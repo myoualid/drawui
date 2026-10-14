@@ -16,12 +16,12 @@ import {
   InputSearch,
   Line,
   RibbonBar,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 import {
   Chart,
   DataGrid,
   NodeGraph,
-} from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
 
 function afterAttach(element, fn) {
   requestAnimationFrame(() => {

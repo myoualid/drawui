@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** overlays  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Radial menu anchored to a viewport element.
@@ -17,7 +17,7 @@ _Source: `src/components/menus/RadialMenu.js`_
 ## Import
 
 ```js
-import { RadialMenu } from "ifcopenshell/gui";
+import { RadialMenu } from "@aeco-dev/gui";
 ```
 
 ## Examples

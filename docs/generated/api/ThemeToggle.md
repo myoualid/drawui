@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `ThemeToggle`
 
 Light/dark switch. Sets `data-theme` on `<html>` to `"light"` or `"dark"`,
@@ -15,7 +15,7 @@ _Source: `src/components/controls/ThemeToggle.js`_
 ## Import
 
 ```js
-import { ThemeToggle } from "ifcopenshell/gui";
+import { ThemeToggle } from "@aeco-dev/gui";
 ```
 
 ## Examples

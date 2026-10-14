@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** text  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Kbd`
 
 Keyboard key chip.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Kbd } from "ifcopenshell/gui";
+import { Kbd } from "@aeco-dev/gui";
 ```
 
 ## Examples

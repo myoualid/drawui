@@ -2,19 +2,19 @@
 
 # IfcOpenShell GUI Component Index
 
-This index documents the maintained public surface of the IfcOpenShell GUI package.
-Install the package with `npm install ifcopenshell-gui`. Application code imports `ifcopenshell/gui` and `ifcopenshell/layout`; an import map or bundler alias points those specifiers at this package.
-Sections follow role: **Text** is written content; **Media** is icons, images, SVG, and canvas; **Inputs** are form controls and buttons; **Feedback** is status, progress, and toasts; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are structure; **Peers** are optional widgets exported from `ifcopenshell/gui`. Their libraries load on first use.
+This index documents the maintained public surface of IfcOpenShell GUI.
+Install `@aeco-dev/gui` for components and `@aeco-dev/layout` for the workspace manager. Application code imports `@aeco-dev/gui` and `@aeco-dev/layout`.
+Sections follow role: **Text** is written content; **Media** is icons, images, SVG, and canvas; **Inputs** are form controls and buttons; **Feedback** is status, progress, and toasts; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are structure; **Peers** are optional widgets exported from `@aeco-dev/gui`. Their libraries load on first use.
 
 ## Import Surfaces
 
 Use package exports for all public IfcOpenShell GUI consumption:
 
 ```js
-import { Button, StackPanel } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+import { Button, StackPanel } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 ```
 
 ## Status Legend
@@ -29,130 +29,130 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Hyperlink` | Stable | `ifcopenshell/gui` | `Link` | Anchor wrapper with optional icon and external-target behavior. |
-| `Text` | Stable | `ifcopenshell/gui` | `Text` | Inline text. Base for titles, captions, badges, and other text chips. |
-| `Heading` | Stable | `ifcopenshell/gui` | None by default | Semantic heading wrapper (`h1`–`h6` via level option). |
-| `Caption` | Stable | `ifcopenshell/gui` | None by default | Thin `small` wrapper. |
-| `Title` | Stable | `ifcopenshell/gui` | `Title` | Panel-style title text for section headers. |
-| `Disclaimer` | Stable | `ifcopenshell/gui` | `Disclaimer` | Muted helper or legal copy. |
-| `Code` | Stable | `ifcopenshell/gui` | `Code` | Inline code / API signature chip. |
-| `Kbd` | Stable | `ifcopenshell/gui` | `Kbd` | Keyboard shortcut chip. |
-| `Markdown` | Stable | `ifcopenshell/gui` | `Markdown` | Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `ifcopenshell/gui`. |
+| `Hyperlink` | Stable | `@aeco-dev/gui` | `Link` | Anchor wrapper with optional icon and external-target behavior. |
+| `Text` | Stable | `@aeco-dev/gui` | `Text` | Inline text. Base for titles, captions, badges, and other text chips. |
+| `Heading` | Stable | `@aeco-dev/gui` | None by default | Semantic heading wrapper (`h1`–`h6` via level option). |
+| `Caption` | Stable | `@aeco-dev/gui` | None by default | Thin `small` wrapper. |
+| `Title` | Stable | `@aeco-dev/gui` | `Title` | Panel-style title text for section headers. |
+| `Disclaimer` | Stable | `@aeco-dev/gui` | `Disclaimer` | Muted helper or legal copy. |
+| `Code` | Stable | `@aeco-dev/gui` | `Code` | Inline code / API signature chip. |
+| `Kbd` | Stable | `@aeco-dev/gui` | `Kbd` | Keyboard shortcut chip. |
+| `Markdown` | Stable | `@aeco-dev/gui` | `Markdown` | Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `@aeco-dev/gui`. |
 
 ## Media
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Image` | Stable | `ifcopenshell/gui` | `Image` | Image wrapper around `img`. |
-| `Svg` | Experimental | `ifcopenshell/gui` | `SVG` | Supports fetch, clone, and ID retargeting for reusable SVGs. |
-| `Canvas` | Stable | `ifcopenshell/gui` | `Canvas` | HTML canvas wrapper for custom drawing. |
-| `Icon` | Stable | `ifcopenshell/gui` | `material-symbols-outlined`, `Icon` | Material Symbols icon span. |
-| `ICONS` | Stable | `ifcopenshell/gui` | None by default | Material Symbols icon name constants. |
+| `Image` | Stable | `@aeco-dev/gui` | `Image` | Image wrapper around `img`. |
+| `Svg` | Experimental | `@aeco-dev/gui` | `SVG` | Supports fetch, clone, and ID retargeting for reusable SVGs. |
+| `Canvas` | Stable | `@aeco-dev/gui` | `Canvas` | HTML canvas wrapper for custom drawing. |
+| `Icon` | Stable | `@aeco-dev/gui` | `material-symbols-outlined`, `Icon` | Material Symbols icon span. |
+| `ICONS` | Stable | `@aeco-dev/gui` | None by default | Material Symbols icon name constants. |
 
 ## Inputs
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Form` | Stable | `ifcopenshell/gui` | None by default | Form wrapper with submit helpers. |
-| `InputText` | Stable | `ifcopenshell/gui` | `InputText` | Single-line input with editor-style propagation guards. |
-| `InputSearch` | Stable | `ifcopenshell/gui` | `InputSearch` | Search input variant of `InputText`. |
-| `InputTextArea` | Stable | `ifcopenshell/gui` | `InputTextArea` | Multiline editor primitive with tab insertion support. |
-| `InputDropdown` | Stable | `ifcopenshell/gui` | `InputDropdown` | Native select wrapper. |
-| `Checkbox` | Stable | `ifcopenshell/gui` | `Checkbox` | Checkbox input primitive. |
-| `InputColor` | Stable | `ifcopenshell/gui` | `InputColor` | Color input primitive. |
-| `InputNumber` | Stable | `ifcopenshell/gui` | `InputNumber` | Numeric input with drag and keyboard adjustments. |
-| `InputInteger` | Stable | `ifcopenshell/gui` | `InputNumber` | Integer-specialized numeric input. |
-| `Slider` | Stable | `ifcopenshell/gui` | `Slider` | Range track plus numeric field for continuous values. |
-| `Button` | Stable | `ifcopenshell/gui` | `Button` | Button primitive with optional prepended icon. |
-| `InputDate` | Experimental | `ifcopenshell/gui` | `InputDate`, `InputDate-input`, `InputDate-calendar` | Composite date and time picker. |
-| `Operator` | Stable | `ifcopenshell/gui` | `Operator` | Icon-only button. |
-| `ThemeToggle` | Stable | `ifcopenshell/gui` | `ThemeToggle` | Light/dark theme toggle control. |
+| `Form` | Stable | `@aeco-dev/gui` | None by default | Form wrapper with submit helpers. |
+| `InputText` | Stable | `@aeco-dev/gui` | `InputText` | Single-line input with editor-style propagation guards. |
+| `InputSearch` | Stable | `@aeco-dev/gui` | `InputSearch` | Search input variant of `InputText`. |
+| `InputTextArea` | Stable | `@aeco-dev/gui` | `InputTextArea` | Multiline editor primitive with tab insertion support. |
+| `InputDropdown` | Stable | `@aeco-dev/gui` | `InputDropdown` | Native select wrapper. |
+| `Checkbox` | Stable | `@aeco-dev/gui` | `Checkbox` | Checkbox input primitive. |
+| `InputColor` | Stable | `@aeco-dev/gui` | `InputColor` | Color input primitive. |
+| `InputNumber` | Stable | `@aeco-dev/gui` | `InputNumber` | Numeric input with drag and keyboard adjustments. |
+| `InputInteger` | Stable | `@aeco-dev/gui` | `InputNumber` | Integer-specialized numeric input. |
+| `Slider` | Stable | `@aeco-dev/gui` | `Slider` | Range track plus numeric field for continuous values. |
+| `Button` | Stable | `@aeco-dev/gui` | `Button` | Button primitive with optional prepended icon. |
+| `InputDate` | Experimental | `@aeco-dev/gui` | `InputDate`, `InputDate-input`, `InputDate-calendar` | Composite date and time picker. |
+| `Operator` | Stable | `@aeco-dev/gui` | `Operator` | Icon-only button. |
+| `ThemeToggle` | Stable | `@aeco-dev/gui` | `ThemeToggle` | Light/dark theme toggle control. |
 
 ## Feedback
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Badge` | Stable | `ifcopenshell/gui` | `Badge` | Compact status / label badge. |
-| `ProgressBar` | Stable | `ifcopenshell/gui` | None by default | Native progress wrapper. |
-| `LoadingCube` | Experimental | `ifcopenshell/gui` | `LoadingCube`, `spinner-wrapper`, `spinner`, `spinner-text`, `spinner-percentage` | Overlay loading cube with text and percentage states. |
-| `Toast` | Stable | `ifcopenshell/gui` | `Toast`, `Toast--{type}`, `Toast--fade-out`, `Toast-close`, `status-bar`, `status-bar-fill` | Transient notification (`new Toast(message, type)`) or progress overlay (`toast.show` / `update` / `hide`). |
-| `StatusBar` | Stable | `ifcopenshell/gui` | `StatusBar` | Application status bar with message regions. |
+| `Badge` | Stable | `@aeco-dev/gui` | `Badge` | Compact status / label badge. |
+| `ProgressBar` | Stable | `@aeco-dev/gui` | None by default | Native progress wrapper. |
+| `LoadingCube` | Experimental | `@aeco-dev/gui` | `LoadingCube`, `spinner-wrapper`, `spinner`, `spinner-text`, `spinner-percentage` | Overlay loading cube with text and percentage states. |
+| `Toast` | Stable | `@aeco-dev/gui` | `Toast`, `Toast--{type}`, `Toast--fade-out`, `Toast-close`, `status-bar`, `status-bar-fill` | Transient notification (`new Toast(message, type)`) or progress overlay (`toast.show` / `update` / `hide`). |
+| `StatusBar` | Stable | `@aeco-dev/gui` | `StatusBar` | Application status bar with message regions. |
 
 ## Layout
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Control` | Stable | `ifcopenshell/gui` | None by default | Base chainable wrapper around a DOM node. |
-| `Container` | Stable | `ifcopenshell/gui` | None by default | Generic block wrapper. |
-| `StackPanel` | Stable | `ifcopenshell/gui` | `Row`, `Column` | Row/column layout primitive used throughout panel layouts (`new StackPanel({ isVertical: false|true })`). |
-| `ScrollViewer` | Stable | `ifcopenshell/gui` | None by default | Scrollable container wrapper. |
-| `Grid` | Stable | `ifcopenshell/gui` | `Grid` | Grid layout primitive with explicit column or auto-fit helpers. |
-| `Rectangle` | Stable | `ifcopenshell/gui` | `Rectangle` | Generic panel container. |
-| `Card` | Stable | `ifcopenshell/gui` | `Card` | Elevated surface shell (`Rectangle` + `Card` class). |
-| `Spacer` | Stable | `ifcopenshell/gui` | None by default | Vertical spacer between stacked items. |
-| `HSpacer` | Stable | `ifcopenshell/gui` | None by default | Horizontal spacer between inline or row items. |
-| `Handle` | Stable | `ifcopenshell/gui` | `drag-handle`, `resize-handle` | Drag / resize handle element (`new Handle("drag"|"resize")`). |
-| `TabItem` | Stable | `ifcopenshell/gui` | `Tab` | Tab chrome created by `TabView.addTab()` — not usually constructed directly. |
-| `center` | Stable | `ifcopenshell/gui` | `centered` | Adds the shared `centered` class to a control. |
-| `LineBreak` | Stable | `ifcopenshell/gui` | `LineBreak` | Thin `br` wrapper. |
-| `Line` | Stable | `ifcopenshell/gui` | `Line` | Divider wrapper around `hr`. |
-| `TabView` | Stable | `ifcopenshell/gui` | `TabView`, `TabView-tabs`, `TabView-content`, `Tab`, `Tab-float`, `selected` | Self-managed tab container. |
-| `makeFlexResizer` | Stable | `ifcopenshell/gui` | None by default | Creates a pointer-driven flex size resizer between siblings. |
-| `createSplitResizer` | Stable | `ifcopenshell/gui` | None by default | Builds a resizer control for a split-pane child index. |
-| `createLayoutResizerHandle` | Stable | `ifcopenshell/gui` | None by default | Creates a left/right/bottom workspace layout resizer handle. |
+| `Control` | Stable | `@aeco-dev/gui` | None by default | Base chainable wrapper around a DOM node. |
+| `Container` | Stable | `@aeco-dev/gui` | None by default | Generic block wrapper. |
+| `StackPanel` | Stable | `@aeco-dev/gui` | `Row`, `Column` | Row/column layout primitive used throughout panel layouts (`new StackPanel({ isVertical: false|true })`). |
+| `ScrollViewer` | Stable | `@aeco-dev/gui` | None by default | Scrollable container wrapper. |
+| `Grid` | Stable | `@aeco-dev/gui` | `Grid` | Grid layout primitive with explicit column or auto-fit helpers. |
+| `Rectangle` | Stable | `@aeco-dev/gui` | `Rectangle` | Generic panel container. |
+| `Card` | Stable | `@aeco-dev/gui` | `Card` | Elevated surface shell (`Rectangle` + `Card` class). |
+| `Spacer` | Stable | `@aeco-dev/gui` | None by default | Vertical spacer between stacked items. |
+| `HSpacer` | Stable | `@aeco-dev/gui` | None by default | Horizontal spacer between inline or row items. |
+| `Handle` | Stable | `@aeco-dev/gui` | `drag-handle`, `resize-handle` | Drag / resize handle element (`new Handle("drag"|"resize")`). |
+| `TabItem` | Stable | `@aeco-dev/gui` | `Tab` | Tab chrome created by `TabView.addTab()` — not usually constructed directly. |
+| `center` | Stable | `@aeco-dev/gui` | `centered` | Adds the shared `centered` class to a control. |
+| `LineBreak` | Stable | `@aeco-dev/gui` | `LineBreak` | Thin `br` wrapper. |
+| `Line` | Stable | `@aeco-dev/gui` | `Line` | Divider wrapper around `hr`. |
+| `TabView` | Stable | `@aeco-dev/gui` | `TabView`, `TabView-tabs`, `TabView-content`, `Tab`, `Tab-float`, `selected` | Self-managed tab container. |
+| `makeFlexResizer` | Stable | `@aeco-dev/gui` | None by default | Creates a pointer-driven flex size resizer between siblings. |
+| `createSplitResizer` | Stable | `@aeco-dev/gui` | None by default | Builds a resizer control for a split-pane child index. |
+| `createLayoutResizerHandle` | Stable | `@aeco-dev/gui` | None by default | Creates a left/right/bottom workspace layout resizer handle. |
 
 ## Collections
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `InputList` | Stable | `ifcopenshell/gui` | `InputList`, `Active` | Selectable list container. |
-| `InputListItem` | Stable | `ifcopenshell/gui` | `InputListItem` | Clickable row for `InputList`. |
-| `LabeledBoxItem` | Stable | `ifcopenshell/gui` | `LabeledBoxItem` | Checkbox + icon + label menu row for workspace menus. |
-| `NavigationList` | Stable | `ifcopenshell/gui` | `NavigationList`, `NavigationList-item`, `NavigationList-back` | One-level-at-a-time hierarchical navigation with back control. |
-| `TreeView` | Stable | `ifcopenshell/gui` | `TreeView`, `TreeView-item`, `TreeView-toggle`, `TreeView-label`, `TreeView-children`, `is-expanded`, `is-selected` | Expandable nested tree; same data options shape as `NavigationList`. |
-| `SortableList` | Stable | `ifcopenshell/gui` | `SortableList`, `SortableList-item`, `SortableList-handle`, `SortableList-placeholder`, `is-dragging`, `InputList`, `InputListItem`, `Checkbox` | Drag-and-drop reorder list with optional checkboxes. |
-| `PropertyGrid` | Stable | `ifcopenshell/gui` | `PropertyGrid`, `PropertyGrid-row` | Key/value property editor grid. |
-| `PropertyGridRow` | Stable | `ifcopenshell/gui` | `PropertyGrid-row` | Single row helper for `PropertyGrid`. |
+| `InputList` | Stable | `@aeco-dev/gui` | `InputList`, `Active` | Selectable list container. |
+| `InputListItem` | Stable | `@aeco-dev/gui` | `InputListItem` | Clickable row for `InputList`. |
+| `LabeledBoxItem` | Stable | `@aeco-dev/gui` | `LabeledBoxItem` | Checkbox + icon + label menu row for workspace menus. |
+| `NavigationList` | Stable | `@aeco-dev/gui` | `NavigationList`, `NavigationList-item`, `NavigationList-back` | One-level-at-a-time hierarchical navigation with back control. |
+| `TreeView` | Stable | `@aeco-dev/gui` | `TreeView`, `TreeView-item`, `TreeView-toggle`, `TreeView-label`, `TreeView-children`, `is-expanded`, `is-selected` | Expandable nested tree; same data options shape as `NavigationList`. |
+| `SortableList` | Stable | `@aeco-dev/gui` | `SortableList`, `SortableList-item`, `SortableList-handle`, `SortableList-placeholder`, `is-dragging`, `InputList`, `InputListItem`, `Checkbox` | Drag-and-drop reorder list with optional checkboxes. |
+| `PropertyGrid` | Stable | `@aeco-dev/gui` | `PropertyGrid`, `PropertyGrid-row` | Key/value property editor grid. |
+| `PropertyGridRow` | Stable | `@aeco-dev/gui` | `PropertyGrid-row` | Single row helper for `PropertyGrid`. |
 
 ## Panels
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Panel` | Stable | `ifcopenshell/gui` | `Panel`, `Rectangle`, `Header`, `PanelContent`, `RibbonBar` | Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `ifcopenshell/gui`. The docked workspace panel is also named Panel and imports from `ifcopenshell/layout`. |
-| `RibbonBar` | Stable | `ifcopenshell/gui` | `RibbonBar` | Horizontal ribbon / action row for panel footers or the app shell. Children are Buttons. |
-| `CollapsiblePanel` | Stable | `ifcopenshell/gui` | `CollapsiblePanel`, `CollapsiblePanel-toggle`, `Panel`, `Header`, `PanelContent`, `collapsed` | Panel with a header collapse toggle. |
+| `Panel` | Stable | `@aeco-dev/gui` | `Panel`, `Rectangle`, `Header`, `PanelContent`, `RibbonBar` | Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `@aeco-dev/gui`. The docked workspace panel is also named Panel and imports from `@aeco-dev/layout`. |
+| `RibbonBar` | Stable | `@aeco-dev/gui` | `RibbonBar` | Horizontal ribbon / action row for panel footers or the app shell. Children are Buttons. |
+| `CollapsiblePanel` | Stable | `@aeco-dev/gui` | `CollapsiblePanel`, `CollapsiblePanel-toggle`, `Panel`, `Header`, `PanelContent`, `collapsed` | Panel with a header collapse toggle. |
 
 ## Overlays
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Tooltip` | Experimental | `ifcopenshell/gui` | `Tooltip`, `Tooltip--{theme}`, `visible` | Hover tooltip with theme variants. |
-| `FloatingDialog` | Stable | `ifcopenshell/gui` | `Panel`, `Header`, `PanelContent`, `RibbonBar` | Lightweight floating panel built on `Panel`. |
-| `Flyout` | Stable | `ifcopenshell/gui` | `Flyout`, `Flyout-header`, `Flyout-icon`, `Flyout-title`, `Flyout-content`, `Flyout-search`, `expanded`, `Badge`, `centered` | Expandable tool panel with optional search row. |
-| `FloatingWindow` | Stable | `ifcopenshell/gui` | `FloatingWindow`, `FloatingWindow-header`, `FloatingWindow-content`, `circle`, `pos-btn`, `green`, `red`, `Row`, `centered-vertical`, `justify-between`, `fill-width`, `fill-height` | Free-floating window with docking controls. |
-| `RadialMenu` | Experimental | `ifcopenshell/gui` | None by default | Radial interaction overlay. |
-| `makeDraggable` | Stable | `ifcopenshell/gui` | None by default | Attaches drag behavior to a panel via a header handle element. |
-| `makeResizable` | Stable | `ifcopenshell/gui` | None by default | Attaches edge resize behavior to a floating panel. |
+| `Tooltip` | Experimental | `@aeco-dev/gui` | `Tooltip`, `Tooltip--{theme}`, `visible` | Hover tooltip with theme variants. |
+| `FloatingDialog` | Stable | `@aeco-dev/gui` | `Panel`, `Header`, `PanelContent`, `RibbonBar` | Lightweight floating panel built on `Panel`. |
+| `Flyout` | Stable | `@aeco-dev/gui` | `Flyout`, `Flyout-header`, `Flyout-icon`, `Flyout-title`, `Flyout-content`, `Flyout-search`, `expanded`, `Badge`, `centered` | Expandable tool panel with optional search row. |
+| `FloatingWindow` | Stable | `@aeco-dev/gui` | `FloatingWindow`, `FloatingWindow-header`, `FloatingWindow-dots`, `FloatingWindow-dot`, `FloatingWindow-title`, `FloatingWindow-tools`, `FloatingWindow-content` | Free-floating window with docking controls. |
+| `RadialMenu` | Experimental | `@aeco-dev/gui` | None by default | Radial interaction overlay. |
+| `makeDraggable` | Stable | `@aeco-dev/gui` | None by default | Attaches drag behavior to a panel via a header handle element. |
+| `makeResizable` | Stable | `@aeco-dev/gui` | None by default | Attaches edge resize behavior to a floating panel. |
 
 ## Shell
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `World` | Stable | `ifcopenshell/layout` | `World` | Application shell. `new World()` builds the default ribbon, regions, and viewport. `world.mount(document.body)` attaches it. |
-| `SplitContainer` | Stable | `ifcopenshell/gui` | `SplitContainer` | Flex host for horizontal/vertical split panes. |
-| `Layout` | Stable | `ifcopenshell/layout` | `Layout`, `Panel` | Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `ifcopenshell/layout`. |
-| `Panel` | Stable | `ifcopenshell/layout` | `CollapsiblePanel` | Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`. |
-| `AppShell` | Stable | `ifcopenshell/gui` | `AppShell`, `AppShell-sidebar`, `AppShell-main` | SPA host with sidebar navigation and hash routing. |
-| `NavigationView` | Stable | `ifcopenshell/gui` | `NavigationView`, `NavigationView-sidebar`, `NavigationView-content` | Sidebar + content navigation scaffold. |
+| `World` | Stable | `@aeco-dev/layout` | `World` | Application shell. `new World()` builds the default ribbon, regions, and viewport. `world.mount(document.body)` attaches it. |
+| `SplitContainer` | Stable | `@aeco-dev/gui` | `SplitContainer` | Flex host for horizontal/vertical split panes. |
+| `Layout` | Stable | `@aeco-dev/layout` | `Layout`, `Panel` | Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `@aeco-dev/layout`. |
+| `Panel` | Stable | `@aeco-dev/layout` | `CollapsiblePanel` | Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `@aeco-dev/layout`. The header/content/footer scaffold is also named Panel and imports from `@aeco-dev/gui`. |
+| `AppShell` | Stable | `@aeco-dev/gui` | `AppShell`, `AppShell-sidebar`, `AppShell-main` | SPA host with sidebar navigation and hash routing. |
+| `NavigationView` | Stable | `@aeco-dev/gui` | `NavigationView`, `NavigationView-sidebar`, `NavigationView-content` | Sidebar + content navigation scaffold. |
 
 ## Peers
 
 | Component | Status | Import | Emitted class(es) | Notes |
 | --- | --- | --- | --- | --- |
-| `Chart` | Stable | `ifcopenshell/gui` | `Rectangle`, `chart-ui-component` | Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use. |
-| `DataGrid` | Stable | `ifcopenshell/gui` | `Rectangle`, `ag-grid-custom` | AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use. |
-| `GanttChart` | Stable | `ifcopenshell/gui` | `Rectangle`, `gantt-container` | jsGantt-improved-backed scheduling chart. |
-| `NodeGraph` | Stable | `ifcopenshell/gui` | `dui-node-graph`, `dui-node`, `dui-node-port` | Interactive node graph editor. |
+| `Chart` | Stable | `@aeco-dev/gui` | `Rectangle`, `chart-ui-component` | Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use. |
+| `DataGrid` | Stable | `@aeco-dev/gui` | `Rectangle`, `ag-grid-custom` | AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use. |
+| `GanttChart` | Stable | `@aeco-dev/gui` | `Rectangle`, `gantt-container` | jsGantt-improved-backed scheduling chart. |
+| `NodeGraph` | Stable | `@aeco-dev/gui` | `dui-node-graph`, `dui-node`, `dui-node-port` | Interactive node graph editor. |
 
 ### Notes
 
@@ -162,15 +162,15 @@ See also the [API reference](../generated/api/index.html) for per-symbol pages.
 
 | File | Status | Purpose |
 | --- | --- | --- |
-| `styles/peers.css` | Stable | Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Included in the browser bundle dist/gui.css. |
-| `styles/gui.css` | Stable | UI library: tokens, components, icons, shell, pie menu, markdown, and themes. The browser bundle dist/gui.css also includes optional widget styles. No workspace grid. |
-| `styles/layout.css` | Stable | Workspace grid, region tracks, resizers, and drop targets. Load after gui.css. |
-| `styles/core.css` | Stable | Imports token, reset, primitive, and generic component layers. |
-| `styles/tokens.css` | Stable | Package-owned `--dui-*` design tokens. |
-| `styles/rules.css` | Stable | Scoped rules helpers. |
-| `styles/components.css` | Stable | Generic component classes. |
-| `styles/icons.css` | Stable | Material Symbols stylesheet for icon-emitting components. |
-| `styles/themes/dark.css` | Stable | Dark theme token values. |
-| `styles/themes/light.css` | Stable | Light theme token values. |
-| `styles/components/shell.css` | Stable | App shell sidebar and navigation layout. |
+| `gui.css` | Stable | Published UI stylesheet for @aeco-dev/gui. Tokens, components, icons, shell, pie menu, markdown, themes, and optional widget styles. No workspace grid. |
+| `layout.css` | Stable | Published workspace grid stylesheet for @aeco-dev/layout. Load after @aeco-dev/gui/gui.css. |
+| `styles/peers.css` | Internal | Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Folded into the published gui.css. |
+| `styles/core.css` | Internal | Source layer for tokens, reset, primitives, and generic components. Folded into the published gui.css. |
+| `styles/tokens.css` | Internal | Source layer for `--dui-*` design tokens. Folded into the published gui.css. |
+| `styles/rules.css` | Internal | Source layer for scoped rules helpers. Folded into the published gui.css. |
+| `styles/components.css` | Internal | Source layer for generic component classes. Folded into the published gui.css. |
+| `styles/icons.css` | Internal | Source layer for Material Symbols. Folded into the published gui.css. |
+| `styles/themes/dark.css` | Internal | Dark theme token values. Folded into the published gui.css. Select with data-theme="dark". |
+| `styles/themes/light.css` | Internal | Light theme token values. Folded into the published gui.css. Select with data-theme="light". |
+| `styles/components/shell.css` | Internal | Source layer for the app shell sidebar and navigation layout. Folded into the published gui.css. |
 

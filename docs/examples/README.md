@@ -39,7 +39,7 @@ For GitHub Pages, set the site source to the `/docs` folder — [`index.html`](.
 ```html
 <link rel="stylesheet" href="../../dist/gui.css">
 <script type="importmap">
-{ "imports": { "ifcopenshell/gui": "../../dist/gui.js" } }
+{ "imports": { "@aeco-dev/gui": "../../dist/gui.js" } }
 </script>
 ```
 
@@ -48,9 +48,9 @@ For GitHub Pages, set the site source to the `/docs` folder — [`index.html`](.
 After npm publish, swap the paths for CDN URLs:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.css">
 <script type="module">
-  import { Button } from "https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.js";
+  import { Button } from "https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.js";
 </script>
 ```
 
@@ -71,7 +71,7 @@ The optional gallery shells (`components/index.html`, `full.html`) are developer
 
 ## Optional library import map
 
-[`components/full.html`](./components/full.html) maps `ifcopenshell/gui` and `ifcopenshell/layout`, and pins Chart.js, AG Grid, jsGantt, Showdown, and Highlight.js to jsDelivr:
+[`components/full.html`](./components/full.html) maps `@aeco-dev/gui` and `@aeco-dev/layout`, and pins Chart.js, AG Grid, jsGantt, Showdown, and Highlight.js to jsDelivr:
 
 - `chart.js@4.4.7`
 - `ag-grid-community@35.2.1`
@@ -87,9 +87,9 @@ Three demos with **different layouts** — not the same ribbon/workspace chrome:
 
 | Demo | Path | Shape | Imports |
 | --- | --- | --- | --- |
-| 3D Viewer | [`templates/`](./templates/) | `new World()`, `new Layout().init(world)`, docked `new Panel()` | `ifcopenshell/gui` + `ifcopenshell/layout` |
-| Site Logistics | [`templates/site/`](./templates/site/) | `AppShell` SPA (sidebar routes) | `ifcopenshell/gui` — Chart, DataGrid, GanttChart, Markdown |
-| Ops Board | [`templates/ops/`](./templates/ops/) | Header + `SplitContainer` + tabs + `StatusBar` | `ifcopenshell/gui` — Chart, DataGrid, NodeGraph |
+| 3D Viewer | [`templates/`](./templates/) | `new World()`, `new Layout().init(world)`, docked `new Panel()` | `@aeco-dev/gui` + `@aeco-dev/layout` |
+| Site Logistics | [`templates/site/`](./templates/site/) | `AppShell` SPA (sidebar routes) | `@aeco-dev/gui` — Chart, DataGrid, GanttChart, Markdown |
+| Ops Board | [`templates/ops/`](./templates/ops/) | Header + `SplitContainer` + tabs + `StatusBar` | `@aeco-dev/gui` — Chart, DataGrid, NodeGraph |
 
 ### 3D Viewer (workspace shell)
 

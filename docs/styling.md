@@ -2,38 +2,20 @@
 
 ## CSS Entry Points
 
-Two stylesheets match the two JavaScript entry points:
+The two packages expose one stylesheet each:
 
-- `ifcopenshell-gui/styles/gui.css` — UI components, icons, shell, and themes
-- `ifcopenshell-gui/styles/layout.css` — workspace grid (load after `gui.css`)
+- `@aeco-dev/gui/gui.css` — components, icons, shell, themes, and optional widget styles
+- `@aeco-dev/layout/layout.css` — workspace grid (load after `gui.css`)
 
-The browser bundle `dist/gui.css` is `gui.css` plus optional widget styles (`styles/peers.css`: node graph, HUD, scheduling, and AG Grid). Import `styles/peers.css` directly only when you assemble CSS without that bundle.
+Both imports are self-contained. `gui.css` includes the node graph, HUD, scheduling, and AG Grid styles, plus Material Symbols and both themes. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
 
-The layers below are what those files pull in. Import a layer directly when you want a smaller set:
+The layer files under `styles/` stay in the repository. They are not separate package exports.
 
-- `ifcopenshell-gui/styles/core.css`
-- `ifcopenshell-gui/styles/icons.css`
-- `ifcopenshell-gui/styles/tokens.css`
-- `ifcopenshell-gui/styles/rules.css`
-- `ifcopenshell-gui/styles/components.css`
-- `ifcopenshell-gui/styles/themes/dark.css`
-- `ifcopenshell-gui/styles/themes/light.css`
-
-`ifcopenshell-gui/styles/gui.css` is the UI stylesheet. It imports tokens, components, icons, and themes. Use `styles/core.css` when you want that layer without icons and themes.
-
-Add `ifcopenshell-gui/styles/layout.css` for the workspace grid. It expects the GUI tokens to already be loaded.
-
-IfcOpenShell GUI core does **not** style `html` / `body` or zero page margins. Full-viewport app shells should import the optional host layer (or set equivalent rules themselves):
-
-```js
-import "ifcopenshell-gui/styles/core.css";
-import "ifcopenshell-gui/styles/app-host.css";
-import "ifcopenshell-gui/styles/themes/dark.css";
-```
+IfcOpenShell GUI does **not** style `html` / `body` or zero page margins. Full-viewport app shells set those rules themselves.
 
 ## Tokens
 
-All package styles use the `--dui-*` namespace. Tokens are defined in `ifcopenshell-gui/styles/tokens.css` and overridden by theme files.
+All package styles use the `--dui-*` namespace. Those tokens ship in `@aeco-dev/gui/gui.css` and are overridden by the theme values in that same file.
 
 | Category | Variables |
 | --- | --- |
@@ -53,30 +35,18 @@ All package styles use the `--dui-*` namespace. Tokens are defined in `ifcopensh
 
 ## Themes
 
-Import one theme stylesheet after `ifcopenshell-gui/styles/core.css`:
+Both themes ship inside `@aeco-dev/gui/gui.css`. Put the choice on the document element:
 
-```js
-import "ifcopenshell-gui/styles/core.css";
-import "ifcopenshell-gui/styles/themes/dark.css";
+```html
+<html data-theme="dark">
 ```
 
-Theme files should override token values, not redefine component structure.
+Theme values override tokens. They do not redefine component structure.
 
 ## Icons
 
-Components that emit Material Symbols markup require `ifcopenshell-gui/styles/icons.css`.
-
-```js
-import "ifcopenshell-gui/styles/icons.css";
-```
+Components that emit Material Symbols use the icon styles already included in `@aeco-dev/gui/gui.css`.
 
 ## Optional widget styles
 
-`ifcopenshell-gui/styles/peers.css` is included in `dist/gui.css`. It pulls in:
-
-- `ifcopenshell-gui/styles/components/nodes.css` — node graph editor
-- `ifcopenshell-gui/styles/components/hud.css` — HUD labels in node meta
-- `ifcopenshell-gui/styles/components/scheduling.css` — gantt/scheduling views
-- `ifcopenshell-gui/styles/components/ag-grid-custom.css` — spreadsheet grid theming
-
-Spinner styles ship via `ifcopenshell-gui/styles/core.css` (imported through `components.css`).
+`@aeco-dev/gui/gui.css` includes the node graph, HUD, scheduling, and AG Grid styles, along with spinner styles.

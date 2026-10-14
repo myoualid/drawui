@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputListItem`
 
 Clickable row for `InputList`.
@@ -12,7 +12,7 @@ Clickable row for `InputList`.
 ## Import
 
 ```js
-import { InputListItem } from "ifcopenshell/gui";
+import { InputListItem } from "@aeco-dev/gui";
 ```
 
 [← Back to API index](./index.html)

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `TabView`, `TabView-tabs`, `TabView-content`, `Tab`, `Tab-float`, `selected`
 
 Self-managed tab container.
@@ -12,7 +12,7 @@ Self-managed tab container.
 ## Import
 
 ```js
-import { TabView } from "ifcopenshell/gui";
+import { TabView } from "@aeco-dev/gui";
 ```
 
 ## Examples

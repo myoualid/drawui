@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Tab`
 
 Tab chrome created by `TabView.addTab()`. Prefer `tabs.addTab(id, label, content)` over constructing directly.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { TabItem } from "ifcopenshell/gui";
+import { TabItem } from "@aeco-dev/gui";
 ```
 
 ## Examples

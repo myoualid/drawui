@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Row`, `Column`
 
 Flex row or column container.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { StackPanel } from "ifcopenshell/gui";
+import { StackPanel } from "@aeco-dev/gui";
 ```
 
 ## Examples

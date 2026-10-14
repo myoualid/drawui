@@ -8,29 +8,29 @@ IfcOpenShell GUI is a framework-free ESM UI library. It provides chainable DOM w
 
 ## Import Rules
 
-Install with `npm install ifcopenshell-gui`. Map the public specifiers onto that package, then import classes:
+Install with `npm install @aeco-dev/gui @aeco-dev/layout`. A bundler resolves the package names. A page without a bundler maps them onto the installed files:
 
 ```html
 <script type="importmap">
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 </script>
 ```
 
 ```js
-import { Button, FloatingWindow, Chart } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+import { Button, FloatingWindow, Chart } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 ```
 
-`ifcopenshell/gui` is the component library, including `Chart`, `DataGrid`, `GanttChart`, `NodeGraph`, and `Markdown`. Those libraries load on first use. `ifcopenshell/layout` exports `World`, `Layout`, and `Panel`.
+`@aeco-dev/gui` is the component library, including `Chart`, `DataGrid`, `GanttChart`, `NodeGraph`, and `Markdown`. Those libraries load on first use. `@aeco-dev/layout` exports `World`, `Layout`, and `Panel`.
 
-Construct with `new Button("Save")`, `new World()`, and `new Layout(config).init(world)`. A bundler can drop classes you do not import from the source barrels. `dist/gui.js` and `dist/layout.js` are the full browser builds.
+Construct with `new Button("Save")`, `new World()`, and `new Layout(config).init(world)`. `@aeco-dev/gui` and `@aeco-dev/layout` are the browser builds.
 
 Do not import from package-internal files unless the path is exported in `package.json`.
 
@@ -38,8 +38,8 @@ Do not import from package-internal files unless the path is exported in `packag
 
 - Use `StackPanel` and `Grid` to arrange components inside a panel.
 - Use `new World()`, then `new Layout(config).init(world)`, when the app docks panels. Listen with `layout.on("workspace", handler)` and `layout.on("tab:selected", handler)`.
-- Use `new Panel({ layout, position, id, label })` from `ifcopenshell/layout` for a docked panel. Call `panel.bindTo(button)` for a control the app owns.
-- Use `Panel` from `ifcopenshell/gui` for fixed header, content, and footer regions.
+- Use `new Panel({ layout, position, id, label })` from `@aeco-dev/layout` for a docked panel. Call `panel.bindTo(button)` for a control the app owns.
+- Use `Panel` from `@aeco-dev/gui` for fixed header, content, and footer regions.
 - Use `FloatingWindow` for draggable or dockable floating windows.
 - Use `CollapsiblePanel` for accordion content inside another surface.
 - Use `Flyout` for standalone expandable tool panels.
@@ -54,7 +54,7 @@ Do not import from package-internal files unless the path is exported in `packag
 
 - Package CSS uses `--dui-*` tokens only.
 - New public selectors should use the `dui-*` namespace.
-- Import `ifcopenshell-gui/styles/icons.css` when using icon-emitting components.
+- Import `@aeco-dev/gui/gui.css` once. It includes icons, themes, and optional widget styles.
 - Keep application layout selectors, module IDs, and product-specific styles out of the package CSS entrypoints.
 
 ## Accessibility Checklist
@@ -90,4 +90,4 @@ Before adding or changing a component:
 ## Known Gotchas
 
 - Some overlays and floating surfaces mount or listen outside their root element and still require careful lifecycle handling.
-- Material Symbols ship in `ifcopenshell-gui/styles/gui.css`. Import `ifcopenshell-gui/styles/icons.css` only when you assemble CSS without that file.
+- Material Symbols ship in `@aeco-dev/gui/gui.css`. Theme layers are in that file; switch them with `data-theme` on `<html>`.

@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** inputs  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `InputDate`, `InputDate-input`, `InputDate-calendar`
 
 Native date or datetime-local field.
@@ -15,7 +15,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { InputDate } from "ifcopenshell/gui";
+import { InputDate } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -6,11 +6,11 @@ import {
   Button,
   Code,
   Disclaimer,
-} from "ifcopenshell/gui";
-import { AppShell } from "ifcopenshell/gui";
+} from "@aeco-dev/gui";
+import { AppShell } from "@aeco-dev/gui";
 import { DEMO_BUILDERS } from "./demos.js";
 
-/** @type {Record<string, () => import("ifcopenshell/gui").Control>} */
+/** @type {Record<string, () => import("@aeco-dev/gui").Control>} */
 let demoBuilders = { ...DEMO_BUILDERS };
 
 const CATEGORY_ICONS = {
@@ -134,7 +134,7 @@ function sectionLabel(text) {
 
 /**
  * Table-like row: name + summary above preview | API on the right.
- * @param {{ name?: string, summary?: string, demo?: import("ifcopenshell/gui").Control | null, apis?: string[] }} parts
+ * @param {{ name?: string, summary?: string, demo?: import("@aeco-dev/gui").Control | null, apis?: string[] }} parts
  */
 function buildComponentRow({ name, summary, demo, apis }) {
   const row = new Container().addClass("Gallery-componentRow");
@@ -485,7 +485,7 @@ function buildFullBuildPage(entries) {
 
   page.add(
     new Disclaimer(
-      "Charts, grids, gantt, and the node graph import from ifcopenshell/gui. Open full.html for those live demos.",
+      "Charts, grids, gantt, and the node graph import from @aeco-dev/gui. Open full.html for those live demos.",
     ),
   );
 
@@ -555,7 +555,7 @@ function buildGroups(catalog, { build }) {
         {
           id: "full-build-overview",
           label: "Vendor dependencies",
-          subtitle: "Requires ifcopenshell/gui and external packages.",
+          subtitle: "Requires @aeco-dev/gui and external packages.",
           render: () => buildFullBuildPage(catalog.fullBuildOnly),
         },
       ],

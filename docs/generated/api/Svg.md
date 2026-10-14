@@ -4,7 +4,7 @@
 
 **Status:** Experimental  
 **Category:** media  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `SVG`
 
 SVG host with fetch, clone, and ID retargeting for reusable SVGs.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Svg } from "ifcopenshell/gui";
+import { Svg } from "@aeco-dev/gui";
 ```
 
 ## Examples

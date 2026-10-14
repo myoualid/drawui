@@ -1,19 +1,21 @@
 # Publishing and distribution
 
-IfcOpenShell GUI ships as source ESM plus bundled browser builds under `docs/dist/`. This page covers npm packaging, GitHub Pages, and CDN-style consumption.
+IfcOpenShell GUI publishes the browser build. This page covers npm packaging, GitHub Pages, and CDN-style consumption.
 
 ## Package contents
 
-The npm package name is `ifcopenshell-gui`. Install it with `npm install ifcopenshell-gui`. Application code imports `ifcopenshell/gui` and `ifcopenshell/layout`. An import map points those specifiers at this package, so they stay off the existing `ifcopenshell` package.
+The library publishes as two public packages:
 
-The package includes:
+- `@aeco-dev/gui` — `gui.js`, `gui.css`, `importmap.full.json`, and `index.d.ts`
+- `@aeco-dev/layout` — `layout.js`, `layout.css`, and `index.d.ts`
 
-- `src/` — ESM source entrypoints
-- `dist/` — browser bundles: `gui.js`, `layout.js`, and matching CSS
-- `styles/` — `gui.css`, `layout.css`, `peers.css`, and the layers they import
-- `types/index.d.ts` — TypeScript declarations
+```sh
+npm install @aeco-dev/gui @aeco-dev/layout
+```
 
-The docs site stays in the repository. It is not part of the npm tarball.
+`@aeco-dev/layout` depends on `@aeco-dev/gui`. A bundler imports the package names directly. A page without a bundler maps them onto `node_modules/@aeco-dev/gui/gui.js` and `node_modules/@aeco-dev/layout/layout.js`.
+
+Source, style layers, and font files stay in the repository. The docs site stays in the repository. Neither is part of the npm tarballs.
 
 ## Entrypoints
 
@@ -23,26 +25,26 @@ Map the public specifiers onto the installed package, then import them:
 <script type="importmap">
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 </script>
 ```
 
 ```js
-import { Button, Chart } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+import { Button, Chart } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 ```
 
-A bundler can alias the same specifiers to the package exports `ifcopenshell-gui/gui` and `ifcopenshell-gui/layout`, which are the source barrels.
+A bundler imports `@aeco-dev/gui` and `@aeco-dev/layout` directly. Those entry points are the browser bundles.
 
-Or load the built bundles:
+Or load the built files from the installed packages:
 
-- UI: `dist/gui.js` + `dist/gui.css` (components and peer widgets)
-- Layout: `dist/layout.js` + `dist/layout.css`
+- UI: `@aeco-dev/gui` and `@aeco-dev/gui/gui.css`
+- Layout: `@aeco-dev/layout` and `@aeco-dev/layout/layout.css`
 
 See the generated [component index](./ai/component-index.html) for the full export inventory.
 
@@ -58,15 +60,15 @@ Run `npm run build` before serving examples or publishing docs assets.
 
 ## Publish to npm
 
-`.github/workflows/publish.yml` builds the package and publishes it when you run **Publish to npm** from the Actions tab. It does not run on push.
+`.github/workflows/publish.yml` builds the packages and publishes `@aeco-dev/gui`, then `@aeco-dev/layout`, when you run **Publish to npm** from the Actions tab. It does not run on push.
 
 Before the first run:
 
-1. Create an npm granular access token that can publish `ifcopenshell-gui` (or an automation token).
+1. Create an npm granular access token that can publish `@aeco-dev/gui` and `@aeco-dev/layout`.
 2. Add that token to the GitHub repository as the secret `NPM_TOKEN`.
-3. Bump `version` in `package.json`. npm rejects a version that is already on the registry.
+3. Bump `version` in `packages/gui/package.json` and `packages/layout/package.json`, and set `@aeco-dev/layout`'s dependency on `@aeco-dev/gui` to that same version. npm rejects a version that is already on the registry.
 
-The workflow runs `npm ci`, `npm run build`, then `npm publish --access public --provenance`. Provenance uses GitHub's OIDC token (`id-token: write`). You can also configure [trusted publishing](https://docs.npmjs.com/trusted-publishers) for this repository and workflow on npmjs.com; `NPM_TOKEN` is still required until that trust is in place.
+The workflow runs `npm ci`, `npm run build`, then publishes each workspace with `--access public --provenance`. Provenance uses GitHub's OIDC token (`id-token: write`). You can also configure [trusted publishing](https://docs.npmjs.com/trusted-publishers) for this repository and workflow on npmjs.com; `NPM_TOKEN` is still required until that trust is in place.
 
 ## GitHub Pages
 
@@ -101,9 +103,9 @@ Example (`full.html` pattern):
 After npm publish, swap paths for CDN URLs:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.css">
 <script type="module">
-  import { Button } from "https://cdn.jsdelivr.net/npm/ifcopenshell-gui@0.2.0/dist/gui.js";
+  import { Button } from "https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.js";
 </script>
 ```
 

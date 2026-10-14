@@ -12,8 +12,8 @@
   <script type="importmap">
   {
     "imports": {
-      "ifcopenshell/gui": "../../dist/gui.js",
-      "ifcopenshell/layout": "../../dist/layout.js",
+      "@aeco-dev/gui": "../../dist/gui.js",
+      "@aeco-dev/layout": "../../dist/layout.js",
       "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
       "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
       "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",
@@ -34,14 +34,14 @@
     <main class="doc-content Markdown"><h1 id="markdown">Markdown</h1>
 <p><strong>Status:</strong> Stable<br />
 <strong>Category:</strong> text<br />
-<strong>Import:</strong> <code>ifcopenshell/gui</code><br />
+<strong>Import:</strong> <code>@aeco-dev/gui</code><br />
 <strong>Emitted class(es):</strong> <code>Markdown</code></p>
 <p>Renders markdown (or sanitized HTML) into a <code>.Markdown</code> container.
 Min build uses the built-in converter. Full build exports a Showdown-backed
 <code>Markdown</code> with the same API when peers are loaded.</p>
 <p><em>Source: <code>src/components/Markdown.js</code></em></p>
 <h2 id="import">Import</h2>
-<pre><code class="js language-js">import { Markdown } from "ifcopenshell/gui";
+<pre><code class="js language-js">import { Markdown } from "@aeco-dev/gui";
 </code></pre>
 <h2 id="examples">Examples</h2>
 <h3 id="markdown-1">Markdown</h3>
@@ -89,7 +89,7 @@ Min build uses the built-in converter. Full build exports a Showdown-backed
       "  - Another item",
       "- Ordered next",
       "",
-      "1. Import Markdown from ifcopenshell/gui",
+      "1. Import Markdown from @aeco-dev/gui",
       "2. Call `new Markdown(text)`",
       "3. Attach to the DOM",
       "",
@@ -106,7 +106,7 @@ Min build uses the built-in converter. Full build exports a Showdown-backed
       "## Code",
       "",
       "```js",
-      "import { Markdown } from \"ifcopenshell/gui\";",
+      "import { Markdown } from \"@aeco-dev/gui\";",
       "",
       "const md = new Markdown(",
       "  \"# Hello\\n\\n**Showdown** + Highlight.js\",",

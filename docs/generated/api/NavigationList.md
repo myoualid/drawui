@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `NavigationList`, `NavigationList-item`, `NavigationList-back`
 
 Hierarchical list that drills into children one level at a time,
@@ -18,7 +18,7 @@ _Source: `src/components/lists/NavigationList.js`_
 ## Import
 
 ```js
-import { NavigationList } from "ifcopenshell/gui";
+import { NavigationList } from "@aeco-dev/gui";
 ```
 
 ## Examples

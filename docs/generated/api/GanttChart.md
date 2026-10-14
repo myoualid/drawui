@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Rectangle`, `gantt-container`
 
 jsGantt-improved-backed scheduling chart.
@@ -12,7 +12,7 @@ jsGantt-improved-backed scheduling chart.
 ## Import
 
 ```js
-import { GanttChart } from "ifcopenshell/gui";
+import { GanttChart } from "@aeco-dev/gui";
 ```
 
 ## Examples

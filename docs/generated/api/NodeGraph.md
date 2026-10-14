@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `dui-node-graph`, `dui-node`, `dui-node-port`
 
 Interactive node graph editor.
@@ -12,7 +12,7 @@ Interactive node graph editor.
 ## Import
 
 ```js
-import { NodeGraph } from "ifcopenshell/gui";
+import { NodeGraph } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** peers  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Rectangle`, `chart-ui-component`
 
 Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use.
@@ -12,7 +12,7 @@ Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js
 ## Import
 
 ```js
-import { Chart } from "ifcopenshell/gui";
+import { Chart } from "@aeco-dev/gui";
 ```
 
 ## Examples

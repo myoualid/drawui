@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** media  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `Image`
 
 Image wrapper around `img`.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Image } from "ifcopenshell/gui";
+import { Image } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** panels  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `CollapsiblePanel`, `CollapsiblePanel-toggle`, `Panel`, `Header`, `PanelContent`, `collapsed`
 
 {@link Panel} with a header collapse toggle.
@@ -14,7 +14,7 @@ _Source: `src/components/panels/CollapsiblePanel.js`_
 ## Import
 
 ```js
-import { CollapsiblePanel } from "ifcopenshell/gui";
+import { CollapsiblePanel } from "@aeco-dev/gui";
 ```
 
 ## Examples

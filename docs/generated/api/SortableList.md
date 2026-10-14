@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** collections  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `SortableList`, `SortableList-item`, `SortableList-handle`, `SortableList-placeholder`, `is-dragging`, `InputList`, `InputListItem`, `Checkbox`
 
 Drag-and-drop reorderable list with optional per-item checkboxes.
@@ -14,7 +14,7 @@ _Source: `src/components/lists/SortableList.js`_
 ## Import
 
 ```js
-import { SortableList } from "ifcopenshell/gui";
+import { SortableList } from "@aeco-dev/gui";
 ```
 
 ## Examples

@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** media  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** None by default
 
 Material Symbols icon names used across GUI components.
@@ -14,7 +14,7 @@ _Source: `src/icons.js`_
 ## Import
 
 ```js
-import { ICONS } from "ifcopenshell/gui";
+import { ICONS } from "@aeco-dev/gui";
 ```
 
 ## Examples

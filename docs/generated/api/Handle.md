@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** layout  
-**Import:** `ifcopenshell/gui`  
+**Import:** `@aeco-dev/gui`  
 **Emitted class(es):** `drag-handle`, `resize-handle`
 
 Drag / resize handle element. Pass `"drag"` or `"resize"` to set the handle class.
@@ -14,7 +14,7 @@ _Source: `src/primitives/ui.js`_
 ## Import
 
 ```js
-import { Handle } from "ifcopenshell/gui";
+import { Handle } from "@aeco-dev/gui";
 ```
 
 ## Examples

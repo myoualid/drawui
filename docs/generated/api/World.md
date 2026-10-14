@@ -4,7 +4,7 @@
 
 **Status:** Stable  
 **Category:** shell  
-**Import:** `ifcopenshell/layout`  
+**Import:** `@aeco-dev/layout`  
 **Emitted class(es):** `World`
 
 Application shell. The default constructor builds the standard regions
@@ -19,7 +19,7 @@ _Source: `src/layout/World.js`_
 ## Import
 
 ```js
-import { World } from "ifcopenshell/layout";
+import { World } from "@aeco-dev/layout";
 ```
 
 ## Examples
