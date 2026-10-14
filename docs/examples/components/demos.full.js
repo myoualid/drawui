@@ -521,7 +521,7 @@ export const FULL_DEMO_BUILDERS = {
         "| Tables | yes | Pipe tables with header row |",
         "| Task lists | yes | Checkboxes below |",
         "| Fenced code | yes | Highlight.js when available |",
-        "| Autolinks | yes | https://github.com/IfcOpenShell/IfcOpenShell |",
+        "| Autolinks | yes | https://github.com/myoualid/drawui |",
         "| Emoji | yes | :sparkles: :rocket: |",
         "",
         "## Lists & tasks",

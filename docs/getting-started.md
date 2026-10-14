@@ -1,4 +1,4 @@
-# IfcOpenShell GUI Getting Started
+# aeco-dev GUI Getting Started
 
 ## Install
 

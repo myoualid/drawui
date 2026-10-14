@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-14T11:23:47.930Z",
+  "generatedAt": "2026-10-14T12:01:23.589Z",
   "build": "shared",
-  "title": "IfcOpenShell GUI — Component reference",
+  "title": "aeco-dev GUI — Component reference",
   "subtitle": "Live reference organized by role: Text, Media, Inputs, Feedback, then structure (Layout, Collections, Panels, Overlays, Shell), and Peers. Open full.html for Chart, DataGrid, GanttChart, and NodeGraph.",
   "stats": {
     "categories": 24,

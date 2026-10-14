@@ -50,7 +50,7 @@ function isTypeDocHost() {
 }
 
 function resolveBundleUrls() {
-  const pkg = "ifcopenshell-gui";
+  const pkg = "aeco-dev-gui";
   const distUrl = new URL("./dist/", import.meta.url).href;
   return {
     pkg,
@@ -61,7 +61,7 @@ function resolveBundleUrls() {
   };
 }
 
-function peerImportMap(_jsUrl, pkg = "ifcopenshell-gui") {
+function peerImportMap(_jsUrl, pkg = "aeco-dev-gui") {
   const distUrl = new URL("./dist/", import.meta.url).href;
   return {
     imports: {

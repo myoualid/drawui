@@ -1,4 +1,4 @@
-# IfcOpenShell GUI
+# aeco-dev GUI
 
 Install with `npm install @aeco-dev/gui @aeco-dev/layout`.
 

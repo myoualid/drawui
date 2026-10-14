@@ -1,14 +1,14 @@
-# IfcOpenShell GUI
+# aeco-dev GUI
 
 A lightweight UI library for Aeco Industry. It is framework-free ESM and CSS for DOM-native tools, panels, overlays, and form controls, with no framework runtime. Optional widgets load their libraries only when you construct them. Components and workspace layout are published as two packages.
 
-Documentation: [https://myoualid.github.io/drawui/](https://myoualid.github.io/drawui/)
+Documentation: [Find here](https://myoualid.github.io/drawui/).
 
 This README is the package guide. The same guides live in `docs/`:
 
 - [Documentation](https://myoualid.github.io/drawui/)
 - [TypeDoc](docs/generated/typedoc/index.html) (generated)
-- [AI docs](docs/ai/) — [component index](docs/ai/component-index.md) + [usage guide](docs/ai/SKILL.md)
+- [AI docs](docs/ai/) — [usage guide](docs/ai/SKILL.md) + [full API JSON](docs/ai/aeco-dev-gui.json) + [component index](docs/ai/component-index.md)
 - [Getting started](docs/getting-started.md)
 - [Styling guide](docs/styling.md)
 - [Publishing](docs/publishing.md)
@@ -97,7 +97,7 @@ Those names are the package entry points. Each one is the browser build.
 - `@aeco-dev/gui/gui.css` — tokens, components, icons, shell, markdown, pie menu, themes, and peer widgets.
 - `@aeco-dev/layout/layout.css` — workspace grid. Load it after `gui.css`.
 
-## What IfcOpenShell GUI Includes
+## What aeco-dev GUI Includes
 
 - Chainable DOM primitives such as text, rows, columns, buttons, inputs, tooltips, spinners, tabs, and listboxes.
 - Composed components such as `Flyout`, `CollapsiblePanel`, `NavigationList`, `TreeView`, `SortableList`, and `Markdown`.
@@ -113,7 +113,7 @@ See [docs/ai/component-index.md](docs/ai/component-index.md) for the complete ex
 
 ## Styling Model
 
-IfcOpenShell GUI styles are token-driven. Theme, spacing, typography, border, and motion values are exposed through `--dui-*` CSS variables. Public package classes use the `dui-*` namespace, while a set of legacy runtime classes remains available for compatibility.
+aeco-dev GUI styles are token-driven. Theme, spacing, typography, border, and motion values are exposed through `--dui-*` CSS variables. Public package classes use the `dui-*` namespace, while a set of legacy runtime classes remains available for compatibility.
 
 `@aeco-dev/gui/gui.css` includes Material Symbols. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
 

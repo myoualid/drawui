@@ -9,7 +9,7 @@
   "out": "docs/generated/typedoc",
   "readme": "docs/typedoc-readme.md",
   "cleanOutputDir": true,
-  "name": "@aeco-dev/layout",
+  "name": "aeco-dev GUI",
   "hideGenerator": true,
   "logLevel": "Warn",
   "validation": {

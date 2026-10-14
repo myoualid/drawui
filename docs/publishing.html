@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Publishing — @aeco-dev/layout</title>
+  <title>Publishing — aeco-dev GUI</title>
   <link rel="stylesheet" href="./dist/docs.css">
   <link rel="stylesheet" href="./styles/themes/dark.css">
   <link rel="stylesheet" href="./styles/themes/light.css">
@@ -13,17 +13,17 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="./index.html">← @aeco-dev/layout docs</a>
+      <a class="doc-nav-home" href="./index.html">← aeco-dev GUI docs</a>
       <a href="./generated/typedoc/index.html">TypeDoc</a>
       <a href="./ai/component-index.html">Component index</a>
       <a href="./ai/SKILL.html">AI usage guide</a>
     </nav>
     <main class="doc-content Markdown"><h1 id="publishinganddistribution">Publishing and distribution</h1>
-<p>IfcOpenShell GUI publishes the browser build. This page covers npm packaging, GitHub Pages, and CDN-style consumption.</p>
+<p>aeco-dev GUI publishes the browser build. This page covers npm packaging, GitHub Pages, and CDN-style consumption.</p>
 <h2 id="packagecontents">Package contents</h2>
 <p>The library publishes as two public packages:</p>
 <ul>
-<li><code>@aeco-dev/gui</code> — <code>gui.js</code>, <code>gui.css</code>, <code>importmap.full.json</code>, and <code>index.d.ts</code></li>
+<li><code>@aeco-dev/gui</code> — <code>gui.js</code>, <code>gui.css</code>, <code>importmap.full.json</code>, <code>index.d.ts</code>, <code>SKILL.md</code>, and <code>aeco-dev-gui.json</code></li>
 <li><code>@aeco-dev/layout</code> — <code>layout.js</code>, <code>layout.css</code>, and <code>index.d.ts</code></li>
 </ul>
 <pre><code class="sh language-sh">npm install @aeco-dev/gui @aeco-dev/layout
@@ -64,7 +64,7 @@ import "@aeco-dev/layout/layout.css";
 <tbody>
 <tr>
 <td><code>npm run build</code></td>
-<td><code>dist/gui.js</code>, <code>dist/layout.js</code>, matching CSS, import map</td>
+<td><code>dist/gui.js</code>, <code>dist/layout.js</code>, matching CSS, import map, <code>SKILL.md</code>, <code>aeco-dev-gui.json</code></td>
 </tr>
 <tr>
 <td><code>npm run build:catalog</code></td>

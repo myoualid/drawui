@@ -1,5 +1,5 @@
 /* Optional GUI widgets: charts, grids, gantt, node graph.
-   Import ifcopenshell-gui/gui.css as well. */
+   Import @aeco-dev/gui/gui.css as well. */
 @import "./components/nodes.css";
 @import "./components/hud.css";
 @import "./components/scheduling.css";

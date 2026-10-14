@@ -1,0 +1,1170 @@
+{
+  "name": "aeco-dev GUI",
+  "description": "Full public API inventory for aeco-dev GUI. Read SKILL.md for usage rules. This file lists every registered symbol.",
+  "packages": {
+    "gui": {
+      "name": "@aeco-dev/gui",
+      "version": "0.2.1",
+      "module": "./gui.js",
+      "style": "./gui.css",
+      "types": "./index.d.ts"
+    },
+    "layout": {
+      "name": "@aeco-dev/layout",
+      "version": "0.2.1",
+      "module": "./layout.js",
+      "style": "./layout.css",
+      "types": "./index.d.ts"
+    }
+  },
+  "install": "npm install @aeco-dev/gui @aeco-dev/layout",
+  "imports": {
+    "components": "import { Button, StackPanel } from \"@aeco-dev/gui\";",
+    "layout": "import { World, Layout, Panel } from \"@aeco-dev/layout\";",
+    "styles": [
+      "import \"@aeco-dev/gui/gui.css\";",
+      "import \"@aeco-dev/layout/layout.css\";"
+    ]
+  },
+  "exports": {
+    "@aeco-dev/gui": [
+      "Control",
+      "Hyperlink",
+      "Image",
+      "Svg",
+      "Text",
+      "Heading",
+      "Container",
+      "StackPanel",
+      "ScrollViewer",
+      "Grid",
+      "Rectangle",
+      "Form",
+      "Caption",
+      "Title",
+      "Disclaimer",
+      "Code",
+      "Kbd",
+      "Badge",
+      "Canvas",
+      "Card",
+      "Spacer",
+      "HSpacer",
+      "Handle",
+      "TabItem",
+      "center",
+      "InputText",
+      "InputSearch",
+      "Icon",
+      "InputTextArea",
+      "InputDropdown",
+      "Checkbox",
+      "InputColor",
+      "InputNumber",
+      "InputInteger",
+      "Slider",
+      "LineBreak",
+      "Line",
+      "Button",
+      "ProgressBar",
+      "TabView",
+      "InputList",
+      "InputListItem",
+      "InputDate",
+      "LoadingCube",
+      "Tooltip",
+      "Panel",
+      "FloatingDialog",
+      "RibbonBar",
+      "Flyout",
+      "CollapsiblePanel",
+      "SplitContainer",
+      "Toast",
+      "Operator",
+      "LabeledBoxItem",
+      "FloatingWindow",
+      "NavigationList",
+      "TreeView",
+      "Markdown",
+      "Chart",
+      "DataGrid",
+      "GanttChart",
+      "SortableList",
+      "RadialMenu",
+      "AppShell",
+      "NavigationView",
+      "PropertyGrid",
+      "NodeGraph",
+      "StatusBar",
+      "ThemeToggle",
+      "PropertyGridRow",
+      "ICONS",
+      "makeDraggable",
+      "makeResizable",
+      "makeFlexResizer",
+      "createSplitResizer",
+      "createLayoutResizerHandle"
+    ],
+    "@aeco-dev/layout": [
+      "World",
+      "Layout",
+      "Panel"
+    ]
+  },
+  "symbols": [
+    {
+      "name": "Control",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Base chainable wrapper around a DOM node."
+    },
+    {
+      "name": "Hyperlink",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Link"
+      ],
+      "notes": "Anchor wrapper with optional icon and external-target behavior."
+    },
+    {
+      "name": "Image",
+      "category": "media",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Image"
+      ],
+      "notes": "Image wrapper around `img`."
+    },
+    {
+      "name": "Svg",
+      "category": "media",
+      "status": "experimental",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "SVG"
+      ],
+      "notes": "Supports fetch, clone, and ID retargeting for reusable SVGs."
+    },
+    {
+      "name": "Text",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Text"
+      ],
+      "notes": "Inline text. Base for titles, captions, badges, and other text chips."
+    },
+    {
+      "name": "Heading",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Semantic heading wrapper (`h1`–`h6` via level option)."
+    },
+    {
+      "name": "Container",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Generic block wrapper."
+    },
+    {
+      "name": "StackPanel",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Row",
+        "Column"
+      ],
+      "notes": "Row/column layout primitive used throughout panel layouts (`new StackPanel({ isVertical: false|true })`)."
+    },
+    {
+      "name": "ScrollViewer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Scrollable container wrapper."
+    },
+    {
+      "name": "Grid",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Grid"
+      ],
+      "notes": "Grid layout primitive with explicit column or auto-fit helpers."
+    },
+    {
+      "name": "Rectangle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Rectangle"
+      ],
+      "notes": "Generic panel container."
+    },
+    {
+      "name": "Form",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Form wrapper with submit helpers."
+    },
+    {
+      "name": "Caption",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Thin `small` wrapper."
+    },
+    {
+      "name": "Title",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Title"
+      ],
+      "notes": "Panel-style title text for section headers."
+    },
+    {
+      "name": "Disclaimer",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Disclaimer"
+      ],
+      "notes": "Muted helper or legal copy."
+    },
+    {
+      "name": "Code",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Code"
+      ],
+      "notes": "Inline code / API signature chip."
+    },
+    {
+      "name": "Kbd",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Kbd"
+      ],
+      "notes": "Keyboard shortcut chip."
+    },
+    {
+      "name": "Badge",
+      "category": "feedback",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Badge"
+      ],
+      "notes": "Compact status / label badge."
+    },
+    {
+      "name": "Canvas",
+      "category": "media",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Canvas"
+      ],
+      "notes": "HTML canvas wrapper for custom drawing."
+    },
+    {
+      "name": "Card",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Card"
+      ],
+      "notes": "Elevated surface shell (`Rectangle` + `Card` class)."
+    },
+    {
+      "name": "Spacer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Vertical spacer between stacked items."
+    },
+    {
+      "name": "HSpacer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Horizontal spacer between inline or row items."
+    },
+    {
+      "name": "Handle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "drag-handle",
+        "resize-handle"
+      ],
+      "notes": "Drag / resize handle element (`new Handle(\"drag\"|\"resize\")`)."
+    },
+    {
+      "name": "TabItem",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Tab"
+      ],
+      "notes": "Tab chrome created by `TabView.addTab()` — not usually constructed directly."
+    },
+    {
+      "name": "center",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "centered"
+      ],
+      "notes": "Adds the shared `centered` class to a control."
+    },
+    {
+      "name": "InputText",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputText"
+      ],
+      "notes": "Single-line input with editor-style propagation guards."
+    },
+    {
+      "name": "InputSearch",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputSearch"
+      ],
+      "notes": "Search input variant of `InputText`."
+    },
+    {
+      "name": "Icon",
+      "category": "media",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "material-symbols-outlined",
+        "Icon"
+      ],
+      "notes": "Material Symbols icon span."
+    },
+    {
+      "name": "InputTextArea",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputTextArea"
+      ],
+      "notes": "Multiline editor primitive with tab insertion support."
+    },
+    {
+      "name": "InputDropdown",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputDropdown"
+      ],
+      "notes": "Native select wrapper."
+    },
+    {
+      "name": "Checkbox",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Checkbox"
+      ],
+      "notes": "Checkbox input primitive."
+    },
+    {
+      "name": "InputColor",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputColor"
+      ],
+      "notes": "Color input primitive."
+    },
+    {
+      "name": "InputNumber",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputNumber"
+      ],
+      "notes": "Numeric input with drag and keyboard adjustments."
+    },
+    {
+      "name": "InputInteger",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputNumber"
+      ],
+      "notes": "Integer-specialized numeric input."
+    },
+    {
+      "name": "Slider",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Slider"
+      ],
+      "notes": "Range track plus numeric field for continuous values."
+    },
+    {
+      "name": "LineBreak",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "LineBreak"
+      ],
+      "notes": "Thin `br` wrapper."
+    },
+    {
+      "name": "Line",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Line"
+      ],
+      "notes": "Divider wrapper around `hr`."
+    },
+    {
+      "name": "Button",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Button"
+      ],
+      "notes": "Button primitive with optional prepended icon."
+    },
+    {
+      "name": "ProgressBar",
+      "category": "feedback",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Native progress wrapper."
+    },
+    {
+      "name": "TabView",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "TabView",
+        "TabView-tabs",
+        "TabView-content",
+        "Tab",
+        "Tab-float",
+        "selected"
+      ],
+      "notes": "Self-managed tab container."
+    },
+    {
+      "name": "InputList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputList",
+        "Active"
+      ],
+      "notes": "Selectable list container."
+    },
+    {
+      "name": "InputListItem",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputListItem"
+      ],
+      "notes": "Clickable row for `InputList`."
+    },
+    {
+      "name": "InputDate",
+      "category": "inputs",
+      "status": "experimental",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "InputDate",
+        "InputDate-input",
+        "InputDate-calendar"
+      ],
+      "notes": "Composite date and time picker."
+    },
+    {
+      "name": "LoadingCube",
+      "category": "feedback",
+      "status": "experimental",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "LoadingCube",
+        "spinner-wrapper",
+        "spinner",
+        "spinner-text",
+        "spinner-percentage"
+      ],
+      "notes": "Overlay loading cube with text and percentage states."
+    },
+    {
+      "name": "Tooltip",
+      "category": "overlays",
+      "status": "experimental",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Tooltip",
+        "Tooltip--{theme}",
+        "visible"
+      ],
+      "notes": "Hover tooltip with theme variants."
+    },
+    {
+      "name": "World",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/layout"
+      ],
+      "emits": [
+        "World"
+      ],
+      "notes": "Application shell. `new World()` builds the default ribbon, regions, and viewport. `world.mount(document.body)` attaches it."
+    },
+    {
+      "name": "Panel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Panel",
+        "Rectangle",
+        "Header",
+        "PanelContent",
+        "RibbonBar"
+      ],
+      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `@aeco-dev/gui`. The docked workspace panel is also named Panel and imports from `@aeco-dev/layout`."
+    },
+    {
+      "name": "FloatingDialog",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Panel",
+        "Header",
+        "PanelContent",
+        "RibbonBar"
+      ],
+      "notes": "Lightweight floating panel built on `Panel`."
+    },
+    {
+      "name": "RibbonBar",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "RibbonBar"
+      ],
+      "notes": "Horizontal ribbon / action row for panel footers or the app shell. Children are Buttons."
+    },
+    {
+      "name": "Flyout",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Flyout",
+        "Flyout-header",
+        "Flyout-icon",
+        "Flyout-title",
+        "Flyout-content",
+        "Flyout-search",
+        "expanded",
+        "Badge",
+        "centered"
+      ],
+      "notes": "Expandable tool panel with optional search row."
+    },
+    {
+      "name": "CollapsiblePanel",
+      "category": "panels",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "CollapsiblePanel",
+        "CollapsiblePanel-toggle",
+        "Panel",
+        "Header",
+        "PanelContent",
+        "collapsed"
+      ],
+      "notes": "Panel with a header collapse toggle."
+    },
+    {
+      "name": "SplitContainer",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "SplitContainer"
+      ],
+      "notes": "Flex host for horizontal/vertical split panes."
+    },
+    {
+      "name": "Toast",
+      "category": "feedback",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Toast",
+        "Toast--{type}",
+        "Toast--fade-out",
+        "Toast-close",
+        "status-bar",
+        "status-bar-fill"
+      ],
+      "notes": "Transient notification (`new Toast(message, type)`) or progress overlay (`toast.show` / `update` / `hide`)."
+    },
+    {
+      "name": "Operator",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Operator"
+      ],
+      "notes": "Icon-only button."
+    },
+    {
+      "name": "LabeledBoxItem",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "LabeledBoxItem"
+      ],
+      "notes": "Checkbox + icon + label menu row for workspace menus."
+    },
+    {
+      "name": "Layout",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/layout"
+      ],
+      "emits": [
+        "Layout",
+        "Panel"
+      ],
+      "notes": "Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `@aeco-dev/layout`."
+    },
+    {
+      "name": "Panel",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/layout"
+      ],
+      "emits": [
+        "CollapsiblePanel"
+      ],
+      "notes": "Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `@aeco-dev/layout`. The header/content/footer scaffold is also named Panel and imports from `@aeco-dev/gui`."
+    },
+    {
+      "name": "FloatingWindow",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "FloatingWindow",
+        "FloatingWindow-header",
+        "FloatingWindow-dots",
+        "FloatingWindow-dot",
+        "FloatingWindow-title",
+        "FloatingWindow-tools",
+        "FloatingWindow-content"
+      ],
+      "notes": "Free-floating window with docking controls."
+    },
+    {
+      "name": "NavigationList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "NavigationList",
+        "NavigationList-item",
+        "NavigationList-back"
+      ],
+      "notes": "One-level-at-a-time hierarchical navigation with back control."
+    },
+    {
+      "name": "TreeView",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "TreeView",
+        "TreeView-item",
+        "TreeView-toggle",
+        "TreeView-label",
+        "TreeView-children",
+        "is-expanded",
+        "is-selected"
+      ],
+      "notes": "Expandable nested tree; same data options shape as `NavigationList`."
+    },
+    {
+      "name": "Markdown",
+      "category": "text",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Markdown"
+      ],
+      "notes": "Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `@aeco-dev/gui`."
+    },
+    {
+      "name": "Chart",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Rectangle",
+        "chart-ui-component"
+      ],
+      "notes": "Chart.js-backed visualization. `new Chart({ chartConfiguration })`. The Chart.js module loads on first use."
+    },
+    {
+      "name": "DataGrid",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Rectangle",
+        "ag-grid-custom"
+      ],
+      "notes": "AG Grid-backed spreadsheet. `new DataGrid(...)`. The AG Grid module loads on first use."
+    },
+    {
+      "name": "GanttChart",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "Rectangle",
+        "gantt-container"
+      ],
+      "notes": "jsGantt-improved-backed scheduling chart."
+    },
+    {
+      "name": "SortableList",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "SortableList",
+        "SortableList-item",
+        "SortableList-handle",
+        "SortableList-placeholder",
+        "is-dragging",
+        "InputList",
+        "InputListItem",
+        "Checkbox"
+      ],
+      "notes": "Drag-and-drop reorder list with optional checkboxes."
+    },
+    {
+      "name": "RadialMenu",
+      "category": "overlays",
+      "status": "experimental",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Radial interaction overlay."
+    },
+    {
+      "name": "AppShell",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "AppShell",
+        "AppShell-sidebar",
+        "AppShell-main"
+      ],
+      "notes": "SPA host with sidebar navigation and hash routing."
+    },
+    {
+      "name": "NavigationView",
+      "category": "shell",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "NavigationView",
+        "NavigationView-sidebar",
+        "NavigationView-content"
+      ],
+      "notes": "Sidebar + content navigation scaffold."
+    },
+    {
+      "name": "PropertyGrid",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "PropertyGrid",
+        "PropertyGrid-row"
+      ],
+      "notes": "Key/value property editor grid."
+    },
+    {
+      "name": "NodeGraph",
+      "category": "peers",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "dui-node-graph",
+        "dui-node",
+        "dui-node-port"
+      ],
+      "notes": "Interactive node graph editor."
+    },
+    {
+      "name": "StatusBar",
+      "category": "feedback",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "StatusBar"
+      ],
+      "notes": "Application status bar with message regions."
+    },
+    {
+      "name": "ThemeToggle",
+      "category": "inputs",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "ThemeToggle"
+      ],
+      "notes": "Light/dark theme toggle control."
+    },
+    {
+      "name": "PropertyGridRow",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "PropertyGrid-row"
+      ],
+      "notes": "Single row helper for `PropertyGrid`."
+    },
+    {
+      "name": "ICONS",
+      "category": "media",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Material Symbols icon name constants."
+    },
+    {
+      "name": "makeDraggable",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Attaches drag behavior to a panel via a header handle element."
+    },
+    {
+      "name": "makeResizable",
+      "category": "overlays",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Attaches edge resize behavior to a floating panel."
+    },
+    {
+      "name": "makeFlexResizer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Creates a pointer-driven flex size resizer between siblings."
+    },
+    {
+      "name": "createSplitResizer",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Builds a resizer control for a split-pane child index."
+    },
+    {
+      "name": "createLayoutResizerHandle",
+      "category": "layout",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [],
+      "notes": "Creates a left/right/bottom workspace layout resizer handle."
+    }
+  ],
+  "factoryNotes": [
+    {
+      "api": "new Grid()",
+      "notes": "Package-owned CSS grid layout primitive."
+    }
+  ],
+  "cssEntryPoints": [
+    {
+      "path": "gui.css",
+      "status": "stable",
+      "purpose": "Published UI stylesheet for @aeco-dev/gui. Tokens, components, icons, shell, pie menu, markdown, themes, and optional widget styles. No workspace grid."
+    },
+    {
+      "path": "layout.css",
+      "status": "stable",
+      "purpose": "Published workspace grid stylesheet for @aeco-dev/layout. Load after @aeco-dev/gui/gui.css."
+    },
+    {
+      "path": "styles/peers.css",
+      "status": "internal",
+      "purpose": "Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/core.css",
+      "status": "internal",
+      "purpose": "Source layer for tokens, reset, primitives, and generic components. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/tokens.css",
+      "status": "internal",
+      "purpose": "Source layer for `--dui-*` design tokens. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/rules.css",
+      "status": "internal",
+      "purpose": "Source layer for scoped rules helpers. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/components.css",
+      "status": "internal",
+      "purpose": "Source layer for generic component classes. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/icons.css",
+      "status": "internal",
+      "purpose": "Source layer for Material Symbols. Folded into the published gui.css."
+    },
+    {
+      "path": "styles/themes/dark.css",
+      "status": "internal",
+      "purpose": "Dark theme token values. Folded into the published gui.css. Select with data-theme=\"dark\"."
+    },
+    {
+      "path": "styles/themes/light.css",
+      "status": "internal",
+      "purpose": "Light theme token values. Folded into the published gui.css. Select with data-theme=\"light\"."
+    },
+    {
+      "path": "styles/components/shell.css",
+      "status": "internal",
+      "purpose": "Source layer for the app shell sidebar and navigation layout. Folded into the published gui.css."
+    }
+  ],
+  "skill": "SKILL.md"
+}

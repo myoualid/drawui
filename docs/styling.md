@@ -1,4 +1,4 @@
-# IfcOpenShell GUI Styling Guide
+# aeco-dev GUI Styling Guide
 
 ## CSS Entry Points
 
@@ -11,7 +11,7 @@ Both imports are self-contained. `gui.css` includes the node graph, HUD, schedul
 
 The layer files under `styles/` stay in the repository. They are not separate package exports.
 
-IfcOpenShell GUI does **not** style `html` / `body` or zero page margins. Full-viewport app shells set those rules themselves.
+aeco-dev GUI does **not** style `html` / `body` or zero page margins. Full-viewport app shells set those rules themselves.
 
 ## Tokens
 

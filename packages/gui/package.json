@@ -15,7 +15,9 @@
     "gui.css",
     "importmap.full.json",
     "index.d.ts",
-    "README.md"
+    "README.md",
+    "SKILL.md",
+    "aeco-dev-gui.json"
   ],
   "exports": {
     ".": {
@@ -24,7 +26,9 @@
       "default": "./gui.js"
     },
     "./gui.css": "./gui.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./SKILL.md": "./SKILL.md",
+    "./aeco-dev-gui.json": "./aeco-dev-gui.json"
   },
   "scripts": {
     "prepublishOnly": "npm run build --prefix ../.."
@@ -47,8 +51,7 @@
     "ui",
     "dom",
     "components",
-    "ifc",
-    "ifcopenshell"
+    "aeco-dev"
   ],
   "publishConfig": {
     "access": "public"

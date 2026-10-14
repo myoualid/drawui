@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI usage guide — @aeco-dev/layout</title>
+  <title>AI usage guide — aeco-dev GUI</title>
   <link rel="stylesheet" href="../dist/docs.css">
   <link rel="stylesheet" href="../styles/themes/dark.css">
   <link rel="stylesheet" href="../styles/themes/light.css">
@@ -13,15 +13,22 @@
 <body>
   <div class="doc-shell">
     <nav class="doc-nav" aria-label="Documentation">
-      <a class="doc-nav-home" href="../index.html">← @aeco-dev/layout docs</a>
+      <a class="doc-nav-home" href="../index.html">← aeco-dev GUI docs</a>
       <a href="../generated/typedoc/index.html">TypeDoc</a>
       <a href="../ai/component-index.html">Component index</a>
       <a href="../ai/SKILL.html">AI usage guide</a>
     </nav>
-    <main class="doc-content Markdown"><h1 id="ifcopenshellguiaiusageguide">IfcOpenShell GUI AI Usage Guide</h1>
-<p>This guide is for coding agents working in IfcOpenShell GUI itself or in applications that consume the package.</p>
+    <main class="doc-content Markdown"><h1 id="aecodevguiaiusageguide">aeco-dev GUI AI Usage Guide</h1>
+<p>This guide is for coding agents working in aeco-dev GUI itself or in applications that consume the package.</p>
 <h2 id="purpose">Purpose</h2>
-<p>IfcOpenShell GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
+<p>aeco-dev GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.</p>
+<h2 id="inventory">Inventory</h2>
+<p><code>@aeco-dev/gui</code> ships this file as <code>SKILL.md</code> and a full machine-readable inventory as <code>aeco-dev-gui.json</code>. Both are rewritten on every <code>npm run build</code>.</p>
+<p>Read <code>aeco-dev-gui.json</code> before guessing component names. It lists every public symbol with status, category, import surface, emitted class, and notes, plus CSS entry points. In an installed package the paths are:</p>
+<ul>
+<li><code>node_modules/@aeco-dev/gui/SKILL.md</code></li>
+<li><code>node_modules/@aeco-dev/gui/aeco-dev-gui.json</code></li>
+</ul>
 <h2 id="importrules">Import Rules</h2>
 <p>Install with <code>npm install @aeco-dev/gui @aeco-dev/layout</code>. A bundler resolves the package names. A page without a bundler maps them onto the installed files:</p>
 <pre><code class="html language-html">&lt;script type="importmap"&gt;
@@ -87,7 +94,7 @@ import "@aeco-dev/layout/layout.css";
 </ul>
 <h2 id="donot">Do Not</h2>
 <ul>
-<li>Do not make IfcOpenShell GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.</li>
+<li>Do not make aeco-dev GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.</li>
 <li>Do not move app-specific CSS into package core layers.</li>
 <li>Do not add framework dependencies for core components.</li>
 <li>Do not introduce a <code>GUI.Button()</code> facade, a <code>peers</code> import, or <code>Layout.buildWorld()</code>.</li>

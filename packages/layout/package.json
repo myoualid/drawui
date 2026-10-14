@@ -35,8 +35,7 @@
     "ui",
     "layout",
     "workspace",
-    "ifc",
-    "ifcopenshell"
+    "aeco-dev"
   ],
   "publishConfig": {
     "access": "public"

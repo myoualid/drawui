@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IfcOpenShell GUI</title>
+  <title>aeco-dev GUI</title>
 
   <link rel="stylesheet" href="../../dist/gui.css">
   <link rel="stylesheet" href="../../styles/themes/dark.css">
@@ -60,14 +60,14 @@
     } from "@aeco-dev/gui";
 
     const panel = new FloatingWindow({
-      title: "IfcOpenShell GUI",
+      title: "aeco-dev GUI",
       position: "right",
       width: "320px",
     });
 
     const content = new StackPanel({ isVertical: true })
       .gap("0.75rem")
-      .add(new Heading(3, "Hello IfcOpenShell GUI"))
+      .add(new Heading(3, "Hello aeco-dev GUI"))
       .add(new Text("Panels, primitives, and basic markdown — zero peer packages."))
       .add(
         new Markdown(
@@ -79,7 +79,7 @@
           .gap("0.5rem")
           .add(
             new Button("Primary").addClass("primary").onClick(() => {
-              alert("IfcOpenShell GUI min build");
+              alert("aeco-dev GUI min build");
             }),
           )
           .add(new Button("Secondary").addClass("secondary")),

@@ -48,7 +48,7 @@ export const worldConfig = {
           name: "Header Bar",
           type: "Workspace",
           children: [
-            { id: "Logo", name: "IfcOpenShell", type: "Row" },
+            { id: "Logo", name: "aeco-dev", type: "Row" },
             {
               id: "HeaderMenu",
               name: "Header Menu",

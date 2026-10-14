@@ -1,10 +1,24 @@
-# IfcOpenShell GUI AI Usage Guide
+---
+name: aeco-dev-gui
+description: Use when building UI with aeco-dev GUI (@aeco-dev/gui and @aeco-dev/layout). Read aeco-dev-gui.json for the full public component inventory shipped with the package.
+---
 
-This guide is for coding agents working in IfcOpenShell GUI itself or in applications that consume the package.
+# aeco-dev GUI AI Usage Guide
+
+This guide is for coding agents working in aeco-dev GUI itself or in applications that consume the package.
 
 ## Purpose
 
-IfcOpenShell GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.
+aeco-dev GUI is a framework-free ESM UI library. It provides chainable DOM wrappers, generic panels, overlays, lists, tabs, and a small token-driven CSS layer. Keep package code app-agnostic.
+
+## Inventory
+
+`@aeco-dev/gui` ships this file as `SKILL.md` and a full machine-readable inventory as `aeco-dev-gui.json`. Both are rewritten on every `npm run build`.
+
+Read `aeco-dev-gui.json` before guessing component names. It lists every public symbol with status, category, import surface, emitted class, and notes, plus CSS entry points. In an installed package the paths are:
+
+- `node_modules/@aeco-dev/gui/SKILL.md`
+- `node_modules/@aeco-dev/gui/aeco-dev-gui.json`
 
 ## Import Rules
 
@@ -81,7 +95,7 @@ Before adding or changing a component:
 
 ## Do Not
 
-- Do not make IfcOpenShell GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.
+- Do not make aeco-dev GUI depend on host-application runtime objects, a context bag, or an operator/command service. The app wires clicks and listens to events.
 - Do not move app-specific CSS into package core layers.
 - Do not add framework dependencies for core components.
 - Do not introduce a `GUI.Button()` facade, a `peers` import, or `Layout.buildWorld()`.

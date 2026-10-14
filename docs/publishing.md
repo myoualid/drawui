@@ -1,12 +1,12 @@
 # Publishing and distribution
 
-IfcOpenShell GUI publishes the browser build. This page covers npm packaging, GitHub Pages, and CDN-style consumption.
+aeco-dev GUI publishes the browser build. This page covers npm packaging, GitHub Pages, and CDN-style consumption.
 
 ## Package contents
 
 The library publishes as two public packages:
 
-- `@aeco-dev/gui` — `gui.js`, `gui.css`, `importmap.full.json`, and `index.d.ts`
+- `@aeco-dev/gui` — `gui.js`, `gui.css`, `importmap.full.json`, `index.d.ts`, `SKILL.md`, and `aeco-dev-gui.json`
 - `@aeco-dev/layout` — `layout.js`, `layout.css`, and `index.d.ts`
 
 ```sh
@@ -52,7 +52,7 @@ See the generated [component index](./ai/component-index.html) for the full expo
 
 | Script | Output |
 | --- | --- |
-| `npm run build` | `dist/gui.js`, `dist/layout.js`, matching CSS, import map |
+| `npm run build` | `dist/gui.js`, `dist/layout.js`, matching CSS, import map, `SKILL.md`, `aeco-dev-gui.json` |
 | `npm run build:catalog` | `docs/examples/components/catalog.json` |
 | `npm run docs` | `docs/generated/` reference pages + TypeDoc HTML |
 

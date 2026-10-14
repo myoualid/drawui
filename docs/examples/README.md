@@ -1,8 +1,8 @@
-# IfcOpenShell GUI examples
+# aeco-dev GUI examples
 
 Static browser demos for the `dist/gui.js` and `dist/layout.js` builds. No bundler required — only a local HTTP server (ES modules do not load over `file://`).
 
-Example pages link `examples/examples.css` after IfcOpenShell GUI CSS to re-enable document scrolling (IfcOpenShell GUI’s reset locks `html`/`body` to `overflow: hidden` for full-viewport apps).
+Example pages link `examples/examples.css` after aeco-dev GUI CSS to re-enable document scrolling (aeco-dev GUI’s reset locks `html`/`body` to `overflow: hidden` for full-viewport apps).
 
 ## Run locally
 

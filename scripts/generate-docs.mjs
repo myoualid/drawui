@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import showdown from "showdown";
 import { stampDocsVersion } from "./stamp-docs-version.mjs";
+import { writeAgentPack } from "./write-agent-pack.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const registryPath = path.join(root, "src/api/registry.json");
@@ -17,7 +18,7 @@ const layoutPackageJson = JSON.parse(
 const PKG = packageJson.name;
 const PKG_GUI = "@aeco-dev/gui";
 const PKG_LAYOUT = "@aeco-dev/layout";
-const DOC_NAME = PKG_LAYOUT;
+const DOC_NAME = "aeco-dev GUI";
 const GUI_JS = "gui.js";
 const LAYOUT_JS = "layout.js";
 const DOCS_CSS = "docs.css";
@@ -67,7 +68,8 @@ function rewriteMarkdownLinks(markdown) {
 }
 
 function markdownToHtml(markdown) {
-  const body = markdown.replace(/^<!--[\s\S]*?-->\n\n?/, "");
+  const withoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "");
+  const body = withoutFrontmatter.replace(/^<!--[\s\S]*?-->\n\n?/, "");
   return markdownConverter.makeHtml(rewriteMarkdownLinks(body));
 }
 
@@ -434,13 +436,13 @@ function renderComponentIndex(registry) {
 
   let markdown = `${GENERATED_BANNER}# ${LIB} Component Index
 
-This index documents the maintained public surface of the ${LIB} package.
+This index documents the maintained public surface of ${LIB}.
 Install \`@aeco-dev/gui\` for components and \`@aeco-dev/layout\` for the workspace manager. Application code imports \`${PKG_GUI}\` and \`${PKG_LAYOUT}\`.
 Sections follow role: **Text** is written content; **Media** is icons, images, SVG, and canvas; **Inputs** are form controls and buttons; **Feedback** is status, progress, and toasts; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are structure; **Peers** are optional widgets exported from \`${PKG_GUI}\`. Their libraries load on first use.
 
 ## Import Surfaces
 
-Use package exports for all public ${LIB} consumption:
+Use these package exports:
 
 \`\`\`js
 import { Button, StackPanel } from "${PKG_GUI}";
@@ -1260,6 +1262,7 @@ This folder is produced by \`npm run docs\`. Do not edit files here by hand.
 | \`live-demos.js\` + \`.json\` | \`docs/examples/components/demos.js\` (+ \`demos.full.js\`) via \`catalog.manifest.json\`; JSDoc \`// live\` only when no gallery demo |
 | \`typedoc/\` | JSDoc in \`src/\` (TypeDoc) + live preview injection |
 | \`../ai/component-index.*\` | \`src/api/registry.json\` (AI retrieval folder) |
+| \`../ai/aeco-dev-gui.json\` + \`../ai/SKILL.md\` | Registry + usage guide, also copied into \`@aeco-dev/gui\` by \`npm run build\` |
 | \`../getting-started.html\`, etc. | Hand-written guides in \`docs/*.md\` |
 
 ## Authoring live examples
@@ -1302,6 +1305,7 @@ for (const guide of MANUAL_GUIDES) {
 }
 
 await stampDocsVersion(root);
+await writeAgentPack(aiDir);
 
 const symbolPages = (await readdir(apiDir)).filter((file) => file.endsWith(".html") && file !== "index.html");
 

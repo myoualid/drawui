@@ -1,6 +1,6 @@
 # @aeco-dev/layout
 
-A lightweight UI library for Aeco Industry. This package is the workspace layout: `World`, `Layout`, and `Panel`, shipped as `layout.js`, `layout.css`, and TypeScript declarations. Documentation: https://myoualid.github.io/drawui/
+A lightweight UI library for Aeco Industry. This package is the workspace layout: `World`, `Layout`, and `Panel`, shipped as `layout.js`, `layout.css`, and TypeScript declarations. Documentation: [Find here](https://myoualid.github.io/drawui/).
 
 ```sh
 npm install @aeco-dev/layout

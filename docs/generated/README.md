@@ -8,6 +8,7 @@ This folder is produced by `npm run docs`. Do not edit files here by hand.
 | `live-demos.js` + `.json` | `docs/examples/components/demos.js` (+ `demos.full.js`) via `catalog.manifest.json`; JSDoc `// live` only when no gallery demo |
 | `typedoc/` | JSDoc in `src/` (TypeDoc) + live preview injection |
 | `../ai/component-index.*` | `src/api/registry.json` (AI retrieval folder) |
+| `../ai/aeco-dev-gui.json` + `../ai/SKILL.md` | Registry + usage guide, also copied into `@aeco-dev/gui` by `npm run build` |
 | `../getting-started.html`, etc. | Hand-written guides in `docs/*.md` |
 
 ## Authoring live examples

@@ -1,6 +1,7 @@
 import * as esbuild from "esbuild";
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { stampDocsVersion } from "./stamp-docs-version.mjs";
+import { AGENT_JSON_NAME, AGENT_SKILL_NAME, writeAgentPack } from "./write-agent-pack.mjs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -51,6 +52,8 @@ const libraryArtifacts = [
   layoutJsName,
   layoutCssName,
   "importmap.full.json",
+  AGENT_SKILL_NAME,
+  AGENT_JSON_NAME,
 ];
 
 async function buildJavaScript() {
@@ -224,7 +227,9 @@ async function verifyDist() {
 
 async function resolveLocalVendorDir() {
   const vendorOverride =
-    process.env.IFCOPENSHELL_GUI_LOCAL_VENDOR || process.env.DRAWUI_LOCAL_VENDOR;
+    process.env.AECO_DEV_GUI_LOCAL_VENDOR ||
+    process.env.IFCOPENSHELL_GUI_LOCAL_VENDOR ||
+    process.env.DRAWUI_LOCAL_VENDOR;
   if (vendorOverride) {
     return path.resolve(vendorOverride);
   }
@@ -292,6 +297,7 @@ await buildJavaScript();
 await buildLibraryStylesheets();
 await buildDocsStylesheet();
 await writeFullImportMap();
+await writeAgentPack(distDir);
 await verifyDist();
 await syncDocsAssets();
 
@@ -327,6 +333,8 @@ async function stagePackages() {
   );
   await writeFile(path.join(guiDir, "index.d.ts"), guiTypes);
   await cp(license, path.join(guiDir, "LICENSE"));
+  await cp(path.join(distDir, AGENT_SKILL_NAME), path.join(guiDir, AGENT_SKILL_NAME));
+  await cp(path.join(distDir, AGENT_JSON_NAME), path.join(guiDir, AGENT_JSON_NAME));
 
   await cp(path.join(distDir, layoutJsName), path.join(layoutPackageDir, layoutJsName));
   await cp(path.join(distDir, layoutCssName), path.join(layoutPackageDir, layoutCssName));
