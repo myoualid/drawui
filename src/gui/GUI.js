@@ -10,7 +10,7 @@ import { FloatingWindow } from "../overlays/FloatingWindow.js";
  * UI component facade. Does not include workspace layout management.
  *
  * @example
- * import { Button, StackPanel, Badge } from "ifcopenshell/gui";
+ * import { Button, StackPanel, Badge } from "@aeco-dev/gui";
  * new StackPanel({ isVertical: false }).add(new Button("Save")).add(new Badge("New"));
  *
  * @example <caption>Basic</caption>

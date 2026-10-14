@@ -124,8 +124,8 @@ const catalog = {
     publicClasses: constructorIndex(guiExports).length + constructorIndex(layoutExports).length,
   },
   apiIndex: {
-    "ifcopenshell/gui": constructorIndex(guiExports),
-    "ifcopenshell/layout": constructorIndex(layoutExports),
+    "@aeco-dev/gui": constructorIndex(guiExports),
+    "@aeco-dev/layout": constructorIndex(layoutExports),
   },
   categories: manifest.categories,
   peerCategories,

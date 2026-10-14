@@ -7,9 +7,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const registryPath = path.join(root, "src/api/registry.json");
 const packagePath = path.join(root, "package.json");
 const packageJson = JSON.parse(await readFile(packagePath, "utf8"));
+const guiPackageJson = JSON.parse(
+  await readFile(path.join(root, "packages/gui/package.json"), "utf8"),
+);
+const layoutPackageJson = JSON.parse(
+  await readFile(path.join(root, "packages/layout/package.json"), "utf8"),
+);
 const PKG = packageJson.name;
-const PKG_GUI = "ifcopenshell/gui";
-const PKG_LAYOUT = "ifcopenshell/layout";
+const PKG_GUI = "@aeco-dev/gui";
+const PKG_LAYOUT = "@aeco-dev/layout";
 const GUI_JS = "gui.js";
 const LAYOUT_JS = "layout.js";
 const DOCS_CSS = "docs.css";
@@ -290,7 +296,10 @@ function validateRegistry(registry, exportSurfaces, packageJson) {
     }
   }
 
-  const publishedCss = Object.keys(packageJson.exports).filter((key) => key.endsWith(".css"));
+  const publishedCss = [
+    ...Object.keys(guiPackageJson.exports),
+    ...Object.keys(layoutPackageJson.exports),
+  ].filter((key) => key.endsWith(".css"));
   for (const css of registry.cssEntryPoints) {
     if (css.status === "internal") continue;
     const exportKey = `./${css.path}`;
@@ -424,7 +433,7 @@ function renderComponentIndex(registry) {
   let markdown = `${GENERATED_BANNER}# ${LIB} Component Index
 
 This index documents the maintained public surface of the ${LIB} package.
-Install the package with \`npm install ${PKG}\`. Application code imports \`${PKG_GUI}\` and \`${PKG_LAYOUT}\`; an import map or bundler alias points those specifiers at this package.
+Install \`@aeco-dev/gui\` for components and \`@aeco-dev/layout\` for the workspace manager. Application code imports \`${PKG_GUI}\` and \`${PKG_LAYOUT}\`.
 Sections follow role: **Text** is written content; **Media** is icons, images, SVG, and canvas; **Inputs** are form controls and buttons; **Feedback** is status, progress, and toasts; **Layout**, **Collections**, **Panels**, **Overlays**, and **Shell** are structure; **Peers** are optional widgets exported from \`${PKG_GUI}\`. Their libraries load on first use.
 
 ## Import Surfaces
@@ -434,8 +443,8 @@ Use package exports for all public ${LIB} consumption:
 \`\`\`js
 import { Button, StackPanel } from "${PKG_GUI}";
 import { World, Layout, Panel } from "${PKG_LAYOUT}";
-import "${PKG}/styles/gui.css";
-import "${PKG}/styles/layout.css";
+import "${PKG_GUI}/gui.css";
+import "${PKG_LAYOUT}/layout.css";
 \`\`\`
 
 ## Status Legend

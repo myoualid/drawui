@@ -1,19 +1,19 @@
 import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-const packageUrl = new URL("../package.json", import.meta.url);
-const packageRootUrl = new URL("../", import.meta.url);
-const packageJson = JSON.parse(await readFile(packageUrl, "utf8"));
-const entrypoints = Object.values(packageJson.exports)
-  .flatMap((target) => {
-    if (typeof target === "string") return [target];
-    if (target && typeof target.import === "string") return [target.import];
-    return [];
-  })
-  .filter((target) => target.endsWith(".js"));
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-for (const entrypoint of entrypoints) {
-  const resolvedUrl = new URL(entrypoint.replace(/^\.\//, ""), packageRootUrl);
-  await import(resolvedUrl);
+for (const name of ["gui", "layout"]) {
+  const packageJson = JSON.parse(
+    await readFile(path.join(root, "packages", name, "package.json"), "utf8"),
+  );
+  const entrypoint = path.join(
+    root,
+    "packages",
+    name,
+    packageJson.exports["."].import.replace(/^\.\//, ""),
+  );
+  await import(pathToFileURL(entrypoint).href);
+  console.log(`Validated ${packageJson.name}`);
 }
-
-console.log(`Validated ${entrypoints.length} JavaScript entrypoints.`);

@@ -90,8 +90,8 @@ const DEFAULT_CONFIG = {
  * `position` is `"left"`, `"right"`, or `"bottom"`.
  *
  * @example App
- * import { Text } from "ifcopenshell/gui";
- * import { World, Layout, Panel } from "ifcopenshell/layout";
+ * import { Text } from "@aeco-dev/gui";
+ * import { World, Layout, Panel } from "@aeco-dev/layout";
  *
  * const world = new World();
  * world.mount(document.body);

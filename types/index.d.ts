@@ -1,4 +1,4 @@
-declare module "ifcopenshell/gui" {
+declare module "@aeco-dev/gui" {
   export class Control {
     constructor(dom?: HTMLElement);
     dom: HTMLElement;
@@ -268,8 +268,8 @@ declare module "ifcopenshell/gui" {
   }
 }
 
-declare module "ifcopenshell/layout" {
-  import type { CollapsiblePanel, Container } from "ifcopenshell/gui";
+declare module "@aeco-dev/layout" {
+  import type { CollapsiblePanel, Container } from "@aeco-dev/gui";
 
   /** Shell with ribbon, side regions, viewport, and footer. `world.mount(parent)`. */
   export class World {

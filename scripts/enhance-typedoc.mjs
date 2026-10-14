@@ -100,8 +100,8 @@ const STORAGE_GUARD = `
 function liveImportMap(assetPrefix) {
   return `{
   "imports": {
-    "ifcopenshell/gui": "${assetPrefix}dist/${GUI_JS}",
-    "ifcopenshell/layout": "${assetPrefix}dist/${LAYOUT_JS}",
+    "@aeco-dev/gui": "${assetPrefix}dist/${GUI_JS}",
+    "@aeco-dev/layout": "${assetPrefix}dist/${LAYOUT_JS}",
     "chart.js/auto": "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/auto/+esm",
     "ag-grid-community": "https://cdn.jsdelivr.net/npm/ag-grid-community@35.2.1/dist/package/main.esm.mjs",
     "jsgantt-improved": "https://cdn.jsdelivr.net/npm/jsgantt-improved@2.8.10/+esm",

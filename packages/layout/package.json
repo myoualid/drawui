@@ -1,0 +1,48 @@
+{
+  "name": "@aeco-dev/layout",
+  "version": "0.2.0",
+  "description": "IfcOpenShell workspace layout. Import from @aeco-dev/layout.",
+  "type": "module",
+  "main": "./layout.js",
+  "module": "./layout.js",
+  "style": "./layout.css",
+  "types": "./index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "layout.js",
+    "layout.css",
+    "index.d.ts",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./layout.js",
+      "default": "./layout.js"
+    },
+    "./layout.css": "./layout.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build --prefix ../.."
+  },
+  "dependencies": {
+    "@aeco-dev/gui": "0.2.0"
+  },
+  "keywords": [
+    "ui",
+    "layout",
+    "workspace",
+    "ifc",
+    "ifcopenshell"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -11,7 +11,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Base chainable wrapper around a DOM node."
@@ -21,7 +21,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Link"
@@ -33,7 +33,7 @@
       "category": "media",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Image"
@@ -45,7 +45,7 @@
       "category": "media",
       "status": "experimental",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "SVG"
@@ -57,7 +57,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Text"
@@ -69,7 +69,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Semantic heading wrapper (`h1`–`h6` via level option)."
@@ -79,7 +79,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Generic block wrapper."
@@ -89,7 +89,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Row",
@@ -102,7 +102,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Scrollable container wrapper."
@@ -112,7 +112,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Grid"
@@ -124,7 +124,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Rectangle"
@@ -136,7 +136,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Form wrapper with submit helpers."
@@ -146,7 +146,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Thin `small` wrapper."
@@ -156,7 +156,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Title"
@@ -168,7 +168,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Disclaimer"
@@ -180,7 +180,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Code"
@@ -192,7 +192,7 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Kbd"
@@ -204,7 +204,7 @@
       "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Badge"
@@ -216,7 +216,7 @@
       "category": "media",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Canvas"
@@ -228,7 +228,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Card"
@@ -240,7 +240,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Vertical spacer between stacked items."
@@ -250,7 +250,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Horizontal spacer between inline or row items."
@@ -260,7 +260,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "drag-handle",
@@ -273,7 +273,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Tab"
@@ -285,7 +285,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "centered"
@@ -297,7 +297,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputText"
@@ -309,7 +309,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputSearch"
@@ -321,7 +321,7 @@
       "category": "media",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "material-symbols-outlined",
@@ -334,7 +334,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputTextArea"
@@ -346,7 +346,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputDropdown"
@@ -358,7 +358,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Checkbox"
@@ -370,7 +370,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputColor"
@@ -382,7 +382,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputNumber"
@@ -394,7 +394,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputNumber"
@@ -406,7 +406,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Slider"
@@ -418,7 +418,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "LineBreak"
@@ -430,7 +430,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Line"
@@ -442,7 +442,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Button"
@@ -454,7 +454,7 @@
       "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Native progress wrapper."
@@ -464,7 +464,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "TabView",
@@ -481,7 +481,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputList",
@@ -494,7 +494,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputListItem"
@@ -506,7 +506,7 @@
       "category": "inputs",
       "status": "experimental",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "InputDate",
@@ -520,7 +520,7 @@
       "category": "feedback",
       "status": "experimental",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "LoadingCube",
@@ -536,7 +536,7 @@
       "category": "overlays",
       "status": "experimental",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Tooltip",
@@ -550,7 +550,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/layout"
+        "@aeco-dev/layout"
       ],
       "emits": [
         "World"
@@ -562,7 +562,7 @@
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Panel",
@@ -571,14 +571,14 @@
         "PanelContent",
         "RibbonBar"
       ],
-      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `ifcopenshell/gui`. The docked workspace panel is also named Panel and imports from `ifcopenshell/layout`."
+      "notes": "Panel scaffold. Use header()/content()/footer() to set regions; add() appends to content. Import from `@aeco-dev/gui`. The docked workspace panel is also named Panel and imports from `@aeco-dev/layout`."
     },
     {
       "name": "FloatingDialog",
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Panel",
@@ -593,7 +593,7 @@
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "RibbonBar"
@@ -605,7 +605,7 @@
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Flyout",
@@ -625,7 +625,7 @@
       "category": "panels",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "CollapsiblePanel",
@@ -642,7 +642,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "SplitContainer"
@@ -654,7 +654,7 @@
       "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Toast",
@@ -671,7 +671,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Operator"
@@ -683,7 +683,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "LabeledBoxItem"
@@ -695,32 +695,32 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/layout"
+        "@aeco-dev/layout"
       ],
       "emits": [
         "Layout",
         "Panel"
       ],
-      "notes": "Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `ifcopenshell/layout`."
+      "notes": "Workspace grid. `new Layout(options).init(world)` docks panels into left, right, and bottom. Listen with `layout.on`. Import from `@aeco-dev/layout`."
     },
     {
       "name": "Panel",
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/layout"
+        "@aeco-dev/layout"
       ],
       "emits": [
         "CollapsiblePanel"
       ],
-      "notes": "Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `ifcopenshell/layout`. The header/content/footer scaffold is also named Panel and imports from `ifcopenshell/gui`."
+      "notes": "Docked workspace panel. `new Panel({ layout, position, id, label })`. Import from `@aeco-dev/layout`. The header/content/footer scaffold is also named Panel and imports from `@aeco-dev/gui`."
     },
     {
       "name": "FloatingWindow",
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "FloatingWindow",
@@ -738,7 +738,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "NavigationList",
@@ -752,7 +752,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "TreeView",
@@ -770,19 +770,19 @@
       "category": "text",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Markdown"
       ],
-      "notes": "Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `ifcopenshell/gui`."
+      "notes": "Showdown markdown renderer. Chart.js, AG Grid, jsGantt, and Highlight.js load on first use. Import from `@aeco-dev/gui`."
     },
     {
       "name": "Chart",
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Rectangle",
@@ -795,7 +795,7 @@
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Rectangle",
@@ -808,7 +808,7 @@
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "Rectangle",
@@ -821,7 +821,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "SortableList",
@@ -840,7 +840,7 @@
       "category": "overlays",
       "status": "experimental",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Radial interaction overlay."
@@ -850,7 +850,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "AppShell",
@@ -864,7 +864,7 @@
       "category": "shell",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "NavigationView",
@@ -878,7 +878,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "PropertyGrid",
@@ -891,7 +891,7 @@
       "category": "peers",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "dui-node-graph",
@@ -905,7 +905,7 @@
       "category": "feedback",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "StatusBar"
@@ -917,7 +917,7 @@
       "category": "inputs",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "ThemeToggle"
@@ -929,7 +929,7 @@
       "category": "collections",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [
         "PropertyGrid-row"
@@ -941,7 +941,7 @@
       "category": "media",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Material Symbols icon name constants."
@@ -951,7 +951,7 @@
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Attaches drag behavior to a panel via a header handle element."
@@ -961,7 +961,7 @@
       "category": "overlays",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Attaches edge resize behavior to a floating panel."
@@ -971,7 +971,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Creates a pointer-driven flex size resizer between siblings."
@@ -981,7 +981,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Builds a resizer control for a split-pane child index."
@@ -991,7 +991,7 @@
       "category": "layout",
       "status": "stable",
       "entrypoints": [
-        "ifcopenshell/gui"
+        "@aeco-dev/gui"
       ],
       "emits": [],
       "notes": "Creates a left/right/bottom workspace layout resizer handle."
@@ -999,59 +999,59 @@
   ],
   "cssEntryPoints": [
     {
+      "path": "gui.css",
+      "status": "stable",
+      "purpose": "Published UI stylesheet for @aeco-dev/gui. Tokens, components, icons, shell, pie menu, markdown, themes, and optional widget styles. No workspace grid."
+    },
+    {
+      "path": "layout.css",
+      "status": "stable",
+      "purpose": "Published workspace grid stylesheet for @aeco-dev/layout. Load after @aeco-dev/gui/gui.css."
+    },
+    {
       "path": "styles/peers.css",
-      "status": "stable",
-      "purpose": "Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Included in the browser bundle dist/gui.css."
-    },
-    {
-      "path": "styles/gui.css",
-      "status": "stable",
-      "purpose": "UI library: tokens, components, icons, shell, pie menu, markdown, and themes. The browser bundle dist/gui.css also includes optional widget styles. No workspace grid."
-    },
-    {
-      "path": "styles/layout.css",
-      "status": "stable",
-      "purpose": "Workspace grid, region tracks, resizers, and drop targets. Load after gui.css."
+      "status": "internal",
+      "purpose": "Optional widget styles for the node graph, HUD, scheduling, and AG Grid. Folded into the published gui.css."
     },
     {
       "path": "styles/core.css",
-      "status": "stable",
-      "purpose": "Imports token, reset, primitive, and generic component layers."
+      "status": "internal",
+      "purpose": "Source layer for tokens, reset, primitives, and generic components. Folded into the published gui.css."
     },
     {
       "path": "styles/tokens.css",
-      "status": "stable",
-      "purpose": "Package-owned `--dui-*` design tokens."
+      "status": "internal",
+      "purpose": "Source layer for `--dui-*` design tokens. Folded into the published gui.css."
     },
     {
       "path": "styles/rules.css",
-      "status": "stable",
-      "purpose": "Scoped rules helpers."
+      "status": "internal",
+      "purpose": "Source layer for scoped rules helpers. Folded into the published gui.css."
     },
     {
       "path": "styles/components.css",
-      "status": "stable",
-      "purpose": "Generic component classes."
+      "status": "internal",
+      "purpose": "Source layer for generic component classes. Folded into the published gui.css."
     },
     {
       "path": "styles/icons.css",
-      "status": "stable",
-      "purpose": "Material Symbols stylesheet for icon-emitting components."
+      "status": "internal",
+      "purpose": "Source layer for Material Symbols. Folded into the published gui.css."
     },
     {
       "path": "styles/themes/dark.css",
-      "status": "stable",
-      "purpose": "Dark theme token values."
+      "status": "internal",
+      "purpose": "Dark theme token values. Folded into the published gui.css. Select with data-theme=\"dark\"."
     },
     {
       "path": "styles/themes/light.css",
-      "status": "stable",
-      "purpose": "Light theme token values."
+      "status": "internal",
+      "purpose": "Light theme token values. Folded into the published gui.css. Select with data-theme=\"light\"."
     },
     {
       "path": "styles/components/shell.css",
-      "status": "stable",
-      "purpose": "App shell sidebar and navigation layout."
+      "status": "internal",
+      "purpose": "Source layer for the app shell sidebar and navigation layout. Folded into the published gui.css."
     }
   ]
 }

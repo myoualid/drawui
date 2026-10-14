@@ -1,6 +1,6 @@
 # IfcOpenShell GUI
 
-IfcOpenShell GUI is a framework-free ESM UI library for DOM-native tools, panels, overlays, and form controls. Install one package, then import the UI library and the workspace manager as separate entry points.
+IfcOpenShell GUI is a framework-free ESM UI library for DOM-native tools, panels, overlays, and form controls. Components and workspace layout are published as two packages.
 
 This README is the package guide. Detailed reference material lives in `docs/`:
 
@@ -14,17 +14,17 @@ This README is the package guide. Detailed reference material lives in `docs/`:
 ## Install
 
 ```sh
-npm install ifcopenshell-gui
+npm install @aeco-dev/gui @aeco-dev/layout
 ```
 
-Imports use `ifcopenshell/gui` and `ifcopenshell/layout`. Map those specifiers onto this package:
+Imports use `@aeco-dev/gui` and `@aeco-dev/layout`. A bundler resolves those names after install. A page without a bundler maps them onto the package files:
 
 ```html
 <script type="importmap">
 {
   "imports": {
-    "ifcopenshell/gui": "./node_modules/ifcopenshell-gui/dist/gui.js",
-    "ifcopenshell/layout": "./node_modules/ifcopenshell-gui/dist/layout.js"
+    "@aeco-dev/gui": "./node_modules/@aeco-dev/gui/gui.js",
+    "@aeco-dev/layout": "./node_modules/@aeco-dev/layout/layout.js"
   }
 }
 </script>
@@ -32,11 +32,11 @@ Imports use `ifcopenshell/gui` and `ifcopenshell/layout`. Map those specifiers o
 
 ## Quick Start
 
-UI components and workspace layout are separate entry points of the same package.
+UI components and workspace layout are separate packages. `@aeco-dev/layout` depends on `@aeco-dev/gui`.
 
 ```js
-import { FloatingWindow, StackPanel, Heading, Text } from "ifcopenshell/gui";
-import "ifcopenshell-gui/styles/gui.css";
+import { FloatingWindow, StackPanel, Heading, Text } from "@aeco-dev/gui";
+import "@aeco-dev/gui/gui.css";
 
 const panel = new FloatingWindow({
   title: "Inspector",
@@ -56,10 +56,10 @@ document.body.appendChild(panel.dom);
 An app that docks panels imports layout as well. The GUI modules do not include the layout engine.
 
 ```js
-import { Text } from "ifcopenshell/gui";
-import { World, Layout, Panel } from "ifcopenshell/layout";
-import "ifcopenshell-gui/styles/gui.css";
-import "ifcopenshell-gui/styles/layout.css";
+import { Text } from "@aeco-dev/gui";
+import { World, Layout, Panel } from "@aeco-dev/layout";
+import "@aeco-dev/gui/gui.css";
+import "@aeco-dev/layout/layout.css";
 
 const world = new World();
 world.mount(document.body);
@@ -69,33 +69,31 @@ const layers = new Panel({ title: "Layers" });
 layers.content.add(new Text("Layer list"));
 ```
 
-Import only the components you construct. A bundler drops the rest.
+The installed package is the browser build. Import the classes you construct; the bundle still includes the rest of that entry point.
 
 ```js
-import { Button, StackPanel, Chart } from "ifcopenshell/gui";
+import { Button, StackPanel, Chart } from "@aeco-dev/gui";
 
 new Button("Save");
 new StackPanel({ isVertical: true });
 new Chart({ chartConfiguration: { type: "bar", data: { labels: ["A"], datasets: [{ data: [1] }] } } });
 ```
 
-Chart, DataGrid, GanttChart, NodeGraph, and Markdown are part of `ifcopenshell/gui`. Their libraries load the first time you construct one.
+Chart, DataGrid, GanttChart, NodeGraph, and Markdown are part of `@aeco-dev/gui`. Their libraries load the first time you construct one.
 
 ## Public API
 
 ### JavaScript
 
-- `ifcopenshell/gui` — component classes. Browser build: `dist/gui.js`.
-- `ifcopenshell/layout` — `World`, `Layout`, and `Panel`. Browser build: `dist/layout.js`.
+- `@aeco-dev/gui` — component classes.
+- `@aeco-dev/layout` — `World`, `Layout`, and `Panel`.
 
-`ifcopenshell/gui` and `ifcopenshell/layout` are the public specifiers. The package exports `ifcopenshell-gui/gui` and `ifcopenshell-gui/layout` are the tree-shakeable source barrels. `dist/gui.js` and `dist/layout.js` are the full browser builds used by import maps.
+Those names are the package entry points. Each one is the browser build.
 
 ### CSS
 
-- `ifcopenshell-gui/styles/gui.css` — tokens, components, icons, shell, markdown, pie menu, themes, and peer widgets. Browser build: `dist/gui.css`.
-- `ifcopenshell-gui/styles/layout.css` — workspace grid. Load it after `gui.css`. Browser build: `dist/layout.css`.
-
-`styles/core.css` is the token and component layer inside `gui.css`. `styles/workspace.css` loads the same rules as `styles/layout.css`.
+- `@aeco-dev/gui/gui.css` — tokens, components, icons, shell, markdown, pie menu, themes, and peer widgets.
+- `@aeco-dev/layout/layout.css` — workspace grid. Load it after `gui.css`.
 
 ## What IfcOpenShell GUI Includes
 
@@ -103,7 +101,7 @@ Chart, DataGrid, GanttChart, NodeGraph, and Markdown are part of `ifcopenshell/g
 - Composed components such as `Flyout`, `CollapsiblePanel`, `NavigationList`, `TreeView`, `SortableList`, and `Markdown`.
 - Layout shells such as `Panel`, `CollapsiblePanel`, and `FloatingDialog`.
 - Overlay components such as `FloatingWindow`.
-- Optional peer widgets: `Chart`, `DataGrid`, `GanttChart`, and `NodeGraph` from `ifcopenshell/gui`.
+- Optional peer widgets: `Chart`, `DataGrid`, `GanttChart`, and `NodeGraph` from `@aeco-dev/gui`.
 - `Layout` for the workspace grid: regions, docking, and `Layout.Panel`.
 - A small CSS system built around `--dui-*` tokens and theme overrides.
 
@@ -115,7 +113,7 @@ See [docs/ai/component-index.md](docs/ai/component-index.md) for the complete ex
 
 IfcOpenShell GUI styles are token-driven. Theme, spacing, typography, border, and motion values are exposed through `--dui-*` CSS variables. Public package classes use the `dui-*` namespace, while a set of legacy runtime classes remains available for compatibility.
 
-If you use components that render Material Symbols, import `ifcopenshell-gui/styles/icons.css` in addition to `ifcopenshell-gui/styles/core.css`.
+`@aeco-dev/gui/gui.css` includes Material Symbols. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
 
 ## Property Tables
 

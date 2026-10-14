@@ -76,7 +76,7 @@ export function markdownToHtml(markdown) {
 }
 
 /**
- * Markdown renderer. Uses Showdown when it is installed, and the built-in converter otherwise. Import from `ifcopenshell/gui`.
+ * Markdown renderer. Uses Showdown when it is installed, and the built-in converter otherwise. Import from `@aeco-dev/gui`.
  *
  * @example
  * // live

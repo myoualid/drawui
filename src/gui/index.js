@@ -1,7 +1,7 @@
 /**
  * UI components. Import the classes you construct:
  *
- * import { Button, StackPanel, Chart } from "ifcopenshell/gui";
+ * import { Button, StackPanel, Chart } from "@aeco-dev/gui";
  * new Button("Save");
  *
  * Each name is a direct re-export, so a bundler can drop the ones you do not

@@ -97,7 +97,11 @@ async function buildDocsStylesheet() {
 }
 
 function peerVersion(name) {
-  return packageJson.dependencies?.[name] ?? packageJson.peerDependencies?.[name];
+  return (
+    packageJson.dependencies?.[name] ??
+    packageJson.peerDependencies?.[name] ??
+    packageJson.devDependencies?.[name]
+  );
 }
 
 async function writeFullImportMap() {
@@ -107,8 +111,8 @@ async function writeFullImportMap() {
 
   const importMap = {
     imports: {
-      "ifcopenshell/gui": `./${guiJsName}`,
-      "ifcopenshell/layout": `./${layoutJsName}`,
+      "@aeco-dev/gui": `./${guiJsName}`,
+      "@aeco-dev/layout": `./${layoutJsName}`,
       "chart.js/auto": `https://cdn.jsdelivr.net/npm/chart.js@${versions["chart.js"]}/auto/+esm`,
       "ag-grid-community": `https://cdn.jsdelivr.net/npm/ag-grid-community@${versions["ag-grid-community"]}/dist/package/main.esm.mjs`,
       "jsgantt-improved": `https://cdn.jsdelivr.net/npm/jsgantt-improved@${versions["jsgantt-improved"]}/+esm`,
@@ -295,6 +299,42 @@ for (const file of libraryArtifacts) {
 }
 
 await syncLocalVendor();
+await stagePackages();
+
+async function stagePackages() {
+  const types = await readFile(path.join(rootDir, "types/index.d.ts"), "utf8");
+  const layoutMarker = 'declare module "@aeco-dev/layout"';
+  const splitAt = types.indexOf(layoutMarker);
+  if (splitAt < 0) {
+    throw new Error("types/index.d.ts is missing the @aeco-dev/layout module.");
+  }
+
+  const guiDir = path.join(rootDir, "packages/gui");
+  const layoutPackageDir = path.join(rootDir, "packages/layout");
+  const guiTypes = `${types.slice(0, splitAt).trim()}\n`;
+  const layoutTypes = `${types.slice(splitAt).trim()}\n`;
+  const license = path.join(rootDir, "LICENSE");
+
+  await cp(path.join(distDir, guiJsName), path.join(guiDir, guiJsName));
+  await cp(path.join(distDir, guiCssName), path.join(guiDir, guiCssName));
+  const fullMap = JSON.parse(await readFile(path.join(distDir, "importmap.full.json"), "utf8"));
+  delete fullMap.imports["@aeco-dev/layout"];
+  await writeFile(
+    path.join(guiDir, "importmap.full.json"),
+    `${JSON.stringify(fullMap, null, 2)}\n`,
+  );
+  await writeFile(path.join(guiDir, "index.d.ts"), guiTypes);
+  await cp(license, path.join(guiDir, "LICENSE"));
+
+  await cp(path.join(distDir, layoutJsName), path.join(layoutPackageDir, layoutJsName));
+  await cp(path.join(distDir, layoutCssName), path.join(layoutPackageDir, layoutCssName));
+  await writeFile(path.join(layoutPackageDir, "index.d.ts"), layoutTypes);
+  await cp(license, path.join(layoutPackageDir, "LICENSE"));
+
+  console.log("Staged npm packages:");
+  console.log("- packages/gui");
+  console.log("- packages/layout");
+}
 
 console.log("Built library dist/:");
 for (const file of libraryArtifacts) {

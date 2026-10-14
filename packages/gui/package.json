@@ -1,0 +1,60 @@
+{
+  "name": "@aeco-dev/gui",
+  "version": "0.2.0",
+  "description": "IfcOpenShell GUI components. Import from @aeco-dev/gui.",
+  "type": "module",
+  "main": "./gui.js",
+  "module": "./gui.js",
+  "style": "./gui.css",
+  "types": "./index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "gui.js",
+    "gui.css",
+    "importmap.full.json",
+    "index.d.ts",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./gui.js",
+      "default": "./gui.js"
+    },
+    "./gui.css": "./gui.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build --prefix ../.."
+  },
+  "peerDependencies": {
+    "@highlightjs/cdn-assets": "11.11.1",
+    "ag-grid-community": "35.2.1",
+    "chart.js": "4.4.7",
+    "jsgantt-improved": "2.8.10",
+    "showdown": "2.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@highlightjs/cdn-assets": { "optional": true },
+    "ag-grid-community": { "optional": true },
+    "chart.js": { "optional": true },
+    "jsgantt-improved": { "optional": true },
+    "showdown": { "optional": true }
+  },
+  "keywords": [
+    "ui",
+    "dom",
+    "components",
+    "ifc",
+    "ifcopenshell"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
