@@ -32,7 +32,7 @@ import { StackPanel, Heading, Text } from "@aeco-dev/gui";
 import "@aeco-dev/gui/gui.css";
 ```
 
-`styles/gui.css` already includes icons, both themes, and the optional widget styles. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
+`@aeco-dev/gui/gui.css` already includes icons, both themes, and the optional widget styles. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to switch themes.
 
 ## First Panel
 

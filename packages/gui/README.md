@@ -1,6 +1,6 @@
 # @aeco-dev/gui
 
-UI components for IfcOpenShell. The package is the browser build: `gui.js`, `gui.css`, and TypeScript declarations.
+A lightweight UI library for Aeco Industry. This package is the component build: `gui.js`, `gui.css`, and TypeScript declarations. Documentation: https://myoualid.github.io/drawui/
 
 ```sh
 npm install @aeco-dev/gui

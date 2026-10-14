@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IfcOpenShell GUI — Documentation</title>
-  <meta name="description" content="Framework-free ESM UI library for DOM-native tools, panels, and controls.">
+  <title>@aeco-dev/layout — Documentation</title>
+  <meta name="description" content="Workspace layout for IfcOpenShell. Install @aeco-dev/layout.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +59,7 @@
     }
 
     .term {
-      width: min(36rem, 100%);
+      width: min(40rem, 100%);
       background: var(--term-panel);
       border: 1px solid var(--term-border);
       border-radius: 10px;
@@ -110,11 +110,46 @@
 
     .term-brand h1 {
       margin: 0;
-      font-size: clamp(1.6rem, 4.5vw, 2rem);
+      font-size: clamp(1.35rem, 4vw, 1.85rem);
       font-weight: 600;
       letter-spacing: -0.03em;
       color: var(--term-accent);
       line-height: 1.1;
+    }
+
+    .term-version {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0.85rem 0 0.55rem;
+      padding: 0.55rem 0.7rem 0.55rem 0.85rem;
+      background: #101210;
+      border: 1px solid #2c332c;
+      border-radius: 10px;
+      color: #f2f4f0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .term-brand h1 .term-version-label {
+      color: inherit;
+      font: inherit;
+    }
+
+    .term-version-label {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .term-version-search {
+      display: grid;
+      place-items: center;
+      width: 1.65rem;
+      height: 1.65rem;
+      color: #9aa398;
+      flex-shrink: 0;
     }
 
     .term-cursor {
@@ -189,7 +224,7 @@
   </style>
 </head>
 <body>
-  <main class="term" aria-label="ifcopenshell-gui documentation">
+  <main class="term" aria-label="@aeco-dev/layout documentation">
     <header class="term-chrome">
       <div class="term-dots" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="term-path">~/docs</div>
@@ -197,10 +232,19 @@
 
     <div class="term-body">
       <div class="term-brand">
-        <h1>ifcopenshell-gui</h1>
+        <h1>@aeco-dev/layout @ <span class="term-version-label" data-layout-version="0.2.1">0.2.1</span></h1>
         <span class="term-cursor" aria-hidden="true"></span>
       </div>
-      <p class="term-tagline">Framework-free ESM UI. Import @aeco-dev/gui and @aeco-dev/layout.</p>
+      <div class="term-version" aria-label="Install">
+        <span class="term-version-label">npm install @aeco-dev/layout</span>
+        <span class="term-version-search" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="7" cy="7" r="4.25" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M10.2 10.2L13.2 13.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </span>
+      </div>
+      <p class="term-tagline">A lightweight UI library for Aeco Industry. Import @aeco-dev/gui and @aeco-dev/layout.</p>
 
       <nav id="nav" aria-label="Documentation"></nav>
 

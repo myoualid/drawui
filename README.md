@@ -1,10 +1,12 @@
 # IfcOpenShell GUI
 
-IfcOpenShell GUI is a framework-free ESM UI library for DOM-native tools, panels, overlays, and form controls. Components and workspace layout are published as two packages.
+A lightweight UI library for Aeco Industry. It is framework-free ESM and CSS for DOM-native tools, panels, overlays, and form controls, with no framework runtime. Optional widgets load their libraries only when you construct them. Components and workspace layout are published as two packages.
 
-This README is the package guide. Detailed reference material lives in `docs/`:
+Documentation: [https://myoualid.github.io/drawui/](https://myoualid.github.io/drawui/)
 
-- [Docs hub](docs/index.html) (GitHub Pages landing page)
+This README is the package guide. The same guides live in `docs/`:
+
+- [Documentation](https://myoualid.github.io/drawui/)
 - [TypeDoc](docs/generated/typedoc/index.html) (generated)
 - [AI docs](docs/ai/) — [component index](docs/ai/component-index.md) + [usage guide](docs/ai/SKILL.md)
 - [Getting started](docs/getting-started.md)

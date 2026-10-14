@@ -1,7 +1,7 @@
 {
   "name": "@aeco-dev/layout",
-  "version": "0.2.0",
-  "description": "IfcOpenShell workspace layout. Import from @aeco-dev/layout.",
+  "version": "0.2.1",
+  "description": "A lightweight UI library for Aeco Industry. Import from @aeco-dev/layout.",
   "type": "module",
   "main": "./layout.js",
   "module": "./layout.js",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run build --prefix ../.."
   },
   "dependencies": {
-    "@aeco-dev/gui": "0.2.0"
+    "@aeco-dev/gui": "0.2.1"
   },
   "keywords": [
     "ui",

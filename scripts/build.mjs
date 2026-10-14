@@ -1,5 +1,6 @@
 import * as esbuild from "esbuild";
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { stampDocsVersion } from "./stamp-docs-version.mjs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -300,6 +301,7 @@ for (const file of libraryArtifacts) {
 
 await syncLocalVendor();
 await stagePackages();
+await stampDocsVersion(rootDir);
 
 async function stagePackages() {
   const types = await readFile(path.join(rootDir, "types/index.d.ts"), "utf8");

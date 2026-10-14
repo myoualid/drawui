@@ -103,9 +103,9 @@ Example (`full.html` pattern):
 After npm publish, swap paths for CDN URLs:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.1/gui.css">
 <script type="module">
-  import { Button } from "https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.0/gui.js";
+  import { Button } from "https://cdn.jsdelivr.net/npm/@aeco-dev/gui@0.2.1/gui.js";
 </script>
 ```
 

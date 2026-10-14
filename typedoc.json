@@ -9,7 +9,7 @@
   "out": "docs/generated/typedoc",
   "readme": "docs/typedoc-readme.md",
   "cleanOutputDir": true,
-  "name": "IfcOpenShell GUI",
+  "name": "@aeco-dev/layout",
   "hideGenerator": true,
   "logLevel": "Warn",
   "validation": {

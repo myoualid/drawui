@@ -1,6 +1,6 @@
 # @aeco-dev/layout
 
-Workspace layout for IfcOpenShell: `World`, `Layout`, and `Panel`. The package is the browser build: `layout.js`, `layout.css`, and TypeScript declarations.
+A lightweight UI library for Aeco Industry. This package is the workspace layout: `World`, `Layout`, and `Panel`, shipped as `layout.js`, `layout.css`, and TypeScript declarations. Documentation: https://myoualid.github.io/drawui/
 
 ```sh
 npm install @aeco-dev/layout

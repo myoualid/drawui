@@ -2,6 +2,7 @@ import { readFile, writeFile, mkdir, readdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import showdown from "showdown";
+import { stampDocsVersion } from "./stamp-docs-version.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const registryPath = path.join(root, "src/api/registry.json");
@@ -16,10 +17,11 @@ const layoutPackageJson = JSON.parse(
 const PKG = packageJson.name;
 const PKG_GUI = "@aeco-dev/gui";
 const PKG_LAYOUT = "@aeco-dev/layout";
+const DOC_NAME = PKG_LAYOUT;
 const GUI_JS = "gui.js";
 const LAYOUT_JS = "layout.js";
 const DOCS_CSS = "docs.css";
-const LIB = "IfcOpenShell GUI";
+const LIB = DOC_NAME;
 const generatedDir = path.join(root, "docs/generated");
 const apiDir = path.join(generatedDir, "api");
 const manifestPath = path.join(root, "docs/examples/components/catalog.manifest.json");
@@ -77,7 +79,7 @@ function renderHtmlDocPage({
   liveBundle = null,
 }) {
   const nav = [
-    `<a class="doc-nav-home" href="${assetPrefix}index.html">← ${PKG} docs</a>`,
+    `<a class="doc-nav-home" href="${assetPrefix}index.html">← ${DOC_NAME} docs</a>`,
     ...navLinks.map(
       (link) =>
         `<a href="${link.href}"${link.active ? ' class="is-active"' : ""}>${link.label}</a>`,
@@ -1298,6 +1300,8 @@ await writeFile(path.join(generatedDir, "README.md"), generatedReadme, "utf8");
 for (const guide of MANUAL_GUIDES) {
   await writeGuideHtml(guide);
 }
+
+await stampDocsVersion(root);
 
 const symbolPages = (await readdir(apiDir)).filter((file) => file.endsWith(".html") && file !== "index.html");
 

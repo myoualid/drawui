@@ -1,8 +1,8 @@
 {
   "name": "ifcopenshell-gui",
   "private": true,
-  "version": "0.2.0",
-  "description": "GUI components and workspace layout. Published as @aeco-dev/gui and @aeco-dev/layout.",
+  "version": "0.2.1",
+  "description": "A lightweight UI library for Aeco Industry. Published as @aeco-dev/gui and @aeco-dev/layout.",
   "type": "module",
   "workspaces": [
     "packages/gui",
