@@ -1,6 +1,6 @@
 {
   "name": "@aeco-dev/layout",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A lightweight UI library for Aeco Industry. Import from @aeco-dev/layout.",
   "type": "module",
   "main": "./layout.js",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run build --prefix ../.."
   },
   "dependencies": {
-    "@aeco-dev/gui": "0.2.1"
+    "@aeco-dev/gui": "0.2.2"
   },
   "keywords": [
     "ui",

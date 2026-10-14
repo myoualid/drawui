@@ -4,14 +4,14 @@
   "packages": {
     "gui": {
       "name": "@aeco-dev/gui",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "module": "./gui.js",
       "style": "./gui.css",
       "types": "./index.d.ts"
     },
     "layout": {
       "name": "@aeco-dev/layout",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "module": "./layout.js",
       "style": "./layout.css",
       "types": "./index.d.ts"
