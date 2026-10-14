@@ -53,6 +53,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myoualid/drawui.git",
+    "directory": "packages/gui"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18"
