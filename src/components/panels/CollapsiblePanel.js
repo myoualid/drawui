@@ -1,4 +1,4 @@
-import { Icon } from "../../primitives/ui.js";
+import { Text } from "../../primitives/ui.js";
 
 import { Panel } from "./Panel.js";
 
@@ -58,7 +58,7 @@ export class CollapsiblePanel extends Panel {
     if (className) this.addClass(className);
 
     this._collapsed = Boolean(collapsed);
-    this.toggleIcon = new Icon("expand_more");
+    this.toggleIcon = new Text(this._collapsed ? "▸" : "▾");
     this.toggleIcon.addClass("CollapsiblePanel-toggle");
 
     if (showHeader) {
@@ -97,6 +97,7 @@ export class CollapsiblePanel extends Panel {
   collapse() {
     this.addClass("collapsed");
     this._collapsed = true;
+    this.toggleIcon?.setValue("▸");
     this._header?.dom.setAttribute("aria-expanded", "false");
     return this;
   }
@@ -105,6 +106,7 @@ export class CollapsiblePanel extends Panel {
   expand() {
     this.removeClass("collapsed");
     this._collapsed = false;
+    this.toggleIcon?.setValue("▾");
     this._header?.dom.setAttribute("aria-expanded", "true");
     return this;
   }

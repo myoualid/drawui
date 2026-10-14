@@ -920,6 +920,7 @@ export class FloatingDialog extends Panel {
       },
     });
 
+    this.addClass('FloatingDialog');
     if (!FloatingDialog.isMobile) this._header?.setStyle('cursor', ['move']);
   }
 

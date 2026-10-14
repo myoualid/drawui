@@ -35,4 +35,15 @@ html[data-theme="light"] {
   --dui-surface-raised-bg: var(--dui-color-surface-raised);
   --dui-surface-overlay-bg: var(--dui-color-overlay);
   --dui-surface-control-bg: var(--dui-color-control);
+
+  --dui-inspector-bg: #ffffff;
+  --dui-inspector-border: rgba(22, 24, 27, 0.12);
+  --dui-inspector-row: rgba(22, 24, 27, 0.045);
+  --dui-inspector-key: #6a707c;
+  --dui-inspector-value: #1c1e21;
+  --dui-inspector-title: #111214;
+  --dui-inspector-section: #1c1e21;
+  --dui-inspector-set: #f3f4f6;
+  --dui-inspector-empty: #8b909a;
+  --dui-inspector-text: #1c1e21;
 }

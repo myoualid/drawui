@@ -61,11 +61,14 @@
 .World .WorkspaceLeft,
 .World .WorkspaceRight,
 .World .WorkspaceBottom {
-  background: var(--dui-color-surface);
+  background: var(--dui-inspector-bg);
   border: 0;
   border-radius: 0;
+  color: var(--dui-inspector-text);
   display: flex;
   flex-direction: column;
+  font-family: var(--dui-inspector-font);
+  font-size: 12px;
   min-height: 0;
   min-width: 0;
   overflow-x: hidden;
@@ -75,14 +78,14 @@
 }
 
 /* One hairline between the stage and a dock. Panels inside are sections, not cards. */
-.World .WorkspaceLeft { border-right: 1px solid var(--dui-color-border); }
-.World .WorkspaceRight { border-left: 1px solid var(--dui-color-border); }
-.World .WorkspaceBottom { border-top: 1px solid var(--dui-color-border); }
+.World .WorkspaceLeft { border-right: 1px solid var(--dui-inspector-border); }
+.World .WorkspaceRight { border-left: 1px solid var(--dui-inspector-border); }
+.World .WorkspaceBottom { border-top: 1px solid var(--dui-inspector-border); }
 
 .World .WorkspaceStack > .Panel {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--dui-color-separator);
+  border-bottom: 1px solid var(--dui-inspector-border);
   border-radius: 0;
   box-shadow: none;
 }
