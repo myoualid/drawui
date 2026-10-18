@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>PropertyGrid check</title>
+  <link rel="stylesheet" href="../../../styles/gui.css">
+  <script type="importmap">
+  { "imports": { "@aeco-dev/gui": "../../../src/gui/index.js" } }
+  </script>
+  <style>
+    body { margin: 0; background: #0f1117; color: var(--dui-inspector-text); }
+    .stage { display: flex; align-items: stretch; min-height: 100vh; }
+    #dock { width: 340px; flex-shrink: 0; border-left: 1px solid var(--dui-inspector-border); background: var(--dui-inspector-bg); }
+    .forms { display: flex; gap: 16px; padding: 16px; }
+    .panel { width: 280px; }
+    .wide { width: 560px; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="forms">
+      <div id="panel" class="panel"></div>
+      <div id="wide" class="wide"></div>
+    </div>
+    <div id="dock"></div>
+  </div>
+  <script type="module">
+    import { Panel, CollapsiblePanel, PropertyGrid, Text, InputText, InputDropdown, InputTextArea, Checkbox, InputNumber, InputInteger, Slider, InputColor, InputDate, ProgressBar } from "@aeco-dev/gui";
+
+    function grid() {
+      const notes = new InputTextArea().setValue("Primary span member");
+      notes.dom.rows = 2;
+      return new PropertyGrid({
+        compact: true,
+        title: "Appearance",
+        rows: {
+          staticText: { label: "Text", value: "IfcBeam" },
+          name: { label: "Name", value: new InputText().setValue("Beam-12") },
+          type: { label: "Type", value: new InputDropdown().setOptions({ IfcBeam: "IfcBeam", IfcColumn: "IfcColumn" }).setValue("IfcBeam") },
+          notes: { label: "Notes", value: notes },
+          visible: { label: "Visible", value: new Checkbox(true) },
+          length: { label: "Length", value: new InputNumber(12.5).setRange(0, 100).setUnit("m") },
+          count: { label: "Count", value: new InputInteger(4).setRange(0, 99) },
+          opacity: { label: "Opacity", value: new Slider(0.75).setRange(0, 1).setStep(0.01).setPrecision(2) },
+          color: { label: "Color", value: new InputColor().setValue("#7d9a62") },
+          created: { label: "Created", value: new InputDate(new Date()) },
+          progress: { label: "LOD", value: new ProgressBar(0.45) },
+          long: { label: "Very long property name", value: "truncated?" },
+        },
+      });
+    }
+
+    document.getElementById("panel").appendChild(grid().dom);
+    document.getElementById("wide").appendChild(grid().dom);
+
+    function section(title, ...children) {
+      return new CollapsiblePanel({ title, showFooter: false }).content(...children);
+    }
+
+    const empty = new Text("No properties");
+    empty.addClass("PropertyGrid-empty");
+
+    const inspector = new Panel({
+      title: "IfcWindow",
+      showFooter: false,
+      resizable: false,
+      resizeHandles: [],
+      panelStyles: { width: "100%", height: "100%", maxHeight: "none" },
+    });
+    inspector.add(
+      section("Attributes", new PropertyGrid({
+        rows: {
+          GlobalId: { label: "GlobalId", value: "2hOgb4AJv4PQDB_FKRBh1h" },
+          Name: { label: "Name", value: "Window" },
+        },
+      })),
+      section("Relationships", new PropertyGrid({
+        rows: {
+          Type: { label: "Type", value: "WT01" },
+          Container: { label: "Container", value: "My Storey" },
+        },
+      })),
+      section("Property Sets", empty),
+      section("Quantities", new PropertyGrid({
+        title: "Qto_WindowBaseQuantities",
+        rows: {
+          Area: { label: "Area", value: "1.08000001430512" },
+          Height: { label: "Height", value: "1200.00004768372" },
+          Width: { label: "Width", value: "899.999976158142" },
+        },
+      })),
+    );
+    document.getElementById("dock").appendChild(inspector.dom);
+  </script>
+</body>
+</html>

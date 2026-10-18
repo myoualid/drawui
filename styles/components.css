@@ -67,6 +67,8 @@
   gap: 0;
   min-width: 0;
   width: 100%;
+  container-type: inline-size;
+  --dui-property-label-width: clamp(64px, 38%, 140px);
 }
 
 .PropertyGrid-title,
@@ -131,7 +133,7 @@
   cursor: default;
   display: grid;
   gap: 8px;
-  grid-template-columns: 140px minmax(0, 1fr);
+  grid-template-columns: minmax(0, var(--dui-property-label-width)) minmax(0, 1fr);
   margin: 0;
   overflow: visible;
   padding: 3px 4px;
@@ -139,7 +141,25 @@
 }
 
 .PropertyGrid-body > .PropertyGrid-row:has(> :nth-child(3)) {
-  grid-template-columns: 140px repeat(auto-fit, minmax(0, 1fr));
+  grid-template-columns: minmax(0, var(--dui-property-label-width)) repeat(auto-fit, minmax(0, 1fr));
+}
+
+/* Too narrow for side-by-side columns: put the label on its own line above the value(s). */
+@container (max-width: 240px) {
+  .PropertyGrid-row.InputListItem,
+  .PropertyGrid-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+  }
+
+  .PropertyGrid-row > .PropertyGrid-cell {
+    flex: 1 1 0;
+  }
+
+  .PropertyGrid-row > .PropertyGrid-label {
+    flex-basis: 100%;
+  }
 }
 
 .PropertyGrid-row.InputListItem:hover,
@@ -176,8 +196,8 @@
   font-weight: 400;
   line-height: 1.35;
   min-width: 0;
+  overflow-wrap: break-word;
   text-align: left;
-  word-break: break-word;
 }
 
 .PropertyGrid-value:has(*) {
