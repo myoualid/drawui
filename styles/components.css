@@ -81,28 +81,35 @@
   width: 100%;
 }
 
-/* Titled grids are quantity / property sets: a bar over zebra rows. */
+/* Titled grids are property / quantity sets: a group box whose title sits on
+   the top border. The title's two-tone fill hides the border line behind it. */
 .PropertyGrid:has(> .PropertyGrid-title) {
-  background: transparent;
+  background: var(--dui-inspector-set);
   border: 1px solid var(--dui-inspector-border);
-  border-radius: 4px;
-  margin: 6px 0 10px;
-  overflow: hidden;
+  border-radius: 3px;
+  margin: 8px 0 0;
+  padding: 10px;
+  position: relative;
 }
 
-.PropertyGrid-title {
-  background: var(--dui-inspector-set);
-  border-bottom: 1px solid var(--dui-inspector-border);
+.PropertyGrid > .PropertyGrid-title {
+  background: linear-gradient(to bottom, var(--dui-inspector-bg) 50%, var(--dui-inspector-set) 50%);
   color: var(--dui-inspector-value);
   display: block;
   font-size: 12px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-weight: 400;
+  left: 6px;
+  line-height: 1.2;
   margin: 0;
-  overflow: visible;
-  padding: 4px 8px;
-  text-overflow: unset;
-  white-space: normal;
+  max-width: calc(100% - 12px);
+  overflow: hidden;
+  padding: 0 4px;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  width: auto;
 }
 
 .PropertyGrid-header {
@@ -120,23 +127,19 @@
   padding: 0;
 }
 
-.PropertyGrid:has(> .PropertyGrid-title) > .PropertyGrid-body {
-  padding: 2px 0;
-}
-
 .PropertyGrid-row.InputListItem,
 .PropertyGrid-row {
-  align-items: center;
+  align-items: start;
   background: transparent;
   border: 0;
-  border-radius: 3px;
+  border-radius: 0;
   cursor: default;
   display: grid;
-  gap: 8px;
+  gap: 12px;
   grid-template-columns: minmax(0, var(--dui-property-label-width)) minmax(0, 1fr);
   margin: 0;
   overflow: visible;
-  padding: 3px 4px;
+  padding: 3px 0;
   position: relative;
 }
 
@@ -169,11 +172,6 @@
   color: inherit;
 }
 
-.PropertyGrid-body > .PropertyGrid-row:nth-child(odd),
-.PropertyGrid-body > .PropertyGrid-row:nth-child(odd):hover {
-  background: var(--dui-inspector-row);
-}
-
 .PropertyGrid-cell {
   min-width: 0;
 }
@@ -196,8 +194,9 @@
   font-weight: 400;
   line-height: 1.35;
   min-width: 0;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   text-align: left;
+  white-space: normal;
 }
 
 .PropertyGrid-value:has(*) {
@@ -233,15 +232,68 @@
   color: var(--dui-inspector-empty);
   display: block;
   font-size: 12px;
-  font-style: italic;
   font-weight: 400;
   line-height: 1.35;
-  padding: 4px 2px;
+  padding: 4px 0;
 }
 
-.WorkspacePanel {
-  background: var(--dui-surface-bg);
-  border-radius: var(--dui-radius);
+.SummaryCard {
+  align-items: center;
+  background: var(--dui-inspector-set);
+  border: 1px solid var(--dui-inspector-border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.SummaryCard > .SummaryCard-icon {
+  color: var(--dui-inspector-value);
+  flex: 0 0 auto;
+  font-size: 28px;
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+}
+
+.SummaryCard-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.SummaryCard-text > .Text {
+  font-size: 12px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.SummaryCard-text > .SummaryCard-title {
+  color: var(--dui-inspector-value);
+  font-weight: 700;
+}
+
+.SummaryCard-text > .SummaryCard-subtitle {
+  color: var(--dui-inspector-key);
+}
+
+.SummaryCard [hidden] {
+  display: none;
+}
+
+/* Docked panel: a small uppercase title over a framed body, inset from the
+   dock edges. --dui-panel-inset is the body's side padding; nested sections
+   use it to run their header strip edge to edge. */
+.Rectangle.WorkspacePanel {
+  --dui-panel-inset: 10px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0 6px 6px;
 }
 
 .WorkspacePanel > .Header.is-panel-drag-handle {
@@ -368,8 +420,7 @@
   padding: 0.15rem 0.7rem 0.55rem;
 }
 
-.Panel:not(.CollapsiblePanel) > .Header,
-.WorkspacePanel > .Header {
+.Panel:not(.CollapsiblePanel) > .Header {
   background: transparent;
   border: 0;
   border-bottom: 1px solid var(--dui-inspector-border);
@@ -377,14 +428,34 @@
   padding: 10px 2px 12px;
 }
 
-.Panel:not(.CollapsiblePanel) > .Header .Text,
-.WorkspacePanel > .Header .Text:not(.CollapsiblePanel-toggle) {
+.Panel:not(.CollapsiblePanel) > .Header .Text {
   color: var(--dui-inspector-title);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
   text-transform: none;
+}
+
+.WorkspacePanel > .Header {
+  background: transparent;
+  border: 0;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 4px;
+}
+
+.WorkspacePanel > .Header .Text:not(.CollapsiblePanel-toggle) {
+  color: var(--dui-inspector-title);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.WorkspacePanel > .Header .Icon:not(.CollapsiblePanel-toggle) {
+  font-size: 14px;
 }
 
 .Panel > .PanelContent > .TabView {
@@ -517,7 +588,8 @@
   padding: var(--dui-space-2) var(--dui-space-3) var(--dui-space-2) calc(var(--dui-space-3) + (var(--depth, 0) * var(--dui-space-6)));
 }
 
-.TreeView-item.is-selected {
+.TreeView-item.is-selected,
+.NavigationList-item.is-selected {
   background: var(--dui-color-surface-selected);
   border-color: color-mix(in srgb, var(--dui-color-accent) 28%, transparent);
   color: var(--dui-color-text);
@@ -648,36 +720,65 @@
   padding: 0;
 }
 
+/* Section: a full-width header strip, bold title, and actions on the right. */
 .CollapsiblePanel:not(.WorkspacePanel) > .Header {
-  background: transparent;
+  background: var(--dui-section-header-bg);
   border: 0;
   gap: 6px;
-  margin: 0;
-  padding: 4px 2px;
+  margin: 0 calc(-1 * var(--dui-panel-inset, 0px));
+  min-height: 24px;
+  padding: 2px max(var(--dui-panel-inset, 0px), 4px);
+  width: auto !important;
 }
 
 .CollapsiblePanel:not(.WorkspacePanel) > .Header .Text:not(.CollapsiblePanel-toggle) {
   color: var(--dui-inspector-section);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0;
   line-height: 1.2;
-  text-transform: uppercase;
+  text-transform: none;
+}
+
+.CollapsiblePanel:not(.WorkspacePanel) > .Header .Header-actions .Operator {
+  color: var(--dui-inspector-key);
+  cursor: pointer;
+  display: flex;
+  font-size: 15px;
+  padding: 2px;
+}
+
+.Panel > .Header .Header-actions .Operator .Icon {
+  color: inherit;
+  font-size: inherit;
+}
+
+.CollapsiblePanel:not(.WorkspacePanel) > .Header .Header-actions .Operator:hover {
+  background: var(--dui-color-surface-hover);
+  color: var(--dui-color-text-hover);
+}
+
+.CollapsiblePanel:not(.WorkspacePanel) > .Header .Header-actions .Operator.is-active {
+  color: var(--dui-color-accent);
 }
 
 .CollapsiblePanel > .PanelContent {
   flex: 0 0 auto;
-  gap: 0;
+  gap: 6px;
   min-height: auto;
   overflow: visible;
-  padding: 2px 0 4px;
+  padding: 6px 0 4px;
 }
 
 .WorkspacePanel.CollapsiblePanel > .PanelContent {
-  gap: 8px;
+  background: var(--dui-inspector-bg);
+  border: 1px solid var(--dui-inspector-border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  gap: 10px;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 8px 0 0;
+  padding: 10px var(--dui-panel-inset);
 }
 
 .CollapsiblePanel > .PanelContent > .TabView {
@@ -690,6 +791,16 @@
   flex: 0 0 auto;
   min-height: auto;
   overflow: visible;
+}
+
+.CollapsiblePanel > .PanelContent > .InputSearch {
+  font-size: 12px;
+  padding: 4px 6px;
+  width: 100%;
+}
+
+.CollapsiblePanel > .PanelContent > .InputSearch[hidden] {
+  display: none;
 }
 
 .CollapsiblePanel > .PanelContent > .InputList {
@@ -980,9 +1091,80 @@ button.FloatingWindow-dot:disabled {
 .RibbonBar {
   align-items: stretch;
   flex-shrink: 0;
-  gap: var(--dui-space-2);
+  gap: 0;
 }
 
+.RibbonGroup {
+  align-items: stretch;
+  border-right: 1px solid var(--dui-color-separator);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: flex-end;
+  min-height: 100%;
+  min-width: 0;
+  padding: 4px 8px 2px;
+}
+
+.RibbonGroup:last-child {
+  border-right: 0;
+}
+
+.RibbonGroup-label,
+.RibbonDropdown-label {
+  color: var(--dui-color-text-muted);
+  flex: 0 0 auto;
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  padding: 0 8px 2px;
+  text-align: center;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.RibbonGroup-items {
+  align-items: stretch;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  min-height: 0;
+}
+
+.RibbonDropdown {
+  align-items: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 7rem;
+  padding: 4px 8px 2px;
+}
+
+.RibbonBar select.InputDropdown {
+  background-color: var(--dui-color-control);
+  border: 1px solid var(--dui-color-border-strong);
+  border-radius: var(--dui-radius);
+  box-sizing: border-box;
+  color: var(--dui-color-text);
+  font-family: var(--dui-font-ui);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 600;
+  height: 1.7rem;
+  max-width: 9rem;
+  min-width: 6.75rem;
+  padding: 0 1.4rem 0 0.5rem;
+  width: auto;
+}
+
+/* Ribbon buttons: accent icon over a label, square hover and pressed fills. */
 .RibbonBar .Button {
   align-items: center;
   backdrop-filter: none;
@@ -992,22 +1174,22 @@ button.FloatingWindow-dot:disabled {
   border-radius: 0;
   box-shadow: none;
   box-sizing: border-box;
-  color: var(--dui-color-text-muted);
+  color: var(--dui-color-text);
   cursor: pointer;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   font-family: var(--dui-font-ui);
-  font-size: var(--dui-font-size-xs);
-  font-weight: 600;
-  gap: var(--dui-space-2);
+  font-size: var(--dui-font-size-sm);
+  font-weight: 500;
+  gap: 4px;
   justify-content: center;
   letter-spacing: 0;
   line-height: 1.2;
-  max-width: 104px;
+  max-width: 112px;
   min-height: 0;
-  min-width: 64px;
-  padding: 6px 10px 4px;
+  min-width: 80px;
+  padding: 6px 4px 4px;
   position: relative;
   transition:
     background-color var(--dui-transition-fast),
@@ -1016,7 +1198,7 @@ button.FloatingWindow-dot:disabled {
 }
 
 .RibbonBar .Button:hover {
-  background: color-mix(in srgb, var(--dui-color-accent) 6%, transparent 94%);
+  background: var(--dui-color-surface-hover);
   border-color: transparent;
   border-bottom-color: transparent;
   box-shadow: none;
@@ -1024,14 +1206,14 @@ button.FloatingWindow-dot:disabled {
 }
 
 .RibbonBar .Button:active {
-  background: transparent;
+  background: var(--dui-color-surface-pressed);
 }
 
 .RibbonBar .Button.Active,
 .RibbonBar .Button.selected,
 .RibbonBar .Button.Active:hover,
 .RibbonBar .Button.selected:hover {
-  background: transparent;
+  background: var(--dui-color-surface-pressed);
   border-color: transparent;
   border-bottom-color: var(--dui-color-accent);
   color: var(--dui-color-text);
@@ -1044,17 +1226,20 @@ button.FloatingWindow-dot:disabled {
 
 .RibbonBar .Button .Icon,
 .RibbonBar .Button .material-symbols-outlined {
-  color: inherit;
+  color: var(--dui-color-accent);
   display: block;
+  font-size: 20px;
   letter-spacing: normal;
   margin: 0;
 }
 
+.RibbonBar .Button:hover .Icon,
+.RibbonBar .Button:hover .material-symbols-outlined,
 .RibbonBar .Button.Active .Icon,
 .RibbonBar .Button.Active .material-symbols-outlined,
 .RibbonBar .Button.selected .Icon,
 .RibbonBar .Button.selected .material-symbols-outlined {
-  color: var(--dui-color-accent);
+  color: var(--dui-color-accent-hover);
 }
 
 
@@ -1201,7 +1386,7 @@ button.FloatingWindow-dot:disabled {
 
 .TabView-tabs .Tab:hover {
   background: transparent;
-  color: var(--dui-color-text);
+  color: var(--dui-color-text-hover);
 }
 
 .TabView-tabs .Tab.active,
@@ -1860,49 +2045,54 @@ progress::-moz-progress-bar {
 
 .StatusBar {
   align-items: center;
-  background: var(--dui-surface-raised-bg);
-  border: 1px solid var(--dui-color-border);
-  border-radius: var(--dui-radius);
+  box-sizing: border-box;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: row;
-  gap: 6px;
-  padding: 10px 12px;
+  gap: var(--dui-space-3);
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 0;
   width: 100%;
 }
 
-.StatusBar-track,
-.StatusBar .track,
-.StatusBar--simple {
+.StatusBar-text {
+  color: var(--dui-color-text-muted);
+  flex: 1 1 auto;
+  font-size: var(--dui-font-size-xs);
+  line-height: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.StatusBar-track {
   background: var(--dui-color-control);
   border-radius: var(--dui-radius);
-  height: 6px;
+  flex: 0 1 7rem;
+  height: 4px;
+  min-width: 2.5rem;
   overflow: hidden;
-  width: 100%;
 }
 
-.StatusBar-fill,
-.StatusBar .fill {
+.StatusBar--simple .StatusBar-track {
+  flex: 1 1 auto;
+}
+
+.StatusBar-fill {
   background: var(--dui-color-accent);
-  border-radius: var(--dui-radius);
+  display: block;
   height: 100%;
-  transition: width var(--dui-transition-medium);
   width: 0%;
 }
 
-.StatusBar-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.StatusBar-meta {
-  align-items: center;
+.StatusBar-percentage {
   color: var(--dui-color-text-muted);
-  display: flex;
-  font-size: var(--dui-font-size-sm);
-  justify-content: space-between;
-  padding: 4px 2px;
+  flex: 0 0 auto;
+  font-size: var(--dui-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .SideBar {

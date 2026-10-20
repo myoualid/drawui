@@ -67,6 +67,7 @@ export {
   LabeledBoxItem,
   PropertyGrid,
   PropertyGridRow,
+  SummaryCard,
   SortableList,
   NavigationList,
   TreeView,

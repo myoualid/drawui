@@ -13,7 +13,7 @@
 
 .World .RibbonMenu {
   align-items: stretch;
-  background-color: var(--dui-color-bg);
+  background-color: var(--dui-tabbar-bg);
   display: flex;
   flex-direction: column;
   grid-column: 1 / -1;
@@ -34,15 +34,71 @@
   height: var(--dui-headerbar-height);
   justify-content: space-between;
   order: 0;
+  overflow: hidden;
   position: relative;
   width: 100%;
   z-index: 2;
 }
 
+.World .HeaderBar > #HeaderMenu {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* A TabView in the header bar is the ribbon's tab strip: the row holding it
+   takes the free width, and only its tabs show. */
+.World .HeaderBar > .Row:has(> .TabView) {
+  align-self: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.World .HeaderBar .TabView {
+  flex: 1 1 auto;
+  height: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.World .HeaderBar .TabView-content {
+  display: none !important;
+}
+
+.World .HeaderBar .TabView-tabs {
+  align-items: stretch;
+  border-bottom: 0;
+  gap: 2px;
+  height: 100%;
+  scrollbar-width: none;
+}
+
+.World .HeaderBar .TabView-tabs .Tab {
+  background: var(--dui-tab-bg);
+  border-bottom: 2px solid transparent;
+  color: var(--dui-color-text-muted);
+  margin-bottom: 0;
+  padding: 0 14px;
+}
+
+.World .HeaderBar .TabView-tabs .Tab:hover {
+  background: var(--dui-tab-bg);
+  color: var(--dui-color-text-hover);
+}
+
+.World .HeaderBar .TabView-tabs .Tab.active,
+.World .HeaderBar .TabView-tabs .Tab.selected {
+  background: var(--dui-tab-bg);
+  border-bottom-color: var(--dui-color-accent);
+  color: var(--dui-color-text);
+}
+
 .World .RibbonMenu > .RibbonBar,
 .World #RibbonBar {
+  background: var(--dui-ribbon-bg);
   border-top: 1px solid var(--dui-color-border);
   flex: 1 1 auto;
+  padding: 0 2px;
   flex-wrap: nowrap;
   justify-content: flex-start;
   min-height: 0;
@@ -61,7 +117,7 @@
 .World .WorkspaceLeft,
 .World .WorkspaceRight,
 .World .WorkspaceBottom {
-  background: var(--dui-inspector-bg);
+  background: var(--dui-color-bg);
   border: 0;
   border-radius: 0;
   color: var(--dui-inspector-text);
@@ -77,21 +133,12 @@
   z-index: 2;
 }
 
-/* One hairline between the stage and a dock. Panels inside are sections, not cards. */
-.World .WorkspaceLeft { border-right: 1px solid var(--dui-inspector-border); }
-.World .WorkspaceRight { border-left: 1px solid var(--dui-inspector-border); }
-.World .WorkspaceBottom { border-top: 1px solid var(--dui-inspector-border); }
-
+/* Docks are the app background; each panel frames its own body. */
 .World .WorkspaceStack > .Panel {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--dui-inspector-border);
   border-radius: 0;
   box-shadow: none;
-}
-
-.World .WorkspaceStack > .Panel:last-child {
-  border-bottom: 0;
 }
 
 .World .WorkspaceLeft {
@@ -138,7 +185,7 @@
 }
 
 .World .Viewport {
-  background-color: var(--dui-color-bg);
+  background-color: var(--dui-viewport-shell-bg);
 }
 
 .World .Viewport canvas,
@@ -148,6 +195,8 @@
 
 .World .Footer {
   align-items: center;
+  background: var(--dui-statusbar-bg);
+  color: var(--dui-color-text-muted);
   display: flex;
   flex-direction: row;
   gap: var(--dui-space-2);
@@ -178,7 +227,7 @@
   outline-offset: -2px;
 }
 
-.World .HeaderBar .Logo {
+.Logo {
   align-items: center;
   display: flex;
   flex: 0 0 auto;
@@ -189,13 +238,13 @@
   width: auto;
 }
 
-.World .HeaderBar .Logo > .Image {
+.Logo > .Image {
   border-radius: var(--dui-radius);
   display: block;
   flex: 0 0 auto;
   height: var(--dui-logo-size);
-  max-height: calc(100% - var(--dui-space-2));
-  max-width: var(--dui-logo-wordmark-max-width);
+  max-height: 1.5rem;
+  max-width: 1.5rem;
   object-fit: contain;
   width: auto;
 }
@@ -242,4 +291,236 @@
     height: 44px;
     width: calc(100% - var(--dui-sidebar-width));
   }
+}
+
+/* Compact shell (tablets, phones). Layout sets the grid areas inline: one
+   tabbed workspace beside the viewport in landscape, above it in portrait,
+   and the ribbon menu as a bar along the bottom. */
+
+.World .WorkspaceTabs,
+.World:not(.is-compact) .LayoutToggle-compact {
+  display: none;
+}
+
+.World.is-compact #LayoutToggleBar > [data-position] {
+  display: none;
+}
+
+.World.is-compact .WorkspaceTabs {
+  background: var(--dui-color-bg);
+  display: flex;
+  grid-area: tabs;
+  z-index: 2;
+}
+
+.World.is-compact .WorkspaceTabs .Tab {
+  flex: 1 0 auto;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 0.85rem;
+}
+
+.World.is-compact .WorkspaceTabs .Tab .Icon {
+  font-size: 18px;
+}
+
+.World.is-compact .WorkspaceLeft,
+.World.is-compact .WorkspaceRight,
+.World.is-compact .WorkspaceBottom {
+  border: 0;
+  grid-area: workspace;
+}
+
+.World.is-landscape .WorkspaceTabs,
+.World.is-landscape .WorkspaceLeft,
+.World.is-landscape .WorkspaceRight,
+.World.is-landscape .WorkspaceBottom {
+  border-left: 1px solid var(--dui-inspector-border);
+}
+
+.World.is-compact .WorkspaceStack {
+  flex: 1 1 auto;
+}
+
+/* One panel at a time; must beat host rules that display panels by region id. */
+.World.is-compact .WorkspaceStack > :not(.is-compact-active) {
+  display: none !important;
+}
+
+.World.is-compact .WorkspaceStack > .is-compact-active {
+  border-bottom: 0;
+}
+
+/* The tab names the panel; Header sets display inline. */
+.World.is-compact .WorkspaceStack > .is-compact-active > .Header {
+  display: none !important;
+}
+
+.World.is-compact .Viewport,
+.World.is-compact #Viewport {
+  grid-area: viewport;
+}
+
+.World.is-compact .Resizer-compact {
+  background: var(--dui-color-bg);
+  grid-area: resizer;
+  z-index: 3;
+}
+
+.World.is-compact .Resizer-compact::before {
+  background: var(--dui-color-text-subtle);
+}
+
+.World.is-landscape .Resizer-compact::before {
+  height: 36px;
+  width: 4px;
+}
+
+.World.is-portrait .Resizer-compact::before {
+  height: 4px;
+  width: 36px;
+}
+
+/* No footer row: the footer sits on the top edge of the bar at zero height
+   and its status floats above it as a pill. `.StatusBar.is-idle` hides it. */
+.World.is-compact .Footer {
+  align-self: start;
+  grid-area: bar;
+  height: 0;
+  overflow: visible;
+  padding: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 7;
+}
+
+.World.is-compact .Footer .StatusBar {
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border-strong);
+  border-radius: 999px;
+  bottom: var(--dui-space-4);
+  box-shadow: var(--dui-shadow-overlay);
+  flex: 0 0 auto;
+  height: 28px;
+  left: 0;
+  margin-inline: auto;
+  max-height: none;
+  padding: 0 var(--dui-space-4);
+  position: absolute;
+  right: 0;
+  transition: opacity var(--dui-transition-medium);
+  width: min(20rem, calc(100% - 7rem));
+}
+
+.World .Footer .StatusBar.is-idle,
+.World.is-compact.is-ribbon-open .Footer .StatusBar {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.World.is-workspace-hidden .Footer .StatusBar {
+  bottom: calc(var(--dui-space-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.World.is-compact .RibbonMenu {
+  border-top: 1px solid var(--dui-color-border);
+  grid-area: bar;
+  overflow: visible;
+  z-index: 6;
+}
+
+.World.is-compact .HeaderBar {
+  height: 100%;
+  width: 100%;
+}
+
+/* Compact tab strip fills the bottom bar; the mark sits on the top edge,
+   next to the tray it opens. */
+.World.is-compact .HeaderBar .TabView-tabs {
+  justify-content: center;
+}
+
+.World.is-compact .HeaderBar .TabView-tabs .Tab {
+  border-bottom: 0;
+  border-top: 2px solid transparent;
+  flex: 1 1 0;
+  font-size: var(--dui-font-size-md);
+  justify-content: center;
+  max-width: 9rem;
+  padding: 0 0.75rem;
+}
+
+.World.is-compact .HeaderBar .TabView-tabs .Tab.active,
+.World.is-compact .HeaderBar .TabView-tabs .Tab.selected {
+  border-top-color: var(--dui-color-accent);
+}
+
+.World.is-compact.is-ribbon-open .HeaderBar .TabView-tabs .Tab.active,
+.World.is-compact.is-ribbon-open .HeaderBar .TabView-tabs .Tab.selected {
+  background: var(--dui-color-surface-hover);
+  color: var(--dui-color-accent);
+}
+
+@media (max-width: 480px) {
+  .World.is-compact .Logo {
+    display: none;
+  }
+}
+
+/* Ribbon tray: hidden until a work mode (or the Tools toggle) opens it. */
+.World.is-compact #RibbonBar {
+  background: var(--dui-surface-raised-bg);
+  border-top: 1px solid var(--dui-color-border-strong);
+  bottom: 100%;
+  box-shadow: var(--dui-shadow-overlay);
+  box-sizing: border-box;
+  display: none;
+  flex-wrap: wrap;
+  left: 0;
+  max-height: min(60vh, 22rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: var(--dui-space-3);
+  position: absolute;
+  right: 0;
+  row-gap: var(--dui-space-3);
+}
+
+.World.is-compact.is-ribbon-open #RibbonBar {
+  display: flex;
+}
+
+.World.is-compact #RibbonBar .Button {
+  min-height: 56px;
+  min-width: 72px;
+}
+
+/* Workspace hidden: the viewport takes the whole screen. Only the panels
+   toggle stays, floating over the viewport corner. */
+.World.is-workspace-hidden .RibbonMenu {
+  border-top: 0;
+}
+
+.World.is-workspace-hidden .HeaderBar > :not(#HeaderMenu),
+.World.is-workspace-hidden #HeaderMenu > :not(#LayoutToggleBar),
+.World.is-workspace-hidden #LayoutToggleBar > :not(.LayoutToggle-panels) {
+  display: none !important;
+}
+
+.World.is-workspace-hidden .LayoutToggle-panels {
+  align-items: center;
+  background: var(--dui-surface-raised-bg);
+  border: 1px solid var(--dui-color-border-strong);
+  border-radius: 50%;
+  bottom: calc(var(--dui-space-5) + env(safe-area-inset-bottom, 0px));
+  box-shadow: var(--dui-shadow-overlay);
+  box-sizing: border-box;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  position: fixed;
+  right: calc(var(--dui-space-5) + env(safe-area-inset-right, 0px));
+  width: 44px;
+  z-index: 20;
 }

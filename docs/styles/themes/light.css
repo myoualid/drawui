@@ -1,31 +1,41 @@
 html[data-theme="light"] {
   color-scheme: light;
 
-  /* Light surfaces and ink — same sage accent, darker so it holds on white. */
-  --dui-color-bg: #f3f3f1;
+  /* Bonsai viewer light palette — same green accent, darker so it holds on white. */
+  --dui-color-bg: #eef1f5;
   --dui-color-surface: #ffffff;
-  --dui-color-surface-raised: #f3f3f1;
-  --dui-color-surface-hover: rgba(22, 24, 27, 0.04);
-  --dui-color-surface-pressed: rgba(22, 24, 27, 0.08);
-  --dui-color-surface-selected: rgba(22, 24, 27, 0.06);
-  --dui-color-control: #ffffff;
-  --dui-color-control-hover: #f3f3f1;
+  --dui-color-surface-raised: #e3e8ef;
+  --dui-color-surface-hover: #d6dde7;
+  --dui-color-surface-pressed: #cad3df;
+  --dui-color-surface-selected: rgba(31, 41, 55, 0.06);
+  --dui-color-control: #f5f7fa;
+  --dui-color-control-hover: #d6dde7;
   --dui-color-overlay: #ffffff;
-  --dui-color-text: #1c1e21;
-  --dui-color-text-muted: #5c5954;
-  --dui-color-text-subtle: #8a857c;
-  --dui-color-border: rgba(22, 24, 27, 0.1);
-  --dui-color-border-strong: rgba(22, 24, 27, 0.18);
-  --dui-color-separator: rgba(22, 24, 27, 0.08);
-  --dui-color-focus: #4f6b38;
-  --dui-color-accent: #4f6b38;
-  --dui-color-accent-hover: #3f562c;
-  --dui-color-accent-soft: rgba(79, 107, 56, 0.12);
-  --dui-color-on-accent: #f7f6f3;
+  --dui-color-text: #1f2937;
+  --dui-color-text-muted: #5b6676;
+  --dui-color-text-subtle: #8b95a3;
+  --dui-color-text-hover: #0f172a;
+  --dui-color-border: #c9d1dc;
+  --dui-color-border-strong: #7c8ca3;
+  --dui-color-separator: #c9d1dc;
+  --dui-color-focus: #7c8ca3;
+  --dui-color-accent: #2f9e44;
+  --dui-color-accent-hover: #267e37;
+  --dui-color-accent-soft: rgba(47, 158, 68, 0.12);
+  --dui-color-on-accent: #ffffff;
   --dui-color-danger: #b5523a;
-  --dui-color-warning: #9a6a1e;
-  --dui-color-success: #4f6b38;
+  --dui-color-warning: #b26b00;
+  --dui-color-success: #2f9e44;
   --dui-color-info: #3d5a78;
+
+  --dui-tabbar-bg: #eef1f5;
+  --dui-tab-bg: #e3e8ef;
+  --dui-ribbon-bg: #e3e8ef;
+  --dui-viewport-shell-bg: #dbe1e8;
+  --dui-statusbar-bg: #edf1f5;
+  --dui-section-header-bg: #eef2f6;
+  --dui-scroll-handle: #b1bac8;
+  --dui-scroll-handle-hover: #929daf;
 
   --dui-shadow-sm: 0 1px 2px rgba(46, 52, 54, 0.08);
   --dui-shadow-md: 0 4px 14px rgba(46, 52, 54, 0.12);
@@ -37,13 +47,13 @@ html[data-theme="light"] {
   --dui-surface-control-bg: var(--dui-color-control);
 
   --dui-inspector-bg: #ffffff;
-  --dui-inspector-border: rgba(22, 24, 27, 0.12);
-  --dui-inspector-row: rgba(22, 24, 27, 0.045);
-  --dui-inspector-key: #6a707c;
-  --dui-inspector-value: #1c1e21;
-  --dui-inspector-title: #111214;
-  --dui-inspector-section: #1c1e21;
-  --dui-inspector-set: #f3f4f6;
-  --dui-inspector-empty: #8b909a;
-  --dui-inspector-text: #1c1e21;
+  --dui-inspector-border: #c9d1dc;
+  --dui-inspector-row: #f5f7fa;
+  --dui-inspector-key: #5b6676;
+  --dui-inspector-value: #1f2937;
+  --dui-inspector-title: #1f2937;
+  --dui-inspector-section: #1f2937;
+  --dui-inspector-set: #f5f7fa;
+  --dui-inspector-empty: #5b6676;
+  --dui-inspector-text: #1f2937;
 }

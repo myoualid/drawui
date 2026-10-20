@@ -9,6 +9,10 @@ import { Panel } from "./Panel.js";
  * const section = new CollapsiblePanel({ title: "Parameters", icon: "tune" });
  * section.content(new Text("Section body"));
  *
+ * @example <caption>Header actions</caption>
+ * const filter = new Operator("filter_alt");
+ * const section = new CollapsiblePanel({ title: "Properties", actions: [filter] });
+ *
  * @category Panels
  */
 export class CollapsiblePanel extends Panel {
@@ -20,6 +24,7 @@ export class CollapsiblePanel extends Panel {
    * @param {string|null} [options.className=null]
    * @param {boolean} [options.showFooter=false]
    * @param {boolean} [options.showHeader=true]
+   * @param {import('../../primitives/ui.js').Control[]} [options.actions] Header controls on the right. Clicking them does not collapse the panel.
    */
   constructor(options = {}) {
     const {
@@ -29,6 +34,7 @@ export class CollapsiblePanel extends Panel {
       className = null,
       showFooter = false,
       showHeader = true,
+      actions = [],
       resizable = false,
       draggable = false,
       resizeHandles = [],
@@ -65,6 +71,7 @@ export class CollapsiblePanel extends Panel {
       this.header({
         title,
         icon,
+        actions,
         leadingActions: [this.toggleIcon],
       });
       this._bindCollapseHeader();
@@ -84,8 +91,12 @@ export class CollapsiblePanel extends Panel {
     el.setAttribute("role", "button");
     el.style.cursor = "pointer";
     el.setAttribute("aria-expanded", String(!this._collapsed));
-    this._header.onClick(() => this.toggleCollapse());
+    el.addEventListener("click", (event) => {
+      if (event.target instanceof Element && event.target.closest(".Header-actions")) return;
+      this.toggleCollapse();
+    });
     el.addEventListener("keydown", (event) => {
+      if (event.target !== el) return;
       if (event.key === "Enter" || event.key === " " || event.code === "Space") {
         event.preventDefault();
         this.toggleCollapse();

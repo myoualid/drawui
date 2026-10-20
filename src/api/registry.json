@@ -887,6 +887,18 @@
       "notes": "Key/value property editor grid."
     },
     {
+      "name": "SummaryCard",
+      "category": "collections",
+      "status": "stable",
+      "entrypoints": [
+        "@aeco-dev/gui"
+      ],
+      "emits": [
+        "SummaryCard"
+      ],
+      "notes": "Bordered icon, title and secondary line for one item."
+    },
+    {
       "name": "NodeGraph",
       "category": "peers",
       "status": "stable",

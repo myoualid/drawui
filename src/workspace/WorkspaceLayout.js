@@ -7,6 +7,7 @@ import { WorkspaceTabController } from "./tabController.js";
 import { bindToggle } from "./moduleBridge.js";
 import { installWorkspaceShortcuts } from "./keyboard.js";
 import { Operator } from "../components/controls/Operator.js";
+import { CompactWorkspace } from "./compact.js";
 
 /**
  * @typedef {'left' | 'right' | 'bottom'} LayoutPosition
@@ -47,6 +48,16 @@ import { Operator } from "../components/controls/Operator.js";
  * @property {number} [resizerSize=4] - Size of the resizer handle in pixels.
  * @property {boolean} [enableViewportGrid=false] - Mount an empty grid host inside the viewport.
  * @property {import('./keyboard.js').WorkspaceShortcut[]} [shortcuts] - Override keyboard shortcuts.
+ * @property {'auto'|boolean} [compact='auto'] - Compact shell for tablets and phones. `'auto'` switches on
+ *   in any portrait container, at `compactBreakpoint` width, or on touch screens whose short side is within it.
+ * @property {number} [compactBreakpoint=900] - Width in pixels at or below which `'auto'` goes compact.
+ * @property {number} [compactBarHeight=52] - Height of the bottom ribbon menu bar in compact mode.
+ * @property {number} [compactResizerSize=12] - Touch-sized splitter between viewport and workspace.
+ * @property {number} [compactLandscapeRatio=0.4] - Workspace share of the width in landscape.
+ * @property {number} [compactPortraitRatio=0.45] - Workspace share of the height in portrait.
+ * @property {string|null} [compactTab=null] - Tab shown first in the compact workspace.
+ * @property {boolean} [compactRibbonToggle=true] - Add a header button that opens the ribbon tray.
+ *   Turn off when the application opens the tray itself (for example from work mode tabs).
  */
 
 /** @type {WorkspaceLayoutConfig} */
@@ -62,6 +73,14 @@ const DEFAULT_CONFIG = {
   minPanelSize: 160,
   resizerSize: 7,
   enableViewportGrid: false,
+  compact: 'auto',
+  compactBreakpoint: 900,
+  compactBarHeight: 52,
+  compactResizerSize: 12,
+  compactLandscapeRatio: 0.4,
+  compactPortraitRatio: 0.45,
+  compactTab: null,
+  compactRibbonToggle: true,
 };
 
 /**
@@ -75,7 +94,8 @@ const DEFAULT_CONFIG = {
  * ### Methods
  *
  * - `init(world)` — bind to a World, an element, or an element id
- * - `on(event, handler)` / `off(event, handler)` — `tab:added`, `tab:removed`, `tab:selected`, `workspace`
+ * - `on(event, handler)` / `off(event, handler)` — `tab:added`, `tab:removed`, `tab:selected`, `workspace`,
+ *   `compact`, `ribbon`
  * - `addTab(position, id, label, content, options?)`
  * - `ensureTab`, `removeTab`, `selectTab`, `toggleTab`, `hasTab`
  * - `getTabIds`, `getSelectedTabId`, `isTabSelected`, `clearTabs`, `setTabLabel`
@@ -85,9 +105,16 @@ const DEFAULT_CONFIG = {
  * - `bindToggle(element, position, id)` — click handler for a button the app owns
  * - `prependToggleBarChild(node)` — insert a node into the header toggle row
  * - `getFloatingWindowMountElement()`
+ * - `isCompact()`, `openRibbon()`, `closeRibbon()`, `toggleRibbon()`, `isRibbonOpen()`
  * - `destroy()`
  *
  * `position` is `"left"`, `"right"`, or `"bottom"`.
+ *
+ * On tablets and phones (see `compact`) the regions merge into one tabbed
+ * workspace beside the viewport (landscape) or above it (portrait). The ribbon
+ * menu moves to a bottom bar and `#RibbonBar` opens as a tray with `openRibbon`.
+ * Region calls keep working: `openWorkspace` and `toggleWorkspace` show or hide
+ * the shared workspace, and `selectTab` switches its tab.
  *
  * @example App
  * import { Text } from "@aeco-dev/gui";
@@ -172,6 +199,8 @@ class WorkspaceLayout {
 
     /** Tab CRUD controller. Layout methods delegate here. */
     this.tabs = new WorkspaceTabController(this);
+
+    this.compact = new CompactWorkspace(this);
   }
 
   _resolveInitialWorkspaceWidth(position) {
@@ -228,9 +257,11 @@ class WorkspaceLayout {
     this._createWorkspaceStacks();
     this._createResizers();
     this._createToggleBar();
+    this.compact.init();
+    this.compact.sync();
     this._applyState();
     this._flushLayoutResize();
-    this._onWindowResize = () => this._updateGridColumns();
+    this._onWindowResize = () => this._onResize();
     window.addEventListener('resize', this._onWindowResize);
 
     this._keyboardCleanup = installWorkspaceShortcuts(this, {
@@ -317,6 +348,7 @@ class WorkspaceLayout {
 
       this.workspaceStacks[position] = new WorkspaceStack(hostElement, position, {
         onLayoutChange: () => {
+          this.compact.refresh();
           this._flushLayoutResize();
         },
       });
@@ -449,6 +481,15 @@ class WorkspaceLayout {
   }
 
   toggleTab(position, id) {
+    if (this.compact.enabled) {
+      if (!this.hasTab(position, id)) return false;
+      if (this.compact.open && this.compact.activeTabId === id) {
+        this.compact.setOpen(false);
+      } else {
+        this.selectTab(position, id, { open: true });
+      }
+      return true;
+    }
     return this.tabs.toggleTab(position, id);
   }
 
@@ -465,6 +506,9 @@ class WorkspaceLayout {
   }
 
   isTabSelected(position, id) {
+    if (this.compact.enabled) {
+      return this.compact.activeTabId === id && this.hasTab(position, id);
+    }
     return this.tabs.isTabSelected(position, id);
   }
 
@@ -625,6 +669,11 @@ class WorkspaceLayout {
   }
 
   _updateGridForPosition(position) {
+    if (this.compact.enabled) {
+      this.compact.apply();
+      return;
+    }
+
     if (position === 'bottom') {
       this._updateGridRows();
     } else {
@@ -687,13 +736,62 @@ class WorkspaceLayout {
   }
 
   _applyState() {
+    if (this.compact.enabled) {
+      this.compact.apply();
+      return;
+    }
+
     this._updateGridColumns();
     this._updateGridRows();
     this._updateWorkspaceVisibility();
     this._updateToggleButtons();
   }
 
+  _onResize() {
+    const changed = this.compact.sync();
+    if (this.compact.enabled || changed) {
+      this._applyState();
+    } else {
+      this._updateGridColumns();
+    }
+
+    if (changed) {
+      this._flushLayoutResize();
+      this._emit('compact', { compact: this.compact.enabled, portrait: this.compact.portrait });
+    }
+  }
+
+  /** @returns {boolean} Whether the compact tablet/phone shell is active. */
+  isCompact() {
+    return this.compact.enabled;
+  }
+
+  /** Open the ribbon tray above the bottom bar. No-op outside compact mode. */
+  openRibbon() {
+    this.compact.setRibbonOpen(true);
+    return this;
+  }
+
+  closeRibbon() {
+    this.compact.setRibbonOpen(false);
+    return this;
+  }
+
+  toggleRibbon() {
+    this.compact.setRibbonOpen(!this.compact.ribbonOpen);
+    return this;
+  }
+
+  isRibbonOpen() {
+    return this.compact.ribbonOpen;
+  }
+
   toggleWorkspace(position) {
+    if (this.compact.enabled) {
+      this.compact.toggle();
+      return this;
+    }
+
     this.state[`${position}Open`] = !this.state[`${position}Open`];
     this._updateGridForPosition(position);
     this._updateToggleButtons();
@@ -702,6 +800,11 @@ class WorkspaceLayout {
   }
 
   openWorkspace(position) {
+    if (this.compact.enabled) {
+      this.compact.setOpen(true);
+      return this;
+    }
+
     const openKey = `${position}Open`;
     const wasOpen = this.state[openKey];
     if (!wasOpen) {
@@ -715,6 +818,11 @@ class WorkspaceLayout {
   }
 
   closeWorkspace(position) {
+    if (this.compact.enabled) {
+      if (this.compact.regionOf(this.compact.activeTabId) === position) this.compact.setOpen(false);
+      return this;
+    }
+
     const openKey = `${position}Open`;
     const wasOpen = this.state[openKey];
     if (wasOpen) {
@@ -754,6 +862,7 @@ class WorkspaceLayout {
   }
 
   isWorkspaceOpen(position) {
+    if (this.compact.enabled) return this.compact.open;
     return Boolean(this.state[`${position}Open`]);
   }
 
@@ -767,6 +876,12 @@ class WorkspaceLayout {
       bottomHeight: this.config.bottomWorkspaceHeight,
     };
 
+    this.compact.open = true;
+    this.compact.ratio = {
+      landscape: this.config.compactLandscapeRatio,
+      portrait: this.config.compactPortraitRatio,
+    };
+
     this._applyState();
     this._flushLayoutResize();
 
@@ -774,6 +889,8 @@ class WorkspaceLayout {
   }
 
   destroy() {
+    this.compact.destroy();
+
     for (const cleanup of this._resizerCleanups) {
       cleanup();
     }

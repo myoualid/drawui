@@ -85,6 +85,7 @@ const ctors = {
   TreeView: C.TreeView,
   PropertyGrid: C.PropertyGrid,
   PropertyGridRow: C.PropertyGridRow,
+  SummaryCard: C.SummaryCard,
   SortableList: C.SortableList,
   FloatingWindow,
 };

@@ -182,6 +182,12 @@ declare module "@aeco-dev/gui" {
   export class Flyout extends Control {}
   export class PropertyGrid extends Control {}
   export class PropertyGridRow extends Control {}
+  export class SummaryCard extends Control {
+    constructor(options?: { icon?: string; title?: string; subtitle?: string });
+    setTitle(title: string): this;
+    setSubtitle(subtitle: string): this;
+    setIcon(icon: string): this;
+  }
   export class SortableList extends Control {}
   export class NavigationList extends Control {}
   export class TreeView extends Control {}
@@ -280,7 +286,7 @@ declare module "@aeco-dev/layout" {
   }
 
   export type LayoutPosition = "left" | "right" | "bottom";
-  export type LayoutEventName = "tab:added" | "tab:removed" | "tab:selected" | "workspace";
+  export type LayoutEventName = "tab:added" | "tab:removed" | "tab:selected" | "workspace" | "compact" | "ribbon";
 
   export interface LayoutOptions {
     leftWorkspaceWidth?: number;
@@ -293,11 +299,20 @@ declare module "@aeco-dev/layout" {
     bottomOpen?: boolean;
     minPanelSize?: number;
     resizerSize?: number;
+    /** Tablet/phone shell: one tabbed workspace and a bottom ribbon bar. */
+    compact?: "auto" | boolean;
+    compactBreakpoint?: number;
+    compactBarHeight?: number;
+    compactResizerSize?: number;
+    compactLandscapeRatio?: number;
+    compactPortraitRatio?: number;
+    compactTab?: string | null;
+    compactRibbonToggle?: boolean;
   }
 
   /**
    * Region grid. `new Layout(options).init(world)`.
-   * Events: `tab:added`, `tab:removed`, `tab:selected`, `workspace`.
+   * Events: `tab:added`, `tab:removed`, `tab:selected`, `workspace`, `compact`, `ribbon`.
    */
   export class Layout {
     constructor(options?: LayoutOptions);
@@ -326,6 +341,11 @@ declare module "@aeco-dev/layout" {
     bindToggle(elementOrId: string | HTMLElement, position: LayoutPosition, id: string): (() => void) | null;
     prependToggleBarChild(node: Node): () => void;
     getFloatingWindowMountElement(): HTMLElement | null;
+    isCompact(): boolean;
+    openRibbon(): this;
+    closeRibbon(): this;
+    toggleRibbon(): this;
+    isRibbonOpen(): boolean;
     destroy(): void;
     static World: typeof World;
     static Panel: typeof Panel;

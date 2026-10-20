@@ -103,7 +103,7 @@ function bodyProject() {
     .add(list)
     .add(
       row(
-        new Button("Add model").addClass("primary"),
+        new Button("Load model").addClass("primary"),
         new Button("Unload").addClass("secondary"),
       ),
     );

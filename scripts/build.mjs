@@ -1,4 +1,5 @@
 import * as esbuild from "esbuild";
+import { watch } from "node:fs";
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { stampDocsVersion } from "./stamp-docs-version.mjs";
 import { AGENT_JSON_NAME, AGENT_SKILL_NAME, writeAgentPack } from "./write-agent-pack.mjs";
@@ -288,26 +289,86 @@ async function syncDocsAssets() {
   }
 }
 
-await rm(distDir, { recursive: true, force: true });
-await mkdir(distDir, { recursive: true });
-await rm(docsDistDir, { recursive: true, force: true });
-await mkdir(docsDistDir, { recursive: true });
+const watchMode = process.argv.includes("--watch");
 
-await buildJavaScript();
-await buildLibraryStylesheets();
-await buildDocsStylesheet();
-await writeFullImportMap();
-await writeAgentPack(distDir);
-await verifyDist();
-await syncDocsAssets();
+async function buildAll({ clean }) {
+  if (clean) {
+    await rm(distDir, { recursive: true, force: true });
+    await rm(docsDistDir, { recursive: true, force: true });
+  }
 
-for (const file of libraryArtifacts) {
-  await cp(path.join(distDir, file), path.join(docsDistDir, file));
+  await mkdir(distDir, { recursive: true });
+  await mkdir(docsDistDir, { recursive: true });
+
+  await buildJavaScript();
+  await buildLibraryStylesheets();
+  await buildDocsStylesheet();
+  await writeFullImportMap();
+  await writeAgentPack(distDir);
+  await verifyDist();
+  await syncDocsAssets();
+
+  for (const file of libraryArtifacts) {
+    await cp(path.join(distDir, file), path.join(docsDistDir, file));
+  }
+
+  await syncLocalVendor();
+  await stagePackages();
+  await stampDocsVersion(rootDir);
+
+  console.log("Built library dist/:");
+  for (const file of libraryArtifacts) {
+    console.log(`- ${file}`);
+  }
+  console.log("Built docs site docs/dist/:");
+  console.log(`- ${docsCssName}`);
+  for (const file of libraryArtifacts) {
+    console.log(`- ${file} (copy for GitHub Pages)`);
+  }
+  console.log("Synced docs/styles/ for GitHub Pages.");
 }
 
-await syncLocalVendor();
-await stagePackages();
-await stampDocsVersion(rootDir);
+await buildAll({ clean: !watchMode });
+
+if (watchMode) {
+  console.log("Watching src/, styles/, and scripts/entries/. Ctrl+C to stop.");
+  let timer = null;
+  let running = false;
+  let queued = false;
+
+  const rebuild = async () => {
+    if (running) {
+      queued = true;
+      return;
+    }
+
+    running = true;
+    try {
+      await buildAll({ clean: false });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      running = false;
+      if (queued) {
+        queued = false;
+        await rebuild();
+      }
+    }
+  };
+
+  const schedule = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      void rebuild();
+    }, 150);
+  };
+
+  for (const dir of ["src", "styles", path.join("scripts", "entries")]) {
+    watch(path.join(rootDir, dir), { recursive: true }, schedule);
+  }
+
+  await new Promise(() => {});
+}
 
 async function stagePackages() {
   const types = await readFile(path.join(rootDir, "types/index.d.ts"), "utf8");
@@ -345,14 +406,3 @@ async function stagePackages() {
   console.log("- packages/gui");
   console.log("- packages/layout");
 }
-
-console.log("Built library dist/:");
-for (const file of libraryArtifacts) {
-  console.log(`- ${file}`);
-}
-console.log("Built docs site docs/dist/:");
-console.log(`- ${docsCssName}`);
-for (const file of libraryArtifacts) {
-  console.log(`- ${file} (copy for GitHub Pages)`);
-}
-console.log("Synced docs/styles/ for GitHub Pages.");

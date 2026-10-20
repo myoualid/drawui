@@ -380,8 +380,25 @@ function bindRowSpecCallbacks(row, spec, table) {
   bindCallbacksForTarget(value, row["valueEl"], spec, { row, spec, table, value, cell: row["valueEl"], cellIndex: 1 });
 }
 
-/** @category Collections */
+/**
+ * Key/value grid. A `title` turns it into a titled group box, the way
+ * property sets are shown. `emptyText` is shown while the grid has no rows.
+ *
+ * @example
+ * new PropertyGrid({ title: "Pset_WallCommon", rows: { ext: { label: "IsExternal", value: "True" } } });
+ * new PropertyGrid({ rows: {}, emptyText: "No attributes" });
+ *
+ * @category Collections
+ */
 class PropertyGrid extends Container {
+  /**
+   * @param {Object} [options]
+   * @param {string} [options.title]
+   * @param {PropertyGridRowSpec} [options.header]
+   * @param {Object<string, PropertyGridRowSpec>} [options.rows]
+   * @param {boolean} [options.compact]
+   * @param {string} [options.emptyText]
+   */
   constructor(options = {}) {
     super();
 
@@ -392,6 +409,8 @@ class PropertyGrid extends Container {
     this.valuesByKey = {};
     this.valueCellsByKey = {};
     this.cellsByKey = {};
+    this.emptyText = options.emptyText ?? null;
+    this.emptyEl = null;
 
     if (options.title) {
       this.titleEl = createPropertyCell(options.title, "PropertyGrid-title");
@@ -416,6 +435,32 @@ class PropertyGrid extends Container {
     if (options.rows) {
       this._addRows(options.rows);
     }
+    this._syncEmpty();
+  }
+
+  /** @private */
+  _syncEmpty() {
+    const isEmpty = Object.keys(this.rowsByKey).length === 0;
+
+    if (isEmpty && this.emptyText != null && !this.emptyEl) {
+      this.emptyEl = new Text(this.emptyText).addClass("PropertyGrid-empty");
+      this.body.add(this.emptyEl);
+    } else if ((!isEmpty || this.emptyText == null) && this.emptyEl) {
+      this.emptyEl.dom.remove();
+      this.emptyEl = null;
+    }
+
+    return this;
+  }
+
+  /**
+   * @param {string|null} text
+   * @returns {this}
+   */
+  setEmptyText(text) {
+    this.emptyText = text;
+    if (this.emptyEl && text != null) this.emptyEl.setValue(text);
+    return this._syncEmpty();
   }
 
   _createRow(label, value, tooltip = "") {
@@ -470,7 +515,7 @@ class PropertyGrid extends Container {
       this._addRow(key, spec);
     });
 
-    return this;
+    return this._syncEmpty();
   }
 
   clearRows() {
@@ -479,7 +524,8 @@ class PropertyGrid extends Container {
     this.valuesByKey = {};
     this.valueCellsByKey = {};
     this.cellsByKey = {};
-    return this;
+    this.emptyEl = null;
+    return this._syncEmpty();
   }
 
   setRows(rows = {}) {

@@ -20,7 +20,7 @@ export class Operator extends Container {
    * @returns {Operator}
    */
   setIcon(iconName) {
-    this._icon.setName(iconName);
+    this._icon.setIcon(iconName);
     return this;
   }
 }

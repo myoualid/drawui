@@ -6,6 +6,7 @@ export { Operator } from "./controls/Operator.js";
 export { ThemeToggle } from "./controls/ThemeToggle.js";
 export { LabeledBoxItem } from "./lists/LabeledBoxItem.js";
 export { PropertyGrid, PropertyGridRow } from "./lists/PropertyGrid.js";
+export { SummaryCard } from "./lists/SummaryCard.js";
 export { SortableList } from "./lists/SortableList.js";
 export { NavigationList } from "./lists/NavigationList.js";
 export { TreeView } from "./lists/TreeView.js";

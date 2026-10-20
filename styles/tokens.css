@@ -3,34 +3,45 @@
 
 :root {
   /*
-   * Color — neutral charcoal with one sage accent (dark default).
-   * Accent is for primary actions, focus, and the active ribbon mark.
-   * Light values live in themes/light.css.
+   * Color — the Bonsai viewer palette: slate greys with one green accent
+   * (dark default). Accent is for primary actions, focus, ribbon icons and
+   * the active tab mark. Light values live in themes/light.css.
    */
-  --dui-color-bg: #16181b;
-  --dui-color-surface: #1e2126;
-  --dui-color-surface-raised: #272b31;
-  --dui-color-surface-hover: rgba(255, 255, 255, 0.045);
-  --dui-color-surface-pressed: rgba(255, 255, 255, 0.08);
+  --dui-color-bg: #26292f;
+  --dui-color-surface: #2b2f36;
+  --dui-color-surface-raised: #31353d;
+  --dui-color-surface-hover: #3a3f48;
+  --dui-color-surface-pressed: #24282f;
   --dui-color-surface-selected: rgba(255, 255, 255, 0.07);
-  --dui-color-control: #2a2e34;
-  --dui-color-control-hover: #32373e;
-  --dui-color-overlay: #23272d;
-  --dui-color-text: #e7e5e1;
-  --dui-color-text-muted: #9c9890;
-  --dui-color-text-subtle: #6f6b64;
-  --dui-color-border: rgba(255, 255, 255, 0.08);
-  --dui-color-border-strong: rgba(255, 255, 255, 0.16);
-  --dui-color-separator: rgba(255, 255, 255, 0.06);
-  --dui-color-focus: #7d9a62;
-  --dui-color-accent: #7d9a62;
-  --dui-color-accent-hover: #8eab73;
-  --dui-color-accent-soft: rgba(125, 154, 98, 0.18);
-  --dui-color-on-accent: #14160f;
+  --dui-color-control: #31353d;
+  --dui-color-control-hover: #3a3f48;
+  --dui-color-overlay: #2b2f36;
+  --dui-color-text: #d0d5dd;
+  --dui-color-text-muted: #9aa4b3;
+  --dui-color-text-subtle: #8f98a6;
+  --dui-color-text-hover: #ffffff;
+  --dui-color-border: #3e444e;
+  --dui-color-border-strong: #5b6472;
+  --dui-color-separator: #3e444e;
+  --dui-color-focus: #5b6472;
+  --dui-color-accent: #39b54a;
+  --dui-color-accent-hover: #53c763;
+  --dui-color-accent-soft: rgba(57, 181, 74, 0.18);
+  --dui-color-on-accent: #14161a;
   --dui-color-danger: #d4785a;
-  --dui-color-warning: #c48a3a;
-  --dui-color-success: #7d9a62;
+  --dui-color-warning: #e4b35a;
+  --dui-color-success: #39b54a;
   --dui-color-info: #7f95b0;
+
+  /* Shell chrome: tab bar, ribbon band, viewport surround, status bar. */
+  --dui-tabbar-bg: #26292f;
+  --dui-tab-bg: #31353d;
+  --dui-ribbon-bg: #31353d;
+  --dui-viewport-shell-bg: #202329;
+  --dui-statusbar-bg: #26292f;
+  --dui-section-header-bg: #26292f;
+  --dui-scroll-handle: #525a67;
+  --dui-scroll-handle-hover: #697385;
 
   /* ——— Typography (Nunito + Inconsolata, 16px body) ——— */
   --dui-font-ui: "Nunito", sans-serif;
@@ -89,15 +100,15 @@
   --dui-logo-wordmark-max-width: 150px;
 
   /* Inspector dock — properties panel (dark). Light overrides in themes/light.css. */
-  --dui-inspector-bg: #141821;
-  --dui-inspector-border: #232833;
-  --dui-inspector-row: #181c26;
-  --dui-inspector-key: #7a8396;
-  --dui-inspector-value: #e2e5ec;
-  --dui-inspector-title: #ffffff;
-  --dui-inspector-section: #e2e5ec;
-  --dui-inspector-set: #1b2029;
-  --dui-inspector-empty: #5c6478;
-  --dui-inspector-text: #c8ccd6;
+  --dui-inspector-bg: #2b2f36;
+  --dui-inspector-border: #3e444e;
+  --dui-inspector-row: #26292f;
+  --dui-inspector-key: #9aa4b3;
+  --dui-inspector-value: #d0d5dd;
+  --dui-inspector-title: #d0d5dd;
+  --dui-inspector-section: #d0d5dd;
+  --dui-inspector-set: #26292f;
+  --dui-inspector-empty: #9aa4b3;
+  --dui-inspector-text: #d0d5dd;
   --dui-inspector-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }

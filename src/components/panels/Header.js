@@ -59,6 +59,7 @@ export class Header extends StackPanel {
     this.actions = null;
     if (actions.length > 0 || alwaysActionsColumn) {
       this.actions = new StackPanel({ isVertical: false });
+      this.actions.addClass("Header-actions");
       this.actions.setDisplay("flex");
       this.actions
         .setStyle("gap", ["0.5rem"])
@@ -114,6 +115,7 @@ export class Header extends StackPanel {
   addAction(action) {
     if (!this.actions) {
       this.actions = new StackPanel({ isVertical: false });
+      this.actions.addClass("Header-actions");
       this.actions.setDisplay("flex");
       this.actions
         .setStyle("gap", ["0.5rem"])

@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "node ./scripts/build.mjs",
+    "dev": "node ./scripts/build.mjs --watch",
     "build:source-check": "node --input-type=module -e \"import './src/gui/index.js'; import './src/layout/index.js'\"",
     "examples": "npm run build && npx --yes serve docs -p 5173",
     "build:catalog": "node ./scripts/generate-min-catalog.mjs",
